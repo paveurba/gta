@@ -60,10 +60,14 @@ export const CLOTHING_CATALOG: ClothingItem[] = [
 ];
 
 export const CLOTHING_SHOP_LOCATIONS = [
-    { x: 72.0, y: -1399.0, z: 29.4, name: 'Suburban' },
-    { x: -167.0, y: -299.0, z: 39.7, name: 'Ponsonbys' },
-    { x: -1193.0, y: -772.0, z: 17.3, name: 'Binco' },
-    { x: 428.0, y: -800.0, z: 29.5, name: 'Discount Store' },
+    { x: 72.25, y: -1399.10, z: 29.38, name: 'Suburban (Innocence Blvd)' },
+    { x: -167.86, y: -298.97, z: 39.73, name: 'Ponsonbys (Rockford Hills)' },
+    { x: -1193.42, y: -772.26, z: 17.32, name: 'Binco (Del Perro)' },
+    { x: 428.69, y: -800.41, z: 29.49, name: 'Discount Store (Pillbox Hill)' },
+    { x: -703.78, y: -152.26, z: 37.42, name: 'Ponsonbys (Burton)' },
+    { x: -1447.80, y: -242.46, z: 49.82, name: 'Suburban (Chumash)' },
+    { x: 123.65, y: -219.44, z: 54.56, name: 'Suburban (Hawick)' },
+    { x: 614.09, y: 2762.81, z: 42.09, name: 'Discount Store (Harmony)' },
 ];
 
 export class ClothingShopService {

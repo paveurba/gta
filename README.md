@@ -16,7 +16,8 @@ A full-featured GTA Online-style multiplayer server built on alt:V with the Reba
 ### World
 - **GTA Online Style**: No AI pedestrians or traffic (clean multiplayer environment)
 - **Static Parked Vehicles**: 45+ vehicles parked in realistic locations around the city
-- **Map Blips**: All shops, properties, and casino marked on the map
+- **Map Blips**: All shops, properties, hospitals, and casino marked on the map
+- **Death/Respawn System**: Players respawn at nearest hospital with $500 fee after 5 seconds
 
 ## Tech Stack
 
@@ -111,6 +112,7 @@ Connect with alt:V client to `localhost:7788`
 |-----|--------|
 | `T` | Open chat |
 | `P` | Open phone menu |
+| `E` | Interact with property (when nearby) |
 
 ## Database Schema
 
@@ -164,19 +166,39 @@ src/plugins/gta-mysql-core/
 - Ammu-Nation Little Seoul
 - Ammu-Nation Cypress Flats
 - Ammu-Nation Sandy Shores
+- Ammu-Nation Paleto Bay
+- Ammu-Nation Tataviam Mountains
 
 ### Clothing Shops (Blue shirt icon)
-- Suburban
-- Ponsonbys
-- Binco
-- Discount Store
+- Suburban (Innocence Blvd)
+- Suburban (Chumash)
+- Suburban (Hawick)
+- Ponsonbys (Rockford Hills)
+- Ponsonbys (Burton)
+- Binco (Del Perro)
+- Discount Store (Pillbox Hill)
+- Discount Store (Harmony)
 
 ### Casino (Gold chip icon)
 - Diamond Casino
 
+### Hospitals (Pink cross icon)
+- Pillbox Hill Medical Center
+- Mount Zonah Medical Center
+- Sandy Shores Medical Center
+- Paleto Bay Medical Center
+
 ### Properties (House icons)
 - Green = For sale
-- Blue = Owned
+- Blue = Owned by you
+- Gray = Owned by another player
+
+**Property Locations:**
+- Unit 124 Popular St ($25,000)
+- 0115 Bay City Ave ($80,000)
+- 0504 S Mo Milton Dr ($150,000)
+- 0184 Milton Rd ($300,000)
+- Eclipse Towers Penthouse ($500,000)
 
 ## Docker Services
 

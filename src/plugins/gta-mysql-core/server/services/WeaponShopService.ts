@@ -45,10 +45,12 @@ export const WEAPON_CATALOG: WeaponItem[] = [
 ];
 
 export const WEAPON_SHOP_LOCATIONS = [
-    { x: 22.0, y: -1105.0, z: 29.8, name: 'Ammu-Nation Pillbox Hill' },
-    { x: -662.0, y: -935.0, z: 21.8, name: 'Ammu-Nation Little Seoul' },
-    { x: 810.0, y: -2157.0, z: 29.6, name: 'Ammu-Nation Cypress Flats' },
-    { x: 1693.0, y: 3760.0, z: 34.7, name: 'Ammu-Nation Sandy Shores' },
+    { x: 22.45, y: -1107.28, z: 29.80, name: 'Ammu-Nation Pillbox Hill' },
+    { x: -662.18, y: -934.87, z: 21.83, name: 'Ammu-Nation Little Seoul' },
+    { x: 810.25, y: -2157.54, z: 29.62, name: 'Ammu-Nation Cypress Flats' },
+    { x: 1693.44, y: 3759.70, z: 34.71, name: 'Ammu-Nation Sandy Shores' },
+    { x: -331.23, y: 6083.88, z: 31.45, name: 'Ammu-Nation Paleto Bay' },
+    { x: 2567.69, y: 294.38, z: 108.73, name: 'Ammu-Nation Tataviam Mountains' },
 ];
 
 export class WeaponShopService {

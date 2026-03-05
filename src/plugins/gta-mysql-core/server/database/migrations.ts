@@ -42,7 +42,7 @@ export async function runMigrations(pool: mysql.Pool): Promise<void> {
         )
     `);
 
-    // Properties table
+    // Properties table - with interior_heading and ipl columns
     await pool.execute(`
         CREATE TABLE IF NOT EXISTS properties (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -55,10 +55,21 @@ export async function runMigrations(pool: mysql.Pool): Promise<void> {
             interior_x FLOAT NOT NULL,
             interior_y FLOAT NOT NULL,
             interior_z FLOAT NOT NULL,
+            interior_heading FLOAT DEFAULT 0,
+            ipl VARCHAR(255) NULL,
             purchased_at TIMESTAMP NULL,
             FOREIGN KEY (owner_player_id) REFERENCES players(id) ON DELETE SET NULL
         )
     `);
+
+    // Add columns if they don't exist (for existing databases)
+    try {
+        await pool.execute(`ALTER TABLE properties ADD COLUMN interior_heading FLOAT DEFAULT 0`);
+    } catch (e) { /* Column already exists */ }
+    
+    try {
+        await pool.execute(`ALTER TABLE properties ADD COLUMN ipl VARCHAR(255) NULL`);
+    } catch (e) { /* Column already exists */ }
 
     // Phone contacts table
     await pool.execute(`
@@ -113,18 +124,58 @@ export async function runMigrations(pool: mysql.Pool): Promise<void> {
         )
     `);
 
-    // Seed default properties if none exist
+    // Check and update properties with correct coordinates
     const [existingProps] = await pool.execute('SELECT COUNT(*) as count FROM properties');
     if ((existingProps as any[])[0].count === 0) {
+        // Seed default properties with accurate GTA V coordinates
+        // These are real purchasable property locations from GTA Online
         await pool.execute(`
-            INSERT INTO properties (name, price, pos_x, pos_y, pos_z, interior_x, interior_y, interior_z) VALUES
-            ('Cheap Apartment', 25000, -35.0, -580.0, 38.0, -32.0, -576.0, 80.0),
-            ('Del Perro Apartment', 80000, -1447.0, -538.0, 34.7, -1452.0, -540.0, 74.0),
-            ('Vinewood House', 150000, -174.0, 502.0, 137.4, -174.0, 497.0, 137.4),
-            ('Beach House', 300000, -1905.0, -570.0, 11.8, -1905.0, -573.0, 11.8),
-            ('Luxury Penthouse', 500000, -140.0, -620.0, 168.8, -140.0, -628.0, 168.8)
+            INSERT INTO properties (name, price, pos_x, pos_y, pos_z, interior_x, interior_y, interior_z, interior_heading, ipl) VALUES
+            ('Unit 124 Popular St', 25000, -47.52, -585.86, 37.95, 266.04, -1007.47, -101.01, 70.0, 'apa_v_mp_h_01_a'),
+            ('0115 Bay City Ave', 80000, -1447.06, -538.53, 34.74, 346.99, -1012.99, -99.20, 70.0, 'apa_v_mp_h_02_a'),
+            ('0504 S Mo Milton Dr', 150000, -774.01, 342.03, 211.40, 346.99, -1012.99, -99.20, 70.0, 'apa_v_mp_h_03_a'),
+            ('0184 Milton Rd', 300000, -572.60, 653.54, 145.63, 346.99, -1012.99, -99.20, 70.0, 'apa_v_mp_h_04_a'),
+            ('Eclipse Towers Penthouse', 500000, -777.14, 312.73, 223.26, 346.99, -1012.99, -99.20, 70.0, 'apa_v_mp_h_05_a')
         `);
-        alt.log('[migrations] Seeded default properties');
+        alt.log('[migrations] Seeded default properties with accurate coordinates');
+    } else {
+        // Update existing properties with correct coordinates
+        await pool.execute(`
+            UPDATE properties SET 
+                pos_x = -47.52, pos_y = -585.86, pos_z = 37.95,
+                interior_x = 266.04, interior_y = -1007.47, interior_z = -101.01,
+                interior_heading = 70.0, ipl = 'apa_v_mp_h_01_a'
+            WHERE id = 1
+        `);
+        await pool.execute(`
+            UPDATE properties SET 
+                pos_x = -1447.06, pos_y = -538.53, pos_z = 34.74,
+                interior_x = 346.99, interior_y = -1012.99, interior_z = -99.20,
+                interior_heading = 70.0, ipl = 'apa_v_mp_h_02_a'
+            WHERE id = 2
+        `);
+        await pool.execute(`
+            UPDATE properties SET 
+                pos_x = -774.01, pos_y = 342.03, pos_z = 211.40,
+                interior_x = 346.99, interior_y = -1012.99, interior_z = -99.20,
+                interior_heading = 70.0, ipl = 'apa_v_mp_h_03_a'
+            WHERE id = 3
+        `);
+        await pool.execute(`
+            UPDATE properties SET 
+                pos_x = -572.60, pos_y = 653.54, pos_z = 145.63,
+                interior_x = 346.99, interior_y = -1012.99, interior_z = -99.20,
+                interior_heading = 70.0, ipl = 'apa_v_mp_h_04_a'
+            WHERE id = 4
+        `);
+        await pool.execute(`
+            UPDATE properties SET 
+                pos_x = -777.14, pos_y = 312.73, pos_z = 223.26,
+                interior_x = 346.99, interior_y = -1012.99, interior_z = -99.20,
+                interior_heading = 70.0, ipl = 'apa_v_mp_h_05_a'
+            WHERE id = 5
+        `);
+        alt.log('[migrations] Updated existing properties with correct coordinates');
     }
 
     alt.log('[migrations] All migrations completed');
