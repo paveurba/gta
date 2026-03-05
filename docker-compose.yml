@@ -1,4 +1,18 @@
 services:
+  mongodb:
+    image: mongo:7
+    container_name: gta-rebar-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
   mysql:
     image: mysql:8.0
     container_name: gta-rebar-mysql
@@ -26,12 +40,15 @@ services:
     container_name: gta-rebar-server
     restart: unless-stopped
     depends_on:
+      mongodb:
+        condition: service_healthy
       mysql:
         condition: service_healthy
     ports:
       - "${GAME_PORT:-7788}:7788/tcp"
       - "${GAME_PORT:-7788}:7788/udp"
     environment:
+      MONGODB: mongodb://mongodb:27017
       DB_HOST: ${DB_HOST:-mysql}
       DB_PORT: ${DB_PORT:-3306}
       DB_NAME: ${DB_NAME:-gta_rebar}
@@ -40,4 +57,5 @@ services:
       BCRYPT_ROUNDS: ${BCRYPT_ROUNDS:-10}
 
 volumes:
+  mongodb_data:
   mysql_data:

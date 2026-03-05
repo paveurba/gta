@@ -5,12 +5,26 @@ import { useTranslate } from '@Shared/translate.js';
 import './rpc/index.js';
 import './systems/tick.js';
 import { useRebar } from './index.js';
+import { useDatabase } from './database/index.js';
+import { useConfig } from './config/index.js';
 
 const Rebar = useRebar();
 const { t } = useTranslate('en');
 const { reconnect } = Utility.useDevReconnect();
+const db = useDatabase();
+const config = useConfig();
 
 async function handleStart() {
+    // Initialize MongoDB connection
+    const mongoUri = config.getField('mongodb') || 'mongodb://127.0.0.1:27017';
+    alt.log(`:: Connecting to MongoDB at ${mongoUri}`);
+    const dbConnected = await db.init(mongoUri);
+    if (!dbConnected) {
+        alt.logError(':: Failed to connect to MongoDB! Server may not function correctly.');
+    } else {
+        alt.log(':: MongoDB Connected');
+    }
+
     // Handle plugin loading
     alt.log(':: Loading Plugins');
     try {
