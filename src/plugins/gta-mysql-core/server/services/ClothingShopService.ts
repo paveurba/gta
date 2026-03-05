@@ -60,14 +60,14 @@ export const CLOTHING_CATALOG: ClothingItem[] = [
 ];
 
 export const CLOTHING_SHOP_LOCATIONS = [
-    { x: 72.25, y: -1399.10, z: 29.38, name: 'Suburban (Innocence Blvd)' },
-    { x: -167.86, y: -298.97, z: 39.73, name: 'Ponsonbys (Rockford Hills)' },
-    { x: -1193.42, y: -772.26, z: 17.32, name: 'Binco (Del Perro)' },
-    { x: 428.69, y: -800.41, z: 29.49, name: 'Discount Store (Pillbox Hill)' },
-    { x: -703.78, y: -152.26, z: 37.42, name: 'Ponsonbys (Burton)' },
-    { x: -1447.80, y: -242.46, z: 49.82, name: 'Suburban (Chumash)' },
-    { x: 123.65, y: -219.44, z: 54.56, name: 'Suburban (Hawick)' },
-    { x: 614.09, y: 2762.81, z: 42.09, name: 'Discount Store (Harmony)' },
+    { x: 72.30, y: -1398.90, z: 29.37, name: 'Suburban' },
+    { x: -163.10, y: -302.70, z: 39.73, name: 'Ponsonbys' },
+    { x: -1192.60, y: -768.30, z: 17.32, name: 'Binco' },
+    { x: 425.70, y: -806.20, z: 29.49, name: 'Discount Store' },
+    { x: -708.20, y: -152.30, z: 37.42, name: 'Ponsonbys' },
+    { x: -1193.90, y: -766.90, z: 17.32, name: 'Suburban' },
+    { x: 127.00, y: -223.20, z: 54.56, name: 'Suburban' },
+    { x: 617.30, y: 2759.60, z: 42.09, name: 'Discount Store' },
 ];
 
 export class ClothingShopService {

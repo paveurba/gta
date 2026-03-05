@@ -865,19 +865,30 @@ function drawShopMarkers(): void {
 
     [...weaponShops, ...clothingShops, ...casinos].forEach((shop) => {
         const dist = Math.sqrt(Math.pow(shop.x - pos.x, 2) + Math.pow(shop.y - pos.y, 2) + Math.pow(shop.z - pos.z, 2));
-        if (dist < 100) {
+        if (dist < 50) {
             const isWeapon = weaponShops.includes(shop);
             const isClothing = clothingShops.includes(shop);
             const color = isWeapon ? [255, 100, 100] : isClothing ? [100, 100, 255] : [255, 215, 0];
-            native.drawMarker(1, shop.x, shop.y, shop.z + 1, 0, 0, 0, 0, 0, 0, 1.5, 1.5, 1.5, color[0], color[1], color[2], 150, false, false, 2, false, null as any, null as any, false);
             
+            // Draw vertical cylinder marker at shop location
+            native.drawMarker(
+                1, // Cylinder
+                shop.x, shop.y, shop.z - 1.0, // Start below ground so it shows at ground level
+                0, 0, 0,
+                0, 0, 0,
+                0.8, 0.8, 2.0, // Narrow and tall
+                color[0], color[1], color[2], 100,
+                false, false, 2, false, null as any, null as any, false
+            );
+            
+            // Draw shop name when close
             if (dist < 20) {
                 native.setTextFont(4);
                 native.setTextScale(0.4, 0.4);
                 native.setTextColour(255, 255, 255, 255);
                 native.setTextOutline();
                 native.setTextCentre(true);
-                native.setDrawOrigin(shop.x, shop.y, shop.z + 2.5, false);
+                native.setDrawOrigin(shop.x, shop.y, shop.z + 1.0, false);
                 native.beginTextCommandDisplayText('STRING');
                 native.addTextComponentSubstringPlayerName(shop.name);
                 native.endTextCommandDisplayText(0, 0, 0);
