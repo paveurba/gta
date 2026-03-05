@@ -324,10 +324,10 @@ alt.on('playerDisconnect', async (player) => {
 // ============================================================================
 
 const HOSPITAL_SPAWNS = [
-    { x: 355.70, y: -596.17, z: 28.79, name: 'Pillbox Hill Medical Center' },
-    { x: -449.67, y: -340.83, z: 34.50, name: 'Mount Zonah Medical Center' },
-    { x: 1839.62, y: 3672.93, z: 34.28, name: 'Sandy Shores Medical Center' },
-    { x: -247.76, y: 6331.23, z: 32.43, name: 'Paleto Bay Medical Center' },
+    { x: 340.0, y: -569.0, z: 28.80, name: 'Pillbox Hill Medical Center' },
+    { x: -449.0, y: -341.0, z: 34.50, name: 'Mount Zonah Medical Center' },
+    { x: 1839.0, y: 3673.0, z: 34.00, name: 'Sandy Shores Medical Center' },
+    { x: -247.0, y: 6331.0, z: 32.40, name: 'Paleto Bay Medical Center' },
 ];
 
 function getNearestHospital(x: number, y: number, z: number): { x: number; y: number; z: number; name: string } {
@@ -364,13 +364,10 @@ alt.on('playerDeath', async (player, killer, weaponHash) => {
     alt.setTimeout(async () => {
         if (!player.valid) return;
         
-        // Respawn at hospital - spawn at ground level first, then use safe spawn
-        player.spawn(hospital.x, hospital.y, hospital.z + 1, 0);
+        // Respawn at hospital with exact ground coordinates
+        player.spawn(hospital.x, hospital.y, hospital.z, 0);
         player.health = 200;
         player.armour = 0;
-        
-        // Use client-side safe spawn to find correct ground level
-        alt.emitClient(player, 'gta:spawn:safe', hospital.x, hospital.y, hospital.z);
         
         // Deduct hospital fee if logged in
         if (session) {
@@ -663,6 +660,18 @@ alt.onClient('vehicle:buy', async (player, model: string, modelHash: number, pri
     if (result.success && result.newBalance !== undefined) {
         session.money = result.newBalance;
         syncMoneyToClient(player);
+        
+        // Auto-spawn the purchased vehicle near the player
+        if (result.vehicleId) {
+            const pos = player.pos;
+            const rot = player.rot;
+            // Spawn vehicle 3 meters in front of player
+            const spawnX = pos.x + Math.sin(-rot.z) * 3;
+            const spawnY = pos.y + Math.cos(-rot.z) * 3;
+            const spawnZ = pos.z;
+            await vehicleService.spawnVehicle(result.vehicleId, spawnX, spawnY, spawnZ, rot.z);
+            alt.log(`[gta-mysql-core] Auto-spawned vehicle ${result.vehicleId} for player ${session.oderId}`);
+        }
     }
     alt.emitClient(player, 'vehicle:buyResult', result);
 });
