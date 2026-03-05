@@ -791,26 +791,26 @@ function drawPropertyMarkers(): void {
                 color = [150, 150, 150]; // Gray
             }
 
-            // Draw flat circle marker on ground (type 1 cylinder with small height)
+            // Draw checkered flat marker on ground (type 27)
             native.drawMarker(
-                1, // Cylinder
-                prop.pos_x, prop.pos_y, prop.pos_z - 1.0, // Position below ground so top is at ground level
+                27, // Checkered flat marker - sits ON the ground
+                prop.pos_x, prop.pos_y, prop.pos_z + 0.01, // Slightly above ground to be visible
                 0, 0, 0,
                 0, 0, 0,
-                2.0, 2.0, 1.0, // Flat cylinder
-                color[0], color[1], color[2], 150,
+                1.5, 1.5, 1.0,
+                color[0], color[1], color[2], 200,
                 false, false, 2, false, null as any, null as any, false
             );
 
-            // Draw small vertical beam above the marker
+            // Draw arrow pointing down above the marker (type 5)
             native.drawMarker(
-                1, // Cylinder
-                prop.pos_x, prop.pos_y, prop.pos_z + 0.5,
+                5, // Arrow pointing down
+                prop.pos_x, prop.pos_y, prop.pos_z + 2.5,
                 0, 0, 0,
-                0, 0, 0,
-                0.3, 0.3, 1.5, // Thin tall beam
-                color[0], color[1], color[2], 100,
-                false, false, 2, false, null as any, null as any, false
+                0, 180.0, 0, // Rotate to point down
+                0.6, 0.6, 0.6,
+                color[0], color[1], color[2], 200,
+                true, true, 2, true, null as any, null as any, false
             );
 
             // Draw property info when close
