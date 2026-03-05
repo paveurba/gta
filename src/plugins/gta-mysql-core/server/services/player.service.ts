@@ -1,5 +1,4 @@
 import * as alt from 'alt-server';
-import { useRebar } from '@Server/index.js';
 
 export interface AuthenticatedSession {
     userId: number;
@@ -22,9 +21,12 @@ export class PlayerService {
     }
 
     notify(player: alt.Player, message: string): void {
-        const Rebar = useRebar();
-        const rPlayer = Rebar.usePlayer(player);
-        rPlayer.notify.sendMessage(message);
+        if (!player || !player.valid) {
+            return;
+        }
+
+        player.emit('gta:notify', message);
+        alt.log(`[gta-mysql-core][p${player.id}] ${message}`);
     }
 
     spawnDefault(player: alt.Player): void {

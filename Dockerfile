@@ -12,7 +12,7 @@ COPY server.toml ./server.toml
 COPY .env.example ./.env
 
 RUN mkdir -p modules/js-module
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --ignore-scripts
 RUN pnpm build:docker
 
 FROM --platform=linux/amd64 altmp/altv-server:release

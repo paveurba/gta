@@ -9,8 +9,6 @@ import { registerJobsModule } from './modules/jobs/index.js';
 const context = createContext();
 
 async function bootstrap() {
-    await context.services.database.healthcheck();
-
     registerAuthenticationModule(context);
     registerPlayerManagementModule(context);
     registerVehiclesModule(context);
@@ -18,6 +16,11 @@ async function bootstrap() {
     registerJobsModule(context);
 
     alt.log('[gta-mysql-core] Plugin initialized');
+
+    context.services.database
+        .healthcheck()
+        .then(() => alt.log('[gta-mysql-core] MySQL connection OK'))
+        .catch((err) => alt.logWarning(`[gta-mysql-core] MySQL connection failed: ${(err as Error).message}`));
 }
 
 bootstrap().catch((err) => {

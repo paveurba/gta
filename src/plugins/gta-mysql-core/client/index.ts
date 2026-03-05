@@ -1,8 +1,14 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 
+alt.onServer('gta:notify', (message: string) => {
+    alt.log(`[gta] ${message}`);
+});
+
 // Keep ambient world alive for local testing (traffic + pedestrians).
 alt.everyTick(() => {
+    native.setPedPopulationBudget(2);
+    native.setVehiclePopulationBudget(3);
     native.setVehicleDensityMultiplierThisFrame(1.0);
     native.setRandomVehicleDensityMultiplierThisFrame(1.0);
     native.setParkedVehicleDensityMultiplierThisFrame(1.0);
