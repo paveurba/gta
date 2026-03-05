@@ -1,5 +1,12 @@
 .git
 .gitignore
+.claude
+.idea
 node_modules
-dist
+altv-server
+altv-crash-handler
+data
+resources/core
+resources/webview
+webview/node_modules
 .env

@@ -1,23 +1,27 @@
 FROM node:20-bullseye AS builder
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
+RUN corepack enable
 
-COPY tsconfig.json ./
-COPY main ./main
-COPY plugins ./plugins
-COPY resources/rebar/package.json ./resources/rebar/package.json
-RUN npm run build
+COPY package.json pnpm-lock.yaml tsconfig.json ./
+COPY scripts ./scripts
+COPY src ./src
+COPY webview ./webview
+COPY resources ./resources
+COPY server.toml ./server.toml
+COPY .env.example ./.env
+
+RUN mkdir -p modules/js-module
+RUN pnpm install --frozen-lockfile
+RUN pnpm build:docker
 
 FROM --platform=linux/amd64 altmp/altv-server:release
 WORKDIR /altv
 
-COPY server.toml /altv/server.toml
-COPY --from=builder /app/dist /altv/resources/rebar
-COPY --from=builder /app/resources/rebar/package.json /altv/resources/rebar/package.json
-
-RUN cd /altv/resources/rebar && npm install --omit=dev
+COPY --from=builder /app/resources ./resources
+COPY --from=builder /app/server.toml ./server.toml
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
 
 EXPOSE 7788/tcp 7788/udp
 CMD ["./altv-server", "--config", "server.toml"]

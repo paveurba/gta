@@ -1,83 +1,80 @@
-# GTA alt:V Rebar Rewrite (TypeScript + MySQL + Docker)
+# GTA V alt:V Server - Rebar Rewrite with MySQL
 
-Clean rewrite of the project using a Rebar-style plugin architecture. Legacy code is intentionally removed and not migrated.
+This project is a clean rewrite based on the official Rebar framework source, with gameplay logic implemented as a Rebar plugin and MySQL-backed repositories/services.
 
 ## Stack
 
-- alt:V multiplayer server
+- alt:V server
+- Rebar framework (official layout and startup)
 - TypeScript
-- Rebar-style modular runtime and plugin registration
-- MySQL 8 with pooled access (`mysql2/promise`)
+- MySQL 8 (`mysql2` with pooling)
 - Docker / Docker Compose
 
-## Project Structure
+## Plugin Architecture
 
-- `main/server` server bootstrap and runtime
-- `main/client` client entrypoint
-- `main/shared` shared event contracts / types
-- `plugins` gameplay modules (`authentication`, `player-management`, `vehicles`, `inventory`, `jobs`)
-- `main/server/services` centralized services including database pool
-- `main/server/repositories` repository layer for all DB access
-- `database/init` MySQL schema initialization scripts
-- `resources/rebar` alt:V resource metadata
+Gameplay plugin location:
 
-## Architecture
+- `src/plugins/[gameplay]/gta-mysql-core`
 
-- Centralized `DatabaseService` owns MySQL connection pooling.
-- Repositories are the only DB-call layer.
-- Services hold business logic.
-- Plugins register gameplay features and command handlers.
-- No raw SQL calls are scattered through modules.
+Server plugin layout:
 
-## Implemented Example Features
+- `server/modules`
+  - `authentication`
+  - `player-management`
+  - `vehicles`
+  - `inventory`
+  - `jobs`
+- `server/services`
+- `server/repositories`
+- `server/database`
 
-- Player registration: `/register <email> <password>`
-- Player login: `/login <email> <password>`
-- Spawn after login/register
-- Vehicle spawn command: `/veh <model>`
-- Inventory preview command: `/inv`
-- Jobs command: `/job <name>` and `/job`
+All database access goes through:
 
-## Environment
+- `DatabaseService` (centralized pool)
+- repository/service pattern (no scattered raw SQL)
 
-1. Copy env file:
+## Implemented Features
 
-```bash
-cp .env.example .env
-```
-
-2. Adjust values as needed:
-
-- `DB_HOST`
-- `DB_PORT`
-- `DB_NAME`
-- `DB_USER`
-- `DB_PASSWORD`
-- `JWT_SECRET`
-
-## Run with Docker
-
-```bash
-docker compose up --build -d
-```
-
-## Build Locally (optional)
-
-```bash
-npm install
-npm run typecheck
-npm run build
-```
+- `/register <email> <password>`
+- `/login <email> <password>`
+- Spawn on successful login/register
+- `/veh <model>`
+- `/inv`
+- `/job <name>` and `/job`
 
 ## Database Schema
 
-The MySQL schema is auto-initialized from:
+MySQL init script:
 
 - `database/init/001_schema.sql`
 
-This includes:
+Tables:
 
 - `users`
 - `player_vehicles`
 - `inventory_items`
 - `player_jobs`
+
+## Run with Docker
+
+1. Create env file:
+
+```bash
+cp .env.example .env
+```
+
+2. Start services:
+
+```bash
+docker compose up --build -d
+```
+
+3. View server logs:
+
+```bash
+docker compose logs -f altv-server
+```
+
+## Notes
+
+- Rebar upstream defaults to MongoDB in core startup. This rewrite disables that startup DB init and uses MySQL in the gameplay plugin as requested.

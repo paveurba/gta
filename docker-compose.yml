@@ -37,7 +37,6 @@ services:
       DB_NAME: ${DB_NAME:-gta_rebar}
       DB_USER: ${DB_USER:-gta}
       DB_PASSWORD: ${DB_PASSWORD:-gta_password}
-      JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
       BCRYPT_ROUNDS: ${BCRYPT_ROUNDS:-10}
 
 volumes:
