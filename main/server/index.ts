@@ -18,3 +18,8 @@ async function bootstrap(): Promise<void> {
 bootstrap().catch((error) => {
   alt.logError(`[Rebar] Bootstrap failed: ${(error as Error).message}`);
 });
+
+alt.on('resourceStop', async () => {
+  await context.services.database.close();
+  alt.log('[Rebar] Database pool closed');
+});

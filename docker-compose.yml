@@ -4,12 +4,12 @@ services:
     container_name: gta-rebar-mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_password}
+      MYSQL_DATABASE: ${DB_NAME:-gta_rebar}
+      MYSQL_USER: ${DB_USER:-gta}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-gta_password}
     ports:
-      - "${DB_PORT:-3306}:3306"
+      - "${MYSQL_EXPOSE_PORT:-3306}:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./database/init:/docker-entrypoint-initdb.d:ro
@@ -32,12 +32,12 @@ services:
       - "${GAME_PORT:-7788}:7788/tcp"
       - "${GAME_PORT:-7788}:7788/udp"
     environment:
-      DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
+      DB_HOST: ${DB_HOST:-mysql}
+      DB_PORT: ${DB_PORT:-3306}
+      DB_NAME: ${DB_NAME:-gta_rebar}
+      DB_USER: ${DB_USER:-gta}
+      DB_PASSWORD: ${DB_PASSWORD:-gta_password}
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
       BCRYPT_ROUNDS: ${BCRYPT_ROUNDS:-10}
 
 volumes:
