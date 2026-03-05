@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "rootDir": ".",
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": [
+      "node",
+      "@altv/types-server",
+      "@altv/types-client",
+      "@altv/types-shared"
+    ]
+  },
+  "include": [
+    "main/**/*.ts",
+    "plugins/**/*.ts"
+  ]
+}

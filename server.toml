@@ -1,43 +1,10 @@
-# alt:V MP server config (GTA 5)
-# See: https://docs.altv.mp/articles/configs/server.html
-
-name = "My alt:V Server"
-# Bind all interfaces so Docker port mapping works; client uses Direct Connect to host IP:7788
+name = "Rebar GTA Server"
 host = "0.0.0.0"
 port = 7788
 players = 64
-password = ""
-# Off when no token (server won't appear in list; use Direct Connect)
 announce = false
-# Enable for dev: reconnect, CEF debug; can help with resource/loading issues
 debug = true
 language = "English"
-
-# Ensure optional props (and their textures) are created on client
-# https://docs.altv.mp/articles/configs/server.html
-disableOptionalProps = false
-
-# Streaming: distances for entities (defaults; helps textures stream in)
-streamingDistance = 400
-migrationDistance = 150
-
-# Manual spawn in example resource (sets model + position + loads money)
 spawnAfterConnect = false
-
-# Max size of server→client script events (bytes); avoid truncating asset data
-maxServerScriptEventSize = 524288
-
-# Modules (JS + C# included in official image)
-modules = ["js-module", "csharp-module"]
-
-# Resources: world = traffic + peds; example = spawn + money
-resources = ["world", "example"]
-
-# Voice (uncomment and set when using altv-voice container)
-# [voice]
-# bitrate = 64000
-# externalSecret = "1234567890"
-# externalHost = "voice"
-# externalPort = 7798
-# externalPublicHost = "YOUR_PUBLIC_IP"
-# externalPublicPort = 7799
+modules = ["js-module"]
+resources = ["rebar"]

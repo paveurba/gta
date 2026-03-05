@@ -1,7 +1,0 @@
-{
-  "name": "example",
-  "type": "module",
-  "dependencies": {
-    "mysql2": "^3.18.2"
-  }
-}
