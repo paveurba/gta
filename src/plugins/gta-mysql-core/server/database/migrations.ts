@@ -124,20 +124,55 @@ export async function runMigrations(pool: mysql.Pool): Promise<void> {
         )
     `);
 
+    // Player vehicles table
+    await pool.execute(`
+        CREATE TABLE IF NOT EXISTS player_vehicles (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            player_id INT NOT NULL,
+            model VARCHAR(100) NOT NULL,
+            model_hash BIGINT NOT NULL,
+            color_primary INT DEFAULT 0,
+            color_secondary INT DEFAULT 0,
+            garage_property_id INT NULL,
+            pos_x FLOAT NULL,
+            pos_y FLOAT NULL,
+            pos_z FLOAT NULL,
+            rot_x FLOAT DEFAULT 0,
+            rot_y FLOAT DEFAULT 0,
+            rot_z FLOAT DEFAULT 0,
+            is_spawned BOOLEAN DEFAULT FALSE,
+            purchased_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE CASCADE,
+            FOREIGN KEY (garage_property_id) REFERENCES properties(id) ON DELETE SET NULL
+        )
+    `);
+
+    // Add garage_slots column to properties if not exists
+    try {
+        await pool.execute(`ALTER TABLE properties ADD COLUMN garage_slots INT DEFAULT 2`);
+    } catch (e) { /* Column already exists */ }
+    
+    // Add garage spawn coordinates to properties
+    try {
+        await pool.execute(`ALTER TABLE properties ADD COLUMN garage_x FLOAT NULL`);
+        await pool.execute(`ALTER TABLE properties ADD COLUMN garage_y FLOAT NULL`);
+        await pool.execute(`ALTER TABLE properties ADD COLUMN garage_z FLOAT NULL`);
+        await pool.execute(`ALTER TABLE properties ADD COLUMN garage_heading FLOAT DEFAULT 0`);
+    } catch (e) { /* Columns already exist */ }
+
     // Check and update properties with correct coordinates
     const [existingProps] = await pool.execute('SELECT COUNT(*) as count FROM properties');
     if ((existingProps as any[])[0].count === 0) {
-        // Seed default properties with accurate GTA V coordinates
-        // These are real purchasable property locations from GTA Online
+        // Seed default properties with accurate GTA V coordinates and garage locations
         await pool.execute(`
-            INSERT INTO properties (name, price, pos_x, pos_y, pos_z, interior_x, interior_y, interior_z, interior_heading, ipl) VALUES
-            ('Unit 124 Popular St', 25000, -47.52, -585.86, 37.95, 266.04, -1007.47, -101.01, 70.0, 'apa_v_mp_h_01_a'),
-            ('0115 Bay City Ave', 80000, -1447.06, -538.53, 34.74, 346.99, -1012.99, -99.20, 70.0, 'apa_v_mp_h_02_a'),
-            ('0504 S Mo Milton Dr', 150000, -774.01, 342.03, 211.40, 346.99, -1012.99, -99.20, 70.0, 'apa_v_mp_h_03_a'),
-            ('0184 Milton Rd', 300000, -572.60, 653.54, 145.63, 346.99, -1012.99, -99.20, 70.0, 'apa_v_mp_h_04_a'),
-            ('Eclipse Towers Penthouse', 500000, -777.14, 312.73, 223.26, 346.99, -1012.99, -99.20, 70.0, 'apa_v_mp_h_05_a')
+            INSERT INTO properties (name, price, pos_x, pos_y, pos_z, interior_x, interior_y, interior_z, interior_heading, ipl, garage_slots, garage_x, garage_y, garage_z, garage_heading) VALUES
+            ('Unit 124 Popular St', 25000, -47.52, -585.86, 37.95, 266.04, -1007.47, -101.01, 70.0, 'apa_v_mp_h_01_a', 2, -50.0, -590.0, 37.5, 180.0),
+            ('0115 Bay City Ave', 80000, -1447.06, -538.53, 34.74, 346.99, -1012.99, -99.20, 70.0, 'apa_v_mp_h_02_a', 4, -1450.0, -545.0, 34.5, 90.0),
+            ('0504 S Mo Milton Dr', 150000, -774.01, 342.03, 211.40, 346.99, -1012.99, -99.20, 70.0, 'apa_v_mp_h_03_a', 6, -780.0, 338.0, 85.0, 270.0),
+            ('0184 Milton Rd', 300000, -572.60, 653.54, 145.63, 346.99, -1012.99, -99.20, 70.0, 'apa_v_mp_h_04_a', 8, -575.0, 660.0, 145.0, 0.0),
+            ('Eclipse Towers Penthouse', 500000, -777.14, 312.73, 223.26, 346.99, -1012.99, -99.20, 70.0, 'apa_v_mp_h_05_a', 10, -780.0, 308.0, 85.0, 180.0)
         `);
-        alt.log('[migrations] Seeded default properties with accurate coordinates');
+        alt.log('[migrations] Seeded default properties with garage coordinates');
     } else {
         // Update existing properties with correct coordinates
         await pool.execute(`

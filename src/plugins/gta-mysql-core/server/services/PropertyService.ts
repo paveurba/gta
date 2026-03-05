@@ -15,6 +15,11 @@ export interface Property {
     interior_heading: number;
     ipl: string | null;
     purchased_at: Date | null;
+    garage_slots: number;
+    garage_x: number | null;
+    garage_y: number | null;
+    garage_z: number | null;
+    garage_heading: number;
 }
 
 export interface PropertyPurchaseResult {

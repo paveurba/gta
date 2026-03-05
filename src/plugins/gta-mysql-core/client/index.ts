@@ -62,6 +62,7 @@ const BLIP_SPRITES = {
     PROPERTY_FOR_SALE: 374, // House for sale
     PROPERTY_OWNED: 40,    // House owned (safehouse)
     HOSPITAL: 61,          // Hospital cross icon
+    DEALERSHIP: 225,       // Car dealership icon
 };
 
 // ============================================================================
@@ -71,7 +72,247 @@ const BLIP_SPRITES = {
 let nearbyProperty: PropertyLocation | null = null;
 let propertyInteractionOpen = false;
 let propertyMenuSelection = 0;
-const PROPERTY_INTERACTION_RADIUS = 3.0;
+const PROPERTY_INTERACTION_RADIUS = 5.0;
+
+// ============================================================================
+// SHOP INTERACTION STATE
+// ============================================================================
+
+let nearbyShop: ShopLocation | null = null;
+let nearbyShopType: 'weapon' | 'clothing' | 'casino' | null = null;
+const SHOP_INTERACTION_RADIUS = 5.0;
+
+let shopMenuOpen = false;
+let shopMenuType: 'weapon' | 'clothing' | null = null;
+let shopCatalog: any[] = [];
+let shopMenuSelection = 0;
+const SHOP_PAGE_SIZE = 6;
+
+// ============================================================================
+// VEHICLE DEALERSHIP STATE
+// ============================================================================
+
+interface VehicleCatalogItem {
+    name: string;
+    model: string;
+    hash: number;
+    price: number;
+    category: string;
+}
+
+interface PlayerVehicle {
+    id: number;
+    model: string;
+    model_hash: number;
+    color_primary: number;
+    color_secondary: number;
+    garage_property_id: number | null;
+    is_spawned: boolean;
+}
+
+let nearbyDealership: ShopLocation | null = null;
+let dealershipMenuOpen = false;
+let vehicleCatalog: VehicleCatalogItem[] = [];
+let vehicleMenuSelection = 0;
+const VEHICLE_PAGE_SIZE = 8;
+
+const VEHICLE_DEALERSHIPS: ShopLocation[] = [
+    { x: -56.49, y: -1097.25, z: 26.42, name: 'Premium Deluxe Motorsport' },
+    { x: -31.66, y: -1106.95, z: 26.42, name: 'Simeon\'s Dealership' },
+];
+const DEALERSHIP_INTERACTION_RADIUS = 10.0;
+
+// ============================================================================
+// GARAGE STATE
+// ============================================================================
+
+let garageMenuOpen = false;
+let garageVehicles: PlayerVehicle[] = [];
+let garageMenuSelection = 0;
+let currentGaragePropertyId: number | null = null;
+
+function openShopMenu(type: 'weapon' | 'clothing'): void {
+    shopMenuOpen = true;
+    shopMenuType = type;
+    shopMenuSelection = 0;
+    shopCatalog = [];
+    alt.showCursor(true);
+    alt.toggleGameControls(false);
+}
+
+function closeShopMenu(): void {
+    shopMenuOpen = false;
+    shopMenuType = null;
+    shopCatalog = [];
+    alt.showCursor(false);
+    alt.toggleGameControls(true);
+}
+
+function handleShopMenuKey(key: number): void {
+    // Escape - Close menu
+    if (key === 27) {
+        closeShopMenu();
+        return;
+    }
+    
+    // Up arrow or W
+    if (key === 38 || key === 87) {
+        if (shopMenuSelection > 0) shopMenuSelection--;
+        return;
+    }
+    
+    // Down arrow or S
+    if (key === 40 || key === 83) {
+        if (shopMenuSelection < shopCatalog.length - 1) shopMenuSelection++;
+        return;
+    }
+    
+    // Enter or E - Buy selected item
+    if (key === 13 || key === 69) {
+        if (shopCatalog.length > 0 && shopMenuSelection < shopCatalog.length) {
+            const item = shopCatalog[shopMenuSelection];
+            if (shopMenuType === 'weapon') {
+                alt.emitServer('weaponshop:buy', item.hash);
+            } else if (shopMenuType === 'clothing') {
+                alt.emitServer('clothingshop:buy', item.component, item.drawable, item.texture);
+            }
+        }
+        return;
+    }
+}
+
+// Server responses for shop catalogs
+alt.onServer('weaponshop:catalog', (catalog: any[]) => {
+    shopCatalog = catalog;
+    alt.log(`[gta] Received weapon catalog: ${catalog.length} items`);
+});
+
+alt.onServer('clothingshop:catalog', (catalog: any[]) => {
+    shopCatalog = catalog;
+    alt.log(`[gta] Received clothing catalog: ${catalog.length} items`);
+});
+
+// ============================================================================
+// VEHICLE DEALERSHIP FUNCTIONS
+// ============================================================================
+
+function findNearestDealership(): ShopLocation | null {
+    const player = alt.Player.local;
+    if (!player || !player.valid) return null;
+    const pos = player.pos;
+
+    let nearest: ShopLocation | null = null;
+    let minDist = DEALERSHIP_INTERACTION_RADIUS;
+
+    for (const dealership of VEHICLE_DEALERSHIPS) {
+        const dx = dealership.x - pos.x;
+        const dy = dealership.y - pos.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < minDist) {
+            minDist = dist;
+            nearest = dealership;
+        }
+    }
+
+    return nearest;
+}
+
+function openDealershipMenu(): void {
+    dealershipMenuOpen = true;
+    vehicleMenuSelection = 0;
+    vehicleCatalog = [];
+    alt.showCursor(true);
+    alt.toggleGameControls(false);
+    alt.emitServer('vehicle:getCatalog');
+}
+
+function closeDealershipMenu(): void {
+    dealershipMenuOpen = false;
+    vehicleCatalog = [];
+    alt.showCursor(false);
+    alt.toggleGameControls(true);
+}
+
+function handleDealershipMenuKey(key: number): void {
+    if (key === 27) { closeDealershipMenu(); return; }
+    if (key === 38 || key === 87) { if (vehicleMenuSelection > 0) vehicleMenuSelection--; return; }
+    if (key === 40 || key === 83) { if (vehicleMenuSelection < vehicleCatalog.length - 1) vehicleMenuSelection++; return; }
+    if (key === 13 || key === 69) {
+        if (vehicleCatalog.length > 0 && vehicleMenuSelection < vehicleCatalog.length) {
+            const vehicle = vehicleCatalog[vehicleMenuSelection];
+            alt.emitServer('vehicle:buy', vehicle.model, vehicle.hash, vehicle.price);
+        }
+        return;
+    }
+}
+
+alt.onServer('vehicle:catalog', (catalog: VehicleCatalogItem[]) => {
+    vehicleCatalog = catalog;
+    alt.log(`[gta] Received vehicle catalog: ${catalog.length} vehicles`);
+});
+
+alt.onServer('vehicle:buyResult', (result: { success: boolean; message: string }) => {
+    if (result.success) {
+        addNotification(`SUCCESS: ${result.message}`);
+    } else {
+        addNotification(`FAILED: ${result.message}`);
+    }
+});
+
+alt.onServer('vehicle:sellResult', (result: { success: boolean; message: string }) => {
+    if (result.success) {
+        addNotification(`SUCCESS: ${result.message}`);
+    } else {
+        addNotification(`FAILED: ${result.message}`);
+    }
+});
+
+// ============================================================================
+// GARAGE FUNCTIONS
+// ============================================================================
+
+function openGarageMenu(propertyId: number): void {
+    garageMenuOpen = true;
+    garageMenuSelection = 0;
+    garageVehicles = [];
+    currentGaragePropertyId = propertyId;
+    alt.showCursor(true);
+    alt.toggleGameControls(false);
+    alt.emitServer('vehicle:getGarageVehicles', propertyId);
+}
+
+function closeGarageMenu(): void {
+    garageMenuOpen = false;
+    garageVehicles = [];
+    currentGaragePropertyId = null;
+    alt.showCursor(false);
+    alt.toggleGameControls(true);
+}
+
+function handleGarageMenuKey(key: number): void {
+    if (key === 27) { closeGarageMenu(); return; }
+    if (key === 38 || key === 87) { if (garageMenuSelection > 0) garageMenuSelection--; return; }
+    if (key === 40 || key === 83) { if (garageMenuSelection < garageVehicles.length) garageMenuSelection++; return; }
+    if (key === 13 || key === 69) {
+        if (garageMenuSelection === garageVehicles.length) {
+            // "Store nearby vehicle" option
+            if (currentGaragePropertyId) {
+                alt.emitServer('vehicle:storeNearby', currentGaragePropertyId);
+            }
+        } else if (garageVehicles.length > 0 && garageMenuSelection < garageVehicles.length) {
+            const vehicle = garageVehicles[garageMenuSelection];
+            if (currentGaragePropertyId) {
+                alt.emitServer('vehicle:spawnFromGarage', vehicle.id, currentGaragePropertyId);
+            }
+        }
+        return;
+    }
+}
+
+alt.onServer('vehicle:garageVehicles', (vehicles: PlayerVehicle[]) => {
+    garageVehicles = vehicles;
+    alt.log(`[gta] Received ${vehicles.length} garage vehicles`);
+});
 
 // ============================================================================
 // MAP BLIP CREATION - Fixed coordinate system
@@ -159,6 +400,19 @@ function createMapBlips(): void {
         createdBlips.push(blip);
     });
 
+    // Vehicle dealerships - Car icons
+    VEHICLE_DEALERSHIPS.forEach(dealership => {
+        const blip = native.addBlipForCoord(dealership.x, dealership.y, dealership.z);
+        native.setBlipSprite(blip, BLIP_SPRITES.DEALERSHIP);
+        native.setBlipColour(blip, 5); // Yellow
+        native.setBlipScale(blip, 0.9);
+        native.setBlipAsShortRange(blip, true);
+        native.beginTextCommandSetBlipName('STRING');
+        native.addTextComponentSubstringPlayerName(dealership.name);
+        native.endTextCommandSetBlipName(blip);
+        createdBlips.push(blip);
+    });
+
     alt.log(`[gta] Created ${createdBlips.length} map blips`);
 }
 
@@ -188,12 +442,41 @@ function getDistanceToProperty(prop: PropertyLocation): number {
     const player = alt.Player.local;
     if (!player || !player.valid) return Infinity;
     const pos = player.pos;
-    
-    // Calculate 3D distance using world coordinates
+
+    // Use 2D XY distance — Z is unreliable (stored coords may differ from actual ground level)
     const dx = prop.pos_x - pos.x;
     const dy = prop.pos_y - pos.y;
-    const dz = prop.pos_z - pos.z;
-    return Math.sqrt(dx * dx + dy * dy + dz * dz);
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+function findNearestShop(): { shop: ShopLocation; type: 'weapon' | 'clothing' | 'casino' } | null {
+    const player = alt.Player.local;
+    if (!player || !player.valid) return null;
+    const pos = player.pos;
+
+    let nearest: { shop: ShopLocation; type: 'weapon' | 'clothing' | 'casino' } | null = null;
+    let minDist = SHOP_INTERACTION_RADIUS;
+
+    const checkList: { list: ShopLocation[]; type: 'weapon' | 'clothing' | 'casino' }[] = [
+        { list: weaponShops, type: 'weapon' },
+        { list: clothingShops, type: 'clothing' },
+        { list: casinos, type: 'casino' },
+    ];
+
+    for (const { list, type } of checkList) {
+        for (const shop of list) {
+            // 2D XY distance — ignores Z so floating coords don't block interaction
+            const dx = shop.x - pos.x;
+            const dy = shop.y - pos.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < minDist) {
+                minDist = dist;
+                nearest = { shop, type };
+            }
+        }
+    }
+
+    return nearest;
 }
 
 function findNearestProperty(): PropertyLocation | null {
@@ -477,7 +760,11 @@ alt.onServer('gta:notify', (message: string) => {
 alt.onServer('gta:money:update', (money: number, bank: number) => {
     playerMoney = money;
     playerBank = bank;
-    isLoggedIn = true;
+    if (!isLoggedIn) {
+        isLoggedIn = true;
+        // Request property list on first login
+        alt.emitServer('property:requestList');
+    }
 });
 
 // ============================================================================
@@ -590,8 +877,46 @@ alt.on('keyup', (key) => {
     const keyNum = key as number;
     if (keyNum === 16 || keyNum === 160 || keyNum === 161) { shiftPressed = false; return; }
 
+    // E key (69) - Dealership interaction (highest priority)
+    if (key === 69 && !chatOpen && !phoneOpen && !propertyInteractionOpen && !shopMenuOpen && !dealershipMenuOpen && !garageMenuOpen && nearbyDealership) {
+        openDealershipMenu();
+        return;
+    }
+    
+    // Dealership menu navigation
+    if (dealershipMenuOpen) {
+        handleDealershipMenuKey(key);
+        return;
+    }
+    
+    // Garage menu navigation
+    if (garageMenuOpen) {
+        handleGarageMenuKey(key);
+        return;
+    }
+
+    // E key (69) - Shop interaction (checked before property — shops take priority when inside cylinder)
+    if (key === 69 && !chatOpen && !phoneOpen && !propertyInteractionOpen && !shopMenuOpen && !dealershipMenuOpen && !garageMenuOpen && nearbyShop && nearbyShopType) {
+        if (nearbyShopType === 'weapon') {
+            openShopMenu('weapon');
+            alt.emitServer('weaponshop:getCatalog');
+        } else if (nearbyShopType === 'clothing') {
+            openShopMenu('clothing');
+            alt.emitServer('clothingshop:getCatalog');
+        } else if (nearbyShopType === 'casino') {
+            addNotification('Casino: Use /slots <bet> or /roulette <bet> <type> <value>');
+        }
+        return;
+    }
+    
+    // Shop menu navigation
+    if (shopMenuOpen) {
+        handleShopMenuKey(key);
+        return;
+    }
+
     // E key (69) - Property interaction
-    if (key === 69 && !chatOpen && !phoneOpen && !propertyInteractionOpen && nearbyProperty) {
+    if (key === 69 && !chatOpen && !phoneOpen && !propertyInteractionOpen && !shopMenuOpen && !dealershipMenuOpen && !garageMenuOpen && nearbyProperty) {
         openPropertyMenu();
         return;
     }
@@ -602,8 +927,8 @@ alt.on('keyup', (key) => {
         return;
     }
 
-    // P key (80) - Toggle phone
-    if (key === 80 && !chatOpen && !propertyInteractionOpen) {
+    // M key (77) - Toggle phone
+    if (key === 77 && !chatOpen && !propertyInteractionOpen) {
         if (phoneOpen) closePhone();
         else if (isLoggedIn) openPhone();
         return;
@@ -656,6 +981,13 @@ function handlePropertyMenuKey(key: number): void {
     }
     if (key === 51) { // 3 - Sell (if owned)
         if (isOwned) handlePropertyAction('sell');
+        return;
+    }
+    if (key === 52) { // 4 - Garage (if owned)
+        if (isOwned) {
+            closePropertyMenu();
+            openGarageMenu(nearbyProperty.id);
+        }
         return;
     }
 }
@@ -863,26 +1195,35 @@ function drawShopMarkers(): void {
     if (!player || !player.valid) return;
     const pos = player.pos;
 
+    // Update nearby shop state (2D XY distance — Z ignored so elevated coords don't block entry)
+    const nearestResult = findNearestShop();
+    nearbyShop = nearestResult ? nearestResult.shop : null;
+    nearbyShopType = nearestResult ? nearestResult.type : null;
+
     [...weaponShops, ...clothingShops, ...casinos].forEach((shop) => {
-        const dist = Math.sqrt(Math.pow(shop.x - pos.x, 2) + Math.pow(shop.y - pos.y, 2) + Math.pow(shop.z - pos.z, 2));
-        if (dist < 50) {
+        // Use 2D XY distance for render culling too
+        const dx = shop.x - pos.x;
+        const dy = shop.y - pos.y;
+        const dist2d = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist2d < 50) {
             const isWeapon = weaponShops.includes(shop);
             const isClothing = clothingShops.includes(shop);
             const color = isWeapon ? [255, 100, 100] : isClothing ? [100, 100, 255] : [255, 215, 0];
-            
-            // Draw vertical cylinder marker at shop location
+
+            // Cylinder base at player foot level: pos_z anchors at ground, cylinder goes up 2 units
             native.drawMarker(
                 1, // Cylinder
-                shop.x, shop.y, shop.z - 1.0, // Start below ground so it shows at ground level
+                shop.x, shop.y, shop.z - 1.0,
                 0, 0, 0,
                 0, 0, 0,
-                0.8, 0.8, 2.0, // Narrow and tall
+                0.8, 0.8, 2.0,
                 color[0], color[1], color[2], 100,
                 false, false, 2, false, null as any, null as any, false
             );
-            
+
             // Draw shop name when close
-            if (dist < 20) {
+            if (dist2d < 20) {
                 native.setTextFont(4);
                 native.setTextScale(0.4, 0.4);
                 native.setTextColour(255, 255, 255, 255);
@@ -891,6 +1232,80 @@ function drawShopMarkers(): void {
                 native.setDrawOrigin(shop.x, shop.y, shop.z + 1.0, false);
                 native.beginTextCommandDisplayText('STRING');
                 native.addTextComponentSubstringPlayerName(shop.name);
+                native.endTextCommandDisplayText(0, 0, 0);
+                native.clearDrawOrigin();
+            }
+
+            // Show "Press E" prompt when inside interaction radius
+            if (dist2d < SHOP_INTERACTION_RADIUS) {
+                native.setTextFont(4);
+                native.setTextScale(0.35, 0.35);
+                native.setTextColour(255, 255, 0, 255);
+                native.setTextOutline();
+                native.setTextCentre(true);
+                native.setDrawOrigin(shop.x, shop.y, shop.z + 1.0, false);
+                native.beginTextCommandDisplayText('STRING');
+                native.addTextComponentSubstringPlayerName('Press E to enter shop');
+                native.endTextCommandDisplayText(0, 0, 0);
+                native.clearDrawOrigin();
+            }
+        }
+    });
+}
+
+// ============================================================================
+// DEALERSHIP MARKERS
+// ============================================================================
+
+function drawDealershipMarkers(): void {
+    const player = alt.Player.local;
+    if (!player || !player.valid) return;
+    const pos = player.pos;
+
+    // Update nearby dealership state
+    nearbyDealership = findNearestDealership();
+
+    VEHICLE_DEALERSHIPS.forEach((dealership) => {
+        const dx = dealership.x - pos.x;
+        const dy = dealership.y - pos.y;
+        const dist2d = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist2d < 50) {
+            // Yellow cylinder marker for dealership
+            native.drawMarker(
+                1, // Cylinder
+                dealership.x, dealership.y, dealership.z - 1.0,
+                0, 0, 0,
+                0, 0, 0,
+                1.5, 1.5, 2.0,
+                255, 200, 100, 100,
+                false, false, 2, false, null as any, null as any, false
+            );
+
+            // Draw dealership name when close
+            if (dist2d < 30) {
+                native.setTextFont(4);
+                native.setTextScale(0.5, 0.5);
+                native.setTextColour(255, 200, 100, 255);
+                native.setTextOutline();
+                native.setTextCentre(true);
+                native.setDrawOrigin(dealership.x, dealership.y, dealership.z + 2.0, false);
+                native.beginTextCommandDisplayText('STRING');
+                native.addTextComponentSubstringPlayerName(dealership.name);
+                native.endTextCommandDisplayText(0, 0, 0);
+                native.clearDrawOrigin();
+            }
+
+            // Show "Press E" prompt when inside interaction radius
+            if (dist2d < DEALERSHIP_INTERACTION_RADIUS) {
+                native.setTextFont(4);
+                native.setTextScale(0.4, 0.4);
+                native.setTextColour(255, 255, 0, 255);
+                native.setTextOutline();
+                native.setTextCentre(true);
+                native.setDrawOrigin(dealership.x, dealership.y, dealership.z + 1.0, false);
+                native.beginTextCommandDisplayText('STRING');
+                native.addTextComponentSubstringPlayerName('Press E to browse vehicles');
                 native.endTextCommandDisplayText(0, 0, 0);
                 native.clearDrawOrigin();
             }
@@ -940,10 +1355,153 @@ function drawPropertyMenu(): void {
         yPos += 0.04;
         drawTextLeft('[3] Sell Property', 0.38, yPos, 0.4, 255, 150, 100);
         yPos += 0.04;
+        drawTextLeft('[4] Open Garage', 0.38, yPos, 0.4, 255, 200, 100);
+        yPos += 0.04;
     }
 
     // Close hint
-    drawTextLeft('[ESC] Close', 0.38, 0.62, 0.35, 150, 150, 150);
+    drawTextLeft('[ESC] Close', 0.38, 0.65, 0.35, 150, 150, 150);
+}
+
+// ============================================================================
+// DEALERSHIP MENU UI
+// ============================================================================
+
+function drawDealershipMenu(): void {
+    if (!dealershipMenuOpen) return;
+    
+    // Background
+    drawRect(0.5, 0.5, 0.4, 0.55, 20, 20, 30, 230);
+    
+    // Title
+    drawTextLeft('VEHICLE DEALERSHIP', 0.33, 0.27, 0.6, 255, 200, 100);
+    drawTextLeft(`Your money: $${playerMoney.toLocaleString()}`, 0.33, 0.32, 0.35, 200, 200, 200);
+    
+    if (vehicleCatalog.length === 0) {
+        drawTextLeft('Loading vehicles...', 0.33, 0.4, 0.4, 200, 200, 200);
+    } else {
+        const startIdx = Math.floor(vehicleMenuSelection / VEHICLE_PAGE_SIZE) * VEHICLE_PAGE_SIZE;
+        const endIdx = Math.min(startIdx + VEHICLE_PAGE_SIZE, vehicleCatalog.length);
+        
+        let yPos = 0.37;
+        for (let i = startIdx; i < endIdx; i++) {
+            const vehicle = vehicleCatalog[i];
+            const isSelected = i === vehicleMenuSelection;
+            const canAfford = playerMoney >= vehicle.price;
+            const color = isSelected ? [255, 255, 100] : canAfford ? [200, 200, 200] : [100, 100, 100];
+            
+            if (isSelected) {
+                drawRect(0.5, yPos + 0.015, 0.38, 0.035, 60, 60, 80, 200);
+            }
+            
+            const priceStr = `$${vehicle.price.toLocaleString()}`;
+            drawTextLeft(`${vehicle.name} (${vehicle.category})`, 0.33, yPos, 0.35, color[0], color[1], color[2]);
+            drawTextLeft(priceStr, 0.62, yPos, 0.35, color[0], color[1], color[2]);
+            yPos += 0.04;
+        }
+        
+        const totalPages = Math.ceil(vehicleCatalog.length / VEHICLE_PAGE_SIZE);
+        const currentPage = Math.floor(vehicleMenuSelection / VEHICLE_PAGE_SIZE) + 1;
+        drawTextLeft(`Page ${currentPage}/${totalPages}`, 0.33, 0.7, 0.3, 150, 150, 150);
+    }
+    
+    drawTextLeft('[W/S] Navigate  [E/Enter] Buy  [ESC] Close', 0.33, 0.74, 0.3, 150, 150, 150);
+}
+
+// ============================================================================
+// GARAGE MENU UI
+// ============================================================================
+
+function drawGarageMenu(): void {
+    if (!garageMenuOpen) return;
+    
+    // Background
+    drawRect(0.5, 0.5, 0.35, 0.45, 20, 20, 30, 230);
+    
+    // Title
+    drawTextLeft('GARAGE', 0.36, 0.32, 0.6, 255, 200, 100);
+    
+    if (garageVehicles.length === 0) {
+        drawTextLeft('No vehicles in garage', 0.36, 0.42, 0.4, 200, 200, 200);
+    } else {
+        let yPos = 0.4;
+        for (let i = 0; i < garageVehicles.length; i++) {
+            const vehicle = garageVehicles[i];
+            const isSelected = i === garageMenuSelection;
+            const color = isSelected ? [255, 255, 100] : [200, 200, 200];
+            
+            if (isSelected) {
+                drawRect(0.5, yPos + 0.015, 0.33, 0.035, 60, 60, 80, 200);
+            }
+            
+            drawTextLeft(`${vehicle.model}`, 0.36, yPos, 0.4, color[0], color[1], color[2]);
+            yPos += 0.04;
+        }
+    }
+    
+    // Store nearby vehicle option
+    const storeSelected = garageMenuSelection === garageVehicles.length;
+    const storeColor = storeSelected ? [255, 255, 100] : [100, 200, 100];
+    if (storeSelected) {
+        drawRect(0.5, 0.6 + 0.015, 0.33, 0.035, 60, 60, 80, 200);
+    }
+    drawTextLeft('[+] Store nearby vehicle', 0.36, 0.6, 0.4, storeColor[0], storeColor[1], storeColor[2]);
+    
+    drawTextLeft('[W/S] Navigate  [E/Enter] Spawn/Store  [ESC] Close', 0.36, 0.7, 0.28, 150, 150, 150);
+}
+
+// ============================================================================
+// SHOP MENU UI
+// ============================================================================
+
+function drawShopMenu(): void {
+    if (!shopMenuOpen) return;
+    
+    const title = shopMenuType === 'weapon' ? 'AMMU-NATION' : 'CLOTHING STORE';
+    const titleColor = shopMenuType === 'weapon' ? [255, 100, 100] : [100, 100, 255];
+    
+    // Background
+    drawRect(0.5, 0.5, 0.35, 0.5, 20, 20, 30, 230);
+    
+    // Title
+    drawTextLeft(title, 0.36, 0.3, 0.6, titleColor[0], titleColor[1], titleColor[2]);
+    
+    if (shopCatalog.length === 0) {
+        drawTextLeft('Loading...', 0.36, 0.4, 0.4, 200, 200, 200);
+    } else {
+        // Calculate page
+        const startIdx = Math.floor(shopMenuSelection / SHOP_PAGE_SIZE) * SHOP_PAGE_SIZE;
+        const endIdx = Math.min(startIdx + SHOP_PAGE_SIZE, shopCatalog.length);
+        
+        let yPos = 0.38;
+        for (let i = startIdx; i < endIdx; i++) {
+            const item = shopCatalog[i];
+            const isSelected = i === shopMenuSelection;
+            const color = isSelected ? [255, 255, 100] : [200, 200, 200];
+            
+            let itemText = '';
+            if (shopMenuType === 'weapon') {
+                itemText = `${item.name} - $${item.price.toLocaleString()}`;
+            } else {
+                itemText = `${item.name} - $${item.price.toLocaleString()}`;
+            }
+            
+            if (isSelected) {
+                drawRect(0.5, yPos + 0.015, 0.33, 0.035, 60, 60, 80, 200);
+            }
+            
+            drawTextLeft(itemText, 0.36, yPos, 0.35, color[0], color[1], color[2]);
+            yPos += 0.04;
+        }
+        
+        // Page indicator
+        const totalPages = Math.ceil(shopCatalog.length / SHOP_PAGE_SIZE);
+        const currentPage = Math.floor(shopMenuSelection / SHOP_PAGE_SIZE) + 1;
+        drawTextLeft(`Page ${currentPage}/${totalPages}`, 0.36, 0.65, 0.3, 150, 150, 150);
+    }
+    
+    // Controls hint
+    drawTextLeft('[W/S] Navigate  [E/Enter] Buy  [ESC] Close', 0.36, 0.7, 0.3, 150, 150, 150);
 }
 
 // ============================================================================
@@ -1024,6 +1582,18 @@ alt.everyTick(() => {
 
     // Property menu
     drawPropertyMenu();
+    
+    // Shop menu
+    drawShopMenu();
+    
+    // Dealership menu
+    drawDealershipMenu();
+    
+    // Garage menu
+    drawGarageMenu();
+    
+    // Dealership markers and detection
+    drawDealershipMarkers();
 
     // Casino result display
     if (showCasinoResult > Date.now()) {

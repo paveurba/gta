@@ -9,11 +9,14 @@ import {
     ClothingShopService,
     PhoneService,
     CasinoService,
+    VehicleService,
     WEAPON_CATALOG,
     WEAPON_SHOP_LOCATIONS,
     CLOTHING_CATALOG,
     CLOTHING_SHOP_LOCATIONS,
     CASINO_LOCATIONS,
+    VEHICLE_CATALOG,
+    VEHICLE_DEALERSHIPS,
 } from './services/index.js';
 
 const Rebar = useRebar();
@@ -31,6 +34,7 @@ let weaponShopService: WeaponShopService;
 let clothingShopService: ClothingShopService;
 let phoneService: PhoneService;
 let casinoService: CasinoService;
+let vehicleService: VehicleService;
 
 async function getMySQLPool(): Promise<mysql.Pool> {
     if (mysqlPool) return mysqlPool;
@@ -55,6 +59,7 @@ async function getMySQLPool(): Promise<mysql.Pool> {
     clothingShopService = new ClothingShopService(mysqlPool);
     phoneService = new PhoneService(mysqlPool);
     casinoService = new CasinoService(mysqlPool);
+    vehicleService = new VehicleService(mysqlPool);
 
     alt.log('[gta-mysql-core] MySQL pool and services initialized');
     return mysqlPool;
@@ -624,6 +629,140 @@ alt.onClient('casino:getHistory', async (player) => {
 });
 
 // ============================================================================
+// VEHICLE EVENTS
+// ============================================================================
+
+alt.onClient('vehicle:getCatalog', (player) => {
+    alt.emitClient(player, 'vehicle:catalog', VEHICLE_CATALOG);
+});
+
+alt.onClient('vehicle:getMyVehicles', async (player) => {
+    const session = playerSessions.get(player.id);
+    if (!session) return;
+    const vehicles = await vehicleService.getPlayerVehicles(session.oderId);
+    alt.emitClient(player, 'vehicle:myVehicles', vehicles);
+});
+
+alt.onClient('vehicle:buy', async (player, model: string, modelHash: number, price: number) => {
+    const session = playerSessions.get(player.id);
+    if (!session) { 
+        alt.emitClient(player, 'vehicle:buyResult', { success: false, message: 'You must login first' });
+        return; 
+    }
+    const result = await vehicleService.buyVehicle(session.oderId, model, modelHash, price, session.money);
+    if (result.success && result.newBalance !== undefined) {
+        session.money = result.newBalance;
+        syncMoneyToClient(player);
+    }
+    alt.emitClient(player, 'vehicle:buyResult', result);
+});
+
+alt.onClient('vehicle:sell', async (player, vehicleId: number) => {
+    const session = playerSessions.get(player.id);
+    if (!session) { 
+        alt.emitClient(player, 'vehicle:sellResult', { success: false, message: 'You must login first' });
+        return; 
+    }
+    const result = await vehicleService.sellVehicle(session.oderId, vehicleId, session.money);
+    if (result.success && result.newBalance !== undefined) {
+        session.money = result.newBalance;
+        syncMoneyToClient(player);
+    }
+    alt.emitClient(player, 'vehicle:sellResult', result);
+});
+
+alt.onClient('vehicle:spawn', async (player, vehicleId: number) => {
+    const session = playerSessions.get(player.id);
+    if (!session) { 
+        notifyPlayer(player, 'You must login first');
+        return; 
+    }
+    const pos = player.pos;
+    const heading = player.rot.z * (180 / Math.PI);
+    const result = await vehicleService.spawnVehicle(player, vehicleId, pos.x + 3, pos.y, pos.z, heading);
+    notifyPlayer(player, result.message);
+});
+
+alt.onClient('vehicle:store', async (player, vehicleId: number, propertyId: number) => {
+    const session = playerSessions.get(player.id);
+    if (!session) { 
+        notifyPlayer(player, 'You must login first');
+        return; 
+    }
+    const property = await propertyService.getPropertyById(propertyId);
+    if (!property) {
+        notifyPlayer(player, 'Property not found');
+        return;
+    }
+    if (property.owner_player_id !== session.oderId) {
+        notifyPlayer(player, 'You don\'t own this property');
+        return;
+    }
+    const garageSlots = (property as any).garage_slots || 2;
+    const result = await vehicleService.storeVehicle(session.oderId, vehicleId, propertyId, garageSlots);
+    notifyPlayer(player, result.message);
+    if (result.success) {
+        const vehicles = await vehicleService.getGarageVehicles(session.oderId, propertyId);
+        alt.emitClient(player, 'vehicle:garageVehicles', vehicles);
+    }
+});
+
+alt.onClient('vehicle:storeNearby', async (player, propertyId: number) => {
+    const session = playerSessions.get(player.id);
+    if (!session) { 
+        notifyPlayer(player, 'You must login first');
+        return; 
+    }
+    const property = await propertyService.getPropertyById(propertyId);
+    if (!property) {
+        notifyPlayer(player, 'Property not found');
+        return;
+    }
+    if (property.owner_player_id !== session.oderId) {
+        notifyPlayer(player, 'You don\'t own this property');
+        return;
+    }
+    const garageSlots = (property as any).garage_slots || 2;
+    const result = await vehicleService.storeNearbyVehicle(player, session.oderId, propertyId, garageSlots);
+    notifyPlayer(player, result.message);
+    if (result.success) {
+        const vehicles = await vehicleService.getGarageVehicles(session.oderId, propertyId);
+        alt.emitClient(player, 'vehicle:garageVehicles', vehicles);
+    }
+});
+
+alt.onClient('vehicle:getGarageVehicles', async (player, propertyId: number) => {
+    const session = playerSessions.get(player.id);
+    if (!session) return;
+    const vehicles = await vehicleService.getGarageVehicles(session.oderId, propertyId);
+    alt.emitClient(player, 'vehicle:garageVehicles', vehicles);
+});
+
+alt.onClient('vehicle:spawnFromGarage', async (player, vehicleId: number, propertyId: number) => {
+    const session = playerSessions.get(player.id);
+    if (!session) { 
+        notifyPlayer(player, 'You must login first');
+        return; 
+    }
+    const property = await propertyService.getPropertyById(propertyId);
+    if (!property) {
+        notifyPlayer(player, 'Property not found');
+        return;
+    }
+    const garageX = (property as any).garage_x || property.pos_x;
+    const garageY = (property as any).garage_y || property.pos_y;
+    const garageZ = (property as any).garage_z || property.pos_z;
+    const garageHeading = (property as any).garage_heading || 0;
+    
+    const result = await vehicleService.spawnVehicle(player, vehicleId, garageX, garageY, garageZ, garageHeading);
+    notifyPlayer(player, result.message);
+    if (result.success) {
+        const vehicles = await vehicleService.getGarageVehicles(session.oderId, propertyId);
+        alt.emitClient(player, 'vehicle:garageVehicles', vehicles);
+    }
+});
+
+// ============================================================================
 // COMMAND HANDLER
 // ============================================================================
 
@@ -836,16 +975,46 @@ async function handleCommand(player: alt.Player, command: string, args: string[]
             notifyPlayer(player, 'Teleported to Diamond Casino');
             break;
         }
+        case 'myvehicles': {
+            if (!session) { notifyPlayer(player, 'You must login first'); return; }
+            const vehicles = await vehicleService.getPlayerVehicles(session.oderId);
+            if (vehicles.length === 0) { 
+                notifyPlayer(player, 'You don\'t own any vehicles. Visit a dealership!'); 
+                return; 
+            }
+            notifyPlayer(player, `Your vehicles (${vehicles.length}):`);
+            vehicles.forEach(v => {
+                const status = v.is_spawned ? 'Spawned' : v.garage_property_id ? 'In Garage' : 'Stored';
+                notifyPlayer(player, `[${v.id}] ${v.model} - ${status}`);
+            });
+            break;
+        }
+        case 'spawnvehicle': {
+            if (!session) { notifyPlayer(player, 'You must login first'); return; }
+            const vehicleId = parseInt(args[0]);
+            if (!vehicleId) { notifyPlayer(player, 'Usage: /spawnvehicle <vehicleId>'); return; }
+            const pos = player.pos;
+            const heading = player.rot.z * (180 / Math.PI);
+            const result = await vehicleService.spawnVehicle(player, vehicleId, pos.x + 3, pos.y, pos.z, heading);
+            notifyPlayer(player, result.message);
+            break;
+        }
+        case 'dealership': {
+            if (!session) { notifyPlayer(player, 'You must login first'); return; }
+            player.pos = new alt.Vector3(-56.49, -1097.25, 26.42);
+            notifyPlayer(player, 'Teleported to Premium Deluxe Motorsport');
+            break;
+        }
         case 'help': {
             notifyPlayer(player, '=== Commands ===');
-            notifyPlayer(player, '/register, /login, /money, /givemoney, /car');
+            notifyPlayer(player, '/register, /login, /money, /givemoney');
             notifyPlayer(player, '/weapons, /buyweapon <name>');
-            notifyPlayer(player, '/properties, /myproperties, /buyproperty, /sellproperty');
-            notifyPlayer(player, '/enter, /exit (for properties)');
+            notifyPlayer(player, '/properties, /myproperties');
+            notifyPlayer(player, '/myvehicles, /spawnvehicle <id>, /dealership');
             notifyPlayer(player, '/slots <bet>, /roulette <bet> <type> <value>');
             notifyPlayer(player, '/contact, /contacts, /sms');
-            notifyPlayer(player, '/tp <x> <y> <z> - Teleport');
-            notifyPlayer(player, '/casino - Go to casino');
+            notifyPlayer(player, '/tp <x> <y> <z>, /casino');
+            notifyPlayer(player, 'Press E near shops/properties to interact');
             notifyPlayer(player, 'Press P for phone menu');
             break;
         }

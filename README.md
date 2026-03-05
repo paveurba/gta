@@ -8,8 +8,9 @@ A full-featured GTA Online-style multiplayer server built on alt:V with the Reba
 - **Authentication**: Register/login with email and password
 - **Money System**: Cash and bank balance with MySQL persistence
 - **Phone System**: Contacts, messaging between players
-- **Property System**: Buy, sell, enter, and exit properties
-- **Weapon Shop**: Purchase weapons and ammo from Ammu-Nation
+- **Property System**: Buy, sell, enter, and exit properties with garages
+- **Vehicle System**: Buy, sell, store vehicles in property garages
+- **Weapon Shop**: Purchase weapons and ammo from Ammu-Nation (weapons persist)
 - **Clothing Shop**: Buy and save outfits
 - **Casino**: Slot machines and roulette with betting
 
@@ -41,13 +42,19 @@ cp .env.example .env
 docker compose up -d
 ```
 
-### 3. View logs
+### 3. Rebuild after code changes
+
+```bash
+docker compose build --no-cache altv-server && docker compose up -d altv-server
+```
+
+### 4. View logs
 
 ```bash
 docker compose logs -f altv-server
 ```
 
-### 4. Connect
+### 5. Connect
 
 Connect with alt:V client to `localhost:7788`
 
@@ -68,7 +75,10 @@ Connect with alt:V client to `localhost:7788`
 ### Vehicles
 | Command | Description |
 |---------|-------------|
-| `/car <model>` | Spawn a vehicle |
+| `/car <model>` | Spawn a temporary vehicle |
+| `/myvehicles` | List your owned vehicles |
+| `/spawnvehicle <id>` | Spawn an owned vehicle |
+| `/dealership` | Teleport to vehicle dealership |
 
 ### Weapons
 | Command | Description |
@@ -81,10 +91,7 @@ Connect with alt:V client to `localhost:7788`
 |---------|-------------|
 | `/properties` | List available properties |
 | `/myproperties` | List owned properties |
-| `/buyproperty <id>` | Buy a property |
-| `/sellproperty <id>` | Sell a property (70% value) |
-| `/enter` | Enter nearby owned property |
-| `/exit` | Exit property |
+| Press `E` near property | Open property menu (buy/enter/sell/garage) |
 
 ### Casino
 | Command | Description |
@@ -111,8 +118,11 @@ Connect with alt:V client to `localhost:7788`
 | Key | Action |
 |-----|--------|
 | `T` | Open chat |
-| `P` | Open phone menu |
-| `E` | Interact with property (when nearby) |
+| `M` | Open phone menu |
+| `E` | Interact (shops, properties, dealerships) |
+| `ESC` | Close menus |
+| `W/S` | Navigate menus |
+| `1-4` | Select menu options |
 
 ## Database Schema
 
@@ -121,7 +131,8 @@ Tables managed by the server:
 - `players` - Core player data (email, password, money, bank)
 - `player_weapons` - Weapon persistence (hash, ammo)
 - `player_clothes` - Clothing persistence (component, drawable, texture)
-- `properties` - Property ownership and locations
+- `player_vehicles` - Vehicle ownership (model, colors, garage location)
+- `properties` - Property ownership, locations, and garage slots
 - `phone_contacts` - Player phone contacts
 - `phone_messages` - Player messages
 - `casino_transactions` - Casino game history
@@ -140,6 +151,7 @@ src/plugins/gta-mysql-core/
 │   └── services/
 │       ├── PlayerWeaponService.ts
 │       ├── PropertyService.ts
+│       ├── VehicleService.ts
 │       ├── WeaponShopService.ts
 │       ├── ClothingShopService.ts
 │       ├── PhoneService.ts
@@ -153,7 +165,8 @@ src/plugins/gta-mysql-core/
 | Service | Description |
 |---------|-------------|
 | `PlayerWeaponService` | Load/save player weapons |
-| `PropertyService` | Buy/sell/enter/exit properties |
+| `PropertyService` | Buy/sell/enter/exit properties with garages |
+| `VehicleService` | Buy/sell/spawn/store vehicles |
 | `WeaponShopService` | Weapon catalog and purchases |
 | `ClothingShopService` | Clothing catalog and purchases |
 | `PhoneService` | Contacts and messaging |
@@ -188,17 +201,23 @@ src/plugins/gta-mysql-core/
 - Sandy Shores Medical Center
 - Paleto Bay Medical Center
 
+### Vehicle Dealerships (Yellow car icon)
+- Premium Deluxe Motorsport (near airport)
+- Simeon's Dealership
+
 ### Properties (House icons)
 - Green = For sale
 - Blue = Owned by you
 - Gray = Owned by another player
 
-**Property Locations:**
-- Unit 124 Popular St ($25,000)
-- 0115 Bay City Ave ($80,000)
-- 0504 S Mo Milton Dr ($150,000)
-- 0184 Milton Rd ($300,000)
-- Eclipse Towers Penthouse ($500,000)
+**Property Locations with Garage Slots:**
+| Property | Price | Garage Slots |
+|----------|-------|--------------|
+| Unit 124 Popular St | $25,000 | 2 |
+| 0115 Bay City Ave | $80,000 | 4 |
+| 0504 S Mo Milton Dr | $150,000 | 6 |
+| 0184 Milton Rd | $300,000 | 8 |
+| Eclipse Towers Penthouse | $500,000 | 10 |
 
 ## Docker Services
 
