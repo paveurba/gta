@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.1.0.826038917027">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 4.1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Weapon Pickup Models</title>
+    <meta name="title" content="Weapon Pickup Models">
+    <meta name="description" content="Pickup Model">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://rebarv.com/data/pickups/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rebarv.com/data/pickups/">
+    <meta property="og:title" content="Weapon Pickup Models">
+    <meta property="og:description" content="Pickup Model">
+    <meta property="og:site_name" content="Rebar for alt:V">
+    <meta property="og:locale" content="en_US">
+
+    <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
+
+    <link href="../../resources/css/retype.css?v=4.1.0.826038917027" rel="stylesheet">
+
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.1.0.826038917027" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.1.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.1.0.826038917027" data-turbo-eval="false" defer></script>
+</head>
+<body>
+    <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
+    <div class="absolute bottom-0 left-0" style="top: 5rem; right: 50%"></div>
+
+    <header id="retype-header" class="sticky top-0 z-30 flex w-full h-16 bg-header-bg border-b border-header-border md:h-20">
+        <div class="container relative flex items-center justify-between pr-6 grow md:justify-start">
+            <!-- Mobile menu button skeleton -->
+            <button v-cloak class="skeleton retype-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-hidden rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+            <div v-cloak id="retype-sidebar-left-toggle-button"></div>
+    
+            <!-- Logo -->
+            <div class="flex items-center justify-between h-full py-2 md:w-75">
+                <div class="flex items-center px-2 md:px-6">
+                    <a id="retype-branding-logo" href="../../" class="flex items-center leading-snug text-xl">
+                        <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg">
+                        </span>
+                        <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
+                    </a>
+                </div>
+    
+                <span class="hidden h-8 border-r md:inline-block border-base-border"></span>
+            </div>
+    
+            <div class="flex justify-between md:grow">
+                <!-- Top Nav -->
+                <nav id="retype-header-nav" class="hidden md:flex">
+                    <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://discord.gg/63rrbadsR7">Discord</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://github.com/stuyk/rebar-altv">GitHub</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://forge.plebmasters.de/hub?targetFrameworks=Rebar+(alt:V)&contentType=Script">Plugins</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://altv.mp">alt:V</a>
+                        </li>
+    
+                    </ul>
+                </nav>
+    
+                <div v-cloak class="flex justify-end grow">
+                    <div id="retype-mobile-search-button"></div>
+                    <doc-search-desktop></doc-search-desktop>
+    
+                    <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                    <doc-history></doc-history>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div id="retype-container" class="container relative flex bg-white">
+        <!-- Sidebar Skeleton -->
+        <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-sidebar-left-bg border-sidebar-left-border sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton">
+        
+            <div class="flex items-center h-16 px-6">
+                <input id="retype-filter-input-mock" class="w-full h-10 pl-8 px-3 py-2 transition-colors duration-200 ease-linear bg-filter-bg border border-filter-border rounded-lg shadow-none md:text-sm hover:border-filter-border-hover focus:outline-hidden focus:border-filter-border-focus placeholder-filter-placeholder" type="text">
+            </div>
+        
+            <div class="pl-6 mt-1 mb-4">
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            </div>
+        
+            <div class="shrink-0 mt-auto bg-transparent dark:border-base-border">
+                <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                    <span class="text-xs whitespace-nowrap">Powered by</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Sidebar component -->
+        <doc-sidebar v-cloak>
+            <template #sidebar-footer>
+                <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-base-border">
+        
+                    <div class="py-3 px-6 md:hidden border-b dark:border-base-border">
+                        <nav>
+                            <ul class="flex flex-wrap justify-center items-center">
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://discord.gg/63rrbadsR7">Discord</a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://github.com/stuyk/rebar-altv">GitHub</a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://forge.plebmasters.de/hub?targetFrameworks=Rebar+(alt:V)&contentType=Script">Plugins</a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://altv.mp">alt:V</a>
+                                </li>
+        
+                            </ul>
+                        </nav>
+                    </div>
+        
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </template>
+        </doc-sidebar>
+
+        <div class="grow min-w-0 bg-body-bg">
+            <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+<div class="flex">
+    <div id="retype-main" class="min-w-0 p-4 grow md:px-16">
+        <main class="relative pb-12 lg:pt-2">
+            <div class="retype-markdown" id="retype-content">
+                <!-- Rendered if sidebar right is enabled -->
+                <div id="retype-sidebar-right-toggle"></div>
+                <!-- Page content  -->
+<doc-anchor-target id="weapon-pickup-models" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#weapon-pickup-models">#</doc-anchor-trigger>
+        <span>Weapon Pickup Models</span>
+    </h1>
+</doc-anchor-target>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Pickup Model</th>
+<th>Pickup Hash</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PICKUP_AMMO_BULLET_MP</td>
+<td>0x550447A9</td>
+</tr>
+<tr>
+<td>PICKUP_AMMO_FIREWORK</td>
+<td>0xF92F486C</td>
+</tr>
+<tr>
+<td>PICKUP_AMMO_FIREWORK_MP</td>
+<td>0x602941D0</td>
+</tr>
+<tr>
+<td>PICKUP_AMMO_FLAREGUN</td>
+<td>0xE013E01C</td>
+</tr>
+<tr>
+<td>PICKUP_AMMO_GRENADELAUNCHER</td>
+<td>0x881AB0A8</td>
+</tr>
+<tr>
+<td>PICKUP_AMMO_GRENADELAUNCHER_MP</td>
+<td>0xA421A532</td>
+</tr>
+<tr>
+<td>PICKUP_AMMO_HOMINGLAUNCHER</td>
+<td>0x5C517D97</td>
+</tr>
+<tr>
+<td>PICKUP_AMMO_MG</td>
+<td>0xDE58E0B3</td>
+</tr>
+<tr>
+<td>PICKUP_AMMO_MINIGUN</td>
+<td>0xF25A01B9</td>
+</tr>
+<tr>
+<td>PICKUP_AMMO_MISSILE_MP</td>
+<td>0xF99E15D0</td>
+</tr>
+<tr>
+<td>PICKUP_AMMO_PISTOL</td>
+<td>0x20796A82</td>
+</tr>
+<tr>
+<td>PICKUP_AMMO_RIFLE</td>
+<td>0xE4BD2FC6</td>
+</tr>
+<tr>
+<td>PICKUP_AMMO_RPG</td>
+<td>0x84837FD7</td>
+</tr>
+<tr>
+<td>PICKUP_AMMO_SHOTGUN</td>
+<td>0x77F3F2DD</td>
+</tr>
+<tr>
+<td>PICKUP_AMMO_SMG</td>
+<td>0x116FC4E6</td>
+</tr>
+<tr>
+<td>PICKUP_AMMO_SNIPER</td>
+<td>0xC02CF125</td>
+</tr>
+<tr>
+<td>PICKUP_ARMOUR_STANDARD</td>
+<td>0x4BFB42D1</td>
+</tr>
+<tr>
+<td>PICKUP_CAMERA</td>
+<td>0xE33D8630</td>
+</tr>
+<tr>
+<td>PICKUP_CUSTOM_SCRIPT</td>
+<td>0x2C014CA6</td>
+</tr>
+<tr>
+<td>PICKUP_GANG_ATTACK_MONEY</td>
+<td>0xE175C698</td>
+</tr>
+<tr>
+<td>PICKUP_HEALTH_SNACK</td>
+<td>0x1CD2CF66</td>
+</tr>
+<tr>
+<td>PICKUP_HEALTH_STANDARD</td>
+<td>0x8F707C18</td>
+</tr>
+<tr>
+<td>PICKUP_MONEY_CASE</td>
+<td>0xCE6FDD6B</td>
+</tr>
+<tr>
+<td>PICKUP_MONEY_DEP_BAG</td>
+<td>0x20893292</td>
+</tr>
+<tr>
+<td>PICKUP_MONEY_MED_BAG</td>
+<td>0x14568F28</td>
+</tr>
+<tr>
+<td>PICKUP_MONEY_PAPER_BAG</td>
+<td>0x711D02A4</td>
+</tr>
+<tr>
+<td>PICKUP_MONEY_PURSE</td>
+<td>0x1E9A99F8</td>
+</tr>
+<tr>
+<td>PICKUP_MONEY_SECURITY_CASE</td>
+<td>0xDE78F17E</td>
+</tr>
+<tr>
+<td>PICKUP_MONEY_VARIABLE</td>
+<td>0xFE18F3AF</td>
+</tr>
+<tr>
+<td>PICKUP_MONEY_WALLET</td>
+<td>0x5DE0AD3E</td>
+</tr>
+<tr>
+<td>PICKUP_PARACHUTE</td>
+<td>0x6773257D</td>
+</tr>
+<tr>
+<td>PICKUP_PORTABLE_CRATE_FIXED_INCAR</td>
+<td>0xEE0E26F3</td>
+</tr>
+<tr>
+<td>PICKUP_PORTABLE_CRATE_FIXED_INCAR_SMALL</td>
+<td>0xA7EA40CE</td>
+</tr>
+<tr>
+<td>PICKUP_PORTABLE_CRATE_FIXED_INCAR_WITH_PASSENGERS</td>
+<td>0xA04E8B0D</td>
+</tr>
+<tr>
+<td>PICKUP_PORTABLE_CRATE_UNFIXED</td>
+<td>0x6E717A95</td>
+</tr>
+<tr>
+<td>PICKUP_PORTABLE_CRATE_UNFIXED_INAIRVEHICLE_WITH_PASSENGERS</td>
+<td>0x90EFDF3B</td>
+</tr>
+<tr>
+<td>PICKUP_PORTABLE_CRATE_UNFIXED_INCAR</td>
+<td>0x4B5259BE</td>
+</tr>
+<tr>
+<td>PICKUP_PORTABLE_CRATE_UNFIXED_INCAR_SMALL</td>
+<td>0xC3CD8B31</td>
+</tr>
+<tr>
+<td>PICKUP_PORTABLE_CRATE_UNFIXED_INCAR_WITH_PASSENGERS</td>
+<td>0x4C35269</td>
+</tr>
+<tr>
+<td>PICKUP_PORTABLE_CRATE_UNFIXED_LOW_GLOW</td>
+<td>0x94FA0B5E</td>
+</tr>
+<tr>
+<td>PICKUP_PORTABLE_DLC_VEHICLE_PACKAGE</td>
+<td>0x31EA45C9</td>
+</tr>
+<tr>
+<td>PICKUP_PORTABLE_PACKAGE</td>
+<td>0x80AB931C</td>
+</tr>
+<tr>
+<td>PICKUP_SUBMARINE</td>
+<td>0xE7CF07CC</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_ARMOUR_STANDARD</td>
+<td>0x4316CC09</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_CUSTOM_SCRIPT</td>
+<td>0xA5B8CAA9</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_CUSTOM_SCRIPT_LOW_GLOW</td>
+<td>0x41D2CF56</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_CUSTOM_SCRIPT_NO_ROTATE</td>
+<td>0x4F92184</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_HEALTH_STANDARD</td>
+<td>0x98D79EF</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_HEALTH_STANDARD_LOW_GLOW</td>
+<td>0xFDEE8368</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_MONEY_VARIABLE</td>
+<td>0x65948212</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_WEAPON_APPISTOL</td>
+<td>0xCC8B3905</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_WEAPON_ASSAULTSMG</td>
+<td>0x68605A36</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_WEAPON_COMBATPISTOL</td>
+<td>0xD0AACEF7</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_WEAPON_GRENADE</td>
+<td>0xA717F898</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_WEAPON_MICROSMG</td>
+<td>0xB86AEE5B</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_WEAPON_MOLOTOV</td>
+<td>0x84D676D4</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_WEAPON_PISTOL</td>
+<td>0xA54AE7B7</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_WEAPON_PISTOL50</td>
+<td>0xD3A39366</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_WEAPON_SAWNOFF</td>
+<td>0x2E071B5A</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_WEAPON_SMG</td>
+<td>0xCC7CCD1B</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_WEAPON_SMOKEGRENADE</td>
+<td>0x65A7D8E9</td>
+</tr>
+<tr>
+<td>PICKUP_VEHICLE_WEAPON_STICKYBOMB</td>
+<td>0x2C804FE3</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_ADVANCEDRIFLE</td>
+<td>0xB2B5325E</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_APPISTOL</td>
+<td>0x3B662889</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_ASSAULTRIFLE</td>
+<td>0xF33C83B0</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_ASSAULTRIFLE_MK2</td>
+<td>0x8187206F</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_ASSAULTSHOTGUN</td>
+<td>0x9299C95B</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_ASSAULTSMG</td>
+<td>0x741C684A</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_AUTOSHOTGUN</td>
+<td>0xBCC5C1F2</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_BAT</td>
+<td>0x81EE601E</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_BATTLEAXE</td>
+<td>0x977C0F2</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_BOTTLE</td>
+<td>0xFA51ABF5</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_BULLPUPRIFLE</td>
+<td>0x815D66E8</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_BULLPUPRIFLE_MK2</td>
+<td>0x8C0FCB13</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_BULLPUPSHOTGUN</td>
+<td>0x6E4E65C2</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_CARBINERIFLE</td>
+<td>0xDF711959</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_CARBINERIFLE_MK2</td>
+<td>0xBDD874BC</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_COMBATMG</td>
+<td>0xB2930A14</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_COMBATMG_MK2</td>
+<td>0xA91FDC8B</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_COMBATPDW</td>
+<td>0x789576E2</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_COMBATPISTOL</td>
+<td>0x8967B4F3</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_COMPACTLAUNCHER</td>
+<td>0xF0EA0639</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_COMPACTRIFLE</td>
+<td>0xFE73AB5</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_CROWBAR</td>
+<td>0x872DC888</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_DAGGER</td>
+<td>0xBFEE6C3B</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_DBSHOTGUN</td>
+<td>0xF9E2DF1F</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_DOUBLEACTION</td>
+<td>0x3B0F70A7</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_FIREWORK</td>
+<td>0x22B15640</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_FLAREGUN</td>
+<td>0xBD4DE242</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_FLASHLIGHT</td>
+<td>0xBDB6FFA5</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_GolfClub</td>
+<td>0x88EAACA7</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_GRENADE</td>
+<td>0x5E0683A1</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_GRENADELAUNCHER</td>
+<td>0x2E764125</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_GUSENBERG</td>
+<td>0x5307A4EC</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_HAMMER</td>
+<td>0x295691A9</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_HATCHET</td>
+<td>0x4E301CD0</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_HEAVYPISTOL</td>
+<td>0x9CF13918</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_HEAVYSHOTGUN</td>
+<td>0xBED46EC5</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_HEAVYSNIPER</td>
+<td>0x693583AD</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_HEAVYSNIPER_MK2</td>
+<td>0xFF0A8297</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_HOMINGLAUNCHER</td>
+<td>0xC01EB678</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_KNIFE</td>
+<td>0x278D8734</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_KNUCKLE</td>
+<td>0xFD9CAEDE</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_MACHETE</td>
+<td>0xD8257ABF</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_MACHINEPISTOL</td>
+<td>0xF5C5DADC</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_MARKSMANPISTOL</td>
+<td>0x8ADDEC75</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_MARKSMANRIFLE</td>
+<td>0x79284A9</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_MARKSMANRIFLE_MK2</td>
+<td>0x9F55D149</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_MG</td>
+<td>0x85CAA9B1</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_MICROSMG</td>
+<td>0x1D9588D3</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_MINIGUN</td>
+<td>0x2F36B434</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_MINISMG</td>
+<td>0xD3722A5B</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_MOLOTOV</td>
+<td>0x2DD30479</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_MUSKET</td>
+<td>0x763F7121</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_NIGHTSTICK</td>
+<td>0x5EA16D74</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_PETROLCAN</td>
+<td>0xC69DE3FF</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_PIPEBOMB</td>
+<td>0xAF692CA9</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_PISTOL</td>
+<td>0xF9AFB48F</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_PISTOL_MK2</td>
+<td>0x499A096A</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_PISTOL50</td>
+<td>0x6C5B941A</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_POOLCUE</td>
+<td>0x93EBB26</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_PROXMINE</td>
+<td>0x624F7213</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_PUMPSHOTGUN</td>
+<td>0xA9355DCD</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_PUMPSHOTGUN_MK2</td>
+<td>0x5DB6C18A</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_RAILGUN</td>
+<td>0xE46E11B4</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_REVOLVER</td>
+<td>0x614BFCAC</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_REVOLVER_MK2</td>
+<td>0x6D60976C</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_RPG</td>
+<td>0x4D36C349</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_SAWNOFFSHOTGUN</td>
+<td>0x96B412A3</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_SMG</td>
+<td>0x3A4C2AD2</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_SMG_MK2</td>
+<td>0xEF2B7390</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_SMOKEGRENADE</td>
+<td>0x1CD604C7</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_SNIPERRIFLE</td>
+<td>0xFE2A352C</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_SNSPISTOL</td>
+<td>0xC5B72713</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_SNSPISTOL_MK2</td>
+<td>0x3DE942BD</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_SPECIALCARBINE</td>
+<td>0x968339D</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_SPECIALCARBINE_MK2</td>
+<td>0x5A26FE0</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_STICKYBOMB</td>
+<td>0x7C119D58</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_STONE_HATCHET</td>
+<td>0xCC90A373</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_STUNGUN</td>
+<td>0xFD16169E</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_SWITCHBLADE</td>
+<td>0xDDE4181A</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_VINTAGEPISTOL</td>
+<td>0xEBF89D5F</td>
+</tr>
+<tr>
+<td>PICKUP_WEAPON_WRENCH</td>
+<td>0xE5121369</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+                
+                <!-- Required only on API pages -->
+                <doc-toolbar-member-filter-no-results></doc-toolbar-member-filter-no-results>
+            </div>
+            <footer id="retype-content-footer" class="clear-both">
+            
+                <nav id="retype-nextprev" class="print:hidden flex mt-14">
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../data/vehicle-mods/">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                            <span>
+                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
+                                <span class="block mt-1">Vehicle Mods</span>
+                            </span>
+                        </a>
+                    </div>
+            
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../data/weather/">
+                            <span>
+                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
+                                <span class="block mt-1">Weather</span>
+                            </span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                        </a>
+                    </div>
+                </nav>
+            </footer>
+        </main>
+
+        <div id="retype-page-footer" class="print:border-none border-t border-base-border pt-6 mb-8">
+            <footer class="flex flex-wrap items-center justify-between print:justify-center">
+                <div id="retype-footer-links" class="print:hidden">
+                    <ul class="flex flex-wrap items-center text-sm">
+                    </ul>
+                </div>
+                <div id="retype-copyright" class="print:justify-center py-2 text-footer-text font-footer-link text-sm leading-relaxed"><p>© Copyright 2026. All rights reserved.</p></div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Rendered if sidebar right is enabled -->
+    <!-- Sidebar right skeleton-->
+    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-sidebar-right-bg border-sidebar-right-border lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:translate-x-0 sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton">
+        <div class="pl-5">
+            <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+        </div>
+    </div>
+
+    <!-- User should be able to hide sidebar right -->
+    <doc-sidebar-right v-cloak></doc-sidebar-right>
+</div>
+
+        </div>
+    </div>
+
+    <doc-search-mobile></doc-search-mobile>
+    <doc-back-to-top></doc-back-to-top>
+</div>
+
+
+    <div id="retype-overlay-target"></div>
+
+    <script data-cfasync="false">window.__DOCS__ = { "title": "Weapon Pickup Models", level: 2, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+</body>
+</html>
