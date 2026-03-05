@@ -791,26 +791,26 @@ function drawPropertyMarkers(): void {
                 color = [150, 150, 150]; // Gray
             }
 
-            // Draw cylinder marker at ground level
+            // Draw flat circle marker on ground (type 1 cylinder with small height)
             native.drawMarker(
                 1, // Cylinder
-                prop.pos_x, prop.pos_y, prop.pos_z - 0.5,
+                prop.pos_x, prop.pos_y, prop.pos_z - 1.0, // Position below ground so top is at ground level
                 0, 0, 0,
                 0, 0, 0,
-                2.0, 2.0, 1.5,
+                2.0, 2.0, 1.0, // Flat cylinder
                 color[0], color[1], color[2], 150,
                 false, false, 2, false, null as any, null as any, false
             );
 
-            // Draw floating icon above
+            // Draw small vertical beam above the marker
             native.drawMarker(
-                32, // House icon
-                prop.pos_x, prop.pos_y, prop.pos_z + 2.0,
+                1, // Cylinder
+                prop.pos_x, prop.pos_y, prop.pos_z + 0.5,
                 0, 0, 0,
                 0, 0, 0,
-                0.5, 0.5, 0.5,
-                color[0], color[1], color[2], 255,
-                true, true, 2, true, null as any, null as any, false
+                0.3, 0.3, 1.5, // Thin tall beam
+                color[0], color[1], color[2], 100,
+                false, false, 2, false, null as any, null as any, false
             );
 
             // Draw property info when close
