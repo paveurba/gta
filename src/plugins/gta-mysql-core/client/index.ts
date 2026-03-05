@@ -434,6 +434,16 @@ alt.onServer('gta:playerId', (id: number) => {
     currentPlayerId = id;
 });
 
+alt.onServer('gta:logout', () => {
+    isLoggedIn = false;
+    currentPlayerId = 0;
+    playerMoney = 0;
+    playerBank = 0;
+    properties = [];
+    createMapBlips();
+    addNotification('Logged out successfully');
+});
+
 // ============================================================================
 // PROPERTY SYSTEM - Ground-level coordinate calculation
 // ============================================================================

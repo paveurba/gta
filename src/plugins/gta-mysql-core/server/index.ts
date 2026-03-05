@@ -305,7 +305,14 @@ alt.on('playerDisconnect', async (player) => {
     const session = playerSessions.get(player.id);
     if (session) {
         await savePlayerMoney(session.email, session.money, session.bank);
-        await weaponService.savePlayerWeapons(player, session.oderId);
+        // Only save weapons if player object is still valid
+        if (player.valid) {
+            try {
+                await weaponService.savePlayerWeapons(player, session.oderId);
+            } catch (err) {
+                alt.logWarning(`[gta-mysql-core] Could not save weapons: ${(err as Error).message}`);
+            }
+        }
         alt.log(`[gta-mysql-core] Saved data for ${session.email}`);
     }
     playerSessions.delete(player.id);
@@ -357,10 +364,13 @@ alt.on('playerDeath', async (player, killer, weaponHash) => {
     alt.setTimeout(async () => {
         if (!player.valid) return;
         
-        // Respawn at hospital
-        player.spawn(hospital.x, hospital.y, hospital.z, 0);
+        // Respawn at hospital - spawn at ground level first, then use safe spawn
+        player.spawn(hospital.x, hospital.y, hospital.z + 1, 0);
         player.health = 200;
         player.armour = 0;
+        
+        // Use client-side safe spawn to find correct ground level
+        alt.emitClient(player, 'gta:spawn:safe', hospital.x, hospital.y, hospital.z);
         
         // Deduct hospital fee if logged in
         if (session) {
@@ -804,6 +814,24 @@ async function handleCommand(player: alt.Player, command: string, args: string[]
             } catch (err) { notifyPlayer(player, `Error: ${(err as Error).message}`); }
             break;
         }
+        case 'logout': {
+            if (!session) { notifyPlayer(player, 'You are not logged in'); return; }
+            try {
+                // Save weapons before logout
+                await weaponService.savePlayerWeapons(player, session.oderId);
+                // Despawn player vehicles
+                await vehicleService.despawnAllPlayerVehicles(session.oderId);
+                // Clear session
+                playerSessions.delete(player.id);
+                player.deleteMeta('playerId');
+                // Reset client state
+                alt.emitClient(player, 'gta:logout');
+                // Remove weapons from player
+                player.removeAllWeapons();
+                notifyPlayer(player, 'You have been logged out. Use /login to login again.');
+            } catch (err) { notifyPlayer(player, `Error: ${(err as Error).message}`); }
+            break;
+        }
         case 'money': {
             if (!session) { notifyPlayer(player, 'You must login first'); return; }
             notifyPlayer(player, `Cash: $${session.money} | Bank: $${session.bank}`);
@@ -1007,7 +1035,7 @@ async function handleCommand(player: alt.Player, command: string, args: string[]
         }
         case 'help': {
             notifyPlayer(player, '=== Commands ===');
-            notifyPlayer(player, '/register, /login, /money, /givemoney');
+            notifyPlayer(player, '/register, /login, /logout, /money');
             notifyPlayer(player, '/weapons, /buyweapon <name>');
             notifyPlayer(player, '/properties, /myproperties');
             notifyPlayer(player, '/myvehicles, /spawnvehicle <id>, /dealership');
@@ -1015,7 +1043,7 @@ async function handleCommand(player: alt.Player, command: string, args: string[]
             notifyPlayer(player, '/contact, /contacts, /sms');
             notifyPlayer(player, '/tp <x> <y> <z>, /casino');
             notifyPlayer(player, 'Press E near shops/properties to interact');
-            notifyPlayer(player, 'Press P for phone menu');
+            notifyPlayer(player, 'Press M for phone menu');
             break;
         }
         default:
