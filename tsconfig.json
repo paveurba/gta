@@ -1,0 +1,55 @@
+{
+    "compilerOptions": {
+        "baseUrl": "src",
+        "paths": {
+            "@Server/*": ["main/server/*"],
+            "@Client/*": ["main/client/*"],
+            "@Shared/*": ["main/shared/*"],
+            "@Plugins/*": ["plugins/*"],
+            "@Composables/*": ["../webview/composables/*"],
+            "@Components/*": ["../webview/components/*"]
+        },
+        "typeRoots": ["./node_modules/@types", "./node_modules/@altv"],
+        "removeComments": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "noImplicitReturns": true,
+        "allowJs": true,
+        "resolveJsonModule": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "NodeNext",
+        "allowSyntheticDefaultImports": true,
+        "composite": false,
+        "forceConsistentCasingInFileNames": true,
+        "strict": false,
+        "module": "NodeNext",
+        "target": "ES2022",
+        "outDir": "athena-cache",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "declaration": true,
+        "emitDeclarationOnly": false
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.ts",
+        "src/**/*.d.ts",
+        "src/**/*.tsx",
+        "src/**/*.vue",
+        "src/scratchpad/example.pad"
+    ],
+    "exclude": [
+        "resources",
+        "scripts",
+        "altv-athena-cache",
+        "athena-cache",
+        "node_modules",
+        "cache",
+        "crashdumps",
+        "data",
+        "doc",
+        "modules",
+        "screenshots"
+    ]
+}

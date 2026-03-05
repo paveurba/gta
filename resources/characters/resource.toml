@@ -1,5 +1,0 @@
-type = "js"
-deps = ["database"]
-main = "server/index.js"
-client-main = "client/index.js"
-client-files = ["client/*"]

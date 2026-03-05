@@ -1,9 +1,64 @@
 {
-  "name": "gta-altv-server",
-  "version": "1.0.0",
-  "private": true,
-  "description": "GTA 5 alt:V MP server (Docker)",
-  "scripts": {
-    "install:resources": "npm install --omit=dev --prefix resources/database && npm install --omit=dev --prefix resources/example && npm install --omit=dev --prefix resources/world"
-  }
+    "author": "stuyk",
+    "type": "module",
+    "version": "53",
+    "scripts": {
+        "dev": "nodemon --config ./nodemon-dev.json -x pnpm start",
+        "dev:linux": "nodemon --config ./nodemon-dev.json -x pnpm start:linux",
+        "start": "node ./scripts/compile.js && altv-server",
+        "start:linux": "node ./scripts/compile.js && ./altv-server",
+        "dev:hot": "pnpm build:docker && concurrently --raw \"nodemon -C --config ./nodemon-hot.json -x pnpm build:docker\" \"altv-server\"",
+        "build:docker": "node ./scripts/compile.js -- docker",
+        "binaries": "pnpm altv-pkg",
+        "rebar:upgrade": "node ./scripts/upgrade.js",
+        "webview:dev": "node ./scripts/buildPluginDependencies.js && node ./scripts/copyFiles.js && node ./scripts/webview.js && pnpm -C webview run dev",
+        "postinstall": "pnpm binaries && pnpm build:docker"
+    },
+    "devDependencies": {
+        "@altv/types-client": "^16.2.6",
+        "@altv/types-natives": "^16.2.1",
+        "@altv/types-server": "^16.2.4",
+        "@altv/types-shared": "^16.2.3",
+        "@altv/types-webview": "^16.2.1",
+        "@altv/types-worker": "^16.2.0",
+        "@types/node": "^20.16.4",
+        "altv-pkg": "^2.7.5",
+        "autoprefixer": "^10.4.20",
+        "fast-glob": "^3.3.2",
+        "fkill": "^9.0.0",
+        "nodemon": "^3.1.4",
+        "postcss": "^8.4.45",
+        "prettier": "^3.3.3",
+        "prettier-plugin-tailwindcss": "^0.5.14",
+        "retypeapp": "^3.5.0",
+        "shx": "^0.3.4",
+        "sucrase": "^3.35.0",
+        "tailwindcss": "^3.4.10"
+    },
+    "dependencies": {
+        "@hono/node-server": "^1.12.2",
+        "@types/sjcl": "^1.0.34",
+        "@vitejs/plugin-vue": "^5.1.3",
+        "bcryptjs": "^2.4.3",
+        "concurrently": "^8.2.2",
+        "dotenv": "^16.4.5",
+        "hono": "^4.5.11",
+        "mongodb": "^6.8.0",
+        "mysql2": "^3.15.3",
+        "node-cron": "^3.0.3",
+        "sjcl": "^1.0.8",
+        "typescript": "^5.5.4",
+        "vite": "^5.4.3",
+        "vue": "^3.5.1",
+        "vue-tsc": "^2.1.4"
+    },
+    "prettier": {
+        "tabWidth": 4,
+        "singleQuote": true,
+        "semi": true,
+        "printWidth": 120,
+        "plugins": [
+            "prettier-plugin-tailwindcss"
+        ]
+    }
 }

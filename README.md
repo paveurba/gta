@@ -1,133 +1,203 @@
-# GTA 5 alt:V MP Server (Docker)
+# GTA V alt:V Multiplayer Server
 
-Docker setup for an **alt:V** multiplayer server (GTA 5). Uses the official [altmp/altv-server](https://hub.docker.com/r/altmp/altv-server) image.
+A full-featured GTA Online-style multiplayer server built on alt:V with the Rebar framework, MySQL persistence, and MongoDB for Rebar core.
 
-## Quick start
+## Features
 
-```bash
-# Build and run game server only
-docker compose up -d
+### Core Systems
+- **Authentication**: Register/login with email and password
+- **Money System**: Cash and bank balance with MySQL persistence
+- **Phone System**: Contacts, messaging between players
+- **Property System**: Buy, sell, enter, and exit properties
+- **Weapon Shop**: Purchase weapons and ammo from Ammu-Nation
+- **Clothing Shop**: Buy and save outfits
+- **Casino**: Slot machines and roulette with betting
 
-# Or build and run in foreground (see logs)
-docker compose up --build
-```
+### World
+- **GTA Online Style**: No AI pedestrians or traffic (clean multiplayer environment)
+- **Static Parked Vehicles**: 45+ vehicles parked in realistic locations around the city
+- **Map Blips**: All shops, properties, and casino marked on the map
 
-Server listens on **7788** (TCP + UDP). The server is **not** on the public list (`announce = false`). Connect like this:
+## Tech Stack
 
-1. Open the [alt:V client](https://altv.mp/#/downloads).
-2. Use **Direct Connect** (not the server browser).
-3. **Host:** `127.0.0.1` (same machine) or your Mac’s LAN IP (e.g. `192.168.x.x`) if connecting from another PC.
-4. **Port:** `7788`.
-5. Client branch must match server (use **release**).
+- **alt:V Server** - GTA V multiplayer framework
+- **Rebar Framework** - TypeScript plugin architecture
+- **MySQL 8** - Player data, money, weapons, properties, phone
+- **MongoDB** - Rebar core character documents
+- **Docker / Docker Compose** - Containerized deployment
 
-## Build only
+## Quick Start
 
-```bash
-docker compose build
-# or
-docker build -t gta-altv-server .
-```
-
-## Money and MySQL (persistence)
-
-MySQL connection follows the **alt:V community pattern** (see [mysql2-wrapper](https://github.com/nickplayz/mysql2-wrapper)):
-
-- **Connection:** Use a URI `mysql://user:password@host:port/database?charset=utf8mb4` or set `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD`, `MYSQL_DATABASE` (Docker env).
-- **When DB is ready:** The resource emits `database:Ready`. Wait for it before running queries:
-
-```js
-alt.on("database:Ready", () => {
-  // MySQL is connected and tables are ready
-});
-```
-
-- **Without MySQL:** Server still runs; each player gets default money (5000) in memory.
-- **With MySQL:** Start with the `db` profile:
+### 1. Clone and configure
 
 ```bash
 cp .env.example .env
-docker compose --profile db up -d
 ```
 
-The **database** resource creates `players` (name, money) and `config` (key, value). Other resources:
+### 2. Start with Docker
 
-```js
-import * as db from "alt:database";
-
-await db.getMoney(player);
-await db.setMoney(player, 10000);
-await db.getConfig("key");
-await db.setConfig("key", value);
+```bash
+docker compose up -d
 ```
 
-Add `deps = ["database"]` in your `resource.toml`. The **example** resource shows money on connect (F8: “Your money: $…”).
+### 3. View logs
 
-**Check if MySQL is loaded:** After a player connects, check server logs:
-- `[database] MySQL connected, tables ready (database:Ready emitted).` = MySQL OK.
-- `[database] MySQL init failed: ...` = DB not reachable (start with `--profile db` or check MYSQL_* env).
+```bash
+docker compose logs -f altv-server
+```
 
-## No cars / no peds (empty world)
+### 4. Connect
 
-The **world** resource turns GTA’s ambient traffic and peds back on (they’re off in multiplayer by default) using client natives every frame. If you still see no cars or peds:
+Connect with alt:V client to `localhost:7788`
 
-1. **Clear client cache:** alt:V → Settings → your server under “Server data” → **Delete resources** → reconnect.
-2. **Confirm world is loaded:** In server logs you should see `Loaded resource world`.
-3. **Client branch:** Use **release** to match the server.
+## Chat Commands
 
-## Run with voice server
+### Authentication
+| Command | Description |
+|---------|-------------|
+| `/register <email> <password>` | Create new account |
+| `/login <email> <password>` | Login to existing account |
 
-1. Copy env example and set your public IP and secret:
-   ```bash
-   cp .env.example .env
-   # Edit .env: PUBLIC_IP=your.public.ip, VOICE_SECRET=1234567890
-   ```
-2. In `docker-compose.yml`, uncomment `depends_on: - altv-voice` under `altv-server`.
-3. In `server.toml`, uncomment the `[voice]` block and set `externalPublicHost` to your public IP.
-4. Start with voice profile:
-   ```bash
-   docker compose --profile voice up -d
-   ```
+### Money
+| Command | Description |
+|---------|-------------|
+| `/money` | Check cash and bank balance |
+| `/givemoney <amount>` | Add money (debug) |
 
-## Mac / Docker Desktop (M-series, 24GB RAM)
+### Vehicles
+| Command | Description |
+|---------|-------------|
+| `/car <model>` | Spawn a vehicle |
 
-The server has **no container limits** and an 8GB memory reservation. To avoid the process being killed or throttled:
+### Weapons
+| Command | Description |
+|---------|-------------|
+| `/weapons` | List available weapons |
+| `/buyweapon <name>` | Purchase a weapon |
 
-1. **Docker Desktop → Settings → Resources → Memory** – set to **12 GB** or more (your Mac has 24 GB, so 12 GB for Docker is safe).
-2. Apply & Restart, then run `docker compose up --build` again.
+### Properties
+| Command | Description |
+|---------|-------------|
+| `/properties` | List available properties |
+| `/myproperties` | List owned properties |
+| `/buyproperty <id>` | Buy a property |
+| `/sellproperty <id>` | Sell a property (70% value) |
+| `/enter` | Enter nearby owned property |
+| `/exit` | Exit property |
 
-That gives the alt:V server enough room inside the Docker VM.
+### Casino
+| Command | Description |
+|---------|-------------|
+| `/slots <bet>` | Play slot machine |
+| `/roulette <bet> <type> <value>` | Play roulette |
 
-## Configuration
+### Phone
+| Command | Description |
+|---------|-------------|
+| `/contact <name> <number>` | Add a contact |
+| `/contacts` | List contacts |
+| `/sms <playerId> <message>` | Send message |
 
-- **File-based:** Edit `server.toml`. Default is file-based (`ALTV_USE_ENV_CONFIG=false`).
-- **Env-based:** Set `ALTV_USE_ENV_CONFIG=true` in `.env` and use `ALTV_*` variables (e.g. `ALTV_NAME`, `ALTV_PLAYERS`). See [altv-docker config](https://github.com/altmp/altv-docker).
+### Utility
+| Command | Description |
+|---------|-------------|
+| `/tp <x> <y> <z>` | Teleport to coordinates |
+| `/casino` | Teleport to Diamond Casino |
+| `/help` | Show all commands |
 
-## "Texture not loaded" / client loading (official docs)
+## Hotkeys
 
-That message appears in the **game client**, not in Docker logs. Server config is already set for proper streaming and optional props. On the **player PC**:
+| Key | Action |
+|-----|--------|
+| `T` | Open chat |
+| `P` | Open phone menu |
 
-1. **Delete cached server resources** (often fixes bad/corrupt downloads):
-   - In alt:V main menu → **Settings** → find your server under **Server data** → click **Delete resources** for it, then reconnect.
+## Database Schema
 
-2. **Client config** (alt:V install folder → `altv.toml`). Ensure these exist (per [client config](https://docs.altv.mp/articles/configs/client.html)):
-   - `textureBudgetPatch = true`
-   - `useSharedTextures = true`
-   - `heapSize = 2048` (or higher if you have VRAM; default 1024 = texture/asset VRAM budget)
+Tables managed by the server:
 
-3. **Enough free disk space** where alt:V is installed (client FAQ).
+- `players` - Core player data (email, password, money, bank)
+- `player_weapons` - Weapon persistence (hash, ammo)
+- `player_clothes` - Clothing persistence (component, drawable, texture)
+- `properties` - Property ownership and locations
+- `phone_contacts` - Player phone contacts
+- `phone_messages` - Player messages
+- `casino_transactions` - Casino game history
+- `transaction_logs` - Audit trail for all transactions
 
-4. Server runs **without a CDN** (warning in logs). For local/dev that’s fine; for many players consider a CDN so resources load reliably.
+See `database/init/001_schema.sql` for full schema.
 
-## Resources
+## Project Structure
 
-- **database** – MySQL persistence for player money and key-value config. Loads first; use `deps = ["database"]` in other resources and `import * as db from "alt:database"`.
-- **world** – Enables standard GTA behavior: ambient traffic, peds, parked cars, and default interiors (IPLs).
-- **example** – Minimal client/server script; shows money from database on connect (F8: “Your money: $…”).
+```
+src/plugins/gta-mysql-core/
+├── server/
+│   ├── index.ts              # Main server plugin
+│   ├── database/
+│   │   └── migrations.ts     # Auto-run database migrations
+│   └── services/
+│       ├── PlayerWeaponService.ts
+│       ├── PropertyService.ts
+│       ├── WeaponShopService.ts
+│       ├── ClothingShopService.ts
+│       ├── PhoneService.ts
+│       └── CasinoService.ts
+└── client/
+    └── index.ts              # Client-side UI and controls
+```
 
-Put custom resources in `resources/` and list them in `server.toml` under `resources = ["database", "world", "example", "your-resource"]`. The image includes **js-module** and **csharp-module**.
+## Services
 
-## Links
+| Service | Description |
+|---------|-------------|
+| `PlayerWeaponService` | Load/save player weapons |
+| `PropertyService` | Buy/sell/enter/exit properties |
+| `WeaponShopService` | Weapon catalog and purchases |
+| `ClothingShopService` | Clothing catalog and purchases |
+| `PhoneService` | Contacts and messaging |
+| `CasinoService` | Slots and roulette games |
 
-- [alt:V](https://altv.mp)
-- [Server config](https://docs.altv.mp/articles/configs/server.html)
-- [Docker image](https://hub.docker.com/r/altmp/altv-server)
+## Map Locations
+
+### Weapon Shops (Red gun icon)
+- Ammu-Nation Pillbox Hill
+- Ammu-Nation Little Seoul
+- Ammu-Nation Cypress Flats
+- Ammu-Nation Sandy Shores
+
+### Clothing Shops (Blue shirt icon)
+- Suburban
+- Ponsonbys
+- Binco
+- Discount Store
+
+### Casino (Gold chip icon)
+- Diamond Casino
+
+### Properties (House icons)
+- Green = For sale
+- Blue = Owned
+
+## Docker Services
+
+| Service | Port | Description |
+|---------|------|-------------|
+| `altv-server` | 7788 | Game server |
+| `mysql` | 3306 | MySQL database |
+| `mongodb` | 27017 | MongoDB (Rebar core) |
+
+## Environment Variables
+
+```env
+DB_HOST=mysql
+DB_PORT=3306
+DB_NAME=gta_rebar
+DB_USER=gta
+DB_PASSWORD=gta_password
+MONGODB=mongodb://mongodb:27017
+GAME_PORT=7788
+```
+
+## License
+
+MIT

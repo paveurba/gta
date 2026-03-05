@@ -1,0 +1,11 @@
+type = "js"
+main = "main/server/index.js"
+client-main = "main/client/index.js"
+client-files = [
+    "main/client/*",
+    "main/shared/*",
+    "**/client/*",
+    "**/shared/*",
+    "**/translate/*"
+]
+required-permissions = ['Screen Capture']

@@ -1,6 +1,12 @@
 .git
 .gitignore
-*.md
+.claude
+.idea
+node_modules
+altv-server
+altv-crash-handler
+data
+resources/core
+resources/webview
+webview/node_modules
 .env
-.env.*
-!.env.example

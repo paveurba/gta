@@ -1,85 +1,61 @@
-# GTA 5 alt:V MP - Game server + optional voice server + MySQL
-# Usage: docker compose up -d
-
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: altv-mysql
+  mongodb:
+    image: mongo:7
+    container_name: gta-rebar-mongodb
     restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-altv}
-      MYSQL_USER: ${MYSQL_USER:-altv}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-altv}
     ports:
-      - "${MYSQL_PORT:-3899}:3306"
+      - "27017:27017"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mongodb_data:/data/db
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p\"$$MYSQL_ROOT_PASSWORD\" || exit 1"]
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 5s
       timeout: 5s
-      retries: 10
-    profiles:
-      - db
+      retries: 20
+
+  mysql:
+    image: mysql:8.0
+    container_name: gta-rebar-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_password}
+      MYSQL_DATABASE: ${DB_NAME:-gta_rebar}
+      MYSQL_USER: ${DB_USER:-gta}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-gta_password}
+    ports:
+      - "${MYSQL_EXPOSE_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$$MYSQL_ROOT_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
 
   altv-server:
-    build: .
-    image: gta-altv-server:latest
-    platform: linux/amd64
-    container_name: altv-game-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gta-rebar-server
     restart: unless-stopped
-    stdin_open: true
-    tty: true
-    ports:
-      - "${GAME_PORT:-7788}:7788"
-      - "${GAME_PORT:-7788}:7788/udp"
-    environment:
-      - ALTV_USE_ENV_CONFIG=${ALTV_USE_ENV_CONFIG:-false}
-      # Voice: when using voice profile, set PUBLIC_IP and VOICE_SECRET in .env
-      - ALTV_VOICE_EXTERNAL_HOST=voice
-      - ALTV_VOICE_EXTERNAL_PORT=7798
-      - ALTV_VOICE_EXTERNAL_PUBLIC_HOST=${PUBLIC_IP:-}
-      - ALTV_VOICE_EXTERNAL_PUBLIC_PORT=7799
-      - ALTV_VOICE_EXTERNAL_SECRET=${VOICE_SECRET:-1234567890}
-      # MySQL (when using db profile: docker compose --profile db up)
-      - MYSQL_HOST=mysql
-      - MYSQL_PORT=3306
-      - MYSQL_USER=${MYSQL_USER:-altv}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-altv}
-      - MYSQL_DATABASE=${MYSQL_DATABASE:-altv}
-    volumes:
-      - ./server.toml:/altv/server.toml:ro
-      - ./resources:/altv/resources:ro
-    # No limits – use Mac resources. Reserve 8G so server isn't OOM killed.
-    deploy:
-      resources:
-        reservations:
-          memory: 8G
-    # With MySQL: docker compose --profile db up -d
     depends_on:
+      mongodb:
+        condition: service_healthy
       mysql:
         condition: service_healthy
-    # Enable when using voice: docker compose --profile voice up -d
-    # depends_on:
-    #   - altv-voice
-
-  # Optional: alt:V voice server (for in-game voice chat)
-  altv-voice:
-    image: altmp/altv-voice-server:release
-    platform: linux/amd64
-    container_name: altv-voice-server
-    restart: unless-stopped
-    stdin_open: true
-    tty: true
-    profiles:
-      - voice
     ports:
-      - "7799:7799/udp"
+      - "${GAME_PORT:-7788}:7788/tcp"
+      - "${GAME_PORT:-7788}:7788/udp"
     environment:
-      - ALTV_PORT=7798
-      - ALTV_PLAYER_PORT=7799
-      - ALTV_SECRET=${VOICE_SECRET:-1234567890}
+      MONGODB: mongodb://mongodb:27017
+      DB_HOST: ${DB_HOST:-mysql}
+      DB_PORT: ${DB_PORT:-3306}
+      DB_NAME: ${DB_NAME:-gta_rebar}
+      DB_USER: ${DB_USER:-gta}
+      DB_PASSWORD: ${DB_PASSWORD:-gta_password}
+      BCRYPT_ROUNDS: ${BCRYPT_ROUNDS:-10}
 
 volumes:
+  mongodb_data:
   mysql_data:
