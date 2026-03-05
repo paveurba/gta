@@ -42,6 +42,18 @@ All database access goes through:
 - `/inv`
 - `/job <name>` and `/job`
 
+## In-Game Testing Without Chat
+
+If chat input is unavailable in your client build, use fallback hotkeys:
+
+- `F5`: quick register (`dev<playerId>@local.test` / `pass1234`)
+- `F6`: quick login for the same dev account
+- `F7`: spawn `sultan`
+- `F8`: show inventory
+- `F9`: set/get `taxi` job
+
+These are temporary QA helpers in the gameplay plugin.
+
 ## Database Schema
 
 MySQL init script:

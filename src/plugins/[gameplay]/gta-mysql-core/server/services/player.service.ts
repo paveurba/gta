@@ -29,6 +29,8 @@ export class PlayerService {
 
     spawnDefault(player: alt.Player): void {
         player.model = 'mp_m_freemode_01';
-        player.spawn(215.8, -810.1, 30.7, 0);
+        player.dimension = 0;
+        // Airport apron spawn; reliable ground level for initial testing.
+        player.spawn(-1036.73, -2738.04, 20.17, 0);
     }
 }
