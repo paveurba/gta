@@ -1,0 +1,9 @@
+{
+  "name": "gta-altv-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GTA 5 alt:V MP server (Docker)",
+  "scripts": {
+    "install:resources": "npm install --omit=dev --prefix resources/database && npm install --omit=dev --prefix resources/example && npm install --omit=dev --prefix resources/world"
+  }
+}

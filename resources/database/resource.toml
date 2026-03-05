@@ -1,0 +1,3 @@
+# MySQL persistence: player money + key-value config. Load first so others can depend on it.
+type = "js"
+main = "server/index.js"

@@ -1,0 +1,85 @@
+# GTA 5 alt:V MP - Game server + optional voice server + MySQL
+# Usage: docker compose up -d
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: altv-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-altv}
+      MYSQL_USER: ${MYSQL_USER:-altv}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-altv}
+    ports:
+      - "${MYSQL_PORT:-3899}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p\"$$MYSQL_ROOT_PASSWORD\" || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    profiles:
+      - db
+
+  altv-server:
+    build: .
+    image: gta-altv-server:latest
+    platform: linux/amd64
+    container_name: altv-game-server
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    ports:
+      - "${GAME_PORT:-7788}:7788"
+      - "${GAME_PORT:-7788}:7788/udp"
+    environment:
+      - ALTV_USE_ENV_CONFIG=${ALTV_USE_ENV_CONFIG:-false}
+      # Voice: when using voice profile, set PUBLIC_IP and VOICE_SECRET in .env
+      - ALTV_VOICE_EXTERNAL_HOST=voice
+      - ALTV_VOICE_EXTERNAL_PORT=7798
+      - ALTV_VOICE_EXTERNAL_PUBLIC_HOST=${PUBLIC_IP:-}
+      - ALTV_VOICE_EXTERNAL_PUBLIC_PORT=7799
+      - ALTV_VOICE_EXTERNAL_SECRET=${VOICE_SECRET:-1234567890}
+      # MySQL (when using db profile: docker compose --profile db up)
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_USER=${MYSQL_USER:-altv}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-altv}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-altv}
+    volumes:
+      - ./server.toml:/altv/server.toml:ro
+      - ./resources:/altv/resources:ro
+    # No limits – use Mac resources. Reserve 8G so server isn't OOM killed.
+    deploy:
+      resources:
+        reservations:
+          memory: 8G
+    # With MySQL: docker compose --profile db up -d
+    depends_on:
+      mysql:
+        condition: service_healthy
+    # Enable when using voice: docker compose --profile voice up -d
+    # depends_on:
+    #   - altv-voice
+
+  # Optional: alt:V voice server (for in-game voice chat)
+  altv-voice:
+    image: altmp/altv-voice-server:release
+    platform: linux/amd64
+    container_name: altv-voice-server
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    profiles:
+      - voice
+    ports:
+      - "7799:7799/udp"
+    environment:
+      - ALTV_PORT=7798
+      - ALTV_PLAYER_PORT=7799
+      - ALTV_SECRET=${VOICE_SECRET:-1234567890}
+
+volumes:
+  mysql_data:
