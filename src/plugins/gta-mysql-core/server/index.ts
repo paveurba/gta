@@ -304,15 +304,85 @@ alt.on('playerDisconnect', async (player) => {
         alt.log(`[gta-mysql-core] Saved data for ${session.email}`);
     }
     playerSessions.delete(player.id);
-    [spawnedPeds, spawnedVehicles, trafficVehicles].forEach((map) => {
-        const items = map.get(player.id) || [];
-        items.forEach((item: any) => {
-            if (item.ped?.valid) item.ped.destroy();
-            if (item.vehicle?.valid) item.vehicle.destroy();
-            if (item.driver?.valid) item.driver.destroy();
-        });
-        map.delete(player.id);
-    });
+    playersInProperty.delete(player.id);
+});
+
+// ============================================================================
+// PLAYER DEATH & RESPAWN
+// ============================================================================
+
+const HOSPITAL_SPAWNS = [
+    { x: 355.70, y: -596.17, z: 28.79, name: 'Pillbox Hill Medical Center' },
+    { x: -449.67, y: -340.83, z: 34.50, name: 'Mount Zonah Medical Center' },
+    { x: 1839.62, y: 3672.93, z: 34.28, name: 'Sandy Shores Medical Center' },
+    { x: -247.76, y: 6331.23, z: 32.43, name: 'Paleto Bay Medical Center' },
+];
+
+function getNearestHospital(x: number, y: number, z: number): { x: number; y: number; z: number; name: string } {
+    let nearest = HOSPITAL_SPAWNS[0];
+    let minDist = Infinity;
+    
+    for (const hospital of HOSPITAL_SPAWNS) {
+        const dist = Math.sqrt(
+            Math.pow(hospital.x - x, 2) + 
+            Math.pow(hospital.y - y, 2) + 
+            Math.pow(hospital.z - z, 2)
+        );
+        if (dist < minDist) {
+            minDist = dist;
+            nearest = hospital;
+        }
+    }
+    
+    return nearest;
+}
+
+const HOSPITAL_FEE = 500;
+
+alt.on('playerDeath', async (player, killer, weaponHash) => {
+    const session = playerSessions.get(player.id);
+    const deathPos = player.pos;
+    
+    alt.log(`[gta-mysql-core] Player ${player.id} died at ${deathPos.x}, ${deathPos.y}, ${deathPos.z}`);
+    
+    // Find nearest hospital
+    const hospital = getNearestHospital(deathPos.x, deathPos.y, deathPos.z);
+    
+    // Respawn after a delay
+    alt.setTimeout(async () => {
+        if (!player.valid) return;
+        
+        // Respawn at hospital
+        player.spawn(hospital.x, hospital.y, hospital.z, 0);
+        player.health = 200;
+        player.armour = 0;
+        
+        // Deduct hospital fee if logged in
+        if (session) {
+            if (session.money >= HOSPITAL_FEE) {
+                session.money -= HOSPITAL_FEE;
+                await savePlayerMoney(session.email, session.money, session.bank);
+                syncMoneyToClient(player);
+                notifyPlayer(player, `Respawned at ${hospital.name}. Hospital fee: $${HOSPITAL_FEE}`);
+            } else {
+                notifyPlayer(player, `Respawned at ${hospital.name}. (No fee - insufficient funds)`);
+            }
+            
+            // Reload weapons after respawn
+            await weaponService.loadWeaponsToPlayer(player, session.oderId);
+        } else {
+            notifyPlayer(player, `Respawned at ${hospital.name}`);
+        }
+        
+        // Clear property state if player was inside
+        playersInProperty.delete(player.id);
+        
+        // Emit safe spawn to client for ground check
+        alt.emitClient(player, 'gta:spawn:safe', hospital.x, hospital.y, hospital.z);
+    }, 5000); // 5 second respawn delay
+    
+    // Notify player they're dead
+    notifyPlayer(player, 'You died! Respawning in 5 seconds...');
 });
 
 // ============================================================================
@@ -382,52 +452,96 @@ alt.onClient('property:getList', async (player) => {
     alt.emitClient(player, 'property:list', properties);
 });
 
+alt.onClient('property:requestList', async (player) => {
+    const properties = await propertyService.getAllProperties();
+    alt.emitClient(player, 'property:list', properties);
+});
+
 alt.onClient('property:buy', async (player, propertyId: number) => {
     const session = playerSessions.get(player.id);
-    if (!session) { notifyPlayer(player, 'You must login first'); return; }
+    if (!session) { 
+        alt.emitClient(player, 'property:buyResult', { success: false, message: 'You must login first' });
+        return; 
+    }
     const result = await propertyService.buyProperty(session.oderId, propertyId, session.money);
-    notifyPlayer(player, result.message);
+    alt.emitClient(player, 'property:buyResult', result);
     if (result.success && result.newBalance !== undefined) {
         session.money = result.newBalance;
         syncMoneyToClient(player);
-        // Update map blips for all players
         broadcastPropertyUpdate();
     }
 });
 
 alt.onClient('property:sell', async (player, propertyId: number) => {
     const session = playerSessions.get(player.id);
-    if (!session) { notifyPlayer(player, 'You must login first'); return; }
+    if (!session) { 
+        alt.emitClient(player, 'property:sellResult', { success: false, message: 'You must login first' });
+        return; 
+    }
     const result = await propertyService.sellProperty(session.oderId, propertyId, session.money);
-    notifyPlayer(player, result.message);
+    alt.emitClient(player, 'property:sellResult', result);
     if (result.success && result.newBalance !== undefined) {
         session.money = result.newBalance;
         syncMoneyToClient(player);
-        // Update map blips for all players
         broadcastPropertyUpdate();
     }
 });
 
 alt.onClient('property:enter', async (player, propertyId: number) => {
     const session = playerSessions.get(player.id);
-    if (!session) { notifyPlayer(player, 'You must login first'); return; }
+    if (!session) { 
+        alt.emitClient(player, 'property:enterResult', { success: false, message: 'You must login first' });
+        return; 
+    }
     const property = await propertyService.getPropertyById(propertyId);
-    if (!property) { notifyPlayer(player, 'Property not found'); return; }
-    if (property.owner_player_id !== session.oderId) { notifyPlayer(player, 'You do not own this property'); return; }
-    player.pos = new alt.Vector3(property.interior_x, property.interior_y, property.interior_z);
+    if (!property) { 
+        alt.emitClient(player, 'property:enterResult', { success: false, message: 'Property not found' });
+        return; 
+    }
+    if (property.owner_player_id !== session.oderId) { 
+        alt.emitClient(player, 'property:enterResult', { success: false, message: 'You do not own this property' });
+        return; 
+    }
+    
     playersInProperty.set(player.id, propertyId);
-    notifyPlayer(player, `Entered ${property.name}`);
+    alt.emitClient(player, 'property:enterResult', { 
+        success: true, 
+        message: `Entered ${property.name}`,
+        interior: {
+            x: property.interior_x,
+            y: property.interior_y,
+            z: property.interior_z,
+            heading: property.interior_heading || 0,
+            ipl: property.ipl || undefined
+        }
+    });
 });
 
-alt.onClient('property:exit', async (player) => {
-    const propertyId = playersInProperty.get(player.id);
-    if (!propertyId) { notifyPlayer(player, 'You are not inside a property'); return; }
-    const property = await propertyService.getPropertyById(propertyId);
-    if (property) {
-        player.pos = new alt.Vector3(property.pos_x, property.pos_y, property.pos_z);
-        notifyPlayer(player, `Exited ${property.name}`);
+alt.onClient('property:exit', async (player, propertyId: number) => {
+    const session = playerSessions.get(player.id);
+    const currentPropertyId = playersInProperty.get(player.id);
+    
+    if (!currentPropertyId) { 
+        alt.emitClient(player, 'property:exitResult', { success: false, message: 'You are not inside a property' });
+        return; 
     }
+    
+    const property = await propertyService.getPropertyById(currentPropertyId);
+    if (!property) {
+        alt.emitClient(player, 'property:exitResult', { success: false, message: 'Property not found' });
+        return;
+    }
+    
     playersInProperty.delete(player.id);
+    alt.emitClient(player, 'property:exitResult', { 
+        success: true, 
+        message: `Exited ${property.name}`,
+        exterior: {
+            x: property.pos_x,
+            y: property.pos_y,
+            z: property.pos_z
+        }
+    });
 });
 
 // Weapon shop events
@@ -525,6 +639,7 @@ async function handleCommand(player: alt.Player, command: string, args: string[]
                 const newSession = await registerPlayer(email, password);
                 playerSessions.set(player.id, newSession);
                 player.setMeta('playerId', newSession.oderId);
+                alt.emitClient(player, 'gta:playerId', newSession.oderId);
                 await bindCharacterForPlayer(player, email);
                 spawnPlayerSafe(player);
                 syncMoneyToClient(player);
@@ -540,6 +655,7 @@ async function handleCommand(player: alt.Player, command: string, args: string[]
                 const newSession = await loginPlayer(email, password);
                 playerSessions.set(player.id, newSession);
                 player.setMeta('playerId', newSession.oderId);
+                alt.emitClient(player, 'gta:playerId', newSession.oderId);
                 await bindCharacterForPlayer(player, email);
                 spawnPlayerSafe(player);
                 await weaponService.loadWeaponsToPlayer(player, newSession.oderId);

@@ -12,6 +12,7 @@ alt.log('[gta-client] Plugin loaded');
 let playerMoney = 0;
 let playerBank = 0;
 let isLoggedIn = false;
+let currentPlayerId = 0;
 
 // ============================================================================
 // SHOP LOCATIONS
@@ -32,6 +33,11 @@ interface PropertyLocation {
     pos_x: number;
     pos_y: number;
     pos_z: number;
+    interior_x: number;
+    interior_y: number;
+    interior_z: number;
+    interior_heading?: number;
+    ipl?: string;
 }
 
 let weaponShops: ShopLocation[] = [];
@@ -40,6 +46,14 @@ let casinos: ShopLocation[] = [];
 let properties: PropertyLocation[] = [];
 const createdBlips: number[] = [];
 
+// Hospital locations for respawn
+const HOSPITALS: ShopLocation[] = [
+    { x: 355.70, y: -596.17, z: 28.79, name: 'Pillbox Hill Medical Center' },
+    { x: -449.67, y: -340.83, z: 34.50, name: 'Mount Zonah Medical Center' },
+    { x: 1839.62, y: 3672.93, z: 34.28, name: 'Sandy Shores Medical Center' },
+    { x: -247.76, y: 6331.23, z: 32.43, name: 'Paleto Bay Medical Center' },
+];
+
 // Blip sprite IDs for GTA V
 const BLIP_SPRITES = {
     WEAPON_SHOP: 110,      // Gun icon
@@ -47,7 +61,21 @@ const BLIP_SPRITES = {
     CASINO: 679,           // Casino chip icon
     PROPERTY_FOR_SALE: 374, // House for sale
     PROPERTY_OWNED: 40,    // House owned (safehouse)
+    HOSPITAL: 61,          // Hospital cross icon
 };
+
+// ============================================================================
+// PROPERTY INTERACTION STATE
+// ============================================================================
+
+let nearbyProperty: PropertyLocation | null = null;
+let propertyInteractionOpen = false;
+let propertyMenuSelection = 0;
+const PROPERTY_INTERACTION_RADIUS = 3.0;
+
+// ============================================================================
+// MAP BLIP CREATION - Fixed coordinate system
+// ============================================================================
 
 function createMapBlips(): void {
     // Clear existing blips
@@ -107,11 +135,26 @@ function createMapBlips(): void {
             native.setBlipSprite(blip, BLIP_SPRITES.PROPERTY_OWNED);
             native.setBlipColour(blip, 3); // Blue - owned
         }
-        native.setBlipScale(blip, 0.8);
+        native.setBlipScale(blip, 0.9);
         native.setBlipAsShortRange(blip, true);
         native.beginTextCommandSetBlipName('STRING');
-        const label = prop.owner_player_id === null ? `${prop.name} - $${prop.price.toLocaleString()}` : prop.name;
+        const label = prop.owner_player_id === null 
+            ? `${prop.name} - $${prop.price.toLocaleString()}` 
+            : `${prop.name} (Owned)`;
         native.addTextComponentSubstringPlayerName(label);
+        native.endTextCommandSetBlipName(blip);
+        createdBlips.push(blip);
+    });
+
+    // Hospitals - Pink/Red cross icons
+    HOSPITALS.forEach(hospital => {
+        const blip = native.addBlipForCoord(hospital.x, hospital.y, hospital.z);
+        native.setBlipSprite(blip, BLIP_SPRITES.HOSPITAL);
+        native.setBlipColour(blip, 49); // Pink/Medical
+        native.setBlipScale(blip, 0.9);
+        native.setBlipAsShortRange(blip, true);
+        native.beginTextCommandSetBlipName('STRING');
+        native.addTextComponentSubstringPlayerName(hospital.name);
         native.endTextCommandSetBlipName(blip);
         createdBlips.push(blip);
     });
@@ -129,8 +172,171 @@ alt.onServer('gta:locations:update', (data: { weaponShops: ShopLocation[]; cloth
 
 alt.onServer('property:list', (props: PropertyLocation[]) => {
     properties = props;
+    alt.log(`[gta] Loaded ${properties.length} properties`);
     createMapBlips();
 });
+
+alt.onServer('gta:playerId', (id: number) => {
+    currentPlayerId = id;
+});
+
+// ============================================================================
+// PROPERTY SYSTEM - Ground-level coordinate calculation
+// ============================================================================
+
+function getDistanceToProperty(prop: PropertyLocation): number {
+    const player = alt.Player.local;
+    if (!player || !player.valid) return Infinity;
+    const pos = player.pos;
+    
+    // Calculate 3D distance using world coordinates
+    const dx = prop.pos_x - pos.x;
+    const dy = prop.pos_y - pos.y;
+    const dz = prop.pos_z - pos.z;
+    return Math.sqrt(dx * dx + dy * dy + dz * dz);
+}
+
+function findNearestProperty(): PropertyLocation | null {
+    if (properties.length === 0) return null;
+    
+    let nearest: PropertyLocation | null = null;
+    let minDist = PROPERTY_INTERACTION_RADIUS;
+    
+    for (const prop of properties) {
+        const dist = getDistanceToProperty(prop);
+        if (dist < minDist) {
+            minDist = dist;
+            nearest = prop;
+        }
+    }
+    
+    return nearest;
+}
+
+function openPropertyMenu(): void {
+    if (propertyInteractionOpen || !nearbyProperty) return;
+    propertyInteractionOpen = true;
+    propertyMenuSelection = 0;
+    alt.showCursor(true);
+    alt.toggleGameControls(false);
+}
+
+function closePropertyMenu(): void {
+    if (!propertyInteractionOpen) return;
+    propertyInteractionOpen = false;
+    alt.showCursor(false);
+    alt.toggleGameControls(true);
+}
+
+function handlePropertyAction(action: 'buy' | 'enter' | 'exit' | 'sell'): void {
+    if (!nearbyProperty) return;
+    
+    switch (action) {
+        case 'buy':
+            alt.emitServer('property:buy', nearbyProperty.id);
+            break;
+        case 'enter':
+            alt.emitServer('property:enter', nearbyProperty.id);
+            break;
+        case 'exit':
+            alt.emitServer('property:exit', nearbyProperty.id);
+            break;
+        case 'sell':
+            alt.emitServer('property:sell', nearbyProperty.id);
+            break;
+    }
+    closePropertyMenu();
+}
+
+// Server responses for property actions
+alt.onServer('property:buyResult', (result: { success: boolean; message: string; newBalance?: number; property?: PropertyLocation }) => {
+    if (result.success) {
+        addNotification(`SUCCESS: ${result.message}`);
+        if (result.newBalance !== undefined) {
+            playerMoney = result.newBalance;
+        }
+        // Request updated property list
+        alt.emitServer('property:requestList');
+    } else {
+        addNotification(`FAILED: ${result.message}`);
+    }
+});
+
+alt.onServer('property:sellResult', (result: { success: boolean; message: string; newBalance?: number }) => {
+    if (result.success) {
+        addNotification(`SUCCESS: ${result.message}`);
+        if (result.newBalance !== undefined) {
+            playerMoney = result.newBalance;
+        }
+        alt.emitServer('property:requestList');
+    } else {
+        addNotification(`FAILED: ${result.message}`);
+    }
+});
+
+alt.onServer('property:enterResult', (result: { success: boolean; message: string; interior?: { x: number; y: number; z: number; heading: number; ipl?: string } }) => {
+    if (result.success && result.interior) {
+        // Load IPL if needed
+        if (result.interior.ipl) {
+            loadPropertyIPL(result.interior.ipl);
+        }
+        // Teleport to interior
+        const player = alt.Player.local;
+        if (player && player.valid) {
+            native.setEntityCoordsNoOffset(
+                player.scriptID, 
+                result.interior.x, 
+                result.interior.y, 
+                result.interior.z, 
+                false, false, false
+            );
+            native.setEntityHeading(player.scriptID, result.interior.heading);
+        }
+        addNotification(result.message);
+    } else {
+        addNotification(`FAILED: ${result.message}`);
+    }
+});
+
+alt.onServer('property:exitResult', (result: { success: boolean; message: string; exterior?: { x: number; y: number; z: number } }) => {
+    if (result.success && result.exterior) {
+        const player = alt.Player.local;
+        if (player && player.valid) {
+            native.setEntityCoordsNoOffset(
+                player.scriptID, 
+                result.exterior.x, 
+                result.exterior.y, 
+                result.exterior.z + 1.0, 
+                false, false, false
+            );
+        }
+        addNotification(result.message);
+    } else {
+        addNotification(`FAILED: ${result.message}`);
+    }
+});
+
+// ============================================================================
+// PROPERTY IPL LOADING
+// ============================================================================
+
+const PROPERTY_IPLS: { [key: string]: string[] } = {
+    'apa_v_mp_h_01_a': ['apa_v_mp_h_01_a'],
+    'apa_v_mp_h_02_a': ['apa_v_mp_h_02_a'],
+    'apa_v_mp_h_03_a': ['apa_v_mp_h_03_a'],
+    'apa_v_mp_h_04_a': ['apa_v_mp_h_04_a'],
+    'apa_v_mp_h_05_a': ['apa_v_mp_h_05_a'],
+};
+
+function loadPropertyIPL(iplName: string): void {
+    const ipls = PROPERTY_IPLS[iplName] || [iplName];
+    ipls.forEach(ipl => {
+        if (!native.isIplActive(ipl)) {
+            native.requestIpl(ipl);
+            alt.log(`[gta] Loaded property IPL: ${ipl}`);
+        }
+    });
+}
 
 // ============================================================================
 // PHONE SYSTEM
@@ -146,7 +352,7 @@ let phoneInput2 = '';
 let phoneSelectedContact = 0;
 
 function openPhone(): void {
-    if (phoneOpen) return;
+    if (phoneOpen || propertyInteractionOpen) return;
     phoneOpen = true;
     phoneTab = 'main';
     phoneInput = '';
@@ -173,6 +379,24 @@ alt.onServer('phone:newMessage', (msg: any) => {
     phoneMessages.unshift(msg);
     phoneUnread++;
     addNotification(`New message from ${msg.sender_id}`);
+});
+
+// ============================================================================
+// DEATH SCREEN
+// ============================================================================
+
+let isDead = false;
+let deathTime = 0;
+const RESPAWN_DELAY = 5000;
+
+alt.on('playerDeath', () => {
+    isDead = true;
+    deathTime = Date.now();
+    alt.log('[gta-client] Player died');
+});
+
+alt.onServer('gta:spawn:safe', () => {
+    isDead = false;
 });
 
 // ============================================================================
@@ -203,7 +427,7 @@ let chatHistory: string[] = [];
 const MAX_CHAT_HISTORY = 10;
 
 function openChat(): void {
-    if (chatOpen || phoneOpen) return;
+    if (chatOpen || phoneOpen || propertyInteractionOpen) return;
     chatOpen = true;
     chatInput = '';
     alt.showCursor(true);
@@ -291,7 +515,6 @@ const CASINO_IPLS = [
 ];
 
 function loadCasinoInterior(): void {
-    // Request and load casino IPLs
     CASINO_IPLS.forEach(ipl => {
         if (!native.isIplActive(ipl)) {
             native.requestIpl(ipl);
@@ -299,7 +522,6 @@ function loadCasinoInterior(): void {
         }
     });
 
-    // Set casino interior state
     const casinoInteriorId = native.getInteriorAtCoords(1100.0, 220.0, -50.0);
     if (casinoInteriorId !== 0) {
         native.pinInteriorInMemory(casinoInteriorId);
@@ -313,36 +535,29 @@ function loadCasinoInterior(): void {
 // ============================================================================
 
 function disableAmbientPopulation(): void {
-    // Disable all ambient population - called every frame
     native.setVehicleDensityMultiplierThisFrame(0.0);
     native.setRandomVehicleDensityMultiplierThisFrame(0.0);
     native.setParkedVehicleDensityMultiplierThisFrame(0.0);
     native.setPedDensityMultiplierThisFrame(0.0);
     native.setScenarioPedDensityMultiplierThisFrame(0.0, 0.0);
-    
-    // Disable garbage trucks, random cars, etc.
     native.setGarbageTrucks(false);
     native.setRandomBoats(false);
     native.setRandomTrains(false);
 }
 
 function disablePopulationOnce(): void {
-    // One-time settings
     native.setPedPopulationBudget(0);
     native.setVehiclePopulationBudget(0);
     native.setRandomEventFlag(false);
     native.setCreateRandomCops(false);
     native.setCreateRandomCopsNotOnScenarios(false);
     native.setCreateRandomCopsOnScenarios(false);
-    
-    // Disable dispatch services (police, ambulance, fire)
-    native.enableDispatchService(1, false); // Police
-    native.enableDispatchService(2, false); // Ambulance
-    native.enableDispatchService(3, false); // Fire
-    native.enableDispatchService(4, false); // Police Helicopter
-    native.enableDispatchService(5, false); // Police Boats
-    native.enableDispatchService(6, false); // Army
-    
+    native.enableDispatchService(1, false);
+    native.enableDispatchService(2, false);
+    native.enableDispatchService(3, false);
+    native.enableDispatchService(4, false);
+    native.enableDispatchService(5, false);
+    native.enableDispatchService(6, false);
     alt.log('[gta] AI population disabled - GTA Online style');
 }
 
@@ -352,18 +567,10 @@ function disablePopulationOnce(): void {
 
 alt.on('connectionComplete', () => {
     alt.log('[gta-client] Connection complete');
-    
-    // Load default IPLs
     alt.loadDefaultIpls();
-    
-    // Load casino interior
     loadCasinoInterior();
-    
-    // Disable AI population (one-time settings)
     disablePopulationOnce();
-    
-    // Request collision for common areas
-    native.requestCollisionAtCoord(924.0, 46.0, 81.1); // Casino
+    native.requestCollisionAtCoord(924.0, 46.0, 81.1);
 });
 
 // ============================================================================
@@ -375,21 +582,35 @@ let shiftPressed = false;
 let activeInput: 'chat' | 'phone1' | 'phone2' = 'chat';
 
 alt.on('keydown', (key) => {
-    if (key === 16 || key === 160 || key === 161) shiftPressed = true;
+    const keyNum = key as number;
+    if (keyNum === 16 || keyNum === 160 || keyNum === 161) shiftPressed = true;
 });
 
 alt.on('keyup', (key) => {
-    if (key === 16 || key === 160 || key === 161) { shiftPressed = false; return; }
+    const keyNum = key as number;
+    if (keyNum === 16 || keyNum === 160 || keyNum === 161) { shiftPressed = false; return; }
+
+    // E key (69) - Property interaction
+    if (key === 69 && !chatOpen && !phoneOpen && !propertyInteractionOpen && nearbyProperty) {
+        openPropertyMenu();
+        return;
+    }
+
+    // Property menu navigation
+    if (propertyInteractionOpen) {
+        handlePropertyMenuKey(key);
+        return;
+    }
 
     // P key (80) - Toggle phone
-    if (key === 80 && !chatOpen) {
+    if (key === 80 && !chatOpen && !propertyInteractionOpen) {
         if (phoneOpen) closePhone();
         else if (isLoggedIn) openPhone();
         return;
     }
 
     // T key (84) - Open chat
-    if (key === 84 && !chatOpen && !phoneOpen) {
+    if (key === 84 && !chatOpen && !phoneOpen && !propertyInteractionOpen) {
         openChat();
         justOpened = true;
         activeInput = 'chat';
@@ -412,29 +633,52 @@ alt.on('keyup', (key) => {
     }
 });
 
+function handlePropertyMenuKey(key: number): void {
+    if (!nearbyProperty) return;
+
+    // Escape - Close menu
+    if (key === 27) {
+        closePropertyMenu();
+        return;
+    }
+
+    const isOwned = nearbyProperty.owner_player_id === currentPlayerId;
+    const isForSale = nearbyProperty.owner_player_id === null;
+
+    // Number keys for actions
+    if (key === 49) { // 1 - Buy (if for sale)
+        if (isForSale) handlePropertyAction('buy');
+        return;
+    }
+    if (key === 50) { // 2 - Enter (if owned)
+        if (isOwned) handlePropertyAction('enter');
+        return;
+    }
+    if (key === 51) { // 3 - Sell (if owned)
+        if (isOwned) handlePropertyAction('sell');
+        return;
+    }
+}
+
 function handlePhoneKey(key: number): void {
-    // Escape - Close or go back
     if (key === 27) {
         if (phoneTab === 'main') closePhone();
         else phoneTab = 'main';
         return;
     }
 
-    // Number keys for menu selection
     if (phoneTab === 'main') {
-        if (key === 49) { phoneTab = 'contacts'; return; } // 1 - Contacts
-        if (key === 50) { phoneTab = 'messages'; return; } // 2 - Messages
-        if (key === 51) { phoneTab = 'addContact'; phoneInput = ''; phoneInput2 = ''; activeInput = 'phone1'; return; } // 3 - Add Contact
-        if (key === 52) { phoneTab = 'sendMessage'; phoneInput = ''; phoneInput2 = ''; activeInput = 'phone1'; return; } // 4 - Send Message
+        if (key === 49) { phoneTab = 'contacts'; return; }
+        if (key === 50) { phoneTab = 'messages'; return; }
+        if (key === 51) { phoneTab = 'addContact'; phoneInput = ''; phoneInput2 = ''; activeInput = 'phone1'; return; }
+        if (key === 52) { phoneTab = 'sendMessage'; phoneInput = ''; phoneInput2 = ''; activeInput = 'phone1'; return; }
     }
 
-    // Tab to switch input fields
     if (key === 9 && (phoneTab === 'addContact' || phoneTab === 'sendMessage')) {
         activeInput = activeInput === 'phone1' ? 'phone2' : 'phone1';
         return;
     }
 
-    // Enter to submit
     if (key === 13) {
         if (phoneTab === 'addContact' && phoneInput && phoneInput2) {
             alt.emitServer('phone:addContact', phoneInput, phoneInput2);
@@ -449,7 +693,6 @@ function handlePhoneKey(key: number): void {
         return;
     }
 
-    // Text input for phone
     if (phoneTab === 'addContact' || phoneTab === 'sendMessage') {
         handleTextInput(key, activeInput);
     }
@@ -458,18 +701,13 @@ function handlePhoneKey(key: number): void {
 function handleTextInput(key: number, target: 'chat' | 'phone1' | 'phone2'): void {
     let input = target === 'chat' ? chatInput : target === 'phone1' ? phoneInput : phoneInput2;
 
-    // Enter
     if (key === 13 && target === 'chat') { sendChat(); return; }
-    // Escape
     if (key === 27 && target === 'chat') { closeChat(); return; }
-    // Backspace
     if (key === 8) { input = input.slice(0, -1); }
-    // Letters
     else if (key >= 65 && key <= 90) {
         const char = String.fromCharCode(key);
         input += shiftPressed ? char : char.toLowerCase();
     }
-    // Numbers with shift
     else if (key >= 48 && key <= 57) {
         if (shiftPressed) {
             const shiftNumbers: { [k: number]: string } = { 48: ')', 49: '!', 50: '@', 51: '#', 52: '$', 53: '%', 54: '^', 55: '&', 56: '*', 57: '(' };
@@ -478,9 +716,7 @@ function handleTextInput(key: number, target: 'chat' | 'phone1' | 'phone2'): voi
             input += String.fromCharCode(key);
         }
     }
-    // Space
     else if (key === 32) { input += ' '; }
-    // Special chars
     else {
         const specialKeys: { [k: number]: [string, string] } = {
             190: ['.', '>'], 188: [',', '<'], 191: ['/', '?'], 189: ['-', '_'],
@@ -526,7 +762,100 @@ function drawRect(x: number, y: number, w: number, h: number, r: number, g: numb
 }
 
 // ============================================================================
-// BLIP MARKERS FOR SHOPS
+// PROPERTY MARKERS - Fixed ground-level rendering
+// ============================================================================
+
+function drawPropertyMarkers(): void {
+    const player = alt.Player.local;
+    if (!player || !player.valid) return;
+    const pos = player.pos;
+
+    // Update nearby property detection
+    nearbyProperty = findNearestProperty();
+
+    properties.forEach(prop => {
+        const dist = getDistanceToProperty(prop);
+        
+        // Draw 3D marker for properties within 50m
+        if (dist < 50) {
+            const isForSale = prop.owner_player_id === null;
+            const isOwned = prop.owner_player_id === currentPlayerId;
+            
+            // Color: Green for sale, Blue for owned by player, Gray for owned by others
+            let color: [number, number, number];
+            if (isForSale) {
+                color = [100, 255, 100]; // Green
+            } else if (isOwned) {
+                color = [100, 100, 255]; // Blue
+            } else {
+                color = [150, 150, 150]; // Gray
+            }
+
+            // Draw cylinder marker at ground level
+            native.drawMarker(
+                1, // Cylinder
+                prop.pos_x, prop.pos_y, prop.pos_z - 0.5,
+                0, 0, 0,
+                0, 0, 0,
+                2.0, 2.0, 1.5,
+                color[0], color[1], color[2], 150,
+                false, false, 2, false, null as any, null as any, false
+            );
+
+            // Draw floating icon above
+            native.drawMarker(
+                32, // House icon
+                prop.pos_x, prop.pos_y, prop.pos_z + 2.0,
+                0, 0, 0,
+                0, 0, 0,
+                0.5, 0.5, 0.5,
+                color[0], color[1], color[2], 255,
+                true, true, 2, true, null as any, null as any, false
+            );
+
+            // Draw property info when close
+            if (dist < 15) {
+                native.setTextFont(4);
+                native.setTextScale(0.4, 0.4);
+                native.setTextColour(255, 255, 255, 255);
+                native.setTextOutline();
+                native.setTextCentre(true);
+                native.setDrawOrigin(prop.pos_x, prop.pos_y, prop.pos_z + 3.0, false);
+                native.beginTextCommandDisplayText('STRING');
+                
+                let label = prop.name;
+                if (isForSale) {
+                    label += `~n~$${prop.price.toLocaleString()}~n~~g~FOR SALE`;
+                } else if (isOwned) {
+                    label += '~n~~b~YOUR PROPERTY';
+                } else {
+                    label += '~n~~r~SOLD';
+                }
+                
+                native.addTextComponentSubstringPlayerName(label);
+                native.endTextCommandDisplayText(0, 0, 0);
+                native.clearDrawOrigin();
+            }
+
+            // Draw interaction prompt when very close
+            if (dist < PROPERTY_INTERACTION_RADIUS && !propertyInteractionOpen) {
+                native.setTextFont(4);
+                native.setTextScale(0.35, 0.35);
+                native.setTextColour(255, 255, 0, 255);
+                native.setTextOutline();
+                native.setTextCentre(true);
+                native.setDrawOrigin(prop.pos_x, prop.pos_y, prop.pos_z + 1.0, false);
+                native.beginTextCommandDisplayText('STRING');
+                native.addTextComponentSubstringPlayerName('Press E to interact');
+                native.endTextCommandDisplayText(0, 0, 0);
+                native.clearDrawOrigin();
+            }
+        }
+    });
+}
+
+// ============================================================================
+// SHOP MARKERS
 // ============================================================================
 
 function drawShopMarkers(): void {
@@ -534,8 +863,7 @@ function drawShopMarkers(): void {
     if (!player || !player.valid) return;
     const pos = player.pos;
 
-    // Draw 3D markers for nearby shops
-    [...weaponShops, ...clothingShops, ...casinos].forEach((shop, i) => {
+    [...weaponShops, ...clothingShops, ...casinos].forEach((shop) => {
         const dist = Math.sqrt(Math.pow(shop.x - pos.x, 2) + Math.pow(shop.y - pos.y, 2) + Math.pow(shop.z - pos.z, 2));
         if (dist < 100) {
             const isWeapon = weaponShops.includes(shop);
@@ -560,12 +888,114 @@ function drawShopMarkers(): void {
 }
 
 // ============================================================================
+// PROPERTY MENU UI
+// ============================================================================
+
+function drawPropertyMenu(): void {
+    if (!propertyInteractionOpen || !nearbyProperty) return;
+
+    const prop = nearbyProperty;
+    const isForSale = prop.owner_player_id === null;
+    const isOwned = prop.owner_player_id === currentPlayerId;
+
+    // Background
+    drawRect(0.5, 0.5, 0.3, 0.35, 20, 20, 30, 230);
+    
+    // Title
+    drawTextLeft(prop.name, 0.38, 0.36, 0.5, 255, 200, 100);
+    
+    // Price info
+    if (isForSale) {
+        drawTextLeft(`Price: $${prop.price.toLocaleString()}`, 0.38, 0.42, 0.4, 100, 255, 100);
+        drawTextLeft(`Your money: $${playerMoney.toLocaleString()}`, 0.38, 0.46, 0.35, 200, 200, 200);
+    } else if (isOwned) {
+        drawTextLeft('You own this property', 0.38, 0.42, 0.4, 100, 100, 255);
+        drawTextLeft(`Sell value: $${Math.floor(prop.price * 0.7).toLocaleString()}`, 0.38, 0.46, 0.35, 200, 200, 200);
+    } else {
+        drawTextLeft('This property is owned', 0.38, 0.42, 0.4, 255, 100, 100);
+    }
+
+    // Options
+    let yPos = 0.52;
+    if (isForSale) {
+        const canAfford = playerMoney >= prop.price;
+        const buyColor = canAfford ? [100, 255, 100] : [150, 150, 150];
+        drawTextLeft('[1] Buy Property', 0.38, yPos, 0.4, buyColor[0], buyColor[1], buyColor[2]);
+        yPos += 0.04;
+    }
+    
+    if (isOwned) {
+        drawTextLeft('[2] Enter Property', 0.38, yPos, 0.4, 100, 200, 255);
+        yPos += 0.04;
+        drawTextLeft('[3] Sell Property', 0.38, yPos, 0.4, 255, 150, 100);
+        yPos += 0.04;
+    }
+
+    // Close hint
+    drawTextLeft('[ESC] Close', 0.38, 0.62, 0.35, 150, 150, 150);
+}
+
+// ============================================================================
+// DEATH SCREEN UI
+// ============================================================================
+
+function drawDeathScreen(): void {
+    if (!isDead) return;
+    
+    const elapsed = Date.now() - deathTime;
+    const remaining = Math.max(0, RESPAWN_DELAY - elapsed);
+    const seconds = Math.ceil(remaining / 1000);
+    
+    // Dark overlay
+    drawRect(0.5, 0.5, 1.0, 1.0, 0, 0, 0, 180);
+    
+    // Death message
+    native.setTextFont(4);
+    native.setTextScale(1.0, 1.0);
+    native.setTextColour(255, 50, 50, 255);
+    native.setTextOutline();
+    native.setTextCentre(true);
+    native.beginTextCommandDisplayText('STRING');
+    native.addTextComponentSubstringPlayerName('WASTED');
+    native.endTextCommandDisplayText(0.5, 0.4, 0);
+    
+    // Respawn countdown
+    native.setTextFont(4);
+    native.setTextScale(0.5, 0.5);
+    native.setTextColour(255, 255, 255, 255);
+    native.setTextOutline();
+    native.setTextCentre(true);
+    native.beginTextCommandDisplayText('STRING');
+    if (remaining > 0) {
+        native.addTextComponentSubstringPlayerName(`Respawning at hospital in ${seconds}...`);
+    } else {
+        native.addTextComponentSubstringPlayerName('Respawning...');
+    }
+    native.endTextCommandDisplayText(0.5, 0.5, 0);
+    
+    // Hospital fee notice
+    native.setTextFont(4);
+    native.setTextScale(0.35, 0.35);
+    native.setTextColour(200, 200, 200, 255);
+    native.setTextOutline();
+    native.setTextCentre(true);
+    native.beginTextCommandDisplayText('STRING');
+    native.addTextComponentSubstringPlayerName('Hospital fee: $500');
+    native.endTextCommandDisplayText(0.5, 0.55, 0);
+}
+
+// ============================================================================
 // HUD DRAWING
 // ============================================================================
 
 alt.everyTick(() => {
-    // Disable AI population every frame (required for some natives)
     disableAmbientPopulation();
+    
+    // Death screen takes priority
+    if (isDead) {
+        drawDeathScreen();
+        return;
+    }
     
     // Money HUD (top right)
     if (isLoggedIn) {
@@ -575,8 +1005,14 @@ alt.everyTick(() => {
         drawText('Press T - /register or /login', 0.98, 0.02, 0.35, 255, 255, 255);
     }
 
+    // Property markers (with fixed ground-level coordinates)
+    drawPropertyMarkers();
+
     // Shop markers
     drawShopMarkers();
+
+    // Property menu
+    drawPropertyMenu();
 
     // Casino result display
     if (showCasinoResult > Date.now()) {
@@ -643,7 +1079,7 @@ alt.everyTick(() => {
     }
 
     // Chat history (left side)
-    if (!phoneOpen) {
+    if (!phoneOpen && !propertyInteractionOpen) {
         for (let i = 0; i < Math.min(chatHistory.length, 5); i++) {
             const alpha = 255 - i * 40;
             native.setTextFont(4);
@@ -669,8 +1105,8 @@ alt.everyTick(() => {
     }
 
     // Help hint
-    if (isLoggedIn && !chatOpen && !phoneOpen) {
-        drawTextLeft('T: Chat | P: Phone | /help', 0.02, 0.02, 0.3, 150, 150, 150);
+    if (isLoggedIn && !chatOpen && !phoneOpen && !propertyInteractionOpen) {
+        drawTextLeft('T: Chat | P: Phone | E: Interact | /help', 0.02, 0.02, 0.3, 150, 150, 150);
     }
 });
 

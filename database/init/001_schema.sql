@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS player_clothes (
     FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE CASCADE
 );
 
--- Properties system
+-- Properties system with interior coordinates and IPL support
 CREATE TABLE IF NOT EXISTS properties (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -45,6 +45,8 @@ CREATE TABLE IF NOT EXISTS properties (
     interior_x FLOAT NOT NULL,
     interior_y FLOAT NOT NULL,
     interior_z FLOAT NOT NULL,
+    interior_heading FLOAT DEFAULT 0,
+    ipl VARCHAR(255) NULL,
     purchased_at TIMESTAMP NULL,
     FOREIGN KEY (owner_player_id) REFERENCES players(id) ON DELETE SET NULL
 );
@@ -95,10 +97,12 @@ CREATE TABLE IF NOT EXISTS transaction_logs (
 );
 
 -- Default properties (seeded by server if table is empty)
-INSERT INTO properties (name, price, pos_x, pos_y, pos_z, interior_x, interior_y, interior_z) VALUES
-    ('Cheap Apartment', 25000, -269.4, -955.3, 31.2, -269.4, -955.3, 31.2),
-    ('Del Perro Apartment', 80000, -1447.1, -537.8, 34.7, -1447.1, -537.8, 34.7),
-    ('Vinewood House', 150000, -174.3, 497.7, 137.7, -174.3, 497.7, 137.7),
-    ('Beach House', 300000, -1902.1, -573.4, 11.6, -1902.1, -573.4, 11.6),
-    ('Luxury Penthouse', 500000, -75.0, -818.5, 326.2, -75.0, -818.5, 326.2)
+-- These use accurate GTA V world coordinates for property entrances
+-- Interior coordinates point to GTA Online apartment interiors
+INSERT INTO properties (name, price, pos_x, pos_y, pos_z, interior_x, interior_y, interior_z, interior_heading, ipl) VALUES
+    ('Unit 124 Popular St', 25000, -47.52, -585.86, 37.95, 266.04, -1007.47, -101.01, 70.0, 'apa_v_mp_h_01_a'),
+    ('0115 Bay City Ave', 80000, -1447.06, -538.53, 34.74, 346.99, -1012.99, -99.20, 70.0, 'apa_v_mp_h_02_a'),
+    ('0504 S Mo Milton Dr', 150000, -774.01, 342.03, 211.40, 346.99, -1012.99, -99.20, 70.0, 'apa_v_mp_h_03_a'),
+    ('0184 Milton Rd', 300000, -572.60, 653.54, 145.63, 346.99, -1012.99, -99.20, 70.0, 'apa_v_mp_h_04_a'),
+    ('Eclipse Towers Penthouse', 500000, -777.14, 312.73, 223.26, 346.99, -1012.99, -99.20, 70.0, 'apa_v_mp_h_05_a')
 ON DUPLICATE KEY UPDATE id=id;
