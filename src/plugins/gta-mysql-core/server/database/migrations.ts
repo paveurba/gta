@@ -75,6 +75,34 @@ export async function runMigrations(pool: mysql.Pool): Promise<void> {
     try {
         await pool.execute(`ALTER TABLE players ADD COLUMN temp_password_expires_at TIMESTAMP NULL`);
     } catch (e) { /* Column already exists */ }
+    try {
+        await pool.execute(`ALTER TABLE players ADD COLUMN last_login TIMESTAMP NULL`);
+    } catch (e) { /* Column already exists */ }
+
+    // Backfill empty usernames from email local part (e.g. pavlik@upanet.org -> pavlik)
+    const [rows] = await pool.execute<{ id: number; email: string; username: string | null }[]>(
+        "SELECT id, email, username FROM players WHERE username IS NULL OR TRIM(COALESCE(username, '')) = ''"
+    );
+    const toBackfill = Array.isArray(rows) ? rows : [];
+    if (toBackfill.length > 0) {
+        const used = new Set<string>();
+        const [existing] = await pool.execute<{ username: string }[]>('SELECT username FROM players WHERE username IS NOT NULL AND TRIM(username) != ""');
+        (Array.isArray(existing) ? existing : []).forEach((r) => { if (r.username) used.add(r.username.toLowerCase()); });
+        for (const row of toBackfill) {
+            const local = row.email.split('@')[0] || '';
+            let base = local.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 32) || `player${row.id}`;
+            if (base.length < 3) base = `player${row.id}`;
+            let username = base;
+            let n = 2;
+            while (used.has(username.toLowerCase())) {
+                username = `${base.slice(0, 28)}_${n}`;
+                n++;
+            }
+            used.add(username.toLowerCase());
+            await pool.execute('UPDATE players SET username = ? WHERE id = ?', [username, row.id]);
+            alt.log(`[migrations] Backfilled username for player ${row.id} (${row.email}) -> ${username}`);
+        }
+    }
 
     // Add columns if they don't exist (for existing databases)
     try {

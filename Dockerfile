@@ -22,6 +22,7 @@ COPY --from=builder /app/resources ./resources
 COPY --from=builder /app/server.toml ./server.toml
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/scripts/send-test-mail.js ./scripts/send-test-mail.js
 
 EXPOSE 7788/tcp 7788/udp
 CMD ["./altv-server", "--config", "server.toml"]

@@ -1,95 +1,33 @@
 /**
  * Email service for sending transactional emails (e.g. password reset).
- * Configuration is read from .env: MAIL_HOST, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD, MAIL_FROM_ADDRESS, MAIL_FROM_NAME.
+ * Uses shared mailTransport (same code path as scripts/send-test-mail.js).
  */
 
 import * as alt from 'alt-server';
+import { getMailConfig, sendMail as sendMailTransport, type SendResult } from './mailTransport.js';
 
-export interface MailConfig {
-    host: string;
-    port: number;
-    secure: boolean;
-    user: string;
-    password: string;
-    fromAddress: string;
-    fromName: string;
-}
-
-function getMailConfig(): MailConfig | null {
-    const host = process.env.MAIL_HOST;
-    const port = parseInt(process.env.MAIL_PORT || '587', 10);
-    const user = process.env.MAIL_USERNAME;
-    const password = process.env.MAIL_PASSWORD;
-    const fromAddress = process.env.MAIL_FROM_ADDRESS;
-    const fromName = process.env.MAIL_FROM_NAME || 'GTA Server';
-
-    const missing: string[] = [];
-    if (!host || host.trim() === '') missing.push('MAIL_HOST');
-    if (!user || (typeof user === 'string' && user.trim() === '')) missing.push('MAIL_USERNAME');
-    if (!password || (typeof password === 'string' && password.trim() === '')) missing.push('MAIL_PASSWORD');
-    if (!fromAddress || (typeof fromAddress === 'string' && fromAddress.trim() === '')) missing.push('MAIL_FROM_ADDRESS');
-
-    if (missing.length > 0) {
-        alt.logWarning(`[EmailService] Mail not configured. Missing or empty in .env: ${missing.join(', ')}. Set these to send password reset emails.`);
-        return null;
-    }
-
-    return {
-        host,
-        port,
-        secure: port === 465,
-        user,
-        password,
-        fromAddress,
-        fromName,
-    };
-}
-
-export interface SendResult {
-    success: boolean;
-    error?: string;
-}
+export type { SendResult };
 
 /**
- * Send an email. Returns success/failure. If MAIL_* env vars are not set, returns failure without throwing.
+ * Send an email. Uses the same transport as in-game password reset and CLI test script.
  */
 export async function sendEmail(to: string, subject: string, textBody: string, htmlBody?: string): Promise<SendResult> {
     const config = getMailConfig();
     if (!config) {
+        const missing = ['MAIL_HOST', 'MAIL_USERNAME', 'MAIL_PASSWORD', 'MAIL_FROM_ADDRESS'].filter(
+            (k) => !process.env[k]?.trim()
+        );
+        alt.logWarning(`[EmailService] Mail not configured. Missing or empty: ${missing.join(', ')}`);
         return { success: false, error: 'Mail not configured' };
     }
 
-    try {
-        const nodemailer = await import('nodemailer');
-        const transporter = nodemailer.default.createTransport({
-            host: config.host,
-            port: config.port,
-            secure: config.secure,
-            requireTLS: !config.secure,
-            auth: {
-                user: config.user,
-                pass: config.password,
-            },
-            tls: {
-                rejectUnauthorized: false,
-            },
-        });
-
-        await transporter.sendMail({
-            from: `"${config.fromName}" <${config.fromAddress}>`,
-            to,
-            subject,
-            text: textBody,
-            html: htmlBody || textBody.replace(/\n/g, '<br>'),
-        });
-
+    const result = await sendMailTransport(to, subject, textBody, htmlBody);
+    if (result.success) {
         alt.log(`[EmailService] Email sent to ${to}: ${subject}`);
-        return { success: true };
-    } catch (err) {
-        const message = err instanceof Error ? err.message : String(err);
-        alt.logError(`[EmailService] Failed to send email: ${message}`);
-        return { success: false, error: message };
+    } else {
+        alt.logError(`[EmailService] Failed to send email: ${result.error}`);
     }
+    return result;
 }
 
 /** Log at module load whether mail is configured (so server logs show why reset emails might not send). */
@@ -97,8 +35,12 @@ function logMailConfigStatus(): void {
     const config = getMailConfig();
     if (config) {
         alt.log(`[EmailService] Mail configured (host: ${config.host}:${config.port}, from: ${config.fromAddress}). Password reset emails will be sent.`);
+    } else {
+        const missing = ['MAIL_HOST', 'MAIL_USERNAME', 'MAIL_PASSWORD', 'MAIL_FROM_ADDRESS'].filter(
+            (k) => !process.env[k]?.trim()
+        );
+        alt.logWarning(`[EmailService] Mail not configured. Missing or empty: ${missing.join(', ')}`);
     }
-    // If not configured, getMailConfig() already logged missing vars
 }
 logMailConfigStatus();
 
