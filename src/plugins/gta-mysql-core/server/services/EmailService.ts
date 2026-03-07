@@ -59,9 +59,13 @@ export async function sendEmail(to: string, subject: string, textBody: string, h
             host: config.host,
             port: config.port,
             secure: config.secure,
+            requireTLS: !config.secure,
             auth: {
                 user: config.user,
                 pass: config.password,
+            },
+            tls: {
+                rejectUnauthorized: false,
             },
         });
 
