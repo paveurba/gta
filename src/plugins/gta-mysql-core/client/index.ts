@@ -445,14 +445,9 @@ alt.onServer('gta:logout', () => {
     addNotification('Logged out successfully');
 });
 
-// Auth UI result handlers
+// Auth UI result handlers – only update message and state. Form closes only when user presses ESC.
 alt.onServer('auth:registerResult', (result: { success: boolean; message: string }) => {
     authMessage = result.message;
-    if (result.success) {
-        authOpen = false;
-        authScreen = 'menu';
-        authMessage = '';
-    }
 });
 
 alt.onServer('auth:loginResult', (result: { success: boolean; message: string; passwordChangeRequired: boolean }) => {
@@ -464,10 +459,6 @@ alt.onServer('auth:loginResult', (result: { success: boolean; message: string; p
         authForm.changeNew = '';
         authForm.changeConfirm = '';
         activeAuthFieldIndex = 0;
-    } else if (result.success) {
-        authOpen = false;
-        authScreen = 'menu';
-        authMessage = '';
     }
 });
 
@@ -479,9 +470,6 @@ alt.onServer('auth:changePasswordResult', (result: { success: boolean; message: 
     authMessage = result.message;
     if (result.success) {
         authRequirePasswordChange = false;
-        authOpen = false;
-        authScreen = 'menu';
-        authMessage = '';
     }
 });
 
@@ -1778,6 +1766,8 @@ alt.everyTick(() => {
 
     // Auth UI (login / register / forgot password / change password)
     if (authOpen) {
+        alt.showCursor(true);
+        alt.toggleGameControls(false);
         const panelW = 0.32;
         const panelH = authScreen === 'menu' ? 0.36 : 0.52;
         drawRect(0.5, 0.5, panelW, panelH, 25, 25, 35, 245);
