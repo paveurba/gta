@@ -5,3 +5,5 @@ export { ClothingShopService, CLOTHING_CATALOG, CLOTHING_SHOP_LOCATIONS, CLOTHIN
 export { PhoneService, type PhoneContact, type PhoneMessage, type PhoneData } from './PhoneService.js';
 export { CasinoService, CASINO_LOCATIONS, type SlotResult, type RouletteResult } from './CasinoService.js';
 export { VehicleService, VEHICLE_CATALOG, VEHICLE_DEALERSHIPS, type PlayerVehicle, type VehicleCatalogItem } from './VehicleService.js';
+export { AuthService, type AuthSession, type RegisterResult, type LoginResult, type ForgotPasswordResult, type ChangePasswordResult } from './AuthService.js';
+export { sendEmail, sendTemporaryPasswordEmail, type SendResult } from './EmailService.js';

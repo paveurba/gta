@@ -436,12 +436,53 @@ alt.onServer('gta:playerId', (id: number) => {
 
 alt.onServer('gta:logout', () => {
     isLoggedIn = false;
+    authRequirePasswordChange = false;
     currentPlayerId = 0;
     playerMoney = 0;
     playerBank = 0;
     properties = [];
     createMapBlips();
     addNotification('Logged out successfully');
+});
+
+// Auth UI result handlers
+alt.onServer('auth:registerResult', (result: { success: boolean; message: string }) => {
+    authMessage = result.message;
+    if (result.success) {
+        authOpen = false;
+        authScreen = 'menu';
+        authMessage = '';
+    }
+});
+
+alt.onServer('auth:loginResult', (result: { success: boolean; message: string; passwordChangeRequired: boolean }) => {
+    authMessage = result.message;
+    if (result.success && result.passwordChangeRequired) {
+        authRequirePasswordChange = true;
+        authScreen = 'changePassword';
+        authForm.changeCurrent = '';
+        authForm.changeNew = '';
+        authForm.changeConfirm = '';
+        activeAuthFieldIndex = 0;
+    } else if (result.success) {
+        authOpen = false;
+        authScreen = 'menu';
+        authMessage = '';
+    }
+});
+
+alt.onServer('auth:forgotPasswordResult', (result: { success: boolean; message: string }) => {
+    authMessage = result.message;
+});
+
+alt.onServer('auth:changePasswordResult', (result: { success: boolean; message: string }) => {
+    authMessage = result.message;
+    if (result.success) {
+        authRequirePasswordChange = false;
+        authOpen = false;
+        authScreen = 'menu';
+        authMessage = '';
+    }
 });
 
 // ============================================================================
@@ -711,6 +752,125 @@ alt.onServer('casino:rouletteResult', (result: any) => {
 });
 
 // ============================================================================
+// AUTH UI STATE
+// ============================================================================
+
+type AuthScreen = 'menu' | 'login' | 'register' | 'forgot' | 'changePassword';
+
+let authOpen = false;
+let authScreen: AuthScreen = 'menu';
+let authRequirePasswordChange = false;
+let authMessage = '';
+let authForm = {
+    loginId: '',
+    loginPassword: '',
+    regUsername: '',
+    regEmail: '',
+    regPassword: '',
+    regConfirm: '',
+    forgotEmail: '',
+    changeCurrent: '',
+    changeNew: '',
+    changeConfirm: '',
+};
+let activeAuthFieldIndex = 0;
+
+const AUTH_FIELDS: Record<AuthScreen, (keyof typeof authForm)[]> = {
+    menu: [],
+    login: ['loginId', 'loginPassword'],
+    register: ['regUsername', 'regEmail', 'regPassword', 'regConfirm'],
+    forgot: ['forgotEmail'],
+    changePassword: ['changeCurrent', 'changeNew', 'changeConfirm'],
+};
+
+function getActiveAuthFieldKey(): keyof typeof authForm | null {
+    const keys = AUTH_FIELDS[authScreen];
+    if (!keys.length || activeAuthFieldIndex >= keys.length) return null;
+    return keys[activeAuthFieldIndex];
+}
+
+function openAuth(screen: AuthScreen = 'menu'): void {
+    authOpen = true;
+    authScreen = screen;
+    authMessage = '';
+    activeAuthFieldIndex = 0;
+    if (screen === 'menu') authRequirePasswordChange = false;
+    alt.showCursor(true);
+    alt.toggleGameControls(false);
+}
+
+function closeAuth(): void {
+    if (authRequirePasswordChange) return;
+    authOpen = false;
+    authScreen = 'menu';
+    authMessage = '';
+    authForm = {
+        loginId: '',
+        loginPassword: '',
+        regUsername: '',
+        regEmail: '',
+        regPassword: '',
+        regConfirm: '',
+        forgotEmail: '',
+        changeCurrent: '',
+        changeNew: '',
+        changeConfirm: '',
+    };
+    activeAuthFieldIndex = 0;
+    alt.showCursor(false);
+    alt.toggleGameControls(true);
+}
+
+function authBack(): void {
+    if (authRequirePasswordChange && authScreen === 'changePassword') return;
+    if (authScreen === 'menu') closeAuth();
+    else {
+        authScreen = 'menu';
+        authMessage = '';
+        activeAuthFieldIndex = 0;
+    }
+}
+
+function submitAuthForm(): void {
+    if (authScreen === 'login') {
+        alt.emitServer('auth:login', authForm.loginId.trim(), authForm.loginPassword);
+    } else if (authScreen === 'register') {
+        alt.emitServer('auth:register', authForm.regUsername.trim(), authForm.regEmail.trim(), authForm.regPassword, authForm.regConfirm);
+    } else if (authScreen === 'forgot') {
+        alt.emitServer('auth:forgotPassword', authForm.forgotEmail.trim());
+    } else if (authScreen === 'changePassword') {
+        alt.emitServer('auth:changePassword', authForm.changeCurrent, authForm.changeNew, authForm.changeConfirm);
+    }
+}
+
+function handleAuthTextInput(key: number, shiftPressed: boolean): void {
+    const field = getActiveAuthFieldKey();
+    if (!field) return;
+    let input = authForm[field];
+
+    if (key === 8) input = input.slice(0, -1);
+    else if (key >= 65 && key <= 90) {
+        const char = String.fromCharCode(key);
+        input += shiftPressed ? char : char.toLowerCase();
+    } else if (key >= 48 && key <= 57) {
+        if (shiftPressed) {
+            const shiftNumbers: { [k: number]: string } = { 48: ')', 49: '!', 50: '@', 51: '#', 52: '$', 53: '%', 54: '^', 55: '&', 56: '*', 57: '(' };
+            input += shiftNumbers[key] || '';
+        } else input += String.fromCharCode(key);
+    } else if (key === 32) input += ' ';
+    else {
+        const specialKeys: { [k: number]: [string, string] } = {
+            190: ['.', '>'], 188: [',', '<'], 191: ['/', '?'], 189: ['-', '_'],
+            187: ['=', '+'], 192: ['`', '~'], 219: ['[', '{'], 221: [']', '}'],
+            220: ['\\', '|'], 186: [';', ':'], 222: ["'", '"'],
+        };
+        if (specialKeys[key]) input += shiftPressed ? specialKeys[key][1] : specialKeys[key][0];
+    }
+
+    authForm = { ...authForm, [field]: input };
+}
+
+// ============================================================================
 // CHAT SYSTEM
 // ============================================================================
 
@@ -949,16 +1109,49 @@ alt.on('keyup', (key) => {
         return;
     }
 
-    // T key (84) - Open chat
+    // T key (84) - Open auth (if not logged in or must change password) or chat
     if (key === 84 && !chatOpen && !phoneOpen && !propertyInteractionOpen) {
-        openChat();
+        if (!isLoggedIn || authRequirePasswordChange) {
+            openAuth(authRequirePasswordChange ? 'changePassword' : 'menu');
+        } else {
+            openChat();
+            activeInput = 'chat';
+        }
         justOpened = true;
-        activeInput = 'chat';
         alt.setTimeout(() => { justOpened = false; }, 100);
         return;
     }
 
     if (justOpened) return;
+
+    // Auth UI
+    if (authOpen) {
+        if (key === 27) {
+            authBack();
+            return;
+        }
+        if (authScreen === 'menu') {
+            if (key === 49) { openAuth('login'); authForm.loginId = ''; authForm.loginPassword = ''; activeAuthFieldIndex = 0; return; }
+            if (key === 50) { openAuth('register'); authForm.regUsername = ''; authForm.regEmail = ''; authForm.regPassword = ''; authForm.regConfirm = ''; activeAuthFieldIndex = 0; return; }
+            if (key === 51) { openAuth('forgot'); authForm.forgotEmail = ''; activeAuthFieldIndex = 0; return; }
+        }
+        if (key === 9) {
+            const keys = AUTH_FIELDS[authScreen];
+            if (keys.length) {
+                activeAuthFieldIndex = (activeAuthFieldIndex + 1) % keys.length;
+            }
+            return;
+        }
+        if (key === 13) {
+            submitAuthForm();
+            return;
+        }
+        const field = getActiveAuthFieldKey();
+        if (field !== null) {
+            handleAuthTextInput(key, shiftPressed);
+        }
+        return;
+    }
 
     // Phone navigation
     if (phoneOpen) {
@@ -1580,13 +1773,71 @@ alt.everyTick(() => {
         drawDeathScreen();
         return;
     }
-    
+
+    // Auth UI (login / register / forgot password / change password)
+    if (authOpen) {
+        const panelW = 0.32;
+        const panelH = authScreen === 'menu' ? 0.36 : 0.52;
+        drawRect(0.5, 0.5, panelW, panelH, 25, 25, 35, 245);
+        drawTextLeft(authRequirePasswordChange ? 'CHANGE PASSWORD (required)' : 'ACCOUNT', 0.36, 0.28, 0.5, 100, 200, 255);
+
+        if (authScreen === 'menu') {
+            drawTextLeft('[1] Login', 0.36, 0.36, 0.4, 255, 255, 255);
+            drawTextLeft('[2] Register', 0.36, 0.42, 0.4, 255, 255, 255);
+            drawTextLeft('[3] Forgot Password', 0.36, 0.48, 0.4, 255, 255, 255);
+            drawTextLeft('[ESC] Close', 0.36, 0.58, 0.35, 150, 150, 150);
+        } else if (authScreen === 'login') {
+            drawTextLeft('Username or Email:', 0.36, 0.34, 0.35, 200, 200, 200);
+            drawRect(0.5, 0.395, 0.26, 0.032, getActiveAuthFieldKey() === 'loginId' ? 60 : 40, getActiveAuthFieldKey() === 'loginId' ? 60 : 40, getActiveAuthFieldKey() === 'loginId' ? 90 : 55, 255);
+            drawTextLeft(authForm.loginId + (getActiveAuthFieldKey() === 'loginId' ? '_' : ''), 0.37, 0.385, 0.35, 255, 255, 255);
+            drawTextLeft('Password:', 0.36, 0.44, 0.35, 200, 200, 200);
+            drawRect(0.5, 0.495, 0.26, 0.032, getActiveAuthFieldKey() === 'loginPassword' ? 60 : 40, getActiveAuthFieldKey() === 'loginPassword' ? 60 : 40, getActiveAuthFieldKey() === 'loginPassword' ? 90 : 55, 255);
+            drawTextLeft('*'.repeat(authForm.loginPassword.length) + (getActiveAuthFieldKey() === 'loginPassword' ? '_' : ''), 0.37, 0.485, 0.35, 255, 255, 255);
+            if (authMessage) drawTextLeft(authMessage, 0.36, 0.55, 0.3, 255, 200, 100);
+            drawTextLeft('[TAB] Next | [ENTER] Login | [ESC] Back', 0.36, 0.62, 0.28, 150, 150, 150);
+        } else if (authScreen === 'register') {
+            drawTextLeft('Username:', 0.36, 0.32, 0.32, 200, 200, 200);
+            drawRect(0.5, 0.355, 0.26, 0.028, getActiveAuthFieldKey() === 'regUsername' ? 60 : 40, getActiveAuthFieldKey() === 'regUsername' ? 60 : 40, getActiveAuthFieldKey() === 'regUsername' ? 90 : 55, 255);
+            drawTextLeft(authForm.regUsername + (getActiveAuthFieldKey() === 'regUsername' ? '_' : ''), 0.37, 0.348, 0.32, 255, 255, 255);
+            drawTextLeft('Email:', 0.36, 0.39, 0.32, 200, 200, 200);
+            drawRect(0.5, 0.425, 0.26, 0.028, getActiveAuthFieldKey() === 'regEmail' ? 60 : 40, getActiveAuthFieldKey() === 'regEmail' ? 60 : 40, getActiveAuthFieldKey() === 'regEmail' ? 90 : 55, 255);
+            drawTextLeft(authForm.regEmail + (getActiveAuthFieldKey() === 'regEmail' ? '_' : ''), 0.37, 0.418, 0.32, 255, 255, 255);
+            drawTextLeft('Password:', 0.36, 0.46, 0.32, 200, 200, 200);
+            drawRect(0.5, 0.495, 0.26, 0.028, getActiveAuthFieldKey() === 'regPassword' ? 60 : 40, getActiveAuthFieldKey() === 'regPassword' ? 60 : 40, getActiveAuthFieldKey() === 'regPassword' ? 90 : 55, 255);
+            drawTextLeft('*'.repeat(authForm.regPassword.length) + (getActiveAuthFieldKey() === 'regPassword' ? '_' : ''), 0.37, 0.488, 0.32, 255, 255, 255);
+            drawTextLeft('Confirm Password:', 0.36, 0.53, 0.32, 200, 200, 200);
+            drawRect(0.5, 0.565, 0.26, 0.028, getActiveAuthFieldKey() === 'regConfirm' ? 60 : 40, getActiveAuthFieldKey() === 'regConfirm' ? 60 : 40, getActiveAuthFieldKey() === 'regConfirm' ? 90 : 55, 255);
+            drawTextLeft('*'.repeat(authForm.regConfirm.length) + (getActiveAuthFieldKey() === 'regConfirm' ? '_' : ''), 0.37, 0.558, 0.32, 255, 255, 255);
+            if (authMessage) drawTextLeft(authMessage, 0.36, 0.60, 0.28, 255, 200, 100);
+            drawTextLeft('[TAB] Next | [ENTER] Register | [ESC] Back', 0.36, 0.66, 0.28, 150, 150, 150);
+        } else if (authScreen === 'forgot') {
+            drawTextLeft('Enter your registered email:', 0.36, 0.36, 0.35, 200, 200, 200);
+            drawRect(0.5, 0.415, 0.26, 0.032, getActiveAuthFieldKey() === 'forgotEmail' ? 60 : 40, getActiveAuthFieldKey() === 'forgotEmail' ? 60 : 40, getActiveAuthFieldKey() === 'forgotEmail' ? 90 : 55, 255);
+            drawTextLeft(authForm.forgotEmail + (getActiveAuthFieldKey() === 'forgotEmail' ? '_' : ''), 0.37, 0.405, 0.35, 255, 255, 255);
+            if (authMessage) drawTextLeft(authMessage, 0.36, 0.48, 0.3, 255, 200, 100);
+            drawTextLeft('[ENTER] Send reset | [ESC] Back', 0.36, 0.56, 0.28, 150, 150, 150);
+        } else if (authScreen === 'changePassword') {
+            drawTextLeft(authRequirePasswordChange ? 'Enter temporary (or current) password:' : 'Current password:', 0.36, 0.34, 0.32, 200, 200, 200);
+            drawRect(0.5, 0.395, 0.26, 0.032, getActiveAuthFieldKey() === 'changeCurrent' ? 60 : 40, getActiveAuthFieldKey() === 'changeCurrent' ? 60 : 40, getActiveAuthFieldKey() === 'changeCurrent' ? 90 : 55, 255);
+            drawTextLeft('*'.repeat(authForm.changeCurrent.length) + (getActiveAuthFieldKey() === 'changeCurrent' ? '_' : ''), 0.37, 0.385, 0.32, 255, 255, 255);
+            drawTextLeft('New password:', 0.36, 0.44, 0.32, 200, 200, 200);
+            drawRect(0.5, 0.495, 0.26, 0.032, getActiveAuthFieldKey() === 'changeNew' ? 60 : 40, getActiveAuthFieldKey() === 'changeNew' ? 60 : 40, getActiveAuthFieldKey() === 'changeNew' ? 90 : 55, 255);
+            drawTextLeft('*'.repeat(authForm.changeNew.length) + (getActiveAuthFieldKey() === 'changeNew' ? '_' : ''), 0.37, 0.485, 0.32, 255, 255, 255);
+            drawTextLeft('Confirm new password:', 0.36, 0.54, 0.32, 200, 200, 200);
+            drawRect(0.5, 0.595, 0.26, 0.032, getActiveAuthFieldKey() === 'changeConfirm' ? 60 : 40, getActiveAuthFieldKey() === 'changeConfirm' ? 60 : 40, getActiveAuthFieldKey() === 'changeConfirm' ? 90 : 55, 255);
+            drawTextLeft('*'.repeat(authForm.changeConfirm.length) + (getActiveAuthFieldKey() === 'changeConfirm' ? '_' : ''), 0.37, 0.585, 0.32, 255, 255, 255);
+            if (authMessage) drawTextLeft(authMessage, 0.36, 0.64, 0.28, 255, 200, 100);
+            drawTextLeft('[TAB] Next | [ENTER] Change | [ESC] Back', 0.36, 0.70, 0.28, 150, 150, 150);
+        }
+        return;
+    }
+
     // Money HUD (top right)
     if (isLoggedIn) {
         drawText(`$${playerMoney.toLocaleString()}`, 0.98, 0.02, 0.5, 114, 204, 114);
         drawText(`Bank: $${playerBank.toLocaleString()}`, 0.98, 0.055, 0.35, 200, 200, 200);
     } else {
-        drawText('Press T - /register or /login', 0.98, 0.02, 0.35, 255, 255, 255);
+        drawText('Press T - Login / Register', 0.98, 0.02, 0.35, 255, 255, 255);
     }
 
     // Property markers (with fixed ground-level coordinates)

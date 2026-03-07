@@ -62,6 +62,20 @@ export async function runMigrations(pool: mysql.Pool): Promise<void> {
         )
     `);
 
+    // Auth columns for UI-based auth (username, password reset, forced change)
+    try {
+        await pool.execute(`ALTER TABLE players ADD COLUMN username VARCHAR(255) NULL UNIQUE`);
+    } catch (e) { /* Column already exists */ }
+    try {
+        await pool.execute(`ALTER TABLE players ADD COLUMN password_change_required BOOLEAN DEFAULT FALSE`);
+    } catch (e) { /* Column already exists */ }
+    try {
+        await pool.execute(`ALTER TABLE players ADD COLUMN temp_password_hash VARCHAR(255) NULL`);
+    } catch (e) { /* Column already exists */ }
+    try {
+        await pool.execute(`ALTER TABLE players ADD COLUMN temp_password_expires_at TIMESTAMP NULL`);
+    } catch (e) { /* Column already exists */ }
+
     // Add columns if they don't exist (for existing databases)
     try {
         await pool.execute(`ALTER TABLE properties ADD COLUMN interior_heading FLOAT DEFAULT 0`);

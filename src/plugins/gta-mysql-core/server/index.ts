@@ -10,6 +10,7 @@ import {
     PhoneService,
     CasinoService,
     VehicleService,
+    AuthService,
     WEAPON_CATALOG,
     WEAPON_SHOP_LOCATIONS,
     CLOTHING_CATALOG,
@@ -35,6 +36,7 @@ let clothingShopService: ClothingShopService;
 let phoneService: PhoneService;
 let casinoService: CasinoService;
 let vehicleService: VehicleService;
+let authService: AuthService;
 
 async function getMySQLPool(): Promise<mysql.Pool> {
     if (mysqlPool) return mysqlPool;
@@ -60,6 +62,7 @@ async function getMySQLPool(): Promise<mysql.Pool> {
     phoneService = new PhoneService(mysqlPool);
     casinoService = new CasinoService(mysqlPool);
     vehicleService = new VehicleService(mysqlPool);
+    authService = new AuthService(mysqlPool);
 
     alt.log('[gta-mysql-core] MySQL pool and services initialized');
     return mysqlPool;
@@ -78,34 +81,16 @@ interface PlayerSession {
 
 const playerSessions = new Map<number, PlayerSession>();
 
-async function registerPlayer(email: string, password: string): Promise<PlayerSession> {
-    alt.log(`[gta-mysql-core] Registering: ${email}`);
-    const pool = await getMySQLPool();
-
-    const [existing] = await pool.execute('SELECT id FROM players WHERE email = ?', [email]);
-    if ((existing as any[]).length > 0) {
-        throw new Error('Email already registered');
-    }
-
-    const [result] = await pool.execute(
-        'INSERT INTO players (email, password_hash, money, bank) VALUES (?, ?, 5000, 10000)',
-        [email, password],
-    );
-
-    alt.log(`[gta-mysql-core] Registered: ${email}, ID: ${(result as any).insertId}`);
-    return { oderId: (result as any).insertId, email, money: 5000, bank: 10000 };
-}
-
-async function loginPlayer(email: string, password: string): Promise<PlayerSession> {
-    const pool = await getMySQLPool();
-    const [rows] = await pool.execute('SELECT id, email, password_hash, money, bank FROM players WHERE email = ?', [email]);
-    const players = rows as any[];
-
-    if (players.length === 0 || password !== players[0].password_hash) {
-        throw new Error('Invalid email or password');
-    }
-
-    return { oderId: players[0].id, email: players[0].email, money: players[0].money, bank: players[0].bank };
+/** Completes login: bind session, character, spawn, sync money and notify client. */
+async function completeLogin(player: alt.Player, session: PlayerSession): Promise<void> {
+    playerSessions.set(player.id, session);
+    player.setMeta('playerId', session.oderId);
+    alt.emitClient(player, 'gta:playerId', session.oderId);
+    await bindCharacterForPlayer(player, session.email);
+    spawnPlayerSafe(player);
+    await weaponService.loadWeaponsToPlayer(player, session.oderId);
+    await clothingShopService.loadPlayerClothing(player, session.oderId);
+    syncMoneyToClient(player);
 }
 
 async function savePlayerMoney(email: string, money: number, bank: number): Promise<void> {
@@ -282,8 +267,7 @@ async function broadcastPropertyUpdate(): Promise<void> {
 alt.on('playerConnect', async (player) => {
     alt.log(`[gta-mysql-core] Player connected: ${player.id}`);
     spawnPlayerSafe(player);
-    notifyPlayer(player, 'Welcome! Press T for chat, P for phone');
-    notifyPlayer(player, 'Use /register <email> <password> or /login <email> <password>');
+    notifyPlayer(player, 'Welcome! Press T to open Login / Register. Press P for phone when logged in.');
 
     // Send shop locations to client
     alt.emitClient(player, 'gta:locations:update', {
@@ -406,6 +390,86 @@ const playersInProperty = new Map<number, number>(); // playerId -> propertyId
 // ============================================================================
 // CLIENT EVENT HANDLERS
 // ============================================================================
+
+// ============================================================================
+// AUTH EVENTS (UI-based login/register/forgot password/change password)
+// ============================================================================
+
+alt.onClient('auth:register', async (player, username: string, email: string, password: string, confirmPassword: string) => {
+    if (playerSessions.get(player.id)) {
+        alt.emitClient(player, 'auth:registerResult', { success: false, message: 'You are already logged in.' });
+        return;
+    }
+    if (password !== confirmPassword) {
+        alt.emitClient(player, 'auth:registerResult', { success: false, message: 'Password and confirmation do not match.' });
+        return;
+    }
+    const pool = await getMySQLPool();
+    const result = await authService.register({ username, email, password });
+    if (!result.success) {
+        alt.emitClient(player, 'auth:registerResult', { success: false, message: result.message });
+        return;
+    }
+    const session: PlayerSession = {
+        oderId: result.session!.playerId,
+        email: result.session!.email,
+        money: result.session!.money,
+        bank: result.session!.bank,
+    };
+    await completeLogin(player, session);
+    alt.emitClient(player, 'auth:registerResult', { success: true, message: result.message });
+    notifyPlayer(player, `Registered! Cash: $${session.money}`);
+});
+
+alt.onClient('auth:login', async (player, loginIdentifier: string, password: string) => {
+    if (playerSessions.get(player.id)) {
+        alt.emitClient(player, 'auth:loginResult', { success: false, message: 'You are already logged in.', passwordChangeRequired: false });
+        return;
+    }
+    const result = await authService.login(loginIdentifier, password);
+    if (!result.success) {
+        alt.emitClient(player, 'auth:loginResult', { success: false, message: result.message, passwordChangeRequired: false });
+        return;
+    }
+    const session: PlayerSession = {
+        oderId: result.session!.playerId,
+        email: result.session!.email,
+        money: result.session!.money,
+        bank: result.session!.bank,
+    };
+    if (result.session!.passwordChangeRequired) {
+        playerSessions.set(player.id, session);
+        player.setMeta('playerId', session.oderId);
+        alt.emitClient(player, 'auth:loginResult', { success: true, message: 'You must set a new password.', passwordChangeRequired: true });
+        notifyPlayer(player, 'You must change your password to continue.');
+        return;
+    }
+    await completeLogin(player, session);
+    alt.emitClient(player, 'auth:loginResult', { success: true, message: result.message, passwordChangeRequired: false });
+    notifyPlayer(player, `Welcome back! Cash: $${session.money}`);
+});
+
+alt.onClient('auth:forgotPassword', async (player, email: string) => {
+    const result = await authService.requestPasswordReset(email);
+    alt.emitClient(player, 'auth:forgotPasswordResult', { success: result.success, message: result.message });
+    if (result.success) notifyPlayer(player, result.message);
+});
+
+alt.onClient('auth:changePassword', async (player, currentPassword: string, newPassword: string, confirmPassword: string) => {
+    const session = playerSessions.get(player.id);
+    if (!session) {
+        alt.emitClient(player, 'auth:changePasswordResult', { success: false, message: 'You must be logged in to change password.' });
+        return;
+    }
+    const result = await authService.changePassword(session.oderId, currentPassword, newPassword, confirmPassword);
+    if (!result.success) {
+        alt.emitClient(player, 'auth:changePasswordResult', { success: false, message: result.message });
+        return;
+    }
+    alt.emitClient(player, 'auth:changePasswordResult', { success: true, message: result.message });
+    await completeLogin(player, session);
+    notifyPlayer(player, 'Password changed. Welcome!');
+});
 
 // Chat handler
 alt.onClient('gta:chat:send', async (player, msg: string) => {
@@ -789,38 +853,9 @@ async function handleCommand(player: alt.Player, command: string, args: string[]
     const session = playerSessions.get(player.id);
 
     switch (command) {
-        case 'register': {
-            const [email, password] = args;
-            if (!email || !password) { notifyPlayer(player, 'Usage: /register <email> <password>'); return; }
-            if (session) { notifyPlayer(player, 'You are already logged in'); return; }
-            try {
-                const newSession = await registerPlayer(email, password);
-                playerSessions.set(player.id, newSession);
-                player.setMeta('playerId', newSession.oderId);
-                alt.emitClient(player, 'gta:playerId', newSession.oderId);
-                await bindCharacterForPlayer(player, email);
-                spawnPlayerSafe(player);
-                syncMoneyToClient(player);
-                notifyPlayer(player, `Registered! Cash: $${newSession.money}`);
-            } catch (err) { notifyPlayer(player, `Error: ${(err as Error).message}`); }
-            break;
-        }
+        case 'register':
         case 'login': {
-            const [email, password] = args;
-            if (!email || !password) { notifyPlayer(player, 'Usage: /login <email> <password>'); return; }
-            if (session) { notifyPlayer(player, 'You are already logged in'); return; }
-            try {
-                const newSession = await loginPlayer(email, password);
-                playerSessions.set(player.id, newSession);
-                player.setMeta('playerId', newSession.oderId);
-                alt.emitClient(player, 'gta:playerId', newSession.oderId);
-                await bindCharacterForPlayer(player, email);
-                spawnPlayerSafe(player);
-                await weaponService.loadWeaponsToPlayer(player, newSession.oderId);
-                await clothingShopService.loadPlayerClothing(player, newSession.oderId);
-                syncMoneyToClient(player);
-                notifyPlayer(player, `Welcome back! Cash: $${newSession.money}`);
-            } catch (err) { notifyPlayer(player, `Error: ${(err as Error).message}`); }
+            notifyPlayer(player, 'Use the Auth menu (press T) to login or register.');
             break;
         }
         case 'logout': {
