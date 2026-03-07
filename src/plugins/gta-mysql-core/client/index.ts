@@ -929,25 +929,24 @@ alt.onServer('gta:money:update', (money: number, bank: number) => {
 // SAFE SPAWN
 // ============================================================================
 
-/** Max height above server Z we accept from ground detection (avoids hospital roof). */
-const GROUND_Z_TOLERANCE_ABOVE = 1.5;
-
 async function forceSafeGroundSpawn(x: number, y: number, z: number): Promise<void> {
     const player = alt.Player.local;
     if (!player || !player.valid) return;
 
     native.requestCollisionAtCoord(x, y, z);
-    await new Promise(resolve => alt.setTimeout(resolve, 100));
 
-    let groundZ = z;
-    const [found, result] = native.getGroundZFor3dCoord(x, y, z + 15, 0, false, false);
-    if (found && result > 0) {
-        if (result <= z + GROUND_Z_TOLERANCE_ABOVE) {
-            groundZ = result;
+    // Retry ground detection up to 10 times (up to ~1s) until collision loads.
+    let groundZ = z + 1.0;
+    for (let attempt = 0; attempt < 10; attempt++) {
+        await new Promise(resolve => alt.setTimeout(resolve, 100));
+        const [found, result] = native.getGroundZFor3dCoord(x, y, z + 20, 0, false, false);
+        if (found && result > 0) {
+            groundZ = result + 1.0;
+            break;
         }
     }
 
-    native.setEntityCoordsNoOffset(player.scriptID, x, y, groundZ + 1.0, false, false, false);
+    native.setEntityCoordsNoOffset(player.scriptID, x, y, groundZ, false, false, false);
 }
 
 alt.onServer('gta:spawn:safe', (x: number, y: number, z: number) => {
