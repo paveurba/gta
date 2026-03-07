@@ -1100,7 +1100,7 @@ alt.on('keyup', (key) => {
     }
 
     // T key (84) - Open auth (if not logged in or must change password) or chat
-    if (key === 84 && !chatOpen && !phoneOpen && !propertyInteractionOpen) {
+    if (key === 84 && !authOpen && !chatOpen && !phoneOpen && !propertyInteractionOpen) {
         if (!isLoggedIn || authRequirePasswordChange) {
             openAuth(authRequirePasswordChange ? 'changePassword' : 'menu');
         } else {
@@ -1757,12 +1757,6 @@ function drawDeathScreen(): void {
 
 alt.everyTick(() => {
     disableAmbientPopulation();
-    
-    // Death screen takes priority
-    if (isDead) {
-        drawDeathScreen();
-        return;
-    }
 
     // Auth UI (login / register / forgot password / change password)
     if (authOpen) {
@@ -1821,6 +1815,12 @@ alt.everyTick(() => {
             if (authMessage) drawTextLeft(authMessage, 0.36, 0.64, 0.28, 255, 200, 100);
             drawTextLeft('[TAB] Next | [ENTER] Change | [ESC] Back', 0.36, 0.70, 0.28, 150, 150, 150);
         }
+        return;
+    }
+
+    // Death screen
+    if (isDead) {
+        drawDeathScreen();
         return;
     }
 
