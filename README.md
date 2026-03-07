@@ -42,11 +42,23 @@ cp .env.example .env
 docker compose up -d
 ```
 
-### 3. Rebuild after code changes
+### 3. After code changes
+
+After changing **any** code (`src/` TypeScript or `webview/` Vue), run:
 
 ```bash
-docker compose build --no-cache altv-server && docker compose up -d altv-server
+pnpm refresh
 ```
+
+This rebuilds the server image (full compile: TypeScript + webview runs inside Docker) and restarts all game containers.
+
+**Other commands:**
+
+| Command | Description |
+|--------|-------------|
+| `pnpm refresh` | Rebuild image (full compile) + restart all containers. Use after any code change. |
+| `pnpm compile:ts` | TypeScript only, no Docker. Use when running server locally (`pnpm start`). |
+| `docker compose up --build -d` | Same as refresh but without running compile:ts first (Docker build does full compile). |
 
 ### 4. View logs
 
@@ -56,7 +68,23 @@ docker compose logs -f altv-server
 
 ### 5. Connect
 
-Connect with alt:V client to `localhost:7788`
+Connect with alt:V client to `localhost:7788`.
+
+**Note for Apple Silicon (M1/M2) or ARM:** You may see a warning that the image platform (linux/amd64) does not match the host (linux/arm64). The server runs under emulation and is fine to use; you can ignore the warning.
+
+---
+
+## After making changes
+
+**One command (Docker):**
+
+```bash
+pnpm refresh
+```
+
+This runs a full rebuild (TypeScript + webview) inside Docker and restarts all game containers. Use it after any change in `src/` or `webview/`.
+
+**Without Docker** (running `pnpm start` locally): run the full compile (`node ./scripts/compile.js` or `pnpm build:docker`), then restart the server.
 
 ## Chat Commands
 
