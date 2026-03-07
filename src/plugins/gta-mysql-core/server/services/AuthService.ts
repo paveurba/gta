@@ -229,13 +229,18 @@ export class AuthService {
             [tempHash, expiresAt, row.id]
         );
 
+        alt.log(`[AuthService] Sending password reset email to ${row.email}`);
         const mailResult = await sendTemporaryPasswordEmail(row.email, tempPassword);
         if (!mailResult.success) {
             await this.pool.execute(
                 'UPDATE players SET temp_password_hash = NULL, temp_password_expires_at = NULL, password_change_required = FALSE WHERE id = ?',
                 [row.id]
             );
-            return { success: false, message: 'Could not send email. Please try again later.' };
+            const message =
+                mailResult.error === 'Mail not configured'
+                    ? 'Password reset emails are not configured on this server. Contact the administrator.'
+                    : 'Could not send email. Please try again later.';
+            return { success: false, message };
         }
 
         return { success: true, message: 'If that email is registered, you will receive a temporary password.' };

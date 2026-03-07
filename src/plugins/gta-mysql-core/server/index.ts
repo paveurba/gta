@@ -11,6 +11,7 @@ import {
     CasinoService,
     VehicleService,
     AuthService,
+    sendTestEmail,
     WEAPON_CATALOG,
     WEAPON_SHOP_LOCATIONS,
     CLOTHING_CATALOG,
@@ -1083,6 +1084,26 @@ async function handleCommand(player: alt.Player, command: string, args: string[]
             notifyPlayer(player, 'Teleported to Premium Deluxe Motorsport');
             break;
         }
+        case 'testmail': {
+            const toEmail = args[0]?.trim() || (session?.email ?? '');
+            if (!toEmail) {
+                notifyPlayer(player, 'Usage: /testmail <email> (or login and use /testmail to send to your account email)');
+                return;
+            }
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(toEmail)) {
+                notifyPlayer(player, 'Please enter a valid email address.');
+                return;
+            }
+            notifyPlayer(player, `Sending test email to ${toEmail}...`);
+            const result = await sendTestEmail(toEmail);
+            if (result.success) {
+                notifyPlayer(player, 'Test email sent. Check the inbox (and spam folder) for that address.');
+            } else {
+                notifyPlayer(player, result.error === 'Mail not configured' ? 'Mail not configured. Set MAIL_* in .env.' : `Failed: ${result.error}`);
+            }
+            break;
+        }
         case 'help': {
             notifyPlayer(player, '=== Commands ===');
             notifyPlayer(player, '/register, /login, /logout, /money');
@@ -1092,6 +1113,7 @@ async function handleCommand(player: alt.Player, command: string, args: string[]
             notifyPlayer(player, '/slots <bet>, /roulette <bet> <type> <value>');
             notifyPlayer(player, '/contact, /contacts, /sms');
             notifyPlayer(player, '/tp <x> <y> <z>, /casino');
+            notifyPlayer(player, '/testmail <email> – send test email (checks mail config)');
             notifyPlayer(player, 'Press E near shops/properties to interact');
             notifyPlayer(player, 'Press M for phone menu');
             break;

@@ -936,10 +936,11 @@ async function forceSafeGroundSpawn(x: number, y: number, z: number): Promise<vo
     native.requestCollisionAtCoord(x, y, z);
 
     // Retry ground detection up to 10 times (up to ~1s) until collision loads.
+    // Use a small offset (z+3) so we get street-level ground, not roof (z+20 would hit hospital roof).
     let groundZ = z + 1.0;
     for (let attempt = 0; attempt < 10; attempt++) {
         await new Promise(resolve => alt.setTimeout(resolve, 100));
-        const [found, result] = native.getGroundZFor3dCoord(x, y, z + 20, 0, false, false);
+        const [found, result] = native.getGroundZFor3dCoord(x, y, z + 3, 0, false, false);
         if (found && result > 0) {
             groundZ = result + 1.0;
             break;
@@ -1013,15 +1014,53 @@ function disablePopulationOnce(): void {
 }
 
 // ============================================================================
-// CONNECTION
+// CONNECTION & RECONNECT
 // ============================================================================
 
+let isDisconnected = false;
+let reconnectAttempts = 0;
+const RECONNECT_INTERVAL_MS = 3000;
+let reconnectTimer: ReturnType<typeof alt.setInterval> | null = null;
+
+function tryReconnect() {
+    reconnectAttempts += 1;
+    alt.log(`[gta-client] Reconnect attempt ${reconnectAttempts}`);
+    try {
+        const altAny = alt as unknown as { reconnect?: () => void };
+        if (typeof altAny.reconnect === 'function') {
+            altAny.reconnect();
+        }
+    } catch (_) {
+        // no reconnect API
+    }
+}
+
+function scheduleReconnect() {
+    if (reconnectTimer != null) return;
+    reconnectTimer = alt.setInterval(() => {
+        tryReconnect();
+    }, RECONNECT_INTERVAL_MS);
+}
+
 alt.on('connectionComplete', () => {
+    isDisconnected = false;
+    reconnectAttempts = 0;
+    if (reconnectTimer != null) {
+        alt.clearInterval(reconnectTimer);
+        reconnectTimer = null;
+    }
     alt.log('[gta-client] Connection complete');
     alt.loadDefaultIpls();
     loadCasinoInterior();
     disablePopulationOnce();
     native.requestCollisionAtCoord(924.0, 46.0, 81.1);
+});
+
+alt.on('disconnect', () => {
+    isDisconnected = true;
+    alt.log('[gta-client] Disconnected - will try to reconnect');
+    tryReconnect();
+    scheduleReconnect();
 });
 
 // ============================================================================
@@ -1091,8 +1130,8 @@ alt.on('keyup', (key) => {
         return;
     }
 
-    // M key (77) - Toggle phone
-    if (key === 77 && !chatOpen && !propertyInteractionOpen) {
+    // M key (77) - Toggle phone (skip when auth/registration is open so "m" can be typed)
+    if (key === 77 && !authOpen && !chatOpen && !propertyInteractionOpen) {
         if (phoneOpen) closePhone();
         else if (isLoggedIn) openPhone();
         return;
@@ -1756,6 +1795,17 @@ function drawDeathScreen(): void {
 
 alt.everyTick(() => {
     disableAmbientPopulation();
+
+    // Disconnect / reconnecting overlay
+    if (isDisconnected) {
+        drawRect(0.5, 0.5, 1.0, 1.0, 0, 0, 0, 220);
+        drawRect(0.5, 0.5, 0.4, 0.22, 25, 25, 35, 245);
+        drawTextLeft('Connection lost', 0.32, 0.38, 0.55, 255, 100, 100);
+        drawTextLeft('Reconnecting...', 0.32, 0.46, 0.4, 255, 255, 255);
+        drawTextLeft(`Attempt ${reconnectAttempts}`, 0.32, 0.52, 0.32, 180, 180, 180);
+        drawTextLeft('If this does not reconnect, use the server list to reconnect.', 0.32, 0.62, 0.28, 150, 150, 150);
+        return;
+    }
 
     // Auth UI (login / register / forgot password / change password)
     if (authOpen) {
