@@ -46,12 +46,12 @@ let casinos: ShopLocation[] = [];
 let properties: PropertyLocation[] = [];
 const createdBlips: number[] = [];
 
-// Hospital locations for respawn (street level outside entrance)
+// Hospital locations for map blips (match server HOSPITAL_SPAWNS – street level)
 const HOSPITALS: ShopLocation[] = [
-    { x: 340.0, y: -569.0, z: 28.80, name: 'Pillbox Hill Medical Center' },
-    { x: -449.0, y: -341.0, z: 34.50, name: 'Mount Zonah Medical Center' },
-    { x: 1839.0, y: 3673.0, z: 34.00, name: 'Sandy Shores Medical Center' },
-    { x: -247.0, y: 6331.0, z: 32.40, name: 'Paleto Bay Medical Center' },
+    { x: 340.25, y: -580.59, z: 28.82, name: 'Pillbox Hill Medical Center' },
+    { x: -449.67, y: -340.55, z: 34.51, name: 'Mount Zonah Medical Center' },
+    { x: 1839.44, y: 3672.71, z: 34.28, name: 'Sandy Shores Medical Center' },
+    { x: -247.46, y: 6331.23, z: 32.43, name: 'Paleto Bay Medical Center' },
 ];
 
 // Blip sprite IDs for GTA V
@@ -941,22 +941,24 @@ alt.onServer('gta:money:update', (money: number, bank: number) => {
 // SAFE SPAWN
 // ============================================================================
 
+/** Max height above server Z we accept from ground detection (avoids hospital roof). */
+const GROUND_Z_TOLERANCE_ABOVE = 1.5;
+
 async function forceSafeGroundSpawn(x: number, y: number, z: number): Promise<void> {
     const player = alt.Player.local;
     if (!player || !player.valid) return;
-    
-    // Load collision at target location
+
     native.requestCollisionAtCoord(x, y, z);
     await new Promise(resolve => alt.setTimeout(resolve, 100));
-    
-    // Try to find ground Z, but use provided Z as fallback
+
     let groundZ = z;
-    const [found, result] = native.getGroundZFor3dCoord(x, y, z + 100, 0, false, false);
+    const [found, result] = native.getGroundZFor3dCoord(x, y, z + 15, 0, false, false);
     if (found && result > 0) {
-        groundZ = result;
+        if (result <= z + GROUND_Z_TOLERANCE_ABOVE) {
+            groundZ = result;
+        }
     }
-    
-    // Teleport player to ground level
+
     native.setEntityCoordsNoOffset(player.scriptID, x, y, groundZ + 1.0, false, false, false);
 }
 

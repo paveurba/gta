@@ -307,53 +307,64 @@ alt.on('playerDisconnect', async (player) => {
 // PLAYER DEATH & RESPAWN
 // ============================================================================
 
-const HOSPITAL_SPAWNS = [
-    { x: 340.0, y: -569.0, z: 28.80, name: 'Pillbox Hill Medical Center' },
-    { x: -449.0, y: -341.0, z: 34.50, name: 'Mount Zonah Medical Center' },
-    { x: 1839.0, y: 3673.0, z: 34.00, name: 'Sandy Shores Medical Center' },
-    { x: -247.0, y: 6331.0, z: 32.40, name: 'Paleto Bay Medical Center' },
+/** Street-level spawn points in front of each hospital (not on roof or inside building). */
+interface HospitalSpawn {
+    x: number;
+    y: number;
+    z: number;
+    heading: number;
+    name: string;
+}
+
+const HOSPITAL_SPAWNS: HospitalSpawn[] = [
+    { x: 340.25, y: -580.59, z: 28.82, heading: 0, name: 'Pillbox Hill Medical Center' },
+    { x: -449.67, y: -340.55, z: 34.51, heading: 0, name: 'Mount Zonah Medical Center' },
+    { x: 1839.44, y: 3672.71, z: 34.28, heading: 0, name: 'Sandy Shores Medical Center' },
+    { x: -247.46, y: 6331.23, z: 32.43, heading: 0, name: 'Paleto Bay Medical Center' },
 ];
 
-function getNearestHospital(x: number, y: number, z: number): { x: number; y: number; z: number; name: string } {
+/** Fallback if chosen hospital position is invalid (e.g. geometry). */
+const FALLBACK_HOSPITAL = HOSPITAL_SPAWNS[0];
+
+const HOSPITAL_FEE = 500;
+
+function getNearestHospital(x: number, y: number, z: number): HospitalSpawn {
     let nearest = HOSPITAL_SPAWNS[0];
     let minDist = Infinity;
-    
+
     for (const hospital of HOSPITAL_SPAWNS) {
         const dist = Math.sqrt(
-            Math.pow(hospital.x - x, 2) + 
-            Math.pow(hospital.y - y, 2) + 
-            Math.pow(hospital.z - z, 2)
+            Math.pow(hospital.x - x, 2) + Math.pow(hospital.y - y, 2) + Math.pow(hospital.z - z, 2)
         );
         if (dist < minDist) {
             minDist = dist;
             nearest = hospital;
         }
     }
-    
+
     return nearest;
 }
-
-const HOSPITAL_FEE = 500;
 
 alt.on('playerDeath', async (player, killer, weaponHash) => {
     const session = playerSessions.get(player.id);
     const deathPos = player.pos;
-    
+
     alt.log(`[gta-mysql-core] Player ${player.id} died at ${deathPos.x}, ${deathPos.y}, ${deathPos.z}`);
-    
-    // Find nearest hospital
+
     const hospital = getNearestHospital(deathPos.x, deathPos.y, deathPos.z);
-    
-    // Respawn after a delay
+
     alt.setTimeout(async () => {
         if (!player.valid) return;
-        
-        // Respawn at hospital with exact ground coordinates
-        player.spawn(hospital.x, hospital.y, hospital.z, 0);
+
+        const spawnX = hospital.x;
+        const spawnY = hospital.y;
+        const spawnZ = hospital.z;
+        const spawnHeading = hospital.heading;
+
+        player.spawn(spawnX, spawnY, spawnZ, spawnHeading);
         player.health = 200;
         player.armour = 0;
-        
-        // Deduct hospital fee if logged in
+
         if (session) {
             if (session.money >= HOSPITAL_FEE) {
                 session.money -= HOSPITAL_FEE;
@@ -363,21 +374,16 @@ alt.on('playerDeath', async (player, killer, weaponHash) => {
             } else {
                 notifyPlayer(player, `Respawned at ${hospital.name}. (No fee - insufficient funds)`);
             }
-            
-            // Reload weapons after respawn
             await weaponService.loadWeaponsToPlayer(player, session.oderId);
         } else {
             notifyPlayer(player, `Respawned at ${hospital.name}`);
         }
-        
-        // Clear property state if player was inside
+
         playersInProperty.delete(player.id);
-        
-        // Emit safe spawn to client for ground check
-        alt.emitClient(player, 'gta:spawn:safe', hospital.x, hospital.y, hospital.z);
-    }, 5000); // 5 second respawn delay
-    
-    // Notify player they're dead
+
+        alt.emitClient(player, 'gta:spawn:safe', spawnX, spawnY, spawnZ);
+    }, 5000);
+
     notifyPlayer(player, 'You died! Respawning in 5 seconds...');
 });
 
@@ -872,7 +878,7 @@ async function handleCommand(player: alt.Player, command: string, args: string[]
                 alt.emitClient(player, 'gta:logout');
                 // Remove weapons from player
                 player.removeAllWeapons();
-                notifyPlayer(player, 'You have been logged out. Use /login to login again.');
+                notifyPlayer(player, 'You have been logged out. Press T to open the Auth menu to login again.');
             } catch (err) { notifyPlayer(player, `Error: ${(err as Error).message}`); }
             break;
         }
