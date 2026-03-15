@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826918240866">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826919317790">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.2.0">
@@ -27,12 +27,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../resources/css/retype.css?v=4.2.0.826918240866" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=4.2.0.826919317790" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=4.2.0.826918240866" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=4.2.0.826919317790" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.2.0.826918240866" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=4.2.0.826918240866" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.2.0.826919317790" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=4.2.0.826919317790" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -173,32 +173,25 @@
     </h2>
 </doc-anchor-target>
 <p><strong>Symptom:</strong> After death, the player sometimes respawns on the <strong>roof of the clinic</strong> instead of at the correct street-level hospital spawn.</p>
-<p><strong>Relevant code (current behaviour):</strong></p>
+<p><strong>Relevant code (current behaviour — fixes applied):</strong></p>
 <ul>
 <li><strong>Server:</strong> <code translate="no" v-pre>src/plugins/gta-mysql-core/server/index.ts</code>
 <ul>
-<li><code translate="no" v-pre>HOSPITAL_SPAWNS</code> array (lines ~320–326): defines x, y, z, heading per hospital.</li>
-<li><code translate="no" v-pre>playerDeath</code> handler (lines ~349–389): picks nearest hospital, calls <code translate="no" v-pre>player.spawn(spawnX, spawnY, spawnZ, spawnHeading)</code>, then emits <code translate="no" v-pre>gta:spawn:safe</code> with the same coords.</li>
+<li><code translate="no" v-pre>HOSPITAL_SPAWNS</code> array (lines 320–325): defines x, y, z, heading per hospital.</li>
+<li><code translate="no" v-pre>playerDeath</code> handler (lines 349–389): picks nearest hospital, calls <code translate="no" v-pre>player.spawn(spawnX, spawnY, spawnZ, spawnHeading)</code>, then emits <code translate="no" v-pre>gta:spawn:safe</code> <strong>without coords</strong> (fix applied — no longer triggers client ground probe on respawn).</li>
 </ul>
 </li>
 <li><strong>Client:</strong> <code translate="no" v-pre>src/plugins/gta-mysql-core/client/index.ts</code>
 <ul>
-<li><code translate="no" v-pre>forceSafeGroundSpawn(x, y, z)</code> (lines 932–951): uses <code translate="no" v-pre>native.getGroundZFor3dCoord(x, y, z + 3, ...)</code> to find ground and then sets player position. Comment notes that a large z-offset (e.g. z+20) would hit the hospital roof.</li>
-<li><strong>Two separate handlers for <code translate="no" v-pre>gta:spawn:safe</code> (confirmed bug):</strong>
-<ul>
-<li>Line 720: <code translate="no" v-pre>alt.onServer('gta:spawn:safe', () =&gt; { isDead = false; })</code> — no-args, always sets isDead=false.</li>
-<li>Line 953: <code translate="no" v-pre>alt.onServer('gta:spawn:safe', (x, y, z) =&gt; { forceSafeGroundSpawn(x, y, z) })</code> — coords handler.</li>
-<li>Since the server always emits with coords (line 385), <strong>both handlers fire every time</strong>. The order and interaction is the root of the roof bug.</li>
+<li><code translate="no" v-pre>forceSafeGroundSpawn(x, y, z)</code> (lines 943–965): uses <code translate="no" v-pre>getGroundZFor3dCoord(x, y, z + 3, ...)</code> with fallback and logging. Now only called for login/default spawn (when coords are provided), not for respawn.</li>
+<li><strong>Single consolidated <code translate="no" v-pre>gta:spawn:safe</code> handler</strong> (line 968, fix applied): sets <code translate="no" v-pre>isDead = false</code> always; calls <code translate="no" v-pre>forceSafeGroundSpawn</code> only if coords are present. Respawn emits no coords → ground probe is skipped.</li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-<p><strong>Likely causes:</strong></p>
+<p><strong>Remaining risk:</strong></p>
 <ol>
-<li><strong>Both handlers fire on every respawn:</strong> Server emits <code translate="no" v-pre>gta:spawn:safe</code> with coords always — the no-args handler at line 720 fires (JS allows mismatched arg count), and the coords handler at line 953 also fires. Both run concurrently and can conflict.</li>
-<li><strong>Ground probe hitting roof:</strong> <code translate="no" v-pre>getGroundZFor3dCoord(x, y, z + 3)</code> may return a roof Z if collision is loaded and the probe ray hits the building polygon first. For Pillbox (z=28.82), probing from z+3=31.82 is close to the roof edge.</li>
-<li><strong>Race/collision:</strong> Client runs <code translate="no" v-pre>forceSafeGroundSpawn</code> before world collision is fully ready, retries up to 10×100ms, but if collision loads late the first found result may be the roof.</li>
+<li><strong><code translate="no" v-pre>HOSPITAL_SPAWNS</code> Z values not yet verified in-game</strong> — <code translate="no" v-pre>player.spawn()</code> is now trusted directly. If any hospital Z is wrong, players will spawn at that wrong Z with no client correction. Verify all four entries in-game (Phase 3.1 still required).</li>
+<li><strong>Ground probe still active for login</strong> — <code translate="no" v-pre>spawnPlayerSafe</code> at line 241 emits coords, so <code translate="no" v-pre>forceSafeGroundSpawn</code> runs on login. <code translate="no" v-pre>DEFAULT_SPAWN</code> is <code translate="no" v-pre>425.1, -979.5, 30.7</code> (outdoor, safe). No action needed here.</li>
 </ol>
 <hr>
 <doc-anchor-target id="issue-2--property-entry-teleports-to-wrong-place-eg-police-dept">
@@ -607,11 +600,11 @@ function doTeleport(result: { interior: { x: number; y: number; z: number; headi
             
                 <nav id="retype-nextprev" class="print:hidden flex mt-14">
                     <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../team-pass/05-rebar-integration-and-qa-report/">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../character-appearance-technical-review/">
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">Rebar Integration + QA Report</span>
+                                <span class="block mt-1">Character Appearance & Personality — Technical Review and Improvement Plan</span>
                             </span>
                         </a>
                     </div>
