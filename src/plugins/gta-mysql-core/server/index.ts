@@ -11,6 +11,7 @@ import {
     CasinoService,
     VehicleService,
     AuthService,
+    AppearanceService,
     sendTestEmail,
     WEAPON_CATALOG,
     WEAPON_SHOP_LOCATIONS,
@@ -38,6 +39,7 @@ let phoneService: PhoneService;
 let casinoService: CasinoService;
 let vehicleService: VehicleService;
 let authService: AuthService;
+let appearanceService: AppearanceService;
 
 async function getMySQLPool(): Promise<mysql.Pool> {
     if (mysqlPool) return mysqlPool;
@@ -64,6 +66,7 @@ async function getMySQLPool(): Promise<mysql.Pool> {
     casinoService = new CasinoService(mysqlPool);
     vehicleService = new VehicleService(mysqlPool);
     authService = new AuthService(mysqlPool);
+    appearanceService = new AppearanceService(mysqlPool);
 
     alt.log('[gta-mysql-core] MySQL pool and services initialized');
     return mysqlPool;
@@ -82,15 +85,22 @@ interface PlayerSession {
 
 const playerSessions = new Map<number, PlayerSession>();
 
-/** Completes login: bind session, character, spawn, sync money and notify client. */
+/** Apply appearance from MySQL then clothing (single source of truth for login/respawn). */
+async function applyCharacterLook(player: alt.Player, playerId: number): Promise<void> {
+    const appearance = await appearanceService.loadOrCreateDefaultAppearance(playerId, 1);
+    Rebar.player.usePlayerAppearance(player).apply(appearance);
+    await clothingShopService.loadPlayerClothing(player, playerId);
+}
+
+/** Completes login: bind session, character, spawn, apply appearance + clothing, sync money and notify client. */
 async function completeLogin(player: alt.Player, session: PlayerSession): Promise<void> {
     playerSessions.set(player.id, session);
     player.setMeta('playerId', session.oderId);
     alt.emitClient(player, 'gta:playerId', session.oderId);
     await bindCharacterForPlayer(player, session.email);
     spawnPlayerSafe(player);
+    await applyCharacterLook(player, session.oderId);
     await weaponService.loadWeaponsToPlayer(player, session.oderId);
-    await clothingShopService.loadPlayerClothing(player, session.oderId);
     syncMoneyToClient(player);
 }
 
@@ -381,6 +391,7 @@ alt.on('playerDeath', async (player, killer, weaponHash) => {
             } else {
                 notifyPlayer(player, `Respawned at ${hospital.name}. (No fee - insufficient funds)`);
             }
+            await applyCharacterLook(player, session.oderId);
             await weaponService.loadWeaponsToPlayer(player, session.oderId);
         } else {
             notifyPlayer(player, `Respawned at ${hospital.name}`);

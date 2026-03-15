@@ -42,6 +42,42 @@ export async function runMigrations(pool: mysql.Pool): Promise<void> {
         )
     `);
 
+    // Character appearance table (face, hair, overlays, tattoos - one row per player)
+    await pool.execute(`
+        CREATE TABLE IF NOT EXISTS character_appearance (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            player_id INT NOT NULL UNIQUE,
+            sex TINYINT NOT NULL DEFAULT 1,
+            face_father TINYINT UNSIGNED NOT NULL DEFAULT 0,
+            face_mother TINYINT UNSIGNED NOT NULL DEFAULT 0,
+            skin_father TINYINT UNSIGNED NOT NULL DEFAULT 0,
+            skin_mother TINYINT UNSIGNED NOT NULL DEFAULT 0,
+            face_mix FLOAT NOT NULL DEFAULT 0.5,
+            skin_mix FLOAT NOT NULL DEFAULT 0.5,
+            structure JSON NULL,
+            hair INT UNSIGNED NOT NULL DEFAULT 0,
+            hair_dlc INT UNSIGNED NOT NULL DEFAULT 0,
+            hair_color1 INT UNSIGNED NOT NULL DEFAULT 0,
+            hair_color2 INT UNSIGNED NOT NULL DEFAULT 0,
+            hair_overlay_collection VARCHAR(64) NULL,
+            hair_overlay_name VARCHAR(64) NULL,
+            facial_hair INT UNSIGNED NOT NULL DEFAULT 0,
+            facial_hair_opacity FLOAT NOT NULL DEFAULT 0,
+            facial_hair_color1 INT UNSIGNED NOT NULL DEFAULT 0,
+            eyebrows INT UNSIGNED NOT NULL DEFAULT 0,
+            eyebrows_opacity FLOAT NOT NULL DEFAULT 0,
+            eyebrows_color1 INT UNSIGNED NOT NULL DEFAULT 0,
+            chest_hair INT UNSIGNED NOT NULL DEFAULT 0,
+            chest_hair_opacity FLOAT NOT NULL DEFAULT 0,
+            chest_hair_color1 INT UNSIGNED NOT NULL DEFAULT 0,
+            eyes INT UNSIGNED NOT NULL DEFAULT 0,
+            head_overlays JSON NULL,
+            tattoos JSON NULL,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE CASCADE
+        )
+    `);
+
     // Properties table - with interior_heading and ipl columns
     await pool.execute(`
         CREATE TABLE IF NOT EXISTS properties (

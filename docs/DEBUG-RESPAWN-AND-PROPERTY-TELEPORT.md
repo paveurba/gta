@@ -8,23 +8,19 @@ Step-by-step implementation plan to diagnose and fix two critical issues on the 
 
 **Symptom:** After death, the player sometimes respawns on the **roof of the clinic** instead of at the correct street-level hospital spawn.
 
-**Relevant code (current behaviour):**
+**Relevant code (current behaviour — fixes applied):**
 
 - **Server:** `src/plugins/gta-mysql-core/server/index.ts`
-  - `HOSPITAL_SPAWNS` array (lines ~320–326): defines x, y, z, heading per hospital.
-  - `playerDeath` handler (lines ~349–389): picks nearest hospital, calls `player.spawn(spawnX, spawnY, spawnZ, spawnHeading)`, then emits `gta:spawn:safe` with the same coords.
+  - `HOSPITAL_SPAWNS` array (lines 320–325): defines x, y, z, heading per hospital.
+  - `playerDeath` handler (lines 349–389): picks nearest hospital, calls `player.spawn(spawnX, spawnY, spawnZ, spawnHeading)`, then emits `gta:spawn:safe` **without coords** (fix applied — no longer triggers client ground probe on respawn).
 - **Client:** `src/plugins/gta-mysql-core/client/index.ts`
-  - `forceSafeGroundSpawn(x, y, z)` (lines 932–951): uses `native.getGroundZFor3dCoord(x, y, z + 3, ...)` to find ground and then sets player position. Comment notes that a large z-offset (e.g. z+20) would hit the hospital roof.
-  - **Two separate handlers for `gta:spawn:safe` (confirmed bug):**
-    - Line 720: `alt.onServer('gta:spawn:safe', () => { isDead = false; })` — no-args, always sets isDead=false.
-    - Line 953: `alt.onServer('gta:spawn:safe', (x, y, z) => { forceSafeGroundSpawn(x, y, z) })` — coords handler.
-    - Since the server always emits with coords (line 385), **both handlers fire every time**. The order and interaction is the root of the roof bug.
+  - `forceSafeGroundSpawn(x, y, z)` (lines 943–965): uses `getGroundZFor3dCoord(x, y, z + 3, ...)` with fallback and logging. Now only called for login/default spawn (when coords are provided), not for respawn.
+  - **Single consolidated `gta:spawn:safe` handler** (line 968, fix applied): sets `isDead = false` always; calls `forceSafeGroundSpawn` only if coords are present. Respawn emits no coords → ground probe is skipped.
 
-**Likely causes:**
+**Remaining risk:**
 
-1. **Both handlers fire on every respawn:** Server emits `gta:spawn:safe` with coords always — the no-args handler at line 720 fires (JS allows mismatched arg count), and the coords handler at line 953 also fires. Both run concurrently and can conflict.
-2. **Ground probe hitting roof:** `getGroundZFor3dCoord(x, y, z + 3)` may return a roof Z if collision is loaded and the probe ray hits the building polygon first. For Pillbox (z=28.82), probing from z+3=31.82 is close to the roof edge.
-3. **Race/collision:** Client runs `forceSafeGroundSpawn` before world collision is fully ready, retries up to 10×100ms, but if collision loads late the first found result may be the roof.
+1. **`HOSPITAL_SPAWNS` Z values not yet verified in-game** — `player.spawn()` is now trusted directly. If any hospital Z is wrong, players will spawn at that wrong Z with no client correction. Verify all four entries in-game (Phase 3.1 still required).
+2. **Ground probe still active for login** — `spawnPlayerSafe` at line 241 emits coords, so `forceSafeGroundSpawn` runs on login. `DEFAULT_SPAWN` is `425.1, -979.5, 30.7` (outdoor, safe). No action needed here.
 
 ---
 
