@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826918240866">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 4.2.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Debug Plan: Respawn Location &amp; Property Entry Teleport Bugs</title>
+    <meta name="title" content="Debug Plan: Respawn Location & Property Entry Teleport Bugs">
+    <meta name="description" content="Step-by-step implementation plan to diagnose and fix two critical issues on the alt:V roleplay server.">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://rebarv.com/debug-respawn-and-property-teleport/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rebarv.com/debug-respawn-and-property-teleport/">
+    <meta property="og:title" content="Debug Plan: Respawn Location & Property Entry Teleport Bugs">
+    <meta property="og:description" content="Step-by-step implementation plan to diagnose and fix two critical issues on the alt:V roleplay server.">
+    <meta property="og:site_name" content="Rebar for alt:V">
+    <meta property="og:locale" content="en_US">
+
+    <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
+
+    <link href="../resources/css/retype.css?v=4.2.0.826918240866" rel="stylesheet">
+
+    <script data-cfasync="false" src="../resources/js/config.js?v=4.2.0.826918240866" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.2.0.826918240866" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=4.2.0.826918240866" defer></script>
+</head>
+<body>
+    <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
+    <div class="absolute bottom-0 left-0" style="top: 5rem; right: 50%"></div>
+
+    <header id="retype-header" class="sticky top-0 z-30 flex w-full h-16 bg-header-bg border-b border-header-border md:h-20">
+        <div class="container relative flex items-center justify-between pr-6 grow md:justify-start">
+            <!-- Mobile menu button skeleton -->
+            <button v-cloak class="skeleton retype-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-hidden rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+            <div v-cloak id="retype-sidebar-left-toggle-button"></div>
+    
+            <!-- Logo -->
+            <div class="flex items-center justify-between h-full py-2 md:w-75">
+                <div class="flex items-center px-2 md:px-6">
+                    <a id="retype-branding-logo" href="../" class="flex items-center leading-snug text-xl">
+                        <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../static/logo_dark.svg">
+                            <img class="max-h-10 hidden dark:inline-block" src="../static/logo_light.svg">
+                        </span>
+                        <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
+                    </a>
+                </div>
+    
+                <span class="hidden h-8 border-r md:inline-block border-base-border"></span>
+            </div>
+    
+            <div class="flex justify-between md:grow">
+                <!-- Top Nav -->
+                <nav id="retype-header-nav" class="hidden md:flex">
+                    <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://discord.gg/63rrbadsR7">Discord</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://github.com/stuyk/rebar-altv">GitHub</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://forge.plebmasters.de/hub?targetFrameworks=Rebar+(alt:V)&contentType=Script">Plugins</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://altv.mp">alt:V</a>
+                        </li>
+    
+                    </ul>
+                </nav>
+    
+                <div v-cloak class="flex justify-end grow">
+                    <div id="retype-mobile-search-button"></div>
+                    <doc-search-desktop></doc-search-desktop>
+    
+                    <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                    <doc-history></doc-history>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div id="retype-container" class="container relative flex bg-white">
+        <!-- Sidebar Skeleton -->
+        <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-sidebar-left-bg border-sidebar-left-border sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton">
+        
+            <div class="flex items-center h-16 px-6">
+                <input id="retype-filter-input-mock" class="w-full h-10 pl-8 px-3 py-2 transition-colors duration-200 ease-linear bg-filter-bg border border-filter-border rounded-lg shadow-none md:text-sm hover:border-filter-border-hover focus:outline-hidden focus:border-filter-border-focus placeholder-filter-placeholder" type="text">
+            </div>
+        
+            <div class="pl-6 mt-1 mb-4">
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            </div>
+        
+            <div class="shrink-0 mt-auto bg-transparent dark:border-base-border">
+                <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                    <span class="text-xs whitespace-nowrap">Powered by</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Sidebar component -->
+        <doc-sidebar v-cloak>
+            <template #sidebar-footer>
+                <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-base-border">
+        
+                    <div class="py-3 px-6 md:hidden border-b dark:border-base-border">
+                        <nav>
+                            <ul class="flex flex-wrap justify-center items-center">
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://discord.gg/63rrbadsR7">Discord</a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://github.com/stuyk/rebar-altv">GitHub</a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://forge.plebmasters.de/hub?targetFrameworks=Rebar+(alt:V)&contentType=Script">Plugins</a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://altv.mp">alt:V</a>
+                                </li>
+        
+                            </ul>
+                        </nav>
+                    </div>
+        
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </template>
+        </doc-sidebar>
+
+        <div class="grow min-w-0 bg-body-bg">
+            <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+<div class="flex">
+    <div id="retype-main" class="min-w-0 p-4 grow md:px-16">
+        <main class="relative pb-12 lg:pt-2">
+            <div class="retype-markdown" id="retype-content">
+                <!-- Rendered if sidebar right is enabled -->
+                <div id="retype-sidebar-right-toggle"></div>
+                <!-- Page content  -->
+<doc-anchor-target id="debug-plan-respawn-location--property-entry-teleport-bugs" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#debug-plan-respawn-location--property-entry-teleport-bugs">#</doc-anchor-trigger>
+        <span>Debug Plan: Respawn Location &amp; Property Entry Teleport Bugs</span>
+    </h1>
+</doc-anchor-target>
+<p>Step-by-step implementation plan to diagnose and fix two critical issues on the alt:V roleplay server.</p>
+<hr>
+<doc-anchor-target id="issue-1--player-respawn-on-clinic-roof">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#issue-1--player-respawn-on-clinic-roof">#</doc-anchor-trigger>
+        <span>Issue 1 — Player Respawn on Clinic Roof</span>
+    </h2>
+</doc-anchor-target>
+<p><strong>Symptom:</strong> After death, the player sometimes respawns on the <strong>roof of the clinic</strong> instead of at the correct street-level hospital spawn.</p>
+<p><strong>Relevant code (current behaviour):</strong></p>
+<ul>
+<li><strong>Server:</strong> <code translate="no" v-pre>src/plugins/gta-mysql-core/server/index.ts</code>
+<ul>
+<li><code translate="no" v-pre>HOSPITAL_SPAWNS</code> array (lines ~320–326): defines x, y, z, heading per hospital.</li>
+<li><code translate="no" v-pre>playerDeath</code> handler (lines ~349–389): picks nearest hospital, calls <code translate="no" v-pre>player.spawn(spawnX, spawnY, spawnZ, spawnHeading)</code>, then emits <code translate="no" v-pre>gta:spawn:safe</code> with the same coords.</li>
+</ul>
+</li>
+<li><strong>Client:</strong> <code translate="no" v-pre>src/plugins/gta-mysql-core/client/index.ts</code>
+<ul>
+<li><code translate="no" v-pre>forceSafeGroundSpawn(x, y, z)</code> (lines 932–951): uses <code translate="no" v-pre>native.getGroundZFor3dCoord(x, y, z + 3, ...)</code> to find ground and then sets player position. Comment notes that a large z-offset (e.g. z+20) would hit the hospital roof.</li>
+<li><strong>Two separate handlers for <code translate="no" v-pre>gta:spawn:safe</code> (confirmed bug):</strong>
+<ul>
+<li>Line 720: <code translate="no" v-pre>alt.onServer('gta:spawn:safe', () =&gt; { isDead = false; })</code> — no-args, always sets isDead=false.</li>
+<li>Line 953: <code translate="no" v-pre>alt.onServer('gta:spawn:safe', (x, y, z) =&gt; { forceSafeGroundSpawn(x, y, z) })</code> — coords handler.</li>
+<li>Since the server always emits with coords (line 385), <strong>both handlers fire every time</strong>. The order and interaction is the root of the roof bug.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Likely causes:</strong></p>
+<ol>
+<li><strong>Both handlers fire on every respawn:</strong> Server emits <code translate="no" v-pre>gta:spawn:safe</code> with coords always — the no-args handler at line 720 fires (JS allows mismatched arg count), and the coords handler at line 953 also fires. Both run concurrently and can conflict.</li>
+<li><strong>Ground probe hitting roof:</strong> <code translate="no" v-pre>getGroundZFor3dCoord(x, y, z + 3)</code> may return a roof Z if collision is loaded and the probe ray hits the building polygon first. For Pillbox (z=28.82), probing from z+3=31.82 is close to the roof edge.</li>
+<li><strong>Race/collision:</strong> Client runs <code translate="no" v-pre>forceSafeGroundSpawn</code> before world collision is fully ready, retries up to 10×100ms, but if collision loads late the first found result may be the roof.</li>
+</ol>
+<hr>
+<doc-anchor-target id="issue-2--property-entry-teleports-to-wrong-place-eg-police-dept">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#issue-2--property-entry-teleports-to-wrong-place-eg-police-dept">#</doc-anchor-trigger>
+        <span>Issue 2 — Property Entry Teleports to Wrong Place (e.g. Police Dept)</span>
+    </h2>
+</doc-anchor-target>
+<p><strong>Symptom:</strong> When entering a property, the player is teleported to an incorrect location (e.g. police department) instead of the property interior.</p>
+<p><strong>Relevant code:</strong></p>
+<ul>
+<li><strong>Server:</strong> <code translate="no" v-pre>src/plugins/gta-mysql-core/server/index.ts</code>
+<ul>
+<li><code translate="no" v-pre>property:enter</code> (lines ~573–601): loads property by ID, checks ownership, sends <code translate="no" v-pre>property:enterResult</code> with <code translate="no" v-pre>interior: { x, y, z, heading, ipl }</code> from <code translate="no" v-pre>property.interior_x/y/z</code>, etc.</li>
+<li><code translate="no" v-pre>/enter</code> command (lines ~967–975): uses <code translate="no" v-pre>getPropertyAtPosition</code>, then sets <code translate="no" v-pre>player.pos</code> to <code translate="no" v-pre>interior_x/y/z</code> and updates <code translate="no" v-pre>playersInProperty</code>.</li>
+</ul>
+</li>
+<li><strong>Client:</strong> <code translate="no" v-pre>src/plugins/gta-mysql-core/client/index.ts</code>
+<ul>
+<li><code translate="no" v-pre>property:enterResult</code> (lines ~599–621): if <code translate="no" v-pre>result.success &amp;&amp; result.interior</code>, loads IPL then teleports with <code translate="no" v-pre>setEntityCoordsNoOffset(result.interior.x, y, z)</code> and sets heading.</li>
+</ul>
+</li>
+<li><strong>Data:</strong> Interior coordinates come from the <code translate="no" v-pre>properties</code> table (<code translate="no" v-pre>interior_x</code>, <code translate="no" v-pre>interior_y</code>, <code translate="no" v-pre>interior_z</code>). Seed/update logic in <code translate="no" v-pre>src/plugins/gta-mysql-core/server/database/migrations.ts</code> (lines ~210–258). Server also has hardcoded teleports (e.g. <code translate="no" v-pre>/dealership</code> to <code translate="no" v-pre>-56.49, -1097.25, 26.42</code>).</li>
+</ul>
+<p><strong>Likely causes:</strong></p>
+<ol>
+<li><strong>Wrong interior in DB:</strong> A property (or a manually added row) has interior coordinates pointing to police station or another location.</li>
+<li><strong>Wrong propertyId:</strong> Client sends a different <code translate="no" v-pre>propertyId</code> than the one the player is at (e.g. list index vs id).</li>
+<li><strong>Missing or undefined interior:</strong> If <code translate="no" v-pre>interior_x/y/z</code> are null or wrong for a property, the server sends <code translate="no" v-pre>success: true</code> with null coords and the client teleports to 0,0,0 or similar. <em>(Note: the server already returns <code translate="no" v-pre>success: false</code> for missing property/non-owner — no silent fallback exists for those cases. The risk is bad data in a valid row.)</em></li>
+<li><strong>IPL loaded but teleport is immediate:</strong> Client loads IPL then teleports without any delay (lines 602–616) — the interior geometry may not be ready, causing the player to fall through or land at the wrong Z.</li>
+<li><strong>Dimension/interior:</strong> alt:V dimension or interior not set when using IPL-based interiors, so the game might not be in the correct “interior world”.</li>
+</ol>
+<hr>
+<doc-anchor-target id="implementation-plan">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#implementation-plan">#</doc-anchor-trigger>
+        <span>Implementation Plan</span>
+    </h1>
+</doc-anchor-target>
+<doc-anchor-target id="phase-1--reproduce-and-trace">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#phase-1--reproduce-and-trace">#</doc-anchor-trigger>
+        <span>Phase 1 — Reproduce and Trace</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="11-respawn-clinic-roof">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#11-respawn-clinic-roof">#</doc-anchor-trigger>
+        <span>1.1 Respawn (clinic roof)</span>
+    </h3>
+</doc-anchor-target>
+<ol>
+<li><strong>Reproduce consistently</strong>
+<ul>
+<li>Die near Pillbox Hill (e.g. around 340, -580, 28) and note whether you land on roof or street.</li>
+<li>Repeat near other hospitals (Mount Zonah, Sandy Shores, Paleto) to see if it’s Pillbox-only or global.</li>
+</ul>
+</li>
+<li><strong>Trace flow</strong>
+<ul>
+<li>Add temporary logs (see Phase 2) and reproduce again to confirm:
+<ul>
+<li>Which hospital the server chose.</li>
+<li>Exact (x, y, z) used for <code translate="no" v-pre>player.spawn()</code> and for <code translate="no" v-pre>gta:spawn:safe</code>.</li>
+<li>On client: (x, y, z) received and the <code translate="no" v-pre>groundZ</code> computed by <code translate="no" v-pre>forceSafeGroundSpawn</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<doc-anchor-target id="12-property-entry-wrong-teleport">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#12-property-entry-wrong-teleport">#</doc-anchor-trigger>
+        <span>1.2 Property entry (wrong teleport)</span>
+    </h3>
+</doc-anchor-target>
+<ol>
+<li><strong>Reproduce</strong>
+<ul>
+<li>Enter <strong>each</strong> property (by name/id) and note which one sends you to the wrong place.</li>
+</ul>
+</li>
+<li><strong>Trace</strong>
+<ul>
+<li>Log the <code translate="no" v-pre>propertyId</code> and the interior (x, y, z) sent from server for that property.</li>
+<li>On client, log the same values when handling <code translate="no" v-pre>property:enterResult</code>.</li>
+<li>Compare with known GTA V interior coords (e.g. apartment interiors ~346, -1012, -99; PD Mission Row ~425, -979, 30).</li>
+</ul>
+</li>
+</ol>
+<hr>
+<doc-anchor-target id="phase-2--logging-improvements">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#phase-2--logging-improvements">#</doc-anchor-trigger>
+        <span>Phase 2 — Logging Improvements</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="21-respawn-server--srcpluginsgta-mysql-coreserverindexts">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#21-respawn-server--srcpluginsgta-mysql-coreserverindexts">#</doc-anchor-trigger>
+        <span>2.1 Respawn (server) — <code translate="no" v-pre>src/plugins/gta-mysql-core/server/index.ts</code></span>
+    </h3>
+</doc-anchor-target>
+<p>In the <code translate="no" v-pre>playerDeath</code> handler, after choosing the hospital and before <code translate="no" v-pre>alt.setTimeout</code>:</p>
+<div id="21-respawn-server--srcpluginsgta-mysql-coreserverindexts-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// After: const hospital = getNearestHospital(...)
+alt.log(`[gta-mysql-core] Respawn: player ${player.id} -&gt; ${hospital.name} at ${hospital.x}, ${hospital.y}, ${hospital.z}`);</code></pre>
+</doc-codeblock></div>
+<p>Inside the <code translate="no" v-pre>alt.setTimeout</code> callback, before <code translate="no" v-pre>player.spawn</code>:</p>
+<div id="21-respawn-server--srcpluginsgta-mysql-coreserverindexts-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-typescript"><code v-pre class="language-typescript">alt.log(`[gta-mysql-core] Respawn applying: spawn(${spawnX}, ${spawnY}, ${spawnZ}) heading=${spawnHeading}`);</code></pre>
+</doc-codeblock></div>
+<p>After <code translate="no" v-pre>player.spawn</code> and before <code translate="no" v-pre>emitClient</code>:</p>
+<div id="21-respawn-server--srcpluginsgta-mysql-coreserverindexts-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-typescript"><code v-pre class="language-typescript">alt.log(`[gta-mysql-core] Respawn done, emitting gta:spawn:safe(${spawnX}, ${spawnY}, ${spawnZ})`);</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="22-respawn-client--srcpluginsgta-mysql-coreclientindexts">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#22-respawn-client--srcpluginsgta-mysql-coreclientindexts">#</doc-anchor-trigger>
+        <span>2.2 Respawn (client) — <code translate="no" v-pre>src/plugins/gta-mysql-core/client/index.ts</code></span>
+    </h3>
+</doc-anchor-target>
+<p>In <code translate="no" v-pre>forceSafeGroundSpawn</code>, at the start:</p>
+<div id="22-respawn-client--srcpluginsgta-mysql-coreclientindexts-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-typescript"><code v-pre class="language-typescript">alt.log(`[gta-client] forceSafeGroundSpawn received: ${x}, ${y}, ${z}`);</code></pre>
+</doc-codeblock></div>
+<p>Inside the loop, when ground is found:</p>
+<div id="22-respawn-client--srcpluginsgta-mysql-coreclientindexts-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-typescript"><code v-pre class="language-typescript">alt.log(`[gta-client] forceSafeGroundSpawn ground found: groundZ=${groundZ} (attempt ${attempt + 1})`);</code></pre>
+</doc-codeblock></div>
+<p>After the loop (whether or not ground was found):</p>
+<div id="22-respawn-client--srcpluginsgta-mysql-coreclientindexts-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-typescript"><code v-pre class="language-typescript">alt.log(`[gta-client] forceSafeGroundSpawn setting position: ${x}, ${y}, ${groundZ}`);</code></pre>
+</doc-codeblock></div>
+<p>This will show if the client is using a roof Z (e.g. high <code translate="no" v-pre>groundZ</code>) for hospital coords.</p>
+<doc-anchor-target id="23-property-entry-server--srcpluginsgta-mysql-coreserverindexts">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#23-property-entry-server--srcpluginsgta-mysql-coreserverindexts">#</doc-anchor-trigger>
+        <span>2.3 Property entry (server) — <code translate="no" v-pre>src/plugins/gta-mysql-core/server/index.ts</code></span>
+    </h3>
+</doc-anchor-target>
+<p>At the start of <code translate="no" v-pre>property:enter</code> handler, after loading the property and before emitting result:</p>
+<div id="23-property-entry-server--srcpluginsgta-mysql-coreserverindexts-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-typescript"><code v-pre class="language-typescript">alt.log(`[gta-mysql-core] property:enter player=${player.id} propertyId=${propertyId} name=${property.name} interior=${property.interior_x}, ${property.interior_y}, ${property.interior_z}`);</code></pre>
+</doc-codeblock></div>
+<p>If you add any fallback (e.g. default interior when DB has nulls), log when that path is used.</p>
+<doc-anchor-target id="24-property-entry-client--srcpluginsgta-mysql-coreclientindexts">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#24-property-entry-client--srcpluginsgta-mysql-coreclientindexts">#</doc-anchor-trigger>
+        <span>2.4 Property entry (client) — <code translate="no" v-pre>src/plugins/gta-mysql-core/client/index.ts</code></span>
+    </h3>
+</doc-anchor-target>
+<p>In <code translate="no" v-pre>property:enterResult</code>, when <code translate="no" v-pre>result.success &amp;&amp; result.interior</code>:</p>
+<div id="24-property-entry-client--srcpluginsgta-mysql-coreclientindexts-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-typescript"><code v-pre class="language-typescript">alt.log(`[gta-client] property:enterResult teleporting to interior: ${result.interior.x}, ${result.interior.y}, ${result.interior.z} heading=${result.interior.heading}`);</code></pre>
+</doc-codeblock></div>
+<p>This confirms what the client actually uses and helps spot mismatches with DB or server logs.</p>
+<hr>
+<doc-anchor-target id="phase-3--validate-coordinates">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#phase-3--validate-coordinates">#</doc-anchor-trigger>
+        <span>Phase 3 — Validate Coordinates</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="31-hospital-spawns">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#31-hospital-spawns">#</doc-anchor-trigger>
+        <span>3.1 Hospital spawns</span>
+    </h3>
+</doc-anchor-target>
+<ol>
+<li><strong>In-game check</strong>
+<ul>
+<li>Use <code translate="no" v-pre>/tp 340.25 -580.59 28.82</code> (Pillbox) and nearby Z values (e.g. 25, 30, 35) to see which Z is street and which is roof.</li>
+</ul>
+</li>
+<li><strong>Reference</strong>
+<ul>
+<li>Pillbox Hill entrance is roughly around 340, -580, 28 (street). Roof is much higher (e.g. 40+). If your <code translate="no" v-pre>HOSPITAL_SPAWNS</code> entry has too high a Z, server spawn will already be on the roof.</li>
+</ul>
+</li>
+<li><strong>Adjust</strong>
+<ul>
+<li>Ensure every entry in <code translate="no" v-pre>HOSPITAL_SPAWNS</code> uses a Z that is <strong>street level</strong> (verified in-game or from a reliable source). Do not rely on client ground probe alone for hospitals if the probe is known to hit roofs.</li>
+</ul>
+</li>
+</ol>
+<doc-anchor-target id="32-property-interiors">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#32-property-interiors">#</doc-anchor-trigger>
+        <span>3.2 Property interiors</span>
+    </h3>
+</doc-anchor-target>
+<ol>
+<li><strong>DB check</strong>
+<ul>
+<li>Run:<br />
+<code translate="no" v-pre>SELECT id, name, interior_x, interior_y, interior_z FROM properties;</code></li>
+<li>Compare with known GTA V coords:
+<ul>
+<li>High-end apartment interior: e.g. 346.99, -1012.99, -99.20</li>
+<li>Mission Row PD: ~425, -979, 30 (example; do not use for apartments)</li>
+</ul>
+</li>
+<li>Fix any row that has interior_x/y/z pointing to PD or another wrong location.</li>
+</ul>
+</li>
+<li><strong>IPL</strong>
+<ul>
+<li>Ensure <code translate="no" v-pre>ipl</code> matches the interior (e.g. apa_v_mp_h_01_a … apa_v_mp_h_05_a for the seeded apartments). Wrong IPL + correct coords can still look wrong if the interior doesn’t load.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<doc-anchor-target id="phase-4--debug-dimension--interior-property">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#phase-4--debug-dimension--interior-property">#</doc-anchor-trigger>
+        <span>Phase 4 — Debug Dimension / Interior (Property)</span>
+    </h2>
+</doc-anchor-target>
+<ol>
+<li><strong>alt:V dimensions</strong>
+<ul>
+<li>If your server uses <code translate="no" v-pre>player.dimension</code>, ensure it’s set when entering a property and reset when exiting (e.g. 0 = world, propertyId or similar for interiors). Check both:
+<ul>
+<li><code translate="no" v-pre>property:enter</code> / <code translate="no" v-pre>property:exit</code> server-side.</li>
+<li>Any client logic that might change dimension.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>IPL load order</strong>
+<ul>
+<li>Client loads IPL in <code translate="no" v-pre>property:enterResult</code> then teleports. If the interior is IPL-based, request the IPL and add a short delay (e.g. 100–200 ms) before teleporting so the interior is ready.</li>
+</ul>
+</li>
+<li><strong>Interior ID (optional)</strong>
+<ul>
+<li>If you use <code translate="no" v-pre>getInteriorAtCoords</code> / <code translate="no" v-pre>refreshInterior</code>, ensure the interior at (interior_x, interior_y, interior_z) is the one you expect and that it’s active when the player is teleported.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<doc-anchor-target id="phase-5--safe-fixes">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#phase-5--safe-fixes">#</doc-anchor-trigger>
+        <span>Phase 5 — Safe Fixes</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="51-respawn-avoid-clinic-roof">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#51-respawn-avoid-clinic-roof">#</doc-anchor-trigger>
+        <span>5.1 Respawn (avoid clinic roof)</span>
+    </h3>
+</doc-anchor-target>
+<p><strong>Option A — Trust server Z, skip client ground correction for respawn</strong></p>
+<ul>
+<li>In the <code translate="no" v-pre>playerDeath</code> handler, after <code translate="no" v-pre>player.spawn(spawnX, spawnY, spawnZ, spawnHeading)</code> do <strong>not</strong> emit <code translate="no" v-pre>gta:spawn:safe</code> with coordinates (so the client does not run <code translate="no" v-pre>forceSafeGroundSpawn</code> and overwrite position). You can still emit <code translate="no" v-pre>gta:spawn:safe</code> with no args so the client sets <code translate="no" v-pre>isDead = false</code>.</li>
+<li>Ensure <code translate="no" v-pre>HOSPITAL_SPAWNS</code> Z values are verified street-level so <code translate="no" v-pre>player.spawn()</code> is correct on its own.</li>
+</ul>
+<p><strong>Option B — Keep client correction but fix the probe</strong></p>
+<ul>
+<li>In <code translate="no" v-pre>forceSafeGroundSpawn</code>, for known hospital positions (e.g. Pillbox 340, -580), use a <strong>fixed street Z</strong> instead of calling <code translate="no" v-pre>getGroundZFor3dCoord</code> (e.g. 28.0 for Pillbox), so the roof is never chosen.</li>
+<li>Alternatively, probe from <strong>below</strong> (e.g. z - 5) or use a small offset that’s clearly on the street, and clamp the result so it never goes above a max Z (e.g. 35 for Pillbox).</li>
+</ul>
+<p><strong>Option C — Single handler for gta:spawn:safe</strong></p>
+<ul>
+<li>You currently have two client handlers for <code translate="no" v-pre>gta:spawn:safe</code>. Consolidate to one: if (x,y,z) are provided, call <code translate="no" v-pre>forceSafeGroundSpawn(x,y,z)</code> then set <code translate="no" v-pre>isDead = false</code>; otherwise only set <code translate="no" v-pre>isDead = false</code>. This avoids any ambiguity in order of execution.</li>
+</ul>
+<p><strong>Recommendation:</strong> Fix <code translate="no" v-pre>HOSPITAL_SPAWNS</code> Z in code and optionally in a small config, then apply Option A or B. Prefer Option A if server coords are reliable to avoid client overriding good server spawn.</p>
+<doc-anchor-target id="52-property-entry-correct-interior">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#52-property-entry-correct-interior">#</doc-anchor-trigger>
+        <span>5.2 Property entry (correct interior)</span>
+    </h3>
+</doc-anchor-target>
+<ol>
+<li><strong>Fix data</strong>
+<ul>
+<li>Update any <code translate="no" v-pre>properties</code> row whose interior_x/y/z point to PD or wrong place. Set to the correct apartment/interior coords and correct <code translate="no" v-pre>ipl</code> if needed.</li>
+</ul>
+</li>
+<li><strong>Correct propertyId</strong>
+<ul>
+<li>Ensure the client sends the real <code translate="no" v-pre>property.id</code> when entering (e.g. from the property list or from the marker you’re interacting with), not an index or another id.</li>
+</ul>
+</li>
+<li><strong>No silent fallback</strong> <em>(already implemented — no action needed)</em>
+<ul>
+<li><code translate="no" v-pre>server/index.ts:580–586</code> already returns <code translate="no" v-pre>success: false</code> for missing property and non-owner. The risk is only bad <code translate="no" v-pre>interior_x/y/z</code> data in an otherwise valid DB row, which sends <code translate="no" v-pre>success: true</code> with wrong coords.</li>
+</ul>
+</li>
+<li><strong>IPL + delay</strong>
+<ul>
+<li>When <code translate="no" v-pre>result.interior.ipl</code> is present, request IPL then delay the teleport by 100–200 ms so the interior is loaded before moving the player.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<doc-anchor-target id="phase-6--example-code-structure-respawn">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#phase-6--example-code-structure-respawn">#</doc-anchor-trigger>
+        <span>Phase 6 — Example Code Structure (Respawn)</span>
+    </h2>
+</doc-anchor-target>
+<p><strong>Server — only emit “clear death” after spawn, no coords (Option A):</strong></p>
+<div id="phase-6--example-code-structure-respawn-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// In playerDeath handler, after player.spawn(...) and health/armour/money/weapons:
+playersInProperty.delete(player.id);
+// Option A: do not send coords; client only clears death state
+alt.emitClient(player, 'gta:spawn:safe');</code></pre>
+</doc-codeblock></div>
+<p><strong>Client — single handler, optional ground correction:</strong></p>
+<div id="phase-6--example-code-structure-respawn-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-typescript"><code v-pre class="language-typescript">alt.onServer('gta:spawn:safe', (x?: number, y?: number, z?: number) =&gt; {
+    isDead = false;
+    if (typeof x === 'number' &amp;&amp; typeof y === 'number' &amp;&amp; typeof z === 'number') {
+        forceSafeGroundSpawn(x, y, z).catch(() =&gt; {});
+    }
+});</code></pre>
+</doc-codeblock></div>
+<p>If you keep client-side ground correction, add a “known spawn” list so hospital positions use fixed Z instead of <code translate="no" v-pre>getGroundZFor3dCoord</code> (Option B).</p>
+<hr>
+<doc-anchor-target id="phase-7--example-code-structure-property-entry">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#phase-7--example-code-structure-property-entry">#</doc-anchor-trigger>
+        <span>Phase 7 — Example Code Structure (Property Entry)</span>
+    </h2>
+</doc-anchor-target>
+<p><strong>Server — validate and log before sending:</strong></p>
+<div id="phase-7--example-code-structure-property-entry-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-typescript"><code v-pre class="language-typescript">alt.onClient('property:enter', async (player, propertyId: number) =&gt; {
+    // ... existing session/ownership checks ...
+    const property = await propertyService.getPropertyById(propertyId);
+    if (!property) {
+        alt.emitClient(player, 'property:enterResult', { success: false, message: 'Property not found' });
+        return;
+    }
+    if (property.owner_player_id !== session.oderId) {
+        alt.emitClient(player, 'property:enterResult', { success: false, message: 'You do not own this property' });
+        return;
+    }
+    // Optional: sanity check interior (e.g. interior_z &lt; 0 for apartment interiors)
+    const interior = {
+        x: property.interior_x,
+        y: property.interior_y,
+        z: property.interior_z,
+        heading: property.interior_heading || 0,
+        ipl: property.ipl || undefined
+    };
+    alt.log(`[gta-mysql-core] property:enter player=${player.id} propertyId=${propertyId} name=${property.name} interior=${interior.x}, ${interior.y}, ${interior.z}`);
+    playersInProperty.set(player.id, propertyId);
+    alt.emitClient(player, 'property:enterResult', { success: true, message: `Entered ${property.name}`, interior });
+});</code></pre>
+</doc-codeblock></div>
+<p><strong>Client — optional delay when IPL is used:</strong></p>
+<div id="phase-7--example-code-structure-property-entry-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-typescript"><code v-pre class="language-typescript">alt.onServer('property:enterResult', (result: { ... }) =&gt; {
+    if (result.success &amp;&amp; result.interior) {
+        if (result.interior.ipl) {
+            loadPropertyIPL(result.interior.ipl);
+            alt.setTimeout(() =&gt; doTeleport(result), 150);
+        } else {
+            doTeleport(result);
+        }
+    } else {
+        addNotification(`FAILED: ${result.message}`);
+    }
+});
+function doTeleport(result: { interior: { x: number; y: number; z: number; heading: number } }) {
+    const player = alt.Player.local;
+    if (player?.valid &amp;&amp; result.interior) {
+        native.setEntityCoordsNoOffset(player.scriptID, result.interior.x, result.interior.y, result.interior.z, false, false, false);
+        native.setEntityHeading(player.scriptID, result.interior.heading);
+    }
+    addNotification(result.message);
+}</code></pre>
+</doc-codeblock></div>
+<hr>
+<doc-anchor-target id="checklist">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#checklist">#</doc-anchor-trigger>
+        <span>Checklist</span>
+    </h2>
+</doc-anchor-target>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>[CONFIRMED BUG]</strong> Consolidate dual <code translate="no" v-pre>gta:spawn:safe</code> handlers (lines 720 + 953) into one (Phase 5.1 Option C, Phase 6).</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>[CONFIRMED BUG]</strong> Apply Option A: stop emitting coords in <code translate="no" v-pre>gta:spawn:safe</code> — trust server Z from <code translate="no" v-pre>HOSPITAL_SPAWNS</code>, skip client ground probe for respawn (Phase 5.1).</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Add server and client logs for respawn and property enter (Phase 2).</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Reproduce both bugs and capture logs (Phase 1).</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Validate <code translate="no" v-pre>HOSPITAL_SPAWNS</code> Z values in-game (Phase 3.1).</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Run <code translate="no" v-pre>SELECT id, name, interior_x, interior_y, interior_z FROM properties</code> and fix wrong interiors (Phase 3.2, 5.2) — most likely root cause of Issue 2.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Ensure client sends correct <code translate="no" v-pre>propertyId</code> (Phase 5.2).</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>[CONFIRMED MISSING]</strong> Add IPL delay (150ms) before teleport in <code translate="no" v-pre>property:enterResult</code> client handler (Phase 4, 5.2, 7).</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Check dimension handling for properties (Phase 4).</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> Test respawn at each hospital and entry for each property before closing the ticket.</li>
+<li class="task-list-item"><input disabled="disabled" type="checkbox" checked="checked" /> <del>No silent fallback for property enter</del> — already implemented (<code translate="no" v-pre>server/index.ts:580–586</code>).</li>
+</ul>
+<p>This plan focuses on clean debugging (reproduce → log → validate data → fix) and stable, minimal changes so other systems (e.g. default spawn, other commands) are not broken.</p>
+
+                
+                <!-- Required only on API pages -->
+                <doc-toolbar-member-filter-no-results></doc-toolbar-member-filter-no-results>
+            </div>
+            <footer id="retype-content-footer" class="clear-both">
+            
+                <nav id="retype-nextprev" class="print:hidden flex mt-14">
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../team-pass/05-rebar-integration-and-qa-report/">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                            <span>
+                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
+                                <span class="block mt-1">Rebar Integration + QA Report</span>
+                            </span>
+                        </a>
+                    </div>
+            
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../shared/utility/">
+                            <span>
+                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
+                                <span class="block mt-1">Utility</span>
+                            </span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                        </a>
+                    </div>
+                </nav>
+            </footer>
+        </main>
+
+        <div id="retype-page-footer" class="print:border-none border-t border-base-border pt-6 mb-8">
+            <footer class="flex flex-wrap items-center justify-between print:justify-center">
+                <div id="retype-footer-links" class="print:hidden">
+                    <ul class="flex flex-wrap items-center text-sm">
+                    </ul>
+                </div>
+                <div id="retype-copyright" class="print:justify-center py-2 text-footer-text font-footer-link text-sm leading-relaxed"><p>© Copyright 2026. All rights reserved.</p></div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Rendered if sidebar right is enabled -->
+    <!-- Sidebar right skeleton-->
+    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-sidebar-right-bg border-sidebar-right-border lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:translate-x-0 sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton">
+        <div class="pl-5">
+            <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+        </div>
+    </div>
+
+    <!-- User should be able to hide sidebar right -->
+    <doc-sidebar-right v-cloak></doc-sidebar-right>
+</div>
+
+        </div>
+    </div>
+
+    <doc-search-mobile></doc-search-mobile>
+    <doc-back-to-top></doc-back-to-top>
+</div>
+
+
+    <div id="retype-overlay-target"></div>
+
+    <script data-cfasync="false">window.__DOCS__ = { "title": "Debug Plan: Respawn Location & Property Entry Teleport Bugs", level: 1, icon: "file", hasPrism: true, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+</body>
+</html>
