@@ -353,6 +353,9 @@ alt.on('playerDeath', async (player, killer, weaponHash) => {
     alt.log(`[gta-mysql-core] Player ${player.id} died at ${deathPos.x}, ${deathPos.y}, ${deathPos.z}`);
 
     const hospital = getNearestHospital(deathPos.x, deathPos.y, deathPos.z);
+    alt.log(
+        `[gta-mysql-core] Respawn: player ${player.id} -> ${hospital.name} at ${hospital.x}, ${hospital.y}, ${hospital.z}`
+    );
 
     alt.setTimeout(async () => {
         if (!player.valid) return;
@@ -362,6 +365,9 @@ alt.on('playerDeath', async (player, killer, weaponHash) => {
         const spawnZ = hospital.z;
         const spawnHeading = hospital.heading;
 
+        alt.log(
+            `[gta-mysql-core] Respawn applying: spawn(${spawnX}, ${spawnY}, ${spawnZ}) heading=${spawnHeading}`
+        );
         player.spawn(spawnX, spawnY, spawnZ, spawnHeading);
         player.health = 200;
         player.armour = 0;
@@ -382,7 +388,9 @@ alt.on('playerDeath', async (player, killer, weaponHash) => {
 
         playersInProperty.delete(player.id);
 
-        alt.emitClient(player, 'gta:spawn:safe', spawnX, spawnY, spawnZ);
+        // Respawn: do not send coords so client does not overwrite with ground probe (avoids clinic roof bug)
+        alt.log(`[gta-mysql-core] Respawn done, emitting gta:spawn:safe (no coords)`);
+        alt.emitClient(player, 'gta:spawn:safe');
     }, 5000);
 
     notifyPlayer(player, 'You died! Respawning in 5 seconds...');
@@ -585,7 +593,29 @@ alt.onClient('property:enter', async (player, propertyId: number) => {
         alt.emitClient(player, 'property:enterResult', { success: false, message: 'You do not own this property' });
         return; 
     }
-    
+
+    const ix = property.interior_x;
+    const iy = property.interior_y;
+    const iz = property.interior_z;
+    const hasValidInterior =
+        typeof ix === 'number' &&
+        typeof iy === 'number' &&
+        typeof iz === 'number' &&
+        !(ix === 0 && iy === 0 && iz === 0);
+    if (!hasValidInterior) {
+        alt.logWarning(
+            `[gta-mysql-core] property:enter propertyId=${propertyId} has invalid interior coords (${ix}, ${iy}, ${iz}) - fix in DB`
+        );
+        alt.emitClient(player, 'property:enterResult', {
+            success: false,
+            message: 'Property interior is not configured. Contact an administrator.',
+        });
+        return;
+    }
+
+    alt.log(
+        `[gta-mysql-core] property:enter player=${player.id} propertyId=${propertyId} name=${property.name} interior=${ix}, ${iy}, ${iz}`
+    );
     playersInProperty.set(player.id, propertyId);
     alt.emitClient(player, 'property:enterResult', { 
         success: true, 

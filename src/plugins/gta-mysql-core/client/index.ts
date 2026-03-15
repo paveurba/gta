@@ -596,25 +596,38 @@ alt.onServer('property:sellResult', (result: { success: boolean; message: string
     }
 });
 
+function doPropertyInteriorTeleport(interior: { x: number; y: number; z: number; heading: number }): void {
+    const player = alt.Player.local;
+    if (player && player.valid) {
+        alt.log(
+            `[gta-client] property:enterResult teleporting to interior: ${interior.x}, ${interior.y}, ${interior.z} heading=${interior.heading}`
+        );
+        native.setEntityCoordsNoOffset(
+            player.scriptID,
+            interior.x,
+            interior.y,
+            interior.z,
+            false,
+            false,
+            false
+        );
+        native.setEntityHeading(player.scriptID, interior.heading);
+    }
+}
+
 alt.onServer('property:enterResult', (result: { success: boolean; message: string; interior?: { x: number; y: number; z: number; heading: number; ipl?: string } }) => {
     if (result.success && result.interior) {
-        // Load IPL if needed
         if (result.interior.ipl) {
             loadPropertyIPL(result.interior.ipl);
+            // Delay teleport so IPL interior is ready (avoids wrong Z / fallthrough)
+            alt.setTimeout(() => {
+                doPropertyInteriorTeleport(result.interior!);
+                addNotification(result.message);
+            }, 150);
+        } else {
+            doPropertyInteriorTeleport(result.interior);
+            addNotification(result.message);
         }
-        // Teleport to interior
-        const player = alt.Player.local;
-        if (player && player.valid) {
-            native.setEntityCoordsNoOffset(
-                player.scriptID, 
-                result.interior.x, 
-                result.interior.y, 
-                result.interior.z, 
-                false, false, false
-            );
-            native.setEntityHeading(player.scriptID, result.interior.heading);
-        }
-        addNotification(result.message);
     } else {
         addNotification(`FAILED: ${result.message}`);
     }
@@ -715,10 +728,6 @@ alt.on('playerDeath', () => {
     isDead = true;
     deathTime = Date.now();
     alt.log('[gta-client] Player died');
-});
-
-alt.onServer('gta:spawn:safe', () => {
-    isDead = false;
 });
 
 // ============================================================================
@@ -933,6 +942,7 @@ async function forceSafeGroundSpawn(x: number, y: number, z: number): Promise<vo
     const player = alt.Player.local;
     if (!player || !player.valid) return;
 
+    alt.log(`[gta-client] forceSafeGroundSpawn received: ${x}, ${y}, ${z}`);
     native.requestCollisionAtCoord(x, y, z);
 
     // Retry ground detection up to 10 times (up to ~1s) until collision loads.
@@ -943,15 +953,24 @@ async function forceSafeGroundSpawn(x: number, y: number, z: number): Promise<vo
         const [found, result] = native.getGroundZFor3dCoord(x, y, z + 3, 0, false, false);
         if (found && result > 0) {
             groundZ = result + 1.0;
+            alt.log(`[gta-client] forceSafeGroundSpawn ground found: groundZ=${groundZ} (attempt ${attempt + 1})`);
             break;
         }
     }
 
+    if (groundZ === z + 1.0) {
+        alt.log(`[gta-client] forceSafeGroundSpawn ground NOT found, using fallback z=${groundZ}`);
+    }
+    alt.log(`[gta-client] forceSafeGroundSpawn setting position: ${x}, ${y}, ${groundZ}`);
     native.setEntityCoordsNoOffset(player.scriptID, x, y, groundZ, false, false, false);
 }
 
-alt.onServer('gta:spawn:safe', (x: number, y: number, z: number) => {
-    forceSafeGroundSpawn(x, y, z).catch(() => {});
+// Single handler: with coords = login/default spawn (apply ground correction); no coords = respawn (clear death only)
+alt.onServer('gta:spawn:safe', (x?: number, y?: number, z?: number) => {
+    isDead = false;
+    if (typeof x === 'number' && typeof y === 'number' && typeof z === 'number') {
+        forceSafeGroundSpawn(x, y, z).catch(() => {});
+    }
 });
 
 // ============================================================================

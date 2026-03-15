@@ -1,0 +1,71 @@
+---
+description: YAGNI, KISS, SOLID, and clean code standards for the project
+alwaysApply: true
+---
+
+# Coding Standards
+
+Apply these principles in every change.
+
+## YAGNI (You Ain’t Gonna Need It)
+
+- Implement only what is required **now**; do not add features “for later.”
+- No speculative abstractions, optional parameters, or “might be useful” code.
+- Remove unused code, dead branches, and unused dependencies.
+
+```typescript
+// ❌ BAD – speculative “future” support
+function getVehicle(id: string, includeHistory = false, format?: 'json' | 'xml') {}
+
+// ✅ GOOD – only what’s needed
+function getVehicle(id: string) {}
+```
+
+## KISS (Keep It Simple, Stupid)
+
+- Prefer the simplest solution that works and is easy to read.
+- Avoid clever tricks, deep abstraction layers, and unnecessary patterns.
+- One clear path through the code; avoid “flexible” APIs that complicate call sites.
+
+```typescript
+// ❌ BAD – unnecessary indirection
+const handler = (fn: Fn) => (req: Req) => pipe(req, validate, fn, respond);
+
+// ✅ GOOD – direct and readable
+function handleRequest(req: Req, fn: (r: Req) => Result) {
+  const validated = validate(req);
+  return respond(fn(validated));
+}
+```
+
+## SOLID
+
+- **S – Single responsibility**: One class/function = one reason to change. Split large modules.
+- **O – Open/closed**: Extend via new code (e.g. new handlers, plugins), avoid editing stable code for every new case.
+- **L – Liskov**: Substitutes must behave like their base (same contracts, no surprises).
+- **I – Interface segregation**: Small, focused interfaces; callers depend only on what they use.
+- **D – Dependency inversion**: Depend on abstractions (interfaces, Rebar services) rather than concrete implementations.
+
+```typescript
+// ❌ BAD – god function, concrete dependency
+async function saveAndNotify(data: Data) {
+  await mysql.query('INSERT...');
+  await sendEmail();
+  await logToFile();
+}
+
+// ✅ GOOD – single responsibility, inject dependencies
+async function saveUser(repo: UserRepository, data: Data) {
+  await repo.insert(data);
+}
+```
+
+## Clean Code
+
+- **Names**: Clear and descriptive. No `data`, `obj`, `temp`, `item` unless the type is trivial and local.
+- **Functions**: Small, one task, few arguments. Extract when logic grows or repeats.
+- **No duplication**: Same logic in two places → extract to one (function or shared module).
+- **Readability**: Prefer obvious control flow; avoid deep nesting (early returns, extract functions).
+- **Composition over complex inheritance**: Prefer small functions and composition; use inheritance only when it clearly fits the domain.
+
+Before finishing: check for code smells (long methods, feature envy, dead code) and simplify where possible.
