@@ -445,9 +445,10 @@ alt.onServer('gta:logout', () => {
     addNotification('Logged out successfully');
 });
 
-// Auth UI result handlers – only update message and state. Form closes only when user presses ESC.
+// Auth UI result handlers – on success close auth so player sees the game; otherwise show message.
 alt.onServer('auth:registerResult', (result: { success: boolean; message: string }) => {
     authMessage = result.message;
+    if (result.success) closeAuth();
 });
 
 alt.onServer('auth:loginResult', (result: { success: boolean; message: string; passwordChangeRequired: boolean }) => {
@@ -459,6 +460,8 @@ alt.onServer('auth:loginResult', (result: { success: boolean; message: string; p
         authForm.changeNew = '';
         authForm.changeConfirm = '';
         activeAuthFieldIndex = 0;
+    } else if (result.success) {
+        closeAuth();
     }
 });
 
@@ -470,6 +473,7 @@ alt.onServer('auth:changePasswordResult', (result: { success: boolean; message: 
     authMessage = result.message;
     if (result.success) {
         authRequirePasswordChange = false;
+        closeAuth();
     }
 });
 
@@ -1181,6 +1185,7 @@ alt.on('keyup', (key) => {
             if (key === 49) { openAuth('login'); authForm.loginId = ''; authForm.loginPassword = ''; activeAuthFieldIndex = 0; return; }
             if (key === 50) { openAuth('register'); authForm.regUsername = ''; authForm.regEmail = ''; authForm.regPassword = ''; authForm.regConfirm = ''; activeAuthFieldIndex = 0; return; }
             if (key === 51) { openAuth('forgot'); authForm.forgotEmail = ''; activeAuthFieldIndex = 0; return; }
+            if (key === 52 && currentPlayerId > 0) { alt.emitServer('auth:logout'); return; }
         }
         if (key === 9) {
             const keys = AUTH_FIELDS[authScreen];
@@ -1839,7 +1844,8 @@ alt.everyTick(() => {
             drawTextLeft('[1] Login', 0.36, 0.36, 0.4, 255, 255, 255);
             drawTextLeft('[2] Register', 0.36, 0.42, 0.4, 255, 255, 255);
             drawTextLeft('[3] Forgot Password', 0.36, 0.48, 0.4, 255, 255, 255);
-            drawTextLeft('[ESC] Close', 0.36, 0.58, 0.35, 150, 150, 150);
+            if (currentPlayerId > 0) drawTextLeft('[4] Logout', 0.36, 0.54, 0.4, 255, 180, 180);
+            drawTextLeft('[ESC] Close', 0.36, currentPlayerId > 0 ? 0.62 : 0.58, 0.35, 150, 150, 150);
         } else if (authScreen === 'login') {
             drawTextLeft('Username or Email:', 0.36, 0.34, 0.35, 200, 200, 200);
             drawRect(0.5, 0.395, 0.26, 0.032, getActiveAuthFieldKey() === 'loginId' ? 60 : 40, getActiveAuthFieldKey() === 'loginId' ? 60 : 40, getActiveAuthFieldKey() === 'loginId' ? 90 : 55, 255);

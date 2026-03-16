@@ -109,6 +109,22 @@ async function savePlayerMoney(email: string, money: number, bank: number): Prom
     await pool.execute('UPDATE players SET money = ?, bank = ? WHERE email = ?', [money, bank, email]);
 }
 
+/** Clears current session (save weapons, despawn vehicles). Does not emit gta:logout. Use when replacing with new login. */
+async function clearExistingSession(player: alt.Player): Promise<void> {
+    const session = playerSessions.get(player.id);
+    if (!session) return;
+    await getMySQLPool();
+    try {
+        await weaponService.savePlayerWeapons(player, session.oderId);
+        await vehicleService.despawnAllPlayerVehicles(session.oderId);
+    } catch (err) {
+        alt.logWarning(`[gta-mysql-core] clearExistingSession: ${(err as Error).message}`);
+    }
+    playerSessions.delete(player.id);
+    playersInProperty.delete(player.id);
+    player.deleteMeta('playerId');
+}
+
 async function refreshPlayerMoney(player: alt.Player): Promise<void> {
     const session = playerSessions.get(player.id);
     if (!session) return;
@@ -422,10 +438,7 @@ const playersInProperty = new Map<number, number>(); // playerId -> propertyId
 // ============================================================================
 
 alt.onClient('auth:register', async (player, username: string, email: string, password: string, confirmPassword: string) => {
-    if (playerSessions.get(player.id)) {
-        alt.emitClient(player, 'auth:registerResult', { success: false, message: 'You are already logged in.' });
-        return;
-    }
+    await clearExistingSession(player);
     if (password !== confirmPassword) {
         alt.emitClient(player, 'auth:registerResult', { success: false, message: 'Password and confirmation do not match.' });
         return;
@@ -448,10 +461,8 @@ alt.onClient('auth:register', async (player, username: string, email: string, pa
 });
 
 alt.onClient('auth:login', async (player, loginIdentifier: string, password: string) => {
-    if (playerSessions.get(player.id)) {
-        alt.emitClient(player, 'auth:loginResult', { success: false, message: 'You are already logged in.', passwordChangeRequired: false });
-        return;
-    }
+    await getMySQLPool();
+    await clearExistingSession(player);
     const result = await authService.login(loginIdentifier, password);
     if (!result.success) {
         alt.emitClient(player, 'auth:loginResult', { success: false, message: result.message, passwordChangeRequired: false });
@@ -495,6 +506,27 @@ alt.onClient('auth:changePassword', async (player, currentPassword: string, newP
     alt.emitClient(player, 'auth:changePasswordResult', { success: true, message: result.message });
     await completeLogin(player, session);
     notifyPlayer(player, 'Password changed. Welcome!');
+});
+
+alt.onClient('auth:logout', async (player) => {
+    const session = playerSessions.get(player.id);
+    if (!session) {
+        notifyPlayer(player, 'You are not logged in.');
+        return;
+    }
+    await getMySQLPool();
+    try {
+        await weaponService.savePlayerWeapons(player, session.oderId);
+        await vehicleService.despawnAllPlayerVehicles(session.oderId);
+        playerSessions.delete(player.id);
+        playersInProperty.delete(player.id);
+        player.deleteMeta('playerId');
+        alt.emitClient(player, 'gta:logout');
+        player.removeAllWeapons();
+        notifyPlayer(player, 'You have been logged out. Press T to login again.');
+    } catch (err) {
+        notifyPlayer(player, `Error: ${(err as Error).message}`);
+    }
 });
 
 // Chat handler
