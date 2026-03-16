@@ -442,6 +442,7 @@ alt.onServer('gta:logout', () => {
     playerBank = 0;
     properties = [];
     createMapBlips();
+    if (authOpen) closeAuth();
     addNotification('Logged out successfully');
 });
 
