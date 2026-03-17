@@ -1,6 +1,7 @@
 import * as alt from 'alt-server';
 import { useRebar } from '@Server/index.js';
 import mysql from 'mysql2/promise';
+import type { Appearance } from '@Shared/types/appearance.js';
 import { runMigrations } from './database/migrations.js';
 import {
     PlayerWeaponService,
@@ -90,6 +91,18 @@ async function applyCharacterLook(player: alt.Player, playerId: number): Promise
     const appearance = await appearanceService.loadOrCreateDefaultAppearance(playerId, 1);
     Rebar.player.usePlayerAppearance(player).apply(appearance);
     await clothingShopService.loadPlayerClothing(player, playerId);
+}
+
+function clamp(value: number, min: number, max: number): number {
+    return Math.min(max, Math.max(min, value));
+}
+
+async function saveAndApplyAppearance(player: alt.Player, playerId: number, patch: Partial<Appearance>): Promise<Partial<Appearance>> {
+    const current = await appearanceService.loadOrCreateDefaultAppearance(playerId, (patch.sex as 0 | 1 | undefined) ?? 1);
+    const nextAppearance = { ...current, ...patch };
+    await appearanceService.saveAppearance(playerId, nextAppearance);
+    Rebar.player.usePlayerAppearance(player).apply(nextAppearance);
+    return nextAppearance;
 }
 
 /** Completes login: bind session, character, spawn, apply appearance + clothing, sync money and notify client. */
@@ -344,7 +357,7 @@ interface HospitalSpawn {
 }
 
 const HOSPITAL_SPAWNS: HospitalSpawn[] = [
-    { x: 340.25, y: -580.59, z: 28.82, heading: 0, name: 'Pillbox Hill Medical Center' },
+    { x: 307.32, y: -595.38, z: 43.29, heading: 70, name: 'Pillbox Hill Medical Center' },
     { x: -449.67, y: -340.55, z: 34.51, heading: 0, name: 'Mount Zonah Medical Center' },
     { x: 1839.44, y: 3672.71, z: 34.28, heading: 0, name: 'Sandy Shores Medical Center' },
     { x: -247.46, y: 6331.23, z: 32.43, heading: 0, name: 'Paleto Bay Medical Center' },
@@ -659,6 +672,7 @@ alt.onClient('property:enter', async (player, propertyId: number) => {
     alt.log(
         `[gta-mysql-core] property:enter player=${player.id} propertyId=${propertyId} name=${property.name} interior=${ix}, ${iy}, ${iz}`
     );
+    player.pos = new alt.Vector3(ix, iy, iz);
     playersInProperty.set(player.id, propertyId);
     alt.emitClient(player, 'property:enterResult', { 
         success: true, 
@@ -689,6 +703,7 @@ alt.onClient('property:exit', async (player, propertyId: number) => {
     }
     
     playersInProperty.delete(player.id);
+    player.pos = new alt.Vector3(property.pos_x, property.pos_y, property.pos_z + 1.0);
     alt.emitClient(player, 'property:exitResult', { 
         success: true, 
         message: `Exited ${property.name}`,
@@ -1011,6 +1026,65 @@ async function handleCommand(player: alt.Player, command: string, args: string[]
             props.forEach(p => notifyPlayer(player, `#${p.id} ${p.name}`));
             break;
         }
+        case 'faceinfo': {
+            if (!session) { notifyPlayer(player, 'You must login first'); return; }
+            const appearance = await appearanceService.loadOrCreateDefaultAppearance(session.oderId, 1);
+            notifyPlayer(
+                player,
+                `Face: father=${appearance.faceFather ?? 0} mother=${appearance.faceMother ?? 0} skinFather=${appearance.skinFather ?? 0} skinMother=${appearance.skinMother ?? 0} faceMix=${appearance.faceMix ?? 0.5} skinMix=${appearance.skinMix ?? 0.5} sex=${appearance.sex ?? 1}`
+            );
+            notifyPlayer(player, 'Use /face <father> <mother> <skinFather> <skinMother> <faceMix 0-1> <skinMix 0-1>');
+            notifyPlayer(player, 'Use /sex <male|female> if you need to switch the freemode base first.');
+            break;
+        }
+        case 'face': {
+            if (!session) { notifyPlayer(player, 'You must login first'); return; }
+            if (args.length < 6) {
+                notifyPlayer(player, 'Usage: /face <father> <mother> <skinFather> <skinMother> <faceMix 0-1> <skinMix 0-1>');
+                return;
+            }
+
+            const faceFather = Number(args[0]);
+            const faceMother = Number(args[1]);
+            const skinFather = Number(args[2]);
+            const skinMother = Number(args[3]);
+            const faceMix = Number(args[4]);
+            const skinMix = Number(args[5]);
+
+            if ([faceFather, faceMother, skinFather, skinMother, faceMix, skinMix].some((value) => Number.isNaN(value))) {
+                notifyPlayer(player, 'Invalid face values. /face expects 4 integers and 2 mix values.');
+                return;
+            }
+
+            const saved = await saveAndApplyAppearance(player, session.oderId, {
+                faceFather: clamp(Math.round(faceFather), 0, 45),
+                faceMother: clamp(Math.round(faceMother), 0, 45),
+                skinFather: clamp(Math.round(skinFather), 0, 45),
+                skinMother: clamp(Math.round(skinMother), 0, 45),
+                faceMix: clamp(faceMix, 0, 1),
+                skinMix: clamp(skinMix, 0, 1),
+            });
+
+            notifyPlayer(
+                player,
+                `Face updated. father=${saved.faceFather} mother=${saved.faceMother} skinFather=${saved.skinFather} skinMother=${saved.skinMother} faceMix=${saved.faceMix} skinMix=${saved.skinMix}`
+            );
+            break;
+        }
+        case 'sex': {
+            if (!session) { notifyPlayer(player, 'You must login first'); return; }
+            const value = (args[0] || '').toLowerCase();
+            if (value !== 'male' && value !== 'female') {
+                notifyPlayer(player, 'Usage: /sex <male|female>');
+                return;
+            }
+
+            const sex = value === 'female' ? 0 : 1;
+            await saveAndApplyAppearance(player, session.oderId, { sex });
+            await clothingShopService.loadPlayerClothing(player, session.oderId);
+            notifyPlayer(player, `Base model updated to ${value}. Use /faceinfo to see current face settings.`);
+            break;
+        }
         case 'buyproperty': {
             if (!session) { notifyPlayer(player, 'You must login first'); return; }
             const propId = parseInt(args[0]);
@@ -1042,9 +1116,19 @@ async function handleCommand(player: alt.Player, command: string, args: string[]
             const nearbyProp = await propertyService.getPropertyAtPosition(player.pos.x, player.pos.y, player.pos.z, 10);
             if (!nearbyProp) { notifyPlayer(player, 'No property nearby'); return; }
             if (nearbyProp.owner_player_id !== session.oderId) { notifyPlayer(player, 'You do not own this property'); return; }
-            player.pos = new alt.Vector3(nearbyProp.interior_x, nearbyProp.interior_y, nearbyProp.interior_z);
             playersInProperty.set(player.id, nearbyProp.id);
-            notifyPlayer(player, `Entered ${nearbyProp.name}`);
+            player.pos = new alt.Vector3(nearbyProp.interior_x, nearbyProp.interior_y, nearbyProp.interior_z);
+            alt.emitClient(player, 'property:enterResult', {
+                success: true,
+                message: `Entered ${nearbyProp.name}`,
+                interior: {
+                    x: nearbyProp.interior_x,
+                    y: nearbyProp.interior_y,
+                    z: nearbyProp.interior_z,
+                    heading: nearbyProp.interior_heading || 0,
+                    ipl: nearbyProp.ipl || undefined,
+                },
+            });
             break;
         }
         case 'exit': {
@@ -1052,8 +1136,16 @@ async function handleCommand(player: alt.Player, command: string, args: string[]
             if (!propId) { notifyPlayer(player, 'You are not inside a property'); return; }
             const prop = await propertyService.getPropertyById(propId);
             if (prop) {
-                player.pos = new alt.Vector3(prop.pos_x, prop.pos_y, prop.pos_z);
-                notifyPlayer(player, `Exited ${prop.name}`);
+                player.pos = new alt.Vector3(prop.pos_x, prop.pos_y, prop.pos_z + 1.0);
+                alt.emitClient(player, 'property:exitResult', {
+                    success: true,
+                    message: `Exited ${prop.name}`,
+                    exterior: {
+                        x: prop.pos_x,
+                        y: prop.pos_y,
+                        z: prop.pos_z,
+                    },
+                });
             }
             playersInProperty.delete(player.id);
             break;

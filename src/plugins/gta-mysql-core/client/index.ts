@@ -607,6 +607,12 @@ function doPropertyInteriorTeleport(interior: { x: number; y: number; z: number;
         alt.log(
             `[gta-client] property:enterResult teleporting to interior: ${interior.x}, ${interior.y}, ${interior.z} heading=${interior.heading}`
         );
+        native.requestCollisionAtCoord(interior.x, interior.y, interior.z);
+        const interiorId = native.getInteriorAtCoords(interior.x, interior.y, interior.z);
+        if (interiorId !== 0) {
+            native.pinInteriorInMemory(interiorId);
+            native.refreshInterior(interiorId);
+        }
         native.setEntityCoordsNoOffset(
             player.scriptID,
             interior.x,
@@ -642,6 +648,7 @@ alt.onServer('property:exitResult', (result: { success: boolean; message: string
     if (result.success && result.exterior) {
         const player = alt.Player.local;
         if (player && player.valid) {
+            native.requestCollisionAtCoord(result.exterior.x, result.exterior.y, result.exterior.z);
             native.setEntityCoordsNoOffset(
                 player.scriptID, 
                 result.exterior.x, 
