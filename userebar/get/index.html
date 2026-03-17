@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>get</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/get/">
+    <meta name="twitter:title" content="get">
+    <meta name="twitter:description" content="Get means that it's going to get some information about a player, players, a vehicle, vehicles, or the world">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,27 +164,12 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="get" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#get">#</doc-anchor-trigger>
-        <span>get</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="get">get</h1>
 <p>Get means that it&#x27;s going to <code translate="no" v-pre>get</code> some information about a player, players, a vehicle, vehicles, or the world</p>
 <p>They&#x27;re general purpose utility functions for getting information.</p>
-<doc-anchor-target id="useplayergetter">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useplayergetter">#</doc-anchor-trigger>
-        <span>usePlayerGetter</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="useplayergetter">usePlayerGetter</h2>
 <p>The player getter gets information about a single player.</p>
-<doc-anchor-target id="usage">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usage">#</doc-anchor-trigger>
-        <span>Usage</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="usage">Usage</h3>
 <div id="usage-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
 const Rebar = useRebar();
@@ -186,12 +177,7 @@ const Rebar = useRebar();
 const getter = Rebar.get.usePlayerGetter();
 const result = getter.byAccount('_id');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="examples">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#examples">#</doc-anchor-trigger>
-        <span>Examples</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="examples">Examples</h3>
 <div id="examples-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// Returns a account by account _id, or id
 const somePlayer = getter.byAccount('_id');
@@ -222,19 +208,9 @@ const result1 = getter.isNearPosition(somePlayer, new alt.Vector3(0, 0, 0));
 // Returns true if the player is logged in and playing on a character
 const result2 = getter.isValid(somePlayer);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="useplayersgetter">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useplayersgetter">#</doc-anchor-trigger>
-        <span>usePlayersGetter</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="useplayersgetter">usePlayersGetter</h2>
 <p>The players getter gets information about all players.</p>
-<doc-anchor-target id="usage-1">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usage-1">#</doc-anchor-trigger>
-        <span>Usage</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="usage-1">Usage</h3>
 <div id="usage-1-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
 const Rebar = useRebar();
@@ -242,12 +218,7 @@ const Rebar = useRebar();
 const getter = Rebar.get.usePlayersGetter();
 const results = getter.driving();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="examples-1">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#examples-1">#</doc-anchor-trigger>
-        <span>Examples</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="examples-1">Examples</h3>
 <div id="examples-1-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// Returns an array of players who are driving
 const playersDriving = getter.driving();
@@ -273,31 +244,16 @@ const playersWalking = getter.walking();
 // Returns all players who have a certain name
 const playersWithName = getter.withName('john_doe');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="usevehiclegetter">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usevehiclegetter">#</doc-anchor-trigger>
-        <span>useVehicleGetter</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="usevehiclegetter">useVehicleGetter</h2>
 <p>The vehicle getter gets information about a single vehicle.</p>
-<doc-anchor-target id="usage-2">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usage-2">#</doc-anchor-trigger>
-        <span>Usage</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="usage-2">Usage</h3>
 <div id="usage-2-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
 const Rebar = useRebar();
 
 const getter = Rebar.get.useVehicleGetter();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="examples-2">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#examples-2">#</doc-anchor-trigger>
-        <span>Examples</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="examples-2">Examples</h3>
 <div id="examples-2-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// Get a vehicle by database id
 const someVehicle = getter.byId('_id');
@@ -324,19 +280,9 @@ const isValidModel = getter.isValidModel(alt.hash('infernus'));
 // Get the passengers of a vehicle
 const passengers = getter.passengers(someVehicle);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="usevehiclesgetter">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usevehiclesgetter">#</doc-anchor-trigger>
-        <span>useVehiclesGetter</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="usevehiclesgetter">useVehiclesGetter</h2>
 <p>The vehicles getter gives information about all vehicles.</p>
-<doc-anchor-target id="usage-3">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usage-3">#</doc-anchor-trigger>
-        <span>Usage</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="usage-3">Usage</h3>
 <div id="usage-3-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
 const Rebar = useRebar();
@@ -344,41 +290,21 @@ const Rebar = useRebar();
 const getter = Rebar.get.useVehiclesGetter();
 const results = getter.inRange(new alt.Vector3(0, 0, 0), 5);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="examples-3">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#examples-3">#</doc-anchor-trigger>
-        <span>Examples</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="examples-3">Examples</h3>
 <div id="examples-3-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// Get all vehicles in range of a position
 const vehiclesInRange = getter.inRange(new alt.Vector3(0, 0, 0), 5);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="useworldgetter">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useworldgetter">#</doc-anchor-trigger>
-        <span>useWorldGetter</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="useworldgetter">useWorldGetter</h2>
 <p>A world getter gives information about the in-game world.</p>
-<doc-anchor-target id="usage-4">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usage-4">#</doc-anchor-trigger>
-        <span>Usage</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="usage-4">Usage</h3>
 <div id="usage-4-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
 const Rebar = useRebar();
 
 const getter = Rebar.get.useWorldGetter();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="examples-4">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#examples-4">#</doc-anchor-trigger>
-        <span>Examples</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="examples-4">Examples</h3>
 <div id="examples-4-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// Check if an entity is in ocean water
 const isInWater = getter.isInOceanWater(somePlayerOrVehicle);

@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Code Examples</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/tutorials/general/code-examples/">
+    <meta name="twitter:title" content="Code Examples">
+    <meta name="twitter:description" content="This is a giant page for code examples and a general purpose cookbook for writing just about anything.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,12 +164,7 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="code-examples" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#code-examples">#</doc-anchor-trigger>
-        <span>Code Examples</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="code-examples">Code Examples</h1>
 <p>This is a giant page for code examples and a general purpose cookbook for writing just about anything.</p>
 <p>Always check the documentation for further information and to see the full extent of what this framework has to offer.</p>
 <div class="flex mb-6">
@@ -184,12 +185,7 @@
         </div>
     </div>
 </div>
-<doc-anchor-target id="server-api">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#server-api">#</doc-anchor-trigger>
-        <span>Server API</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="server-api">Server API</h2>
 <p>We mostly work on the server-side for a majority of the functionality.</p>
 <p>Here&#x27;s how to import Rebar in various ways.</p>
 <div id="server-api-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -202,12 +198,7 @@ const Rebar = useRebar();</code></pre>
 
 const Rebar = alt.getMeta('Rebar');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="notifying-a-player">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#notifying-a-player">#</doc-anchor-trigger>
-        <span>Notifying a Player</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="notifying-a-player">Notifying a Player</h2>
 <p>Send a default GTA:V notification to the player.</p>
 <div id="notifying-a-player-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -219,12 +210,7 @@ alt.on('playerConnect', (player) =&gt; {
     rPlayer.notify.showNotification('Welcome to the server!');
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="screen-shards">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#screen-shards">#</doc-anchor-trigger>
-        <span>Screen Shards</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="screen-shards">Screen Shards</h2>
 <p>Shards are like the <code translate="no" v-pre>Mission Failed</code> full screen effect that you see in normal GTA:V. You can show them like this.</p>
 <div id="screen-shards-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import * as alt from 'alt-server';
@@ -240,12 +226,7 @@ alt.on('playerConnect', (player) =&gt; {
     });
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="screen-mission-text">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#screen-mission-text">#</doc-anchor-trigger>
-        <span>Screen Mission Text</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="screen-mission-text">Screen Mission Text</h2>
 <p>Mission text will show in the bottom center of the screen.</p>
 <div id="screen-mission-text-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import * as alt from 'alt-server';
@@ -258,12 +239,7 @@ alt.on('playerConnect', (player) =&gt; {
     rPlayer.notify.showMissionText('Visit our website at https://rebarv.com');
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="keybinds">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#keybinds">#</doc-anchor-trigger>
-        <span>Keybinds</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="keybinds">Keybinds</h2>
 <p>Keybinds can be done on server-side to allow for server-side callbacks.</p>
 <p>Here&#x27;s a simple keybind that when <code translate="no" v-pre>K</code> is pressed it teleports the player to a position.</p>
 <div id="keybinds-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -283,12 +259,7 @@ Keybinder.on(K_KEY, (player) =&gt; {
     });
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="interaction-points">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#interaction-points">#</doc-anchor-trigger>
-        <span>Interaction Points</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="interaction-points">Interaction Points</h2>
 <p>Interaction points are places where the player can press <code translate="no" v-pre>E</code> to do something.</p>
 <p>They can be accented with markers, text labels, and blips.</p>
 <p>There are also local versions of <code translate="no" v-pre>marker</code>, <code translate="no" v-pre>text label</code>, and <code translate="no" v-pre>blips</code> to only show it to a single player. Which has full control via server-side.</p>
@@ -345,12 +316,7 @@ Rebar.controllers.useBlipGlobal({
     text: 'Interaction Point',
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="server-configuration">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#server-configuration">#</doc-anchor-trigger>
-        <span>Server Configuration</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="server-configuration">Server Configuration</h2>
 <p>You can modify server configuration by creating a plugin that tweaks the settings.</p>
 <p>Here&#x27;s an example of what you can invoke to change settings in Rebar.</p>
 <div id="server-configuration-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -372,12 +338,7 @@ ServerConfig.set('hideStreetName', true);
 ServerConfig.set('hideVehicleClass', true);
 ServerConfig.set('hideVehicleName', true);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="saving-player-data">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#saving-player-data">#</doc-anchor-trigger>
-        <span>Saving Player Data</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="saving-player-data">Saving Player Data</h2>
 <p>With a character select plugin, and auth plugin installed it&#x27;s really easy to write data to the database using the document system.</p>
 <p>This document system also exists for other entities like Vehicles,and Accounts.</p>
 <div id="saving-player-data-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -400,12 +361,7 @@ async function onSomeEvent(player: alt.Player) {
     const mydata = rPlayer.character.getField&lt;MyCustomData&gt;('mydata');
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="character--account-permissions">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#character--account-permissions">#</doc-anchor-trigger>
-        <span>Character &amp; Account Permissions</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="character--account-permissions">Character &amp; Account Permissions</h2>
 <p>There&#x27;s a built in permission system to assign players as admins, specific jobs, etc.</p>
 <div id="character--account-permissions-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import * as alt from 'alt-server';
@@ -420,12 +376,7 @@ function someFunction(player: alt.Player) {
     rPlayer.account.addPermission('admin');
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="registering-commands">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#registering-commands">#</doc-anchor-trigger>
-        <span>Registering Commands</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="registering-commands">Registering Commands</h2>
 <p>With a <code translate="no" v-pre>chat plugin</code> you can register commands and invoke them in-game in the chat window.</p>
 <p>Additionally, you can protect your commands from being ran under <code translate="no" v-pre>Account Permissions</code> or <code translate="no" v-pre>Character Permissions</code>.</p>
 <div id="registering-commands-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -461,12 +412,7 @@ Messenger.commands.register({
     },
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="assigning-custom-models">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#assigning-custom-models">#</doc-anchor-trigger>
-        <span>Assigning Custom Models</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="assigning-custom-models">Assigning Custom Models</h2>
 <p>You can easily assign a custom player model to override their default character appearance.</p>
 <div id="assigning-custom-models-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import * as alt from 'alt-server';
@@ -479,12 +425,7 @@ function someFunction(player: alt.Player) {
     rPlayer.clothing.setSkin('a_c_husky');
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="assigning-uniforms">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#assigning-uniforms">#</doc-anchor-trigger>
-        <span>Assigning Uniforms</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="assigning-uniforms">Assigning Uniforms</h2>
 <p>You can also assign and clear uniforms for the player to wear.</p>
 <div id="assigning-uniforms-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import * as alt from 'alt-server';
@@ -503,12 +444,7 @@ function someFunction(player: alt.Player) {
     rPlayer.clothing.clearUniform();
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="owned-vehicles">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#owned-vehicles">#</doc-anchor-trigger>
-        <span>Owned Vehicles</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="owned-vehicles">Owned Vehicles</h2>
 <p>Vehicles can be owned by an individual player, or a <code translate="no" v-pre>permission</code>.</p>
 <div id="owned-vehicles-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import * as alt from 'alt-server';
@@ -532,12 +468,7 @@ function someFunction(player: alt.Player) {
     Rebar.vehicle.useVehicle(veh).create(_id);
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="spawn-owned-vehicles">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#spawn-owned-vehicles">#</doc-anchor-trigger>
-        <span>Spawn Owned Vehicles</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="spawn-owned-vehicles">Spawn Owned Vehicles</h2>
 <p>Want to easily spawn vehicles owned by a player, well Rebar makes it super simple.</p>
 <p>It even handles synchronizing mods, extras, lock state, engine damage, and more.</p>
 <div id="spawn-owned-vehicles-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -561,12 +492,7 @@ async function someFunction(player: alt.Player) {
     }
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="teleport-to-a-waypoint">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#teleport-to-a-waypoint">#</doc-anchor-trigger>
-        <span>Teleport to a Waypoint</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="teleport-to-a-waypoint">Teleport to a Waypoint</h2>
 <div id="teleport-to-a-waypoint-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import * as alt from 'alt-server';
 import { useRebar } from '@Server/index.js';
@@ -587,12 +513,7 @@ Messenger.commands.register({
     },
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="control-pedestrians">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#control-pedestrians">#</doc-anchor-trigger>
-        <span>Control Pedestrians</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="control-pedestrians">Control Pedestrians</h2>
 <p>We have a built in pedestrian controller on server-side that lets you invoke natives to easily make pedestrians do various things.</p>
 <p>Here&#x27;s one that makes a bunch of them dance together.</p>
 <div id="control-pedestrians-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -617,12 +538,7 @@ function someFunction(player: alt.Player) {
     }
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="raycast-for-objects">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#raycast-for-objects">#</doc-anchor-trigger>
-        <span>Raycast for Objects</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="raycast-for-objects">Raycast for Objects</h2>
 <p>Raycast for an Object from server-side.</p>
 <div id="raycast-for-objects-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import * as alt from 'alt-server';

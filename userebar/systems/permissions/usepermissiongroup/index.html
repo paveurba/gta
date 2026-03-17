@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>usePermissionGroup</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/systems/permissions/usepermissiongroup/">
+    <meta name="twitter:title" content="usePermissionGroup">
+    <meta name="twitter:description" content="Permission groups are a way to organize permissions into groups, and then assign those groups to players. This way, you can easily manage permissions for">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,19 +164,9 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="usepermissiongroup" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usepermissiongroup">#</doc-anchor-trigger>
-        <span>usePermissionGroup</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="usepermissiongroup">usePermissionGroup</h1>
 <p>Permission groups are a way to organize permissions into groups, and then assign those groups to players. This way, you can easily manage permissions for multiple players at once.</p>
-<doc-anchor-target id="creating-a-permission-group">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#creating-a-permission-group">#</doc-anchor-trigger>
-        <span>Creating a permission group</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="creating-a-permission-group">Creating a permission group</h2>
 <p>You can create a permission group with these properties:</p>
 <ul>
 <li><code translate="no" v-pre>permissions: string[]</code> - an array of permission names that this group should have.</li>
@@ -209,12 +205,7 @@ await groups.add('chief', {
 <li>The <code translate="no" v-pre>admin</code> group has two permissions: <code translate="no" v-pre>ban</code> and <code translate="no" v-pre>unban</code>, and inherits all permissions from the <code translate="no" v-pre>support</code> group.</li>
 <li>The <code translate="no" v-pre>chief</code> group has two permissions: <code translate="no" v-pre>grant</code> and <code translate="no" v-pre>revoke</code>, and inherits all permissions from the <code translate="no" v-pre>admin</code> group, which in turn inherits all permissions from the <code translate="no" v-pre>support</code> group.</li>
 </ul>
-<doc-anchor-target id="removing-a-permission-group">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#removing-a-permission-group">#</doc-anchor-trigger>
-        <span>Removing a permission group</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="removing-a-permission-group">Removing a permission group</h2>
 <p>You can remove a permission group by calling the <code translate="no" v-pre>remove</code> method with the name of the group you want to remove.</p>
 <div id="removing-a-permission-group-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -241,12 +232,7 @@ await groups.remove('support');</code></pre>
         </div>
     </div>
 </div>
-<doc-anchor-target id="add-permissions-to-a-group">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#add-permissions-to-a-group">#</doc-anchor-trigger>
-        <span>Add permissions to a group</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="add-permissions-to-a-group">Add permissions to a group</h2>
 <p>You can add permissions to a group by calling the <code translate="no" v-pre>addPermission</code> method with the name of the group and the permission you want to add.</p>
 <div id="add-permissions-to-a-group-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -274,12 +260,7 @@ So, on next server start, if you want to make changes to the group, you need to 
         </div>
     </div>
 </div>
-<doc-anchor-target id="remove-permissions-from-a-group">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#remove-permissions-from-a-group">#</doc-anchor-trigger>
-        <span>Remove permissions from a group</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="remove-permissions-from-a-group">Remove permissions from a group</h2>
 <p>You can remove permissions from a group by calling the <code translate="no" v-pre>removePermission</code> method with the name of the group and the permission you want to remove.</p>
 <div id="remove-permissions-from-a-group-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -307,12 +288,7 @@ So, on next server start, if you want to make changes to the group, you need to 
         </div>
     </div>
 </div>
-<doc-anchor-target id="check-permission">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#check-permission">#</doc-anchor-trigger>
-        <span>Check permission</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="check-permission">Check permission</h2>
 <p>You can check if group has a permission by calling the <code translate="no" v-pre>groupHasPermission</code> method with the name of the group and the permission you want to check.</p>
 <div id="check-permission-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -322,12 +298,7 @@ const groups = Rebar.permissions.usePermissionGroup();
 const hasPermission = await groups.groupHasPermission('support', 'teleport');</code></pre>
 </doc-codeblock></div>
 <p>This will return <code translate="no" v-pre>true</code> if the <code translate="no" v-pre>support</code> group has the <code translate="no" v-pre>teleport</code> permission, otherwise <code translate="no" v-pre>false</code>.</p>
-<doc-anchor-target id="list-permissions">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#list-permissions">#</doc-anchor-trigger>
-        <span>List Permissions</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="list-permissions">List Permissions</h2>
 <p>You can list all permissions recursively for a group by calling the <code translate="no" v-pre>groupsToPlainPermissions</code> method with the name of the group.</p>
 <div id="list-permissions-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';

@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Chapter 3. Project Setup</title>
@@ -29,13 +29,21 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/tutorials/rebar/chapter-03-project-setup/">
+    <meta name="twitter:title" content="Chapter 3. Project Setup">
+    <meta name="twitter:description" content="Now that we've obtained all the necessary programs to get started with development, we can begin with setting up our project.">
+    <meta name="twitter:image" content="https://rebarv.com/static/book/open-terminal.png">
+    <meta name="twitter:image:alt" content="Chapter 3. Project Setup">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -50,10 +58,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -161,19 +169,9 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="chapter-3-project-setup" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#chapter-3-project-setup">#</doc-anchor-trigger>
-        <span>Chapter 3. Project Setup</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="chapter-3-project-setup">Chapter 3. Project Setup</h1>
 <p>Now that we&#x27;ve obtained all the necessary programs to get started with development, we can begin with setting up our project.</p>
-<doc-anchor-target id="cloning-the-repository">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#cloning-the-repository">#</doc-anchor-trigger>
-        <span>Cloning the Repository</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="cloning-the-repository">Cloning the Repository</h2>
 <p>Cloning a repository means you&#x27;re going to download some source code from a GitHub website, in the case here we&#x27;ll be cloning the Rebar repository into some location on our computer. For the sake of this book, I&#x27;m cloning the repository into a separate disk <code translate="no" v-pre>D:</code> drive under the location <code translate="no" v-pre>D:/projects/rebar-altv</code>.</p>
 <p>Right-click the base folder where you wish to clone the repository, and click <code translate="no" v-pre>Open in Terminal</code>. This will open the terminal in the current directory that you have open.</p>
 <p>**Ensure you do not clone it to any folders with spaces, or special characters. **</p>
@@ -187,23 +185,13 @@
 <pre translate="no" class="language-none"><code v-pre class="language-none">git clone https://github.com/Stuyk/rebar-altv/</code></pre>
 </doc-codeblock></div>
 <p><em>You may or may not be prompted to make a GitHub account, if you are. Make one and sign into it.</em></p>
-<doc-anchor-target id="navigate-to-repository">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#navigate-to-repository">#</doc-anchor-trigger>
-        <span>Navigate to Repository</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="navigate-to-repository">Navigate to Repository</h2>
 <p>In the same <code translate="no" v-pre>Terminal</code> you are going to <code translate="no" v-pre>cd</code> into that directory.</p>
 <p><code translate="no" v-pre>cd</code> means you are going to navigate into the directory from the <code translate="no" v-pre>Terminal</code>.</p>
 <div id="navigate-to-repository-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">cd rebar-altv</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="install-dependencies">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#install-dependencies">#</doc-anchor-trigger>
-        <span>Install Dependencies</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="install-dependencies">Install Dependencies</h2>
 <p>You are now going to use the <code translate="no" v-pre>Terminal</code> to install dependencies for Rebar.</p>
 <div id="install-dependencies-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">pnpm install</code></pre>
@@ -221,12 +209,7 @@
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="running-the-server">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#running-the-server">#</doc-anchor-trigger>
-        <span>Running the Server</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="running-the-server">Running the Server</h2>
 <p>With that all said and done, we will be using the <code translate="no" v-pre>Terminal</code> to <strong>Start and Stop</strong> the server. We want to verify that everything is loading correctly throughout the entire framework.</p>
 <p>We&#x27;ll be using <code translate="no" v-pre>dev</code> mode to ensure the server starts. Use your <code translate="no" v-pre>Terminal</code> to run the following command.</p>
 <div id="running-the-server-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -239,12 +222,7 @@
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="configuring-altv-client">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#configuring-altv-client">#</doc-anchor-trigger>
-        <span>Configuring alt:V Client</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="configuring-altv-client">Configuring alt:V Client</h2>
 <p>When you are working on a server, you are more often than not going to want to run your alt:V client with <code translate="no" v-pre>debug</code> set to <code translate="no" v-pre>true</code>.</p>
 <p>Open your alt:V Client folder where it&#x27;s installed. Usually it&#x27;s under the following path:</p>
 <div id="configuring-altv-client-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -257,32 +235,17 @@
 </figure>
 </p>
 <p>Make sure to <strong>SAVE THE FILE</strong> and then restart your alt:V client.</p>
-<doc-anchor-target id="connecting-to-the-server">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#connecting-to-the-server">#</doc-anchor-trigger>
-        <span>Connecting to the Server</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="connecting-to-the-server">Connecting to the Server</h2>
 <p>Once you have the server running in the above steps, you can <code translate="no" v-pre>Direct Connect</code> to your server with the following IP by opening the alt:V Client and using the in-game interface to connect to your server.</p>
 <p>Additionally, <strong>you may not see anything when you connect, or be able to do anything</strong>. Rebar does not spawn you into the game, and we just want to verify that we can connect to the server.</p>
 <div id="connecting-to-the-server-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">127.0.0.1:7788</code></pre>
 </doc-codeblock></div>
 <p><em>If you are having trouble connecting, visit the alt:V Discord on the main website, and ask for help</em></p>
-<doc-anchor-target id="shutting-down-the-server">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#shutting-down-the-server">#</doc-anchor-trigger>
-        <span>Shutting Down the Server</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="shutting-down-the-server">Shutting Down the Server</h2>
 <p>In the same terminal where you are running the server, click on it, and simply press <code translate="no" v-pre>CTRL + C</code> multiple times to kill the server.</p>
 <p>If you need to clear the console of all text you can use <code translate="no" v-pre>CTRL + L</code> to clear the console.</p>
-<doc-anchor-target id="recap">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#recap">#</doc-anchor-trigger>
-        <span>Recap</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="recap">Recap</h2>
 <p>When we want to run the server we open a Terminal and type:</p>
 <div id="recap-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">pnpm dev</code></pre>

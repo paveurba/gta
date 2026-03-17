@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Utility</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/shared/utility/">
+    <meta name="twitter:title" content="Utility">
+    <meta name="twitter:description" content="Utility provides a lot of shared functionality between client, server, and webview.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,12 +164,7 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="utility" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#utility">#</doc-anchor-trigger>
-        <span>Utility</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="utility">Utility</h1>
 <p>Utility provides a lot of shared functionality between client, server, and webview.</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
@@ -182,60 +183,30 @@
         </div>
     </div>
 </div>
-<doc-anchor-target id="import">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#import">#</doc-anchor-trigger>
-        <span>Import</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="import">Import</h2>
 <div id="import-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import * as Utility from '@Shared/utility/index.js';</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="usage">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usage">#</doc-anchor-trigger>
-        <span>Usage</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="clone-data">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#clone-data">#</doc-anchor-trigger>
-        <span>Clone Data</span>
-    </h3>
-</doc-anchor-target>
+<h2 id="usage">Usage</h2>
+<h3 id="clone-data">Clone Data</h3>
 <p>When you need to break function bindings for objects, or clone an array. This is a way to do it.</p>
 <p>This works exactly the same as a deep clone.</p>
 <div id="clone-data-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const arrayResult = Utility.clone.arrayData([]);
 const objectResult = Utility.clone.objectData({});</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="rgba-to-hex">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#rgba-to-hex">#</doc-anchor-trigger>
-        <span>RGBA to Hex</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="rgba-to-hex">RGBA to Hex</h3>
 <p>Some values from the natives return as <code translate="no" v-pre>rgba</code>, this converts them to <code translate="no" v-pre>hex</code>.</p>
 <div id="rgba-to-hex-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const hexColor = Utility.color.rgbaToHexAlpha(new alt.RGBA(0, 0, 0, 255));</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="missing-number">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#missing-number">#</doc-anchor-trigger>
-        <span>Missing Number</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="missing-number">Missing Number</h3>
 <p>Return a missing number given a group of numbers.</p>
 <div id="missing-number-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// Result should be 2
 const numberResult = Utility.math.getMissingNumber([0, 1, 3], 0);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="randomization">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#randomization">#</doc-anchor-trigger>
-        <span>Randomization</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="randomization">Randomization</h3>
 <p>Various randomization functions for creating data.</p>
 <div id="randomization-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// Will pull a random result from the array
@@ -250,22 +221,12 @@ const rngRgbResult = Utility.random.rgb();
 // Will shuffle the numbers into a random order
 const shuffledArray = Utility.random.shuffle&lt;number&gt;([0, 1, 2, 3, 4]);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="uid">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#uid">#</doc-anchor-trigger>
-        <span>UID</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="uid">UID</h3>
 <p>Randomly generates a short string. Collision can happen.</p>
 <div id="uid-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const uid = Utility.uid.generate();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="vector">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#vector">#</doc-anchor-trigger>
-        <span>Vector</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="vector">Vector</h3>
 <p>Vectors are used to perform various distance checks.</p>
 <div id="vector-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// Only gets the distance between X &amp; Y
@@ -277,12 +238,7 @@ const distLong = Utility.vector.distance(new alt.Vector3(0, 0, 0), new alt.Vecto
 // Returns a position in front of a given player, vehicle, etc.
 const posInFrontOf = Utility.vector.getVectorInFrontOfPlayer(somePlayerOrVehicle, 5);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="vehicle-hash-map">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#vehicle-hash-map">#</doc-anchor-trigger>
-        <span>Vehicle Hash Map</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="vehicle-hash-map">Vehicle Hash Map</h3>
 <p>When you need vehicle names from hash values or need a large list of vehicles. This is it.</p>
 <div id="vehicle-hash-map-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// will return 'infernus'

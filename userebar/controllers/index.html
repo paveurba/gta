@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>controllers</title>
@@ -29,14 +29,22 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/controllers/">
+    <meta name="twitter:title" content="controllers">
+    <meta name="twitter:description" content="Controllers effectively show and allow interactions throughout the game world for your players.">
+    <meta name="twitter:image" content="https://rebarv.com/static/controllers/blip.png">
+    <meta name="twitter:image:alt" content="controllers">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -51,10 +59,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -162,12 +170,7 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="controllers" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#controllers">#</doc-anchor-trigger>
-        <span>controllers</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="controllers">controllers</h1>
 <p>Controllers effectively show and allow interactions throughout the game world for your players.</p>
 <p>Controllers pretty much make your gamemode tick by displaying a lot information such as:</p>
 <ul>
@@ -180,12 +183,7 @@
 <li>etc.</li>
 </ul>
 <hr>
-<doc-anchor-target id="blips">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#blips">#</doc-anchor-trigger>
-        <span>Blips</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="blips">Blips</h2>
 <p>Create a map marker that displays an icon, and text on the map.</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
@@ -209,12 +207,7 @@
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="useblipglobal">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useblipglobal">#</doc-anchor-trigger>
-        <span>useBlipGlobal</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="useblipglobal">useBlipGlobal</h3>
 <p>A global blip can be seen by all players.</p>
 <div id="useblipglobal-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -249,12 +242,7 @@ blip.destroy();</code></pre>
 
 blip.attach(player);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="usebliplocal">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usebliplocal">#</doc-anchor-trigger>
-        <span>useBlipLocal</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="usebliplocal">useBlipLocal</h3>
 <p>A local blip can only been seen by a single player.</p>
 <div id="usebliplocal-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -278,20 +266,10 @@ blip.update({ pos: new alt.Vector3(0, 0, 0), text: 'New Text!' });
 blip.destroy();</code></pre>
 </doc-codeblock></div>
 <hr>
-<doc-anchor-target id="d2d-text-labels">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#d2d-text-labels">#</doc-anchor-trigger>
-        <span>D2D Text Labels</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="d2d-text-labels">D2D Text Labels</h2>
 <p>These are the most performant Text Labels that exist for alt:V.</p>
 <p>These labels are specifically built for in-world use; and provide a way to synchronize with all players or some players.</p>
-<doc-anchor-target id="used2dtextlabel">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#used2dtextlabel">#</doc-anchor-trigger>
-        <span>useD2DTextLabel</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="used2dtextlabel">useD2DTextLabel</h3>
 <p>This example shows a message, and then changes the text to New Text!</p>
 <div id="used2dtextlabel-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const label = Rebar.controllers.useD2DTextLabel({
@@ -301,12 +279,7 @@ blip.destroy();</code></pre>
 
 label.update({ text: 'New Text!' });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="used2dtextlabellocal">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#used2dtextlabellocal">#</doc-anchor-trigger>
-        <span>useD2DTextLabelLocal</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="used2dtextlabellocal">useD2DTextLabelLocal</h3>
 <p>This example iterates through images passed through the <code translate="no" v-pre>images</code> directory.</p>
 <div id="used2dtextlabellocal-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const label = Rebar.controllers.useD2DTextLabelLocal(player, {
@@ -326,12 +299,7 @@ alt.setInterval(() =&gt; {
 }, 50);</code></pre>
 </doc-codeblock></div>
 <hr>
-<doc-anchor-target id="interactions">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#interactions">#</doc-anchor-trigger>
-        <span>Interactions</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="interactions">Interactions</h2>
 <p>Interactions allow a player to walk up to an invisible trigger and press <code translate="no" v-pre>E</code> to interact with it.</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
@@ -350,12 +318,7 @@ alt.setInterval(() =&gt; {
         </div>
     </div>
 </div>
-<doc-anchor-target id="useinteraction">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useinteraction">#</doc-anchor-trigger>
-        <span>useInteraction</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="useinteraction">useInteraction</h3>
 <div id="useinteraction-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
 
@@ -389,12 +352,7 @@ interaction.onLeave((player: alt.Player, colshape: alt.Colshape, uid: string) =&
     // someone left
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="useinteractionlocal">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useinteractionlocal">#</doc-anchor-trigger>
-        <span>useInteractionLocal</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="useinteractionlocal">useInteractionLocal</h3>
 <p>Local interactions can only be interacted with for an individual player.</p>
 <div id="useinteractionlocal-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -425,24 +383,14 @@ function doSomething(somePlayer: alt.Player) {
 }</code></pre>
 </doc-codeblock></div>
 <hr>
-<doc-anchor-target id="markers">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#markers">#</doc-anchor-trigger>
-        <span>Markers</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="markers">Markers</h2>
 <p>Create a physical in-world marker that can be walked through.</p>
 <p><figure class="content-center">
     <img src="../../static/controllers/marker.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="818" height="642" />
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="usemarkerglobal">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usemarkerglobal">#</doc-anchor-trigger>
-        <span>useMarkerGlobal</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="usemarkerglobal">useMarkerGlobal</h3>
 <p>A global marker can be seen by all players.</p>
 <div id="usemarkerglobal-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -475,12 +423,7 @@ const virtualEntity = globalMarker.getEntity();
 // Remove the marker
 globalMarker.destroy();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="usemarkerlocal">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usemarkerlocal">#</doc-anchor-trigger>
-        <span>useMarkerLocal</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="usemarkerlocal">useMarkerLocal</h3>
 <p>A local marker can only be seen by a single player.</p>
 <div id="usemarkerlocal-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -504,24 +447,14 @@ marker.update({ pos: new alt.Vector3(0, 0, 1) });
 marker.destroy();</code></pre>
 </doc-codeblock></div>
 <hr>
-<doc-anchor-target id="objects">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#objects">#</doc-anchor-trigger>
-        <span>Objects</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="objects">Objects</h2>
 <p>Objects are well... objects. They&#x27;re things on the map like ATMs, Boxes, etc.</p>
 <p><figure class="content-center">
     <img src="../../static/controllers/object.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="742" height="444" />
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="useobjectglobal">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useobjectglobal">#</doc-anchor-trigger>
-        <span>useObjectGlobal</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="useobjectglobal">useObjectGlobal</h3>
 <p>Global objects can be seen by all players.</p>
 <div id="useobjectglobal-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -537,12 +470,7 @@ object.update({ pos: new alt.Vector3(0, 0, 0) });
 // Destroy the global object
 object.destroy();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="useobjectlocal">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useobjectlocal">#</doc-anchor-trigger>
-        <span>useObjectLocal</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="useobjectlocal">useObjectLocal</h3>
 <p>Local objects can only be seen by a single player.</p>
 <div id="useobjectlocal-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -562,23 +490,13 @@ object.update({ pos: new alt.Vector3(0, 0, 0) });
 object.destroy();</code></pre>
 </doc-codeblock></div>
 <hr>
-<doc-anchor-target id="pedestrians">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#pedestrians">#</doc-anchor-trigger>
-        <span>Pedestrians</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="pedestrians">Pedestrians</h2>
 <p>Peds use the internal alt:V Peds that can be synchronized by invoking a set of hand-picked natives on them.</p>
 <p>Default behavior:</p>
 <ul>
 <li>When a pedestrian dies, it&#x27;s despawned after 5 seconds</li>
 </ul>
-<doc-anchor-target id="useped">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useped">#</doc-anchor-trigger>
-        <span>usePed</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="useped">usePed</h3>
 <div id="useped-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const ped = Rebar.controllers.usePed(new alt.Ped('mp_m_freemode_01', new alt.Vector3(0, 0, 0), alt.Vector3.ZERO, 100));
 
@@ -626,12 +544,7 @@ ped.kill();
 // Fades out the ped over 5 seconds, and then destroys the ped
 ped.fadeOutAndDestroy();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="native-list">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#native-list">#</doc-anchor-trigger>
-        <span>Native List</span>
-    </h4>
-</doc-anchor-target>
+<h4 id="native-list">Native List</h4>
 <p>These are the list of natives that are available to invoke.</p>
 <p>This can be updated later but this is a general purpose list that should work fine with the ped.</p>
 <div id="native-list-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -677,12 +590,7 @@ ped.fadeOutAndDestroy();</code></pre>
 &gt;;</code></pre>
 </doc-codeblock></div>
 <hr>
-<doc-anchor-target id="pickups">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#pickups">#</doc-anchor-trigger>
-        <span>Pickups</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="pickups">Pickups</h2>
 <p>Pickups are collisions you can run over with a specific weapon model.</p>
 <p>They&#x27;re traditionally seen in GTA:Online, but this is a more server-side implementation of the pickups.</p>
 <p><figure class="content-center">
@@ -690,12 +598,7 @@ ped.fadeOutAndDestroy();</code></pre>
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="usepickupglobal">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usepickupglobal">#</doc-anchor-trigger>
-        <span>usePickupGlobal</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="usepickupglobal">usePickupGlobal</h3>
 <div id="usepickupglobal-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import * as alt from 'alt-server';
 import { useRebar } from '@Server/index.js';
@@ -722,31 +625,16 @@ const pickup = Rebar.controllers.usePickupGlobal({
 pickup.on(handlePickup);</code></pre>
 </doc-codeblock></div>
 <hr>
-<doc-anchor-target id="progress-bars">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#progress-bars">#</doc-anchor-trigger>
-        <span>Progress Bars</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="progress-bars">Progress Bars</h2>
 <p>Progress bars allow you to convey that something is progressing over time to a single player, or to all players in the area.</p>
 <p><figure class="content-center">
     <img src="../../static/controllers/progressbar.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="736" height="441" />
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="useprogressbarglobal">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useprogressbarglobal">#</doc-anchor-trigger>
-        <span>useProgressbarGlobal</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="useprogressbarglobal">useProgressbarGlobal</h3>
 <p>These are seen by all players, and are can be seen when they are in range of the progress bar.</p>
-<doc-anchor-target id="timed-progress-bar">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#timed-progress-bar">#</doc-anchor-trigger>
-        <span>Timed Progress Bar</span>
-    </h4>
-</doc-anchor-target>
+<h4 id="timed-progress-bar">Timed Progress Bar</h4>
 <div id="timed-progress-bar-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const bar = Rebar.controllers.useProgressbarGlobal(
     {
@@ -765,12 +653,7 @@ bar.onFinish(() =&gt; {
 await bar.waitForFinish();
 console.log('bar complete via async');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="manual-control-progress-bar">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#manual-control-progress-bar">#</doc-anchor-trigger>
-        <span>Manual Control Progress Bar</span>
-    </h4>
-</doc-anchor-target>
+<h4 id="manual-control-progress-bar">Manual Control Progress Bar</h4>
 <div id="manual-control-progress-bar-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const bar = Rebar.controllers.useProgressbarGlobal({
     label: 'hi',
@@ -792,19 +675,9 @@ bar.onFinish(() =&gt; {
 await bar.waitForFinish();
 console.log('bar complete via async');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="useprogressbarlocal">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useprogressbarlocal">#</doc-anchor-trigger>
-        <span>useProgressbarLocal</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="useprogressbarlocal">useProgressbarLocal</h3>
 <p>These are seen by a single player.</p>
-<doc-anchor-target id="timed-progress-bar-1">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#timed-progress-bar-1">#</doc-anchor-trigger>
-        <span>Timed Progress Bar</span>
-    </h4>
-</doc-anchor-target>
+<h4 id="timed-progress-bar-1">Timed Progress Bar</h4>
 <div id="timed-progress-bar-1-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const bar = Rebar.controllers.useProgressbarLocal(
     somePlayer,
@@ -824,12 +697,7 @@ bar.onFinish(() =&gt; {
 await bar.waitForFinish();
 console.log('bar complete via async');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="manual-control-progress-bar-1">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#manual-control-progress-bar-1">#</doc-anchor-trigger>
-        <span>Manual Control Progress Bar</span>
-    </h4>
-</doc-anchor-target>
+<h4 id="manual-control-progress-bar-1">Manual Control Progress Bar</h4>
 <div id="manual-control-progress-bar-1-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const bar = Rebar.controllers.useProgressbarGlobal(somePlayer, {
     label: 'hi',
@@ -852,12 +720,7 @@ await bar.waitForFinish();
 console.log('bar complete via async');</code></pre>
 </doc-codeblock></div>
 <hr>
-<doc-anchor-target id="text-labels">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#text-labels">#</doc-anchor-trigger>
-        <span>Text Labels</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="text-labels">Text Labels</h2>
 <p>Text labels are floating pieces of text that can be seen in-game in a 3D space.</p>
 <p>These are less performant than the D2D labels.</p>
 <p><figure class="content-center">
@@ -865,12 +728,7 @@ console.log('bar complete via async');</code></pre>
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="usetextlabelglobal">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usetextlabelglobal">#</doc-anchor-trigger>
-        <span>useTextLabelGlobal</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="usetextlabelglobal">useTextLabelGlobal</h3>
 <p>Global text labels can be seen by all players.</p>
 <div id="usetextlabelglobal-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -890,12 +748,7 @@ label.update({ text: 'New Text!' });
 // Remove text label
 label.destroy();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="usetextlabellocal">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usetextlabellocal">#</doc-anchor-trigger>
-        <span>useTextLabelLocal</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="usetextlabellocal">useTextLabelLocal</h3>
 <p>Local text labels can only be seen by a single player.</p>
 <div id="usetextlabellocal-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -912,12 +765,7 @@ label.update({ text: 'hello world!!!' });
 label.destroy();</code></pre>
 </doc-codeblock></div>
 <hr>
-<doc-anchor-target id="world-menus">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#world-menus">#</doc-anchor-trigger>
-        <span>World Menus</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="world-menus">World Menus</h2>
 <p>World menus are 3D menus that can exist in the world, and can be popped up at any time.</p>
 <p>They&#x27;re meant for quickly selecting options, and getting results on either server or client-side.</p>
 <p>In the case here, it&#x27;s server-side usage.</p>
@@ -927,12 +775,7 @@ label.destroy();</code></pre>
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="useworldmenu">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useworldmenu">#</doc-anchor-trigger>
-        <span>useWorldMenu</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="useworldmenu">useWorldMenu</h3>
 <div id="useworldmenu-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function showSomeMenu(player: alt.Player) {
     const worldMenu = Rebar.controllers.useWorldMenu({
@@ -963,21 +806,11 @@ label.destroy();</code></pre>
     console.log(result);
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="doors">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#doors">#</doc-anchor-trigger>
-        <span>Doors</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="doors">Doors</h2>
 <p>Doors are objects that can be opened and closed. When they are locked, no one can bypass them.</p>
 <p>Permissions can be set on doors to allow certain players to lock/unlock them.
 More details about how to use permissions can be found <a href="../systems/permissions/useentitypermissions/">here</a>.</p>
-<doc-anchor-target id="usedoor">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usedoor">#</doc-anchor-trigger>
-        <span>useDoor</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="usedoor">useDoor</h3>
 <div id="usedoor-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
 import { DoorState } from '@Shared/types/index.js';

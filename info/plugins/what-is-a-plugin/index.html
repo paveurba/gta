@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>What is a Plugin?</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/info/plugins/what-is-a-plugin/">
+    <meta name="twitter:title" content="What is a Plugin?">
+    <meta name="twitter:description" content="A plugin can be seen as code that is meant to work with the Rebar Framework.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,26 +164,11 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="what-is-a-plugin" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#what-is-a-plugin">#</doc-anchor-trigger>
-        <span>What is a Plugin?</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="what-is-a-plugin">What is a Plugin?</h1>
 <p>A plugin can be seen as code that is meant to work with the Rebar Framework.</p>
-<doc-anchor-target id="where-are-plugins-stored">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#where-are-plugins-stored">#</doc-anchor-trigger>
-        <span>Where are plugins stored?</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="where-are-plugins-stored">Where are plugins stored?</h2>
 <p>Plugins can be found in the <code translate="no" v-pre>src/plugins</code> directory, and each plugin should have a unique folder name.</p>
-<doc-anchor-target id="example-plugin-structure">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#example-plugin-structure">#</doc-anchor-trigger>
-        <span>Example Plugin Structure</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="example-plugin-structure">Example Plugin Structure</h2>
 <p>This plugin structure is used purely as a full featured plugin.</p>
 <div id="example-plugin-structure-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">├───main
@@ -210,12 +201,7 @@
             └───MyCustomPage.vue</code></pre>
 </doc-codeblock></div>
 <p>See <a href="../structure/">plugin structure</a> for more information.</p>
-<doc-anchor-target id="example-shared-vue-components--composables-plugin">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#example-shared-vue-components--composables-plugin">#</doc-anchor-trigger>
-        <span>Example Shared Vue Components / Composables Plugin</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="example-shared-vue-components--composables-plugin">Example Shared Vue Components / Composables Plugin</h2>
 <p>It is recommended to prefix your plugin with <code translate="no" v-pre>ui</code> when it&#x27;s components and composables</p>
 <div id="example-shared-vue-components--composables-plugin-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">├───main
@@ -228,20 +214,10 @@
         └───UiInput.vue
         └───UiButton.vue</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="disabling-plugins">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#disabling-plugins">#</doc-anchor-trigger>
-        <span>Disabling Plugins</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="disabling-plugins">Disabling Plugins</h2>
 <p>If you wish to disable a plugin simply add a <code translate="no" v-pre>!</code> before the folder name.</p>
 <p>Alternatively you can add a file named <code translate="no" v-pre>.disable</code> to the plugin folder to disable it.</p>
-<doc-anchor-target id="adding-dependencies">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#adding-dependencies">#</doc-anchor-trigger>
-        <span>Adding Dependencies</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="adding-dependencies">Adding Dependencies</h2>
 <p>If you noticed a plugin can use npm packages for the webview or server.</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>

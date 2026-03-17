@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>document</title>
@@ -25,13 +25,19 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/document/">
+    <meta name="twitter:title" content="document">
+    <meta name="twitter:description" content="Documents are what are stored inside of MongoDB. Evey document has an _id which is a string of characters. That string of characters can be used to quickly">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -46,10 +52,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -157,12 +163,7 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="document" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#document">#</doc-anchor-trigger>
-        <span>document</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="document">document</h1>
 <p>Documents are what are stored inside of MongoDB. Evey document has an <code translate="no" v-pre>_id</code> which is a string of characters. That string of characters can be used to quickly pull down any document.</p>
 <p>Documents require the developer to assign the data once, and once that data is assigned it will only push data out to the database automatically while using document functionality.</p>
 <p>We are effectively reading data once on login, and pushing data outwards only.</p>
@@ -183,52 +184,22 @@
         </div>
     </div>
 </div>
-<doc-anchor-target id="document-types">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#document-types">#</doc-anchor-trigger>
-        <span>Document Types</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="document-types">Document Types</h2>
 <p>A document is a set of data that is bound to a player or vehicle until they disconnect or are destroyed.
 It automatically saves data to the MongoDB database when any <code translate="no" v-pre>set</code> or <code translate="no" v-pre>setBulk</code> function is used.</p>
-<doc-anchor-target id="account">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#account">#</doc-anchor-trigger>
-        <span>Account</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="account">Account</h3>
 <p>Account data usually includes email, password, discord info, ban status, etc.</p>
 <p>You should bind account data after authenticating to the server.</p>
-<doc-anchor-target id="character">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#character">#</doc-anchor-trigger>
-        <span>Character</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="character">Character</h3>
 <p>Character data usually includes appearance, name, clothes, inventory, money, etc.</p>
 <p>You should bind character data after fetching call characters owned by an account.</p>
-<doc-anchor-target id="global">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#global">#</doc-anchor-trigger>
-        <span>Global</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="global">Global</h3>
 <p>These documents work differently than the other documents, they&#x27;re used as a single document to store a lot of data.</p>
 <p>Meanining; they&#x27;re great for tracking very specific things. Such as global player deaths, global money spent, etc.</p>
-<doc-anchor-target id="vehicle">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#vehicle">#</doc-anchor-trigger>
-        <span>Vehicle</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="vehicle">Vehicle</h3>
 <p>Vehicle data usually includes model, paint, mods, ownership, etc.</p>
 <p>Only owned vehicles should be given a document.</p>
-<doc-anchor-target id="virtual">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#virtual">#</doc-anchor-trigger>
-        <span>Virtual</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="virtual">Virtual</h3>
 <p>Virtual documents allow you to interface with any document type and use with a similar interface to <code translate="no" v-pre>useAccount</code>, <code translate="no" v-pre>useCharacter</code>, <code translate="no" v-pre>useVehicle</code>, etc.</p>
 
                 

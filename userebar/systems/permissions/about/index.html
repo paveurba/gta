@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>About permissions</title>
@@ -25,13 +25,19 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/systems/permissions/about/">
+    <meta name="twitter:title" content="About permissions">
+    <meta name="twitter:description" content="There is a documentation for permission system that allows you to control what players can and cannot do.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -46,10 +52,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -157,22 +163,12 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="about-player-permissions" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#about-player-permissions">#</doc-anchor-trigger>
-        <span>About Player Permissions</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="about-player-permissions">About Player Permissions</h1>
 <p>There is a documentation for permission system that allows you to control what players can and cannot do.</p>
 <p>Rebar exposes the same interface for both account and character permissions.
 This means that you can use almost the same code to check permissions regardless of the source.</p>
 <p>Also, Rebar allows you to modify permissions when player is offline, with use of <a href="../../../document/document-virtual/"><code translate="no" v-pre>useVirtualDocument</code></a>.</p>
-<doc-anchor-target id="permission-resolution-order">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#permission-resolution-order">#</doc-anchor-trigger>
-        <span>Permission resolution order</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="permission-resolution-order">Permission resolution order</h2>
 <p>When checking permissions, Rebar will check permissions in the following order:</p>
 <ol>
 <li>Account</li>
@@ -181,18 +177,8 @@ This means that you can use almost the same code to check permissions regardless
 <li>Character&#x27;s groups</li>
 </ol>
 <p>This means that if you want to grant a permission to all player&#x27;s characters, you should set it on the account level.</p>
-<doc-anchor-target id="useful-links">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useful-links">#</doc-anchor-trigger>
-        <span>Useful links</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="player-permissions">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#player-permissions">#</doc-anchor-trigger>
-        <span>Player permissions</span>
-    </h3>
-</doc-anchor-target>
+<h2 id="useful-links">Useful links</h2>
+<h3 id="player-permissions">Player permissions</h3>
 <p>
 <div class="mb-6 px-5 py-4 flex justify-between relative border border-base-border hover:border-base-border-hover rounded transition-colors duration-150">
     <div class="flex items-center text-base-500">
@@ -231,12 +217,7 @@ This means that you can use almost the same code to check permissions regardless
     <a href="../playerpermissions/#usevirtual" class="absolute block inset-0"></a>
 </div>
 </p>
-<doc-anchor-target id="player-groups">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#player-groups">#</doc-anchor-trigger>
-        <span>Player groups</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="player-groups">Player groups</h3>
 <p>
 <div class="mb-6 px-5 py-4 flex justify-between relative border border-base-border hover:border-base-border-hover rounded transition-colors duration-150">
     <div class="flex items-center text-base-500">
@@ -275,12 +256,7 @@ This means that you can use almost the same code to check permissions regardless
     <a href="../playergroups/#usevirtual" class="absolute block inset-0"></a>
 </div>
 </p>
-<doc-anchor-target id="using-groups">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#using-groups">#</doc-anchor-trigger>
-        <span>Using groups</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="using-groups">Using groups</h3>
 <p>
 <div class="mb-6 px-5 py-4 flex justify-between relative border border-base-border hover:border-base-border-hover rounded transition-colors duration-150">
     <div class="flex items-center text-base-500">
@@ -295,12 +271,7 @@ This means that you can use almost the same code to check permissions regardless
     <a href="../usepermissiongroup/" class="absolute block inset-0"></a>
 </div>
 </p>
-<doc-anchor-target id="checking-permissions">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#checking-permissions">#</doc-anchor-trigger>
-        <span>Checking permissions</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="checking-permissions">Checking permissions</h3>
 <p>
 <div class="mb-6 px-5 py-4 flex justify-between relative border border-base-border hover:border-base-border-hover rounded transition-colors duration-150">
     <div class="flex items-center text-base-500">

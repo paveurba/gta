@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>useVehicle</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/usevehicle/">
+    <meta name="twitter:title" content="useVehicle">
+    <meta name="twitter:description" content="Used to create a new vehicle document, repair vehicles, apply vehicle documents, etc.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,19 +164,9 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="usevehicle" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usevehicle">#</doc-anchor-trigger>
-        <span>useVehicle</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="usevehicle">useVehicle</h1>
 <p>Used to create a new vehicle document, repair vehicles, apply vehicle documents, etc.</p>
-<doc-anchor-target id="usevehicle-1">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usevehicle-1">#</doc-anchor-trigger>
-        <span>useVehicle</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="usevehicle-1">useVehicle</h2>
 <div id="usevehicle-1-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
 
@@ -178,45 +174,25 @@ const Rebar = useRebar();
 
 const rVehicle = Rebar.vehicle.useVehicle(new alt.Vehicle('infernus', alt.Vector3.zero, alt.Vector3.zero));</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="apply">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#apply">#</doc-anchor-trigger>
-        <span>apply</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="apply">apply</h3>
 <p>Use a vehicle document, and apply it to the given vehicle.</p>
 <p>This does not save the document, but only applies what is in the document.</p>
 <div id="apply-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">rVehicle.apply({ pos: new alt.Vector3(0, 0, 0) });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="create">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#create">#</doc-anchor-trigger>
-        <span>create</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="create">create</h3>
 <p>Creates a vehicle document and assigns the owner as the given <code translate="no" v-pre>identifier</code>.</p>
 <p>Usually you want to pass the character <code translate="no" v-pre>_id</code> for this.</p>
 <div id="create-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const document = await rVehicle.create(someCharacterIdOrSomethingElse);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="handlingset">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#handlingset">#</doc-anchor-trigger>
-        <span>handling.set</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="handlingset">handling.set</h3>
 <p>A way to modify client-side vehicle handling for individual vehicles from server-side.</p>
 <p>Any player that enters a vehicle will always get the correct handling data for the individual vehicle.</p>
 <div id="handlingset-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">rVehicle.handling.set({ brakeForce: 1.0 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="valid-handlers">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#valid-handlers">#</doc-anchor-trigger>
-        <span>Valid Handlers</span>
-    </h4>
-</doc-anchor-target>
+<h4 id="valid-handlers">Valid Handlers</h4>
 <p>Check out [https://gtacars.net/gta5/glossary](for more information) on these properties.</p>
 <div id="valid-handlers-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">interface HandlingData {
@@ -287,12 +263,7 @@ const rVehicle = Rebar.vehicle.useVehicle(new alt.Vehicle('infernus', alt.Vector
     weaponDamageMult: number;
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="isbound">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#isbound">#</doc-anchor-trigger>
-        <span>isBound</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="isbound">isBound</h3>
 <p>Check if a vehicle has a document bound to it</p>
 <div id="isbound-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">if (rVehicle.isBound()) {
@@ -300,134 +271,69 @@ const rVehicle = Rebar.vehicle.useVehicle(new alt.Vehicle('infernus', alt.Vector
     return;
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="keysadd">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#keysadd">#</doc-anchor-trigger>
-        <span>keys.add</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="keysadd">keys.add</h3>
 <p>Add keys to the vehicle for a given user.</p>
 <div id="keysadd-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const didAdd = await rVehicle.keys.add('some_document_id');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="keysclear">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#keysclear">#</doc-anchor-trigger>
-        <span>keys.clear</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="keysclear">keys.clear</h3>
 <p>Remove all keys from the vehicle.</p>
 <div id="keysclear-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">await rVehicle.keys.clear();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="keysremove">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#keysremove">#</doc-anchor-trigger>
-        <span>keys.remove</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="keysremove">keys.remove</h3>
 <p>Remove a specific key from the vehicle</p>
 <div id="keysremove-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const didRemove = await rVehicle.keys.remove('some_document_id');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="repair">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#repair">#</doc-anchor-trigger>
-        <span>repair</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="repair">repair</h3>
 <p>Correctly repairs the vehicle and returns the new vehicle instance</p>
 <p>Players will be removed from the vehicle on repair</p>
 <div id="repair-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">await rVehicle.repair();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="save">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#save">#</doc-anchor-trigger>
-        <span>save</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="save">save</h3>
 <p>Save all current damage, position, rotation etc.</p>
 <p>This does not create a new document for the given vehicle</p>
 <div id="save-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">rVehicle.save();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="setrpm">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#setrpm">#</doc-anchor-trigger>
-        <span>setRpm</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="setrpm">setRpm</h3>
 <p>Set the RPM for the vehicle driver to 0</p>
 <div id="setrpm-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">rVehicle.setRpm(0);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="sync">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#sync">#</doc-anchor-trigger>
-        <span>sync</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="sync">sync</h3>
 <p>Used to apply mods, health, etc. to a vehicle if it has a document bound</p>
 <div id="sync-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">rVehicle.sync();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="toggledoor">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#toggledoor">#</doc-anchor-trigger>
-        <span>toggleDoor</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="toggledoor">toggleDoor</h3>
 <p>Toggle a door without permission checking.</p>
 <div id="toggledoor-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">rVehicle.toggleDoor(parseInt(id));</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="toggledoorasplayer">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#toggledoorasplayer">#</doc-anchor-trigger>
-        <span>toggleDoorAsPlayer</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="toggledoorasplayer">toggleDoorAsPlayer</h3>
 <p>Toggle a door as a player and check permission for vehicle.</p>
 <div id="toggledoorasplayer-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">rVehicle.toggleDoorAsPlayer(player, 1);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="toggleengine">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#toggleengine">#</doc-anchor-trigger>
-        <span>toggleEngine</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="toggleengine">toggleEngine</h3>
 <p>Toggle the engine without permission checking.</p>
 <div id="toggleengine-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">rVehicle.toggleEngine();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="toggleengineasplayer">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#toggleengineasplayer">#</doc-anchor-trigger>
-        <span>toggleEngineAsPlayer</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="toggleengineasplayer">toggleEngineAsPlayer</h3>
 <p>Toggle the engine as a player and check permission for vehicle.</p>
 <div id="toggleengineasplayer-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">rVehicle.toggleEngineAsPlayer(player);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="togglelock">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#togglelock">#</doc-anchor-trigger>
-        <span>toggleLock</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="togglelock">toggleLock</h3>
 <p>Toggle the lock without permission checking.</p>
 <div id="togglelock-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">rVehicle.toggleLock();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="togglelockasplayer">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#togglelockasplayer">#</doc-anchor-trigger>
-        <span>toggleLockAsPlayer</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="togglelockasplayer">toggleLockAsPlayer</h3>
 <p>Toggle the lock as a player and check permission for vehicle.</p>
 <div id="togglelockasplayer-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">rVehicle.toggleLockAsPlayer(player);</code></pre>

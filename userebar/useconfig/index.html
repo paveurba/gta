@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>useConfig</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/useconfig/">
+    <meta name="twitter:title" content="useConfig">
+    <meta name="twitter:description" content="This document provides an overview of the configuration management for a Rebar server application.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,30 +164,15 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="useconfig" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useconfig">#</doc-anchor-trigger>
-        <span>useConfig</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="useconfig">useConfig</h1>
 <p>This document provides an overview of the configuration management for a Rebar server application.</p>
-<doc-anchor-target id="features">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#features">#</doc-anchor-trigger>
-        <span>Features</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="features">Features</h2>
 <ul>
 <li>Parsing environment variables.</li>
 <li>Setting a default value if env variable was not defined.</li>
 <li>Basic type validation - number, boolean, string (by default).</li>
 </ul>
-<doc-anchor-target id="defaults">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#defaults">#</doc-anchor-trigger>
-        <span>Defaults</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="defaults">Defaults</h2>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -208,19 +199,9 @@
 </tbody>
 </table>
 </div>
-<doc-anchor-target id="usage">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usage">#</doc-anchor-trigger>
-        <span>Usage</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="usage">Usage</h2>
 <p>Config defined as an interface, all methods covered with type hints, so you will see all variables and correct types on each method call.</p>
-<doc-anchor-target id="get-config-object">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#get-config-object">#</doc-anchor-trigger>
-        <span>Get config object</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="get-config-object">Get config object</h3>
 <p>You can get the whole config object this way:</p>
 <div id="get-config-object-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -231,12 +212,7 @@ const config = useRebar().useConfig().get();
 // }
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="get-variable-from-config">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#get-variable-from-config">#</doc-anchor-trigger>
-        <span>Get variable from config</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="get-variable-from-config">Get variable from config</h3>
 <p>You can also get a specific value from config:</p>
 <div id="get-variable-from-config-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -244,12 +220,7 @@ const config = useRebar().useConfig().get();
 const mongodb = useRebar().useConfig().getField('mongodb');
 // typeof mongodb === 'string'</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="set-new-variable">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#set-new-variable">#</doc-anchor-trigger>
-        <span>Set new variable</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="set-new-variable">Set new variable</h3>
 <p>To be able to extend default Rebar config, you can extend Config interface this way:</p>
 <div id="set-new-variable-pluginssharedinterfacests" class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">/plugins/shared/interfaces.ts</div>
@@ -336,12 +307,7 @@ config.initFromEnv(
         </div>
     </div>
 </div>
-<doc-anchor-target id="override-config-variable-in-runtime">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#override-config-variable-in-runtime">#</doc-anchor-trigger>
-        <span>Override config variable in runtime</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="override-config-variable-in-runtime">Override config variable in runtime</h3>
 <p>You can change variable value in runtime. Be careful with types.</p>
 <div id="override-config-variable-in-runtime-pluginsserverindexts" class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">/plugins/server/index.ts</div>

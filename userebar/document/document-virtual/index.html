@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Virtual Document</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/document/document-virtual/">
+    <meta name="twitter:title" content="Virtual Document">
+    <meta name="twitter:description" content="See Documents Section for further information on documents.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,19 +164,9 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="virtual-document" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#virtual-document">#</doc-anchor-trigger>
-        <span>Virtual Document</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="virtual-document">Virtual Document</h1>
 <p>See <a href="../">Documents Section</a> for further information on documents.</p>
-<doc-anchor-target id="usevirtual">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usevirtual">#</doc-anchor-trigger>
-        <span>useVirtual</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="usevirtual">useVirtual</h2>
 <p>If document is not found in the database, it will return <code translate="no" v-pre>undefined</code>.</p>
 <div id="usevirtual-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -185,12 +181,7 @@ interface CustomDocument {
 
 const virtualDocument = await Rebar.document.virtual.useVirtual&lt;CustomDocument&gt;('663ce39eb270106cf02fb7e3', 'SomeCollection');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="get">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#get">#</doc-anchor-trigger>
-        <span>get</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="get">get</h3>
 <p>Get all data for a document</p>
 <div id="get-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function someFunction() {
@@ -205,12 +196,7 @@ const virtualDocument = await Rebar.document.virtual.useVirtual&lt;CustomDocumen
     console.log(data);
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="getfield">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#getfield">#</doc-anchor-trigger>
-        <span>getField</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="getfield">getField</h3>
 <p>Get a specific field from a document</p>
 <div id="getfield-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function someFunction() {
@@ -225,12 +211,7 @@ const virtualDocument = await Rebar.document.virtual.useVirtual&lt;CustomDocumen
     console.log(test1);
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="set">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#set">#</doc-anchor-trigger>
-        <span>set</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="set">set</h3>
 <p>Set a specific field for the document, and save to the database</p>
 <div id="set-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function someFunction() {
@@ -244,12 +225,7 @@ const virtualDocument = await Rebar.document.virtual.useVirtual&lt;CustomDocumen
     await virtualDocument.set('test1', 'hi');
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="setbulk">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#setbulk">#</doc-anchor-trigger>
-        <span>setBulk</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="setbulk">setBulk</h3>
 <p>Set multiple fields for the document, and save to the database</p>
 <div id="setbulk-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function someFunction() {
@@ -263,12 +239,7 @@ const virtualDocument = await Rebar.document.virtual.useVirtual&lt;CustomDocumen
     await virtualDocument.setBulk({ test1: 'hi', test2: 'hi' });
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="refresh">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#refresh">#</doc-anchor-trigger>
-        <span>refresh</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="refresh">refresh</h3>
 <p>Refresh the document from the database</p>
 <div id="refresh-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function someFunction() {
@@ -282,21 +253,11 @@ const virtualDocument = await Rebar.document.virtual.useVirtual&lt;CustomDocumen
     await virtualDocument.refresh();
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="permissions">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#permissions">#</doc-anchor-trigger>
-        <span><a href="../../systems/permissions/playerpermissions/#usevirtual">permissions</a></span>
-    </h3>
-</doc-anchor-target>
+<h3 id="permissions"><a href="../../systems/permissions/playerpermissions/#usevirtual">permissions</a></h3>
 <p>If you want to modify permissions for a document, you can use the <code translate="no" v-pre>permissions</code> property.</p>
 <p>It is available only for <code translate="no" v-pre>Accounts</code> and <code translate="no" v-pre>Characters</code> collections.</p>
 <p>Click the link above(heading) to see more details on how to use this property.</p>
-<doc-anchor-target id="groups">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#groups">#</doc-anchor-trigger>
-        <span><a href="../../systems/permissions/playergroups/#usevirtual">groups</a></span>
-    </h3>
-</doc-anchor-target>
+<h3 id="groups"><a href="../../systems/permissions/playergroups/#usevirtual">groups</a></h3>
 <p>If you want to modify groups for a document, you can use the <code translate="no" v-pre>groups</code> property.</p>
 <p>It is available only for <code translate="no" v-pre>Accounts</code> and <code translate="no" v-pre>Characters</code> collections.</p>
 <p>Click the link above(heading) to see more details on how to use this property.</p>

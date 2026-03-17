@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Character Appearance &amp; Personality — Technical Review and Improvement Plan</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/character-appearance-technical-review/">
+    <meta name="twitter:title" content="Character Appearance & Personality — Technical Review and Improvement Plan">
+    <meta name="twitter:description" content="A technical review of the current player personality/character appearance implementation on the alt:V roleplay server, with an improvement plan for">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,26 +164,11 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="character-appearance--personality--technical-review-and-improvement-plan" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#character-appearance--personality--technical-review-and-improvement-plan">#</doc-anchor-trigger>
-        <span>Character Appearance &amp; Personality — Technical Review and Improvement Plan</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="character-appearance--personality--technical-review-and-improvement-plan">Character Appearance &amp; Personality — Technical Review and Improvement Plan</h1>
 <p>A technical review of the current player personality/character appearance implementation on the alt:V roleplay server, with an improvement plan for registration, storage, load, and editing.</p>
 <hr>
-<doc-anchor-target id="1-how-to-audit-the-current-implementation">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#1-how-to-audit-the-current-implementation">#</doc-anchor-trigger>
-        <span>1. How to Audit the Current Implementation</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="11-where-appearance-data-is-stored">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#11-where-appearance-data-is-stored">#</doc-anchor-trigger>
-        <span>1.1 Where appearance data is stored</span>
-    </h3>
-</doc-anchor-target>
+<h2 id="1-how-to-audit-the-current-implementation">1. How to Audit the Current Implementation</h2>
+<h3 id="11-where-appearance-data-is-stored">1.1 Where appearance data is stored</h3>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -217,12 +208,7 @@
 <li><code translate="no" v-pre>src/plugins/gta-mysql-core/server/services/ClothingShopService.ts</code> — <code translate="no" v-pre>loadPlayerClothing</code>, <code translate="no" v-pre>saveClothing</code>, <code translate="no" v-pre>player_clothes</code> table.</li>
 <li><code translate="no" v-pre>src/plugins/gta-mysql-core/server/database/migrations.ts</code> — <code translate="no" v-pre>player_clothes</code> schema; no appearance table.</li>
 </ul>
-<doc-anchor-target id="12-how-it-is-saved-during-registration">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#12-how-it-is-saved-during-registration">#</doc-anchor-trigger>
-        <span>1.2 How it is saved during registration</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="12-how-it-is-saved-during-registration">1.2 How it is saved during registration</h3>
 <ul>
 <li><strong>Current:</strong> Registration does <strong>not</strong> save appearance. In <code translate="no" v-pre>bindCharacterForPlayer</code>:
 <ul>
@@ -232,12 +218,7 @@
 </li>
 <li><strong>Result:</strong> New characters have no <code translate="no" v-pre>appearance</code> in the Rebar document. Any later use of <code translate="no" v-pre>usePlayerAppearance(player).sync()</code> would apply nothing (or defaults) because <code translate="no" v-pre>data.appearance</code> is undefined.</li>
 </ul>
-<doc-anchor-target id="13-how-it-is-loaded-on-player-spawn--login">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#13-how-it-is-loaded-on-player-spawn--login">#</doc-anchor-trigger>
-        <span>1.3 How it is loaded on player spawn / login</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="13-how-it-is-loaded-on-player-spawn--login">1.3 How it is loaded on player spawn / login</h3>
 <ul>
 <li><p><strong>Login flow</strong> (<code translate="no" v-pre>completeLogin</code>):</p>
 <ol>
@@ -258,30 +239,15 @@
 </ul>
 <p><strong>Summary:</strong> Appearance is not set at registration and is not applied on login. Only MySQL-based clothing is applied on login.</p>
 <hr>
-<doc-anchor-target id="2-database-structure">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#2-database-structure">#</doc-anchor-trigger>
-        <span>2. Database Structure</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="21-recommended-approach-single-source-of-truth">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#21-recommended-approach-single-source-of-truth">#</doc-anchor-trigger>
-        <span>2.1 Recommended approach: single source of truth</span>
-    </h3>
-</doc-anchor-target>
+<h2 id="2-database-structure">2. Database Structure</h2>
+<h3 id="21-recommended-approach-single-source-of-truth">2.1 Recommended approach: single source of truth</h3>
 <p>Choose one primary store for appearance and clothing to avoid desync:</p>
 <ul>
 <li><strong>Option A — MySQL (recommended for your stack):</strong> You already use MySQL for players, money, properties, vehicles, and clothing. Add an <strong>appearance</strong> store in MySQL and, on login, apply appearance from MySQL then clothing from MySQL. Optionally mirror to Rebar Character for any Rebar features that read <code translate="no" v-pre>character.appearance</code> / <code translate="no" v-pre>character.clothing</code>.</li>
 <li><strong>Option B — MongoDB (Rebar) only:</strong> Store appearance and clothing only in the Rebar Character document. On login, bind with <strong><code translate="no" v-pre>syncPlayer: true</code></strong> and ensure the character document is populated (registration flow must create/save appearance). Migrate or sync MySQL <code translate="no" v-pre>player_clothes</code> into Rebar <code translate="no" v-pre>Character.clothing</code> so one source remains.</li>
 </ul>
 <p>Below assumes <strong>Option A (MySQL)</strong> for consistency with the rest of gta-mysql-core.</p>
-<doc-anchor-target id="22-recommended-mysql-schema">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#22-recommended-mysql-schema">#</doc-anchor-trigger>
-        <span>2.2 Recommended MySQL schema</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="22-recommended-mysql-schema">2.2 Recommended MySQL schema</h3>
 <p><strong>Table: <code translate="no" v-pre>character_appearance</code></strong><br />
 One row per character/player. Use <code translate="no" v-pre>player_id</code> if one character per account, or a <code translate="no" v-pre>character_id</code> if you support multiple characters per account.</p>
 <div id="22-recommended-mysql-schema-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -328,12 +294,7 @@ One row per character/player. Use <code translate="no" v-pre>player_id</code> if
 </ul>
 <p><strong>Existing: <code translate="no" v-pre>player_clothes</code></strong>
 Current schema has only <code translate="no" v-pre>(id, player_id, component, drawable, texture)</code> — no <code translate="no" v-pre>dlc</code>, <code translate="no" v-pre>isProp</code>, or <code translate="no" v-pre>palette</code> columns. If you use DLC clothing or props, you will need to add those columns (and update <code translate="no" v-pre>saveClothing</code>/<code translate="no" v-pre>loadPlayerClothing</code> accordingly).</p>
-<doc-anchor-target id="23-storing-face-features-hair-clothing-tattoos">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#23-storing-face-features-hair-clothing-tattoos">#</doc-anchor-trigger>
-        <span>2.3 Storing face features, hair, clothing, tattoos</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="23-storing-face-features-hair-clothing-tattoos">2.3 Storing face features, hair, clothing, tattoos</h3>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -378,18 +339,8 @@ Current schema has only <code translate="no" v-pre>(id, player_id, component, dr
 </table>
 </div>
 <hr>
-<doc-anchor-target id="3-server-side-architecture">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#3-server-side-architecture">#</doc-anchor-trigger>
-        <span>3. Server-Side Architecture</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="31-best-practice-for-loading-and-applying-appearance">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#31-best-practice-for-loading-and-applying-appearance">#</doc-anchor-trigger>
-        <span>3.1 Best practice for loading and applying appearance</span>
-    </h3>
-</doc-anchor-target>
+<h2 id="3-server-side-architecture">3. Server-Side Architecture</h2>
+<h3 id="31-best-practice-for-loading-and-applying-appearance">3.1 Best practice for loading and applying appearance</h3>
 <ol>
 <li><p><strong>Order of application (login/spawn):</strong></p>
 <ul>
@@ -403,51 +354,26 @@ Current schema has only <code translate="no" v-pre>(id, player_id, component, dr
 <li><p><strong>Defaults:</strong> If no appearance row exists (e.g. new character), apply a default Appearance (e.g. male/female freemode, default face/hair) and optionally save it so the next load is consistent.</p>
 </li>
 </ol>
-<doc-anchor-target id="32-syncing-appearance-with-the-client">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#32-syncing-appearance-with-the-client">#</doc-anchor-trigger>
-        <span>3.2 Syncing appearance with the client</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="32-syncing-appearance-with-the-client">3.2 Syncing appearance with the client</h3>
 <ul>
 <li><strong>Server authority:</strong> Server owns the source of truth (DB). Server applies appearance and clothing to the ped with <code translate="no" v-pre>player.setHeadBlendData</code>, <code translate="no" v-pre>player.setClothes</code>, etc. alt:V syncs the ped model and clothes to clients automatically; no need to send raw appearance to client for other players.</li>
 <li><strong>Local player:</strong> The local player’s appearance is set by the server; the client just receives the same ped updates as everyone else.</li>
 <li><strong>Character creator (client UI):</strong> If the creator runs in a webview or client script, the client sends the chosen appearance (e.g. JSON) to the server; the server validates, saves to DB, then applies it to the player so all clients see the same.</li>
 </ul>
-<doc-anchor-target id="33-respawn-and-reconnect">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#33-respawn-and-reconnect">#</doc-anchor-trigger>
-        <span>3.3 Respawn and reconnect</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="33-respawn-and-reconnect">3.3 Respawn and reconnect</h3>
 <ul>
 <li><strong>Respawn:</strong> Do not strip appearance. After setting position/health, re-apply appearance and clothing from the same source (e.g. call the same “apply character look” function) so that any accidental clear (e.g. model change) is corrected.</li>
 <li><strong>Reconnect:</strong> On full reconnect, the player goes through login again: bind character, then apply appearance from DB, then clothing from DB. Ensure this runs after spawn so the ped is created before applying head blend and clothes.</li>
 </ul>
 <hr>
-<doc-anchor-target id="4-character-editing-system">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#4-character-editing-system">#</doc-anchor-trigger>
-        <span>4. Character Editing System</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="41-how-players-modify-appearance-later">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#41-how-players-modify-appearance-later">#</doc-anchor-trigger>
-        <span>4.1 How players modify appearance later</span>
-    </h3>
-</doc-anchor-target>
+<h2 id="4-character-editing-system">4. Character Editing System</h2>
+<h3 id="41-how-players-modify-appearance-later">4.1 How players modify appearance later</h3>
 <ul>
 <li><strong>Barber:</strong> Change hair, hair color, facial hair, eyebrows (and optionally chest hair). Server event receives the new values, validates ranges, updates DB, then applies to player (e.g. <code translate="no" v-pre>document.set('appearance', newAppearance)</code> for Rebar, or UPDATE <code translate="no" v-pre>character_appearance</code> + apply from MySQL).</li>
 <li><strong>Clothing shop:</strong> Already in place: buy applies and saves to <code translate="no" v-pre>player_clothes</code>. Ensure “try on” does not persist until purchase; only <code translate="no" v-pre>buyClothing</code> (or equivalent) writes to DB.</li>
 <li><strong>Plastic surgery / face editor:</strong> Change face blend, structure, overlays, eyes. Same pattern: server receives payload, validates, saves, applies.</li>
 </ul>
-<doc-anchor-target id="42-what-data-should-be-changeable">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#42-what-data-should-be-changeable">#</doc-anchor-trigger>
-        <span>4.2 What data should be changeable</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="42-what-data-should-be-changeable">4.2 What data should be changeable</h3>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -481,24 +407,14 @@ Current schema has only <code translate="no" v-pre>(id, player_id, component, dr
 </tbody>
 </table>
 </div>
-<doc-anchor-target id="43-safe-database-updates">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#43-safe-database-updates">#</doc-anchor-trigger>
-        <span>4.3 Safe database updates</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="43-safe-database-updates">4.3 Safe database updates</h3>
 <ul>
 <li><strong>Single transaction per “save”:</strong> When the user confirms (e.g. “Pay &amp; apply”), run one UPDATE (or one INSERT … ON DUPLICATE KEY UPDATE) for appearance and one or more for clothing so the state is consistent.</li>
 <li><strong>Validate on server:</strong> Never trust client numeric values; clamp to valid ranges (e.g. GTA component IDs, overlay IDs, 0–1 for mix/opacity).</li>
 <li><strong>Idempotent apply:</strong> After every DB write, re-apply appearance and clothing from the DB so server and client stay in sync even if a previous apply failed partially.</li>
 </ul>
 <hr>
-<doc-anchor-target id="5-common-mistakes-to-check">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#5-common-mistakes-to-check">#</doc-anchor-trigger>
-        <span>5. Common Mistakes to Check</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="5-common-mistakes-to-check">5. Common Mistakes to Check</h2>
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -543,18 +459,8 @@ Current schema has only <code translate="no" v-pre>(id, player_id, component, dr
 </table>
 </div>
 <hr>
-<doc-anchor-target id="6-recommended-implementation-structure">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#6-recommended-implementation-structure">#</doc-anchor-trigger>
-        <span>6. Recommended Implementation Structure</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="61-example-server-side-flow">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#61-example-server-side-flow">#</doc-anchor-trigger>
-        <span>6.1 Example server-side flow</span>
-    </h3>
-</doc-anchor-target>
+<h2 id="6-recommended-implementation-structure">6. Recommended Implementation Structure</h2>
+<h3 id="61-example-server-side-flow">6.1 Example server-side flow</h3>
 <p><strong>Registration → save → spawn → load → update</strong></p>
 <ol>
 <li><p><strong>Registration (auth)</strong></p>
@@ -589,12 +495,7 @@ Current schema has only <code translate="no" v-pre>(id, player_id, component, dr
 </ul>
 </li>
 </ol>
-<doc-anchor-target id="62-example-flow-pseudocode">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#62-example-flow-pseudocode">#</doc-anchor-trigger>
-        <span>6.2 Example flow (pseudocode)</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="62-example-flow-pseudocode">6.2 Example flow (pseudocode)</h3>
 <div id="62-example-flow-pseudocode-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">// ---- REGISTRATION (with character creator) ----
 onClient('auth:register', ...) -&gt; create account
@@ -630,24 +531,14 @@ onClient('barber:apply', player, hair, hairColor1, hairColor2, facialHair, ...):
   applyAppearance(player, loadAppearanceFromMySQL(playerId))
   charge and notify</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="63-example-modules">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#63-example-modules">#</doc-anchor-trigger>
-        <span>6.3 Example modules</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="63-example-modules">6.3 Example modules</h3>
 <ul>
 <li><strong>AppearanceService</strong> (or extend existing): <code translate="no" v-pre>loadAppearance(playerId)</code>, <code translate="no" v-pre>saveAppearance(playerId, data)</code>, <code translate="no" v-pre>getDefaultAppearance(sex)</code>. Uses MySQL <code translate="no" v-pre>character_appearance</code> (and optionally syncs to Rebar Character).</li>
 <li><strong>applyAppearance(player, appearance):</strong> Either call existing <code translate="no" v-pre>usePlayerAppearance(player).apply(appearance)</code> with a plain object shaped like <code translate="no" v-pre>Appearance</code>, or implement a small helper that maps your MySQL row (or Rebar document) to the same shape and then calls that.</li>
 <li><strong>Login flow:</strong> After <code translate="no" v-pre>bindCharacterForPlayer</code> and spawn, call <code translate="no" v-pre>applyAppearance</code> then <code translate="no" v-pre>loadPlayerClothing</code> so both run from your chosen source of truth.</li>
 </ul>
 <hr>
-<doc-anchor-target id="summary">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#summary">#</doc-anchor-trigger>
-        <span>Summary</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="summary">Summary</h2>
 <ul>
 <li><strong>Current state:</strong> Appearance lives only in Rebar MongoDB and is not set at registration; it is not applied on login because bind uses <code translate="no" v-pre>syncPlayer: false</code>. Only MySQL clothing is applied on login.</li>
 <li><strong>Audit:</strong> Trace storage (MongoDB + MySQL), registration (no appearance saved), and login (appearance never applied, only MySQL clothing).</li>

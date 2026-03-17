@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>useCronJob</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/usecronjob/">
+    <meta name="twitter:title" content="useCronJob">
+    <meta name="twitter:description" content="This API allows you to create timed events that happen at different intervals based on server time. Such as every 5th minute of the hour, every hour, etc.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,21 +164,11 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="usecronjob" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usecronjob">#</doc-anchor-trigger>
-        <span>useCronJob</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="usecronjob">useCronJob</h1>
 <p>This API allows you to create timed events that happen at different intervals based on server time. Such as every 5th minute of the hour, every hour, etc.</p>
 <p>Details on how to create the cron expression can be found in the node-cron documentation:</p>
 <p><a href="https://www.npmjs.com/package/node-cron#cron-syntax">Cron Syntax</a></p>
-<doc-anchor-target id="how-to-create-new-cronjob">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#how-to-create-new-cronjob">#</doc-anchor-trigger>
-        <span>How to create new Cronjob</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="how-to-create-new-cronjob">How to create new Cronjob</h2>
 <p>To create a new cron job, you need a unique name, a cron expression that defines the time of execution and one or more functions that are executed.</p>
 <div id="how-to-create-new-cronjob-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -195,21 +191,11 @@ export function task1() {
 
 cronJob.create('my-cronjob', '*/5 * * * * *', [task1]);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="how-to-remove-a-cronjob">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#how-to-remove-a-cronjob">#</doc-anchor-trigger>
-        <span>How to remove a Cronjob</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="how-to-remove-a-cronjob">How to remove a Cronjob</h2>
 <div id="how-to-remove-a-cronjob-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">cronJob.remove('my-cronjob');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="how-to-add-a-function-to-an-existing-cronjob">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#how-to-add-a-function-to-an-existing-cronjob">#</doc-anchor-trigger>
-        <span>How to add a function to an existing cronjob</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="how-to-add-a-function-to-an-existing-cronjob">How to add a function to an existing cronjob</h2>
 <div id="how-to-add-a-function-to-an-existing-cronjob-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">export function task2() {
     alt.log('Task 2');
@@ -217,12 +203,7 @@ cronJob.create('my-cronjob', '*/5 * * * * *', [task1]);</code></pre>
 
 cronJob.addTaskToCron('my-cronjob', task2);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="how-to-remove-a-function-to-an-existing-cronjob">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#how-to-remove-a-function-to-an-existing-cronjob">#</doc-anchor-trigger>
-        <span>How to remove a function to an existing cronjob</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="how-to-remove-a-function-to-an-existing-cronjob">How to remove a function to an existing cronjob</h2>
 <div id="how-to-remove-a-function-to-an-existing-cronjob-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">export function task2() {
     alt.log('Task 2');

@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Chapter 7. Programming</title>
@@ -29,14 +29,22 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/tutorials/rebar/chapter-07-programming/">
+    <meta name="twitter:title" content="Chapter 7. Programming">
+    <meta name="twitter:description" content="In our previous section we created our first plugin, spawned a player, and gave them a weapon. In this section, we're going to learn how to do some basic">
+    <meta name="twitter:image" content="https://rebarv.com/static/book/intellisense.png">
+    <meta name="twitter:image:alt" content="Chapter 7. Programming">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -51,10 +59,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -162,12 +170,7 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="chapter-7-programming" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#chapter-7-programming">#</doc-anchor-trigger>
-        <span>Chapter 7. Programming</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="chapter-7-programming">Chapter 7. Programming</h1>
 <p>In our previous section we created our first plugin, spawned a player, and gave them a weapon. In this section, we&#x27;re going to learn how to do some basic programming, and how to know what to type based on the patterns you&#x27;re seeing.</p>
 <p>Don&#x27;t try to overthink what you&#x27;re seeing here in this section, you may need to come back to it for a refresher or maybe you need a little more help by looking at <a href="https://learnxinyminutes.com/docs/typescript/">some more examples</a>.</p>
 <p>What is important is that you give it time, and practice often. You obtain nothing if you do nothing.</p>
@@ -175,12 +178,7 @@
 <p>Do or do not. There is no try.</p>
 <p>- Yoda</p>
 </blockquote>
-<doc-anchor-target id="basics">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#basics">#</doc-anchor-trigger>
-        <span>Basics</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="basics">Basics</h2>
 <p>Variables are the bread and butter for programming, variables store different data types. We&#x27;ve already used one variable to store an <code translate="no" v-pre>alt.Vector3</code> inside of it.</p>
 <div id="basics-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">let spawnPosition = new alt.Vector3({
@@ -190,12 +188,7 @@
 });</code></pre>
 </doc-codeblock></div>
 <p>But variables can store just about anything inside of them. Here&#x27;s a few examples of what that looks like for types like <code translate="no" v-pre>strings</code>, <code translate="no" v-pre>numbers</code>, <code translate="no" v-pre>objects</code>, <code translate="no" v-pre>interfaces</code>, and <code translate="no" v-pre>arrays</code>.</p>
-<doc-anchor-target id="variables">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#variables">#</doc-anchor-trigger>
-        <span>Variables</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="variables">Variables</h3>
 <p>Variables can be declared as <code translate="no" v-pre>let</code> or <code translate="no" v-pre>const</code> depending on what is needed.</p>
 <p>If the value is not meant to change, we use <code translate="no" v-pre>const</code>. If the value is meant to change we use <code translate="no" v-pre>let</code>.</p>
 <div id="variables-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -210,12 +203,7 @@ const spawnPosition = new alt.Vector3({
 let count = 0;
 count += 1;</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="strings">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#strings">#</doc-anchor-trigger>
-        <span>Strings</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="strings">Strings</h3>
 <div id="strings-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// We use 'let' to declare a variable of the string type, and give it a name.
 let myVariable: string;
@@ -236,12 +224,7 @@ let variableWorld = 'world';
 // Variable contains 'hello world'
 let result = variableHello + ' ' + variableWorld;</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="numbers">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#numbers">#</doc-anchor-trigger>
-        <span>Numbers</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="numbers">Numbers</h3>
 <div id="numbers-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// Again, we use 'let' to declare a variable of the number type, and give it a name
 let myNumber: number;
@@ -273,12 +256,7 @@ let result2 = numberA * numberB;
 let result3 = numberA / numberB;
 let result4 = numberA - numberB;</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="booleans">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#booleans">#</doc-anchor-trigger>
-        <span>Booleans</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="booleans">Booleans</h3>
 <p>Booleans are a great way to see if something is true or false.</p>
 <div id="booleans-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">let isRaining = true;
@@ -300,12 +278,7 @@ let isValue1Smaller = value1 &lt; value2; // true
 // Are these the same values?
 let isValueSame = value1 === value; // false</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="objects">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#objects">#</doc-anchor-trigger>
-        <span>Objects</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="objects">Objects</h3>
 <p>Objects can be incredibly complex, so this is just the basics of declaring and modifying them.</p>
 <div id="objects-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// Objects can be delcared with {}
@@ -333,12 +306,7 @@ const newObject = {
 // Those objects inside objects can also be modified
 newObject.data.address = '0.0.0.0';</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="interfaces">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#interfaces">#</doc-anchor-trigger>
-        <span>Interfaces</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="interfaces">Interfaces</h3>
 <p>While objects are great, they aren&#x27;t great without an interface. An interface lets you determine the expected structure of ran Object.</p>
 <div id="interfaces-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// You can declare an interface like this
@@ -385,12 +353,7 @@ const user2: UserOptional = {
 
 // Neat!</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="arrays">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#arrays">#</doc-anchor-trigger>
-        <span>Arrays</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="arrays">Arrays</h3>
 <p>Arrays are a group of strings, objects, numbers, or other types. They are often represented by a type <code translate="no" v-pre>[]</code></p>
 <div id="arrays-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// Let's declare some fruit in an array as a string array with string[]
@@ -429,12 +392,7 @@ for (let fruit of fruits) {
 
 // Neat!</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="if-statements">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#if-statements">#</doc-anchor-trigger>
-        <span>If Statements</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="if-statements">If Statements</h3>
 <p>If statements can be seen as your logical operators to help make your code do certain things. It&#x27;s effectively like stating if you have a chocolate bar, do you eat the whole thing now, or do you eat it later. Then you tell the computer exactly what to do with the chocolate bar.</p>
 <div id="if-statements-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// Basic If Statement
@@ -495,12 +453,7 @@ if (!isMember) {
     console.log('Membership required.'); // Membership required
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="functions">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#functions">#</doc-anchor-trigger>
-        <span>Functions</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="functions">Functions</h3>
 <p>Functions allow you to put re-useable code together to be called multiple times.</p>
 <div id="functions-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// Basic Function
@@ -529,27 +482,12 @@ function sumAll(...nums: number[]): number {
 }
 console.log(sumAll(1, 2, 3, 4)); // 10</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="camel-casing">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#camel-casing">#</doc-anchor-trigger>
-        <span>Camel Casing</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="camel-casing">Camel Casing</h3>
 <p>When you are declaring variables you should always <code translate="no" v-pre>camelCase</code> them. This means that the first word is always lowercase, and all words thereafter are capitalized. <code translate="no" v-pre>likeThisReallyLongSentence</code>.</p>
 <p>However, this is just a general rule for JavaScript, and TypeScript. Try to abide by it so others can read your code quickly.</p>
-<doc-anchor-target id="function-scope">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#function-scope">#</doc-anchor-trigger>
-        <span>Function Scope</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="function-scope">Function Scope</h2>
 <p>Scope determines where certain variables and functions can be logged or executed.</p>
-<doc-anchor-target id="global-scope">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#global-scope">#</doc-anchor-trigger>
-        <span>Global Scope</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="global-scope">Global Scope</h3>
 <ul>
 <li>Variables declared outside any function or block</li>
 <li>Accessible from anywhere in the code</li>
@@ -564,12 +502,7 @@ function printGlobalVar() {
 printGlobalVar(); // Output: I'm global
 console.log(globalVar); // Accessible here as well</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="function-scope-1">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#function-scope-1">#</doc-anchor-trigger>
-        <span>Function Scope</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="function-scope-1">Function Scope</h3>
 <ul>
 <li>Variables declared inside a function using <code translate="no" v-pre>let</code>, or <code translate="no" v-pre>const</code></li>
 <li>Accessible only within that function</li>
@@ -583,12 +516,7 @@ console.log(globalVar); // Accessible here as well</code></pre>
 greet(); // Output: Hello, World!
 console.log(message); // Error: Cannot find name 'message'</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="block-scope">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#block-scope">#</doc-anchor-trigger>
-        <span>Block Scope</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="block-scope">Block Scope</h3>
 <ul>
 <li>Variables declared inside a block (e.g., <code translate="no" v-pre>{}</code>) using <code translate="no" v-pre>let</code> or <code translate="no" v-pre>const</code>.</li>
 <li>Accessible only within that block.</li>
@@ -601,24 +529,14 @@ console.log(message); // Error: Cannot find name 'message'</code></pre>
 
 console.log(blockScopedVar); // Error: Cannot find name 'blockScopedVar'</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="recap">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#recap">#</doc-anchor-trigger>
-        <span>Recap</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="recap">Recap</h3>
 <ul>
 <li><strong>Global Scope</strong>: Accessible anywhere</li>
 <li><strong>Function Scope</strong>: Accessible only within the function</li>
 <li><strong>Block Scope</strong>: Accessible only within the block</li>
 </ul>
 <p>Understanding these scopes helps manage variable accessibility and avoid bugs.</p>
-<doc-anchor-target id="intellisense">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#intellisense">#</doc-anchor-trigger>
-        <span>Intellisense</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="intellisense">Intellisense</h2>
 <p>If you are not sure what intellisense is, it&#x27;s the little helper in your text editor that will sometimes pop-up with suggestions.</p>
 <p>Here&#x27;s a picture of what that looks like.</p>
 <p><figure class="content-center">
@@ -633,12 +551,7 @@ console.log(blockScopedVar); // Error: Cannot find name 'blockScopedVar'</code><
 </figure>
 </p>
 <p>As you can see in the above image, it clearly explains what each icon is and what their name is. Now let&#x27;s break down how each one of those works. Let&#x27;s take a look at some common examples from <code translate="no" v-pre>alt:V</code>.</p>
-<doc-anchor-target id="class-type">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#class-type">#</doc-anchor-trigger>
-        <span>Class Type</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="class-type">Class Type</h3>
 <p>Now we&#x27;re going to focus on <code translate="no" v-pre>alt.Vehicle</code> which is a <code translate="no" v-pre>class</code>. A class can be described as a little <code translate="no" v-pre>orange tree with roots</code>.</p>
 <p>Usually when you see a <code translate="no" v-pre>class</code> it needs to be be instantiated with the <code translate="no" v-pre>new</code> keyword.</p>
 <p>Let&#x27;s take a look at what that may look like.</p>
@@ -660,12 +573,7 @@ const vehicle = new alt.Vehicle('infernus', new alt.Vector3(5, 5, 5), new alt.Ve
 <li><code translate="no" v-pre>rot</code> of <code translate="no" v-pre>alt.Vector3</code> type.</li>
 </ul>
 <p><em>Remember that a <code translate="no" v-pre>?</code> means the argument, variable, or property may be optional</em></p>
-<doc-anchor-target id="property-type">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#property-type">#</doc-anchor-trigger>
-        <span>Property Type</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="property-type">Property Type</h3>
 <p>Properties are always assigned with an <code translate="no" v-pre>=</code> sign. A property can be described as a <code translate="no" v-pre>small low blue box</code>.</p>
 <p><figure class="content-center">
     <img src="../../../static/book/player-health.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="630" height="92" />
@@ -676,12 +584,7 @@ const vehicle = new alt.Vehicle('infernus', new alt.Vector3(5, 5, 5), new alt.Ve
 <div id="property-type-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">player.health = 200; // believe it or not player health goes between 99-200. &lt;= 99 being dead</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="function-type">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#function-type">#</doc-anchor-trigger>
-        <span>Function Type</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="function-type">Function Type</h3>
 <p>Functions usually require using <code translate="no" v-pre>()</code> to make them function. The icon is often a <code translate="no" v-pre>large purple box</code>.</p>
 <p><figure class="content-center">
     <img src="../../../static/book/player-give-weapon.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="617" height="63" />
@@ -708,12 +611,7 @@ const vehicle = new alt.Vehicle('infernus', new alt.Vector3(5, 5, 5), new alt.Ve
 <div id="function-type-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const eyeColor = player.getEyeColor();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="recap-1">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#recap-1">#</doc-anchor-trigger>
-        <span>Recap</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="recap-1">Recap</h2>
 <p>While there&#x27;s a lot to learn in programming, this will all eventually become second nature in your understanding as you proceed to work with the knowledge you&#x27;ve obtained every day. You must practice programming to be good at programming. It is a skill that can only be obtained by writing code, and dealing with the bugs.</p>
 
                 

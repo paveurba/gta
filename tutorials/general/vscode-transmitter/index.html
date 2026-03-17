@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>VSCode Transmitter</title>
@@ -29,13 +29,21 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/tutorials/general/vscode-transmitter/">
+    <meta name="twitter:title" content="VSCode Transmitter">
+    <meta name="twitter:description" content="Rebar has built in support for the Rebar Transmitter extension.">
+    <meta name="twitter:image" content="https://rebarv.com/static/transmitter-example.png">
+    <meta name="twitter:image:alt" content="VSCode Transmitter">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -50,10 +58,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -161,21 +169,11 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="vscode-transmitter" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#vscode-transmitter">#</doc-anchor-trigger>
-        <span>VSCode Transmitter</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="vscode-transmitter">VSCode Transmitter</h1>
 <p>Rebar has built in support for the <code translate="no" v-pre>Rebar Transmitter</code> extension.</p>
 <p>This allows you to open a scratchpad under <code translate="no" v-pre>src/scratchpad</code> and write code.</p>
 <p>Once the code is written you can <code translate="no" v-pre>SELECT THE CODE WITH YOUR CURSOR</code> and then right-click to execute it while the server is running.</p>
-<doc-anchor-target id="instructions">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#instructions">#</doc-anchor-trigger>
-        <span>Instructions</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="instructions">Instructions</h2>
 <ol>
 <li>Open <code translate="no" v-pre>src/scratchpad</code> folder</li>
 <li>Rename both of the example pads to <code translate="no" v-pre>serverExample.ts</code> and <code translate="no" v-pre>clientExample.ts</code></li>
@@ -183,23 +181,13 @@
 <li>Highlight it</li>
 <li>Right-click it, and execute it</li>
 </ol>
-<doc-anchor-target id="example">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#example">#</doc-anchor-trigger>
-        <span>Example</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="example">Example</h2>
 <p><figure class="content-center">
     <img src="../../../static/transmitter-example.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="991" height="246" />
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="download">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#download">#</doc-anchor-trigger>
-        <span>Download</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="download">Download</h2>
 <p><a href="https://marketplace.visualstudio.com/items?itemName=stuyk.rebar-transmitter">https://marketplace.visualstudio.com/items?itemName=stuyk.rebar-transmitter</a></p>
 
                 

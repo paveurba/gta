@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Install &amp; Upgrade</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/install/">
+    <meta name="twitter:title" content="Install & Upgrade">
+    <meta name="twitter:description" content="Hey listen! When you run Rebar for the first time, you won't be able to spawn.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,12 +164,7 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="install--upgrade" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#install--upgrade">#</doc-anchor-trigger>
-        <span>Install &amp; Upgrade</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="install--upgrade">Install &amp; Upgrade</h1>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
     <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
@@ -183,12 +184,7 @@
         </div>
     </div>
 </div>
-<doc-anchor-target id="1-programs-to-install">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#1-programs-to-install">#</doc-anchor-trigger>
-        <span>1. Programs to Install</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="1-programs-to-install">1. Programs to Install</h2>
 <p>Install these programs.</p>
 <ul>
 <li><a href="https://git-scm.com/downloads">Git</a></li>
@@ -210,56 +206,26 @@
 <li><a href="https://code.visualstudio.com/download">VSCode</a></li>
 </ul>
 <hr>
-<doc-anchor-target id="2-clone-the-repository">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#2-clone-the-repository">#</doc-anchor-trigger>
-        <span>2. Clone the Repository</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="2-clone-the-repository">2. Clone the Repository</h2>
 <p>Open a <code translate="no" v-pre>terminal</code> and <code translate="no" v-pre>clone</code> the repository somewhere.</p>
 <div id="2-clone-the-repository-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">git clone https://github.com/Stuyk/rebar-altv/</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="navigate-into-rebar">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#navigate-into-rebar">#</doc-anchor-trigger>
-        <span>Navigate into Rebar</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="navigate-into-rebar">Navigate into Rebar</h3>
 <div id="navigate-into-rebar-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">cd rebar-altv</code></pre>
 </doc-codeblock></div>
 <hr>
-<doc-anchor-target id="3a-windows">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#3a-windows">#</doc-anchor-trigger>
-        <span>3a. Windows</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="install">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#install">#</doc-anchor-trigger>
-        <span>Install</span>
-    </h3>
-</doc-anchor-target>
+<h2 id="3a-windows">3a. Windows</h2>
+<h3 id="install">Install</h3>
 <div id="install-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">pnpm install</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="download-binaries">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#download-binaries">#</doc-anchor-trigger>
-        <span>Download Binaries</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="download-binaries">Download Binaries</h3>
 <div id="download-binaries-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">pnpm binaries</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="start">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#start">#</doc-anchor-trigger>
-        <span>Start</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="start">Start</h3>
 <div id="start-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">pnpm start</code></pre>
 </doc-codeblock></div>
@@ -272,57 +238,27 @@
 <pre translate="no" class="language-none"><code v-pre class="language-none">pnpm dev:hot</code></pre>
 </doc-codeblock></div>
 <hr>
-<doc-anchor-target id="3b-linux">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#3b-linux">#</doc-anchor-trigger>
-        <span>3b. Linux</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="3b-linux">3b. Linux</h2>
 <p>Last installation was tested on Ubuntu 22.04+</p>
-<doc-anchor-target id="install-libatomic">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#install-libatomic">#</doc-anchor-trigger>
-        <span>Install libatomic</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="install-libatomic">Install libatomic</h3>
 <div id="install-libatomic-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">sudo apt-get update
 sudo apt-get install libatomic1</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="install-1">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#install-1">#</doc-anchor-trigger>
-        <span>Install</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="install-1">Install</h3>
 <div id="install-1-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">pnpm install</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="download-binaries-1">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#download-binaries-1">#</doc-anchor-trigger>
-        <span>Download Binaries</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="download-binaries-1">Download Binaries</h3>
 <div id="download-binaries-1-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">pnpm binaries</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="grant-execute-permissions">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#grant-execute-permissions">#</doc-anchor-trigger>
-        <span>Grant execute permissions</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="grant-execute-permissions">Grant execute permissions</h3>
 <div id="grant-execute-permissions-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-bash"><code v-pre class="language-bash">sudo chmod +x altv-server
 sudo chmod +x altv-crash-handler</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="start-1">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#start-1">#</doc-anchor-trigger>
-        <span>Start</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="start-1">Start</h3>
 <div id="start-1-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">pnpm start:linux</code></pre>
 </doc-codeblock></div>
@@ -331,48 +267,23 @@ sudo chmod +x altv-crash-handler</code></pre>
 <pre translate="no" class="language-none"><code v-pre class="language-none">pnpm dev:linux</code></pre>
 </doc-codeblock></div>
 <hr>
-<doc-anchor-target id="3c-docker">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#3c-docker">#</doc-anchor-trigger>
-        <span>3c. Docker</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="3c-docker">3c. Docker</h2>
 <p>Follow all of the instructions above.</p>
 <p>Build with <code translate="no" v-pre>pnpm build:docker</code> and then run <code translate="no" v-pre>./altv-server</code>.</p>
-<doc-anchor-target id="upgrading">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#upgrading">#</doc-anchor-trigger>
-        <span>Upgrading</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="auto-upgrade">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#auto-upgrade">#</doc-anchor-trigger>
-        <span>Auto Upgrade</span>
-    </h3>
-</doc-anchor-target>
+<h2 id="upgrading">Upgrading</h2>
+<h3 id="auto-upgrade">Auto Upgrade</h3>
 <p>If you already have Rebar installed simply run the following command:</p>
 <div id="auto-upgrade-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">pnpm rebar:upgrade</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="manual-upgrade">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#manual-upgrade">#</doc-anchor-trigger>
-        <span>Manual Upgrade</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="manual-upgrade">Manual Upgrade</h3>
 <p>Download the latest version <code translate="no" v-pre>Rebar</code> into another folder.</p>
 <p>Copy the folders <code translate="no" v-pre>src/main</code>, <code translate="no" v-pre>webview</code>, and <code translate="no" v-pre>docs</code> folder into the main folder of Rebar.</p>
 <p>Copy the file <code translate="no" v-pre>package.json</code> to the main folder of Rebar.</p>
 <p>Run <code translate="no" v-pre>pnpm upgrade</code> and <code translate="no" v-pre>pnpm install</code>.</p>
 <p><a href="https://github.com/Stuyk/rebar-altv/archive/refs/heads/main.zip">Click To Download Latest Source Code</a></p>
 <p>That&#x27;s it.</p>
-<doc-anchor-target id="webview-development">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#webview-development">#</doc-anchor-trigger>
-        <span>Webview Development</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="webview-development">Webview Development</h2>
 <p>If you need to develop an interface out of game, you can use <code translate="no" v-pre>pnpm:webview</code></p>
 
                 

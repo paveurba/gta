@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>utility</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/utility/">
+    <meta name="twitter:title" content="utility">
+    <meta name="twitter:description" content="These are a collection of utility functions, some also exist client-side but most are server-side only.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,127 +164,67 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="utility" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#utility">#</doc-anchor-trigger>
-        <span>utility</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="utility">utility</h1>
 <p>These are a collection of utility functions, some also exist client-side but most are server-side only.</p>
-<doc-anchor-target id="clonearraydata">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#clonearraydata">#</doc-anchor-trigger>
-        <span>clone.arrayData</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="clonearraydata">clone.arrayData</h2>
 <p>Cloning an array and ensuring it is not bound to anything</p>
 <div id="clonearraydata-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const oldArray = [1, 2, 3];
 const newArray = Rebar.utility.clone.arrayData(oldArray);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="cloneobjectdata">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#cloneobjectdata">#</doc-anchor-trigger>
-        <span>clone.objectData</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="cloneobjectdata">clone.objectData</h2>
 <p>Cloning object data will remove any functions</p>
 <div id="cloneobjectdata-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const oldObject = { hello: 'test', test: () =&gt; {} };
 const newObject = Rebar.utility.clone.objectData(oldObject);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="clothingaddcategory">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#clothingaddcategory">#</doc-anchor-trigger>
-        <span>clothing.addCategory</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="clothingaddcategory">clothing.addCategory</h2>
 <p>Add a new category with dlc information, for custom dlcs
 These are the maximum ids available for each given set of clothes in the dlc based on component index.</p>
 <div id="clothingaddcategory-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">//Rebar.utility.clothing.addCategory('dlc-name', { clothes: { 2: 5 }, props: {} });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="clothinggetcategories">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#clothinggetcategories">#</doc-anchor-trigger>
-        <span>clothing.getCategories</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="clothinggetcategories">clothing.getCategories</h2>
 <p>Returns all available DLC names for female or male characters</p>
 <div id="clothinggetcategories-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const maleCategories = Rebar.utility.clothing.getCategories('male');
 const femaleCategories = Rebar.utility.clothing.getCategories('female');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="clothinggetcategory">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#clothinggetcategory">#</doc-anchor-trigger>
-        <span>clothing.getCategory</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="clothinggetcategory">clothing.getCategory</h2>
 <p>Return all data about a given dlc&#x27;s clothes</p>
 <div id="clothinggetcategory-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const data = Rebar.utility.clothing.getCategory('Female_Apt01');
 console.log(data.clothes);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="clothinggetdefaultcategory">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#clothinggetdefaultcategory">#</doc-anchor-trigger>
-        <span>clothing.getDefaultCategory</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="clothinggetdefaultcategory">clothing.getDefaultCategory</h2>
 <p>Get the default game baked clothes</p>
 <div id="clothinggetdefaultcategory-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const maleBaseGameClothes = Rebar.utility.clothing.getDefaultCategory('male');
 const femaleBaseGameClothes = Rebar.utility.clothing.getDefaultCategory('female');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="clothinggettops">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#clothinggettops">#</doc-anchor-trigger>
-        <span>clothing.getTops</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="clothinggettops">clothing.getTops</h2>
 <p>Get all available top data for a model, including torso category</p>
 <div id="clothinggettops-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const maleTops = Rebar.utility.clothing.getTops('male');
 const femaleTops = Rebar.utility.clothing.getTops('male');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="clothinggettorsos">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#clothinggettorsos">#</doc-anchor-trigger>
-        <span>clothing.getTorsos</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="clothinggettorsos">clothing.getTorsos</h2>
 <p>Get all torsos available for a given clothing top</p>
 <div id="clothinggettorsos-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const torsosAvailable = Rebar.utility.clothing.getTorsos('male', maleTops[0].torsos);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="clothinggetundershirts">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#clothinggetundershirts">#</doc-anchor-trigger>
-        <span>clothing.getUndershirts</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="clothinggetundershirts">clothing.getUndershirts</h2>
 <p>Get all available undershirts for a given clothing top</p>
 <div id="clothinggetundershirts-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const undershirtsAvailable = Rebar.utility.clothing.getUndershirts('male', maleTops[0].category);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="colorrgbatohextalpha">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#colorrgbatohextalpha">#</doc-anchor-trigger>
-        <span>color.rgbaToHextAlpha</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="colorrgbatohextalpha">color.rgbaToHextAlpha</h2>
 <p>Converts an RGBA color to a hex color. This one returns #FF0000
 Results always includes <code translate="no" v-pre>#</code></p>
 <div id="colorrgbatohextalpha-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const hexColor = Rebar.utility.color.rgbaToHexAlpha(new alt.RGBA(255, 0, 0));</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="flagisenabled">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#flagisenabled">#</doc-anchor-trigger>
-        <span>flag.isEnabled</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="flagisenabled">flag.isEnabled</h2>
 <p>Bitwise flags are useful when you want to store a lot of options under a single variable</p>
 <div id="flagisenabled-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const Roles = {
@@ -296,104 +242,54 @@ if (isSuperAdmin) {
     // Super Admin!
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="mathgetmissingnumber">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#mathgetmissingnumber">#</doc-anchor-trigger>
-        <span>math.getMissingNumber</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="mathgetmissingnumber">math.getMissingNumber</h2>
 <p>Returns the missing number given an array of numbers</p>
 <div id="mathgetmissingnumber-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const missingNumber = Rebar.utility.math.getMissingNumber([0, 1, 3]);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="passwordcheck">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#passwordcheck">#</doc-anchor-trigger>
-        <span>password.check</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="passwordcheck">password.check</h2>
 <p>Checks a given password against a password hash
 Uses pbkdf2</p>
 <div id="passwordcheck-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">Rebar.utility.password.check('plainpassword', 'somecrazyhashvalue');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="passwordhash">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#passwordhash">#</doc-anchor-trigger>
-        <span>password.hash</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="passwordhash">password.hash</h2>
 <p>Hashes a password for safe database storage</p>
 <div id="passwordhash-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const pbkdf2Password = Rebar.utility.password.hash('plainpassword');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="randomelement">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#randomelement">#</doc-anchor-trigger>
-        <span>random.element</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="randomelement">random.element</h2>
 <p>Will pull a random result from the array</p>
 <div id="randomelement-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const elementResult = Utility.random.element&lt;number&gt;([0, 1, 2, 3, 4, 5]);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="randomnumberbetween">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#randomnumberbetween">#</doc-anchor-trigger>
-        <span>random.numberBetween</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="randomnumberbetween">random.numberBetween</h2>
 <p>Will pull a random number between two numbers</p>
 <div id="randomnumberbetween-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const rngNumberResult = Utility.random.numberBetween(0, 5);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="randomrgb">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#randomrgb">#</doc-anchor-trigger>
-        <span>random.rgb</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="randomrgb">random.rgb</h2>
 <p>Will create a random color</p>
 <div id="randomrgb-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const rngRgbResult = Utility.random.rgb();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="randomshuffle">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#randomshuffle">#</doc-anchor-trigger>
-        <span>random.shuffle</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="randomshuffle">random.shuffle</h2>
 <p>Will shuffle the numbers into a random order, and return the shuffled array
 //</p>
 <div id="randomshuffle-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const shuffledArray = Utility.random.shuffle&lt;number&gt;([0, 1, 2, 3, 4]);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="timeformattimestamp">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#timeformattimestamp">#</doc-anchor-trigger>
-        <span>time.formatTimestamp</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="timeformattimestamp">time.formatTimestamp</h2>
 <p>Generates a useable timestamp with hour, minute, and second</p>
 <div id="timeformattimestamp-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const { hour, minute, second } = Rebar.utility.time.formatTimestamp(Date.now());</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="uidgenerate">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#uidgenerate">#</doc-anchor-trigger>
-        <span>uid.generate</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="uidgenerate">uid.generate</h2>
 <p>Generates a random short string as an identifier</p>
 <div id="uidgenerate-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const uid = Rebar.utility.uid.generate();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="useprotectcallback">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useprotectcallback">#</doc-anchor-trigger>
-        <span>useProtectCallback</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="useprotectcallback">useProtectCallback</h2>
 <p>When you&#x27;re using events, or you need callbacks to be fully protected and permissioned this utility functions provides a simple wrapper to check for permissions before the callback is executed.</p>
 <p>This prevents unauthorized users from executing callbacks at the event level.</p>
 <p>A simple, but easy way to add permissions when recieving client-side events, or other callbacks.</p>
@@ -420,12 +316,7 @@ alt.onClient(
     }),
 );</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="useratelimitcallback">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useratelimitcallback">#</doc-anchor-trigger>
-        <span>useRateLimitCallback</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="useratelimitcallback">useRateLimitCallback</h2>
 <p>When you&#x27;re using events, or you need callbacks to be protected by a rate limiter, this is a wrapper you can use.</p>
 <p>This prevents player invoked functions from being called too frequently.</p>
 <p>In fact, if a player calls them too much, they will be kicked.</p>

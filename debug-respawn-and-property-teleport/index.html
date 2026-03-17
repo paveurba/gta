@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Debug Plan: Respawn Location &amp; Property Entry Teleport Bugs</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/debug-respawn-and-property-teleport/">
+    <meta name="twitter:title" content="Debug Plan: Respawn Location & Property Entry Teleport Bugs">
+    <meta name="twitter:description" content="Step-by-step implementation plan to diagnose and fix two critical issues on the alt:V roleplay server.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,20 +164,10 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="debug-plan-respawn-location--property-entry-teleport-bugs" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#debug-plan-respawn-location--property-entry-teleport-bugs">#</doc-anchor-trigger>
-        <span>Debug Plan: Respawn Location &amp; Property Entry Teleport Bugs</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="debug-plan-respawn-location--property-entry-teleport-bugs">Debug Plan: Respawn Location &amp; Property Entry Teleport Bugs</h1>
 <p>Step-by-step implementation plan to diagnose and fix two critical issues on the alt:V roleplay server.</p>
 <hr>
-<doc-anchor-target id="issue-1--player-respawn-on-clinic-roof">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#issue-1--player-respawn-on-clinic-roof">#</doc-anchor-trigger>
-        <span>Issue 1 — Player Respawn on Clinic Roof</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="issue-1--player-respawn-on-clinic-roof">Issue 1 — Player Respawn on Clinic Roof</h2>
 <p><strong>Symptom:</strong> After death, the player sometimes respawns on the <strong>roof of the clinic</strong> instead of at the correct street-level hospital spawn.</p>
 <p><strong>Relevant code (current behaviour — fixes applied):</strong></p>
 <ul>
@@ -194,12 +190,7 @@
 <li><strong>Ground probe still active for login</strong> — <code translate="no" v-pre>spawnPlayerSafe</code> at line 241 emits coords, so <code translate="no" v-pre>forceSafeGroundSpawn</code> runs on login. <code translate="no" v-pre>DEFAULT_SPAWN</code> is <code translate="no" v-pre>425.1, -979.5, 30.7</code> (outdoor, safe). No action needed here.</li>
 </ol>
 <hr>
-<doc-anchor-target id="issue-2--property-entry-teleports-to-wrong-place-eg-police-dept">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#issue-2--property-entry-teleports-to-wrong-place-eg-police-dept">#</doc-anchor-trigger>
-        <span>Issue 2 — Property Entry Teleports to Wrong Place (e.g. Police Dept)</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="issue-2--property-entry-teleports-to-wrong-place-eg-police-dept">Issue 2 — Property Entry Teleports to Wrong Place (e.g. Police Dept)</h2>
 <p><strong>Symptom:</strong> When entering a property, the player is teleported to an incorrect location (e.g. police department) instead of the property interior.</p>
 <p><strong>Relevant code:</strong></p>
 <ul>
@@ -225,24 +216,9 @@
 <li><strong>Dimension/interior:</strong> alt:V dimension or interior not set when using IPL-based interiors, so the game might not be in the correct “interior world”.</li>
 </ol>
 <hr>
-<doc-anchor-target id="implementation-plan">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#implementation-plan">#</doc-anchor-trigger>
-        <span>Implementation Plan</span>
-    </h1>
-</doc-anchor-target>
-<doc-anchor-target id="phase-1--reproduce-and-trace">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#phase-1--reproduce-and-trace">#</doc-anchor-trigger>
-        <span>Phase 1 — Reproduce and Trace</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="11-respawn-clinic-roof">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#11-respawn-clinic-roof">#</doc-anchor-trigger>
-        <span>1.1 Respawn (clinic roof)</span>
-    </h3>
-</doc-anchor-target>
+<h1 id="implementation-plan">Implementation Plan</h1>
+<h2 id="phase-1--reproduce-and-trace">Phase 1 — Reproduce and Trace</h2>
+<h3 id="11-respawn-clinic-roof">1.1 Respawn (clinic roof)</h3>
 <ol>
 <li><strong>Reproduce consistently</strong>
 <ul>
@@ -262,12 +238,7 @@
 </ul>
 </li>
 </ol>
-<doc-anchor-target id="12-property-entry-wrong-teleport">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#12-property-entry-wrong-teleport">#</doc-anchor-trigger>
-        <span>1.2 Property entry (wrong teleport)</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="12-property-entry-wrong-teleport">1.2 Property entry (wrong teleport)</h3>
 <ol>
 <li><strong>Reproduce</strong>
 <ul>
@@ -283,18 +254,8 @@
 </li>
 </ol>
 <hr>
-<doc-anchor-target id="phase-2--logging-improvements">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#phase-2--logging-improvements">#</doc-anchor-trigger>
-        <span>Phase 2 — Logging Improvements</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="21-respawn-server--srcpluginsgta-mysql-coreserverindexts">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#21-respawn-server--srcpluginsgta-mysql-coreserverindexts">#</doc-anchor-trigger>
-        <span>2.1 Respawn (server) — <code translate="no" v-pre>src/plugins/gta-mysql-core/server/index.ts</code></span>
-    </h3>
-</doc-anchor-target>
+<h2 id="phase-2--logging-improvements">Phase 2 — Logging Improvements</h2>
+<h3 id="21-respawn-server--srcpluginsgta-mysql-coreserverindexts">2.1 Respawn (server) — <code translate="no" v-pre>src/plugins/gta-mysql-core/server/index.ts</code></h3>
 <p>In the <code translate="no" v-pre>playerDeath</code> handler, after choosing the hospital and before <code translate="no" v-pre>alt.setTimeout</code>:</p>
 <div id="21-respawn-server--srcpluginsgta-mysql-coreserverindexts-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// After: const hospital = getNearestHospital(...)
@@ -308,12 +269,7 @@ alt.log(`[gta-mysql-core] Respawn: player ${player.id} -&gt; ${hospital.name} at
 <div id="21-respawn-server--srcpluginsgta-mysql-coreserverindexts-code-3" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">alt.log(`[gta-mysql-core] Respawn done, emitting gta:spawn:safe(${spawnX}, ${spawnY}, ${spawnZ})`);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="22-respawn-client--srcpluginsgta-mysql-coreclientindexts">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#22-respawn-client--srcpluginsgta-mysql-coreclientindexts">#</doc-anchor-trigger>
-        <span>2.2 Respawn (client) — <code translate="no" v-pre>src/plugins/gta-mysql-core/client/index.ts</code></span>
-    </h3>
-</doc-anchor-target>
+<h3 id="22-respawn-client--srcpluginsgta-mysql-coreclientindexts">2.2 Respawn (client) — <code translate="no" v-pre>src/plugins/gta-mysql-core/client/index.ts</code></h3>
 <p>In <code translate="no" v-pre>forceSafeGroundSpawn</code>, at the start:</p>
 <div id="22-respawn-client--srcpluginsgta-mysql-coreclientindexts-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">alt.log(`[gta-client] forceSafeGroundSpawn received: ${x}, ${y}, ${z}`);</code></pre>
@@ -327,41 +283,21 @@ alt.log(`[gta-mysql-core] Respawn: player ${player.id} -&gt; ${hospital.name} at
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">alt.log(`[gta-client] forceSafeGroundSpawn setting position: ${x}, ${y}, ${groundZ}`);</code></pre>
 </doc-codeblock></div>
 <p>This will show if the client is using a roof Z (e.g. high <code translate="no" v-pre>groundZ</code>) for hospital coords.</p>
-<doc-anchor-target id="23-property-entry-server--srcpluginsgta-mysql-coreserverindexts">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#23-property-entry-server--srcpluginsgta-mysql-coreserverindexts">#</doc-anchor-trigger>
-        <span>2.3 Property entry (server) — <code translate="no" v-pre>src/plugins/gta-mysql-core/server/index.ts</code></span>
-    </h3>
-</doc-anchor-target>
+<h3 id="23-property-entry-server--srcpluginsgta-mysql-coreserverindexts">2.3 Property entry (server) — <code translate="no" v-pre>src/plugins/gta-mysql-core/server/index.ts</code></h3>
 <p>At the start of <code translate="no" v-pre>property:enter</code> handler, after loading the property and before emitting result:</p>
 <div id="23-property-entry-server--srcpluginsgta-mysql-coreserverindexts-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">alt.log(`[gta-mysql-core] property:enter player=${player.id} propertyId=${propertyId} name=${property.name} interior=${property.interior_x}, ${property.interior_y}, ${property.interior_z}`);</code></pre>
 </doc-codeblock></div>
 <p>If you add any fallback (e.g. default interior when DB has nulls), log when that path is used.</p>
-<doc-anchor-target id="24-property-entry-client--srcpluginsgta-mysql-coreclientindexts">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#24-property-entry-client--srcpluginsgta-mysql-coreclientindexts">#</doc-anchor-trigger>
-        <span>2.4 Property entry (client) — <code translate="no" v-pre>src/plugins/gta-mysql-core/client/index.ts</code></span>
-    </h3>
-</doc-anchor-target>
+<h3 id="24-property-entry-client--srcpluginsgta-mysql-coreclientindexts">2.4 Property entry (client) — <code translate="no" v-pre>src/plugins/gta-mysql-core/client/index.ts</code></h3>
 <p>In <code translate="no" v-pre>property:enterResult</code>, when <code translate="no" v-pre>result.success &amp;&amp; result.interior</code>:</p>
 <div id="24-property-entry-client--srcpluginsgta-mysql-coreclientindexts-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">alt.log(`[gta-client] property:enterResult teleporting to interior: ${result.interior.x}, ${result.interior.y}, ${result.interior.z} heading=${result.interior.heading}`);</code></pre>
 </doc-codeblock></div>
 <p>This confirms what the client actually uses and helps spot mismatches with DB or server logs.</p>
 <hr>
-<doc-anchor-target id="phase-3--validate-coordinates">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#phase-3--validate-coordinates">#</doc-anchor-trigger>
-        <span>Phase 3 — Validate Coordinates</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="31-hospital-spawns">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#31-hospital-spawns">#</doc-anchor-trigger>
-        <span>3.1 Hospital spawns</span>
-    </h3>
-</doc-anchor-target>
+<h2 id="phase-3--validate-coordinates">Phase 3 — Validate Coordinates</h2>
+<h3 id="31-hospital-spawns">3.1 Hospital spawns</h3>
 <ol>
 <li><strong>In-game check</strong>
 <ul>
@@ -379,12 +315,7 @@ alt.log(`[gta-mysql-core] Respawn: player ${player.id} -&gt; ${hospital.name} at
 </ul>
 </li>
 </ol>
-<doc-anchor-target id="32-property-interiors">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#32-property-interiors">#</doc-anchor-trigger>
-        <span>3.2 Property interiors</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="32-property-interiors">3.2 Property interiors</h3>
 <ol>
 <li><strong>DB check</strong>
 <ul>
@@ -406,12 +337,7 @@ alt.log(`[gta-mysql-core] Respawn: player ${player.id} -&gt; ${hospital.name} at
 </li>
 </ol>
 <hr>
-<doc-anchor-target id="phase-4--debug-dimension--interior-property">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#phase-4--debug-dimension--interior-property">#</doc-anchor-trigger>
-        <span>Phase 4 — Debug Dimension / Interior (Property)</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="phase-4--debug-dimension--interior-property">Phase 4 — Debug Dimension / Interior (Property)</h2>
 <ol>
 <li><strong>alt:V dimensions</strong>
 <ul>
@@ -435,18 +361,8 @@ alt.log(`[gta-mysql-core] Respawn: player ${player.id} -&gt; ${hospital.name} at
 </li>
 </ol>
 <hr>
-<doc-anchor-target id="phase-5--safe-fixes">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#phase-5--safe-fixes">#</doc-anchor-trigger>
-        <span>Phase 5 — Safe Fixes</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="51-respawn-avoid-clinic-roof">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#51-respawn-avoid-clinic-roof">#</doc-anchor-trigger>
-        <span>5.1 Respawn (avoid clinic roof)</span>
-    </h3>
-</doc-anchor-target>
+<h2 id="phase-5--safe-fixes">Phase 5 — Safe Fixes</h2>
+<h3 id="51-respawn-avoid-clinic-roof">5.1 Respawn (avoid clinic roof)</h3>
 <p><strong>Option A — Trust server Z, skip client ground correction for respawn</strong></p>
 <ul>
 <li>In the <code translate="no" v-pre>playerDeath</code> handler, after <code translate="no" v-pre>player.spawn(spawnX, spawnY, spawnZ, spawnHeading)</code> do <strong>not</strong> emit <code translate="no" v-pre>gta:spawn:safe</code> with coordinates (so the client does not run <code translate="no" v-pre>forceSafeGroundSpawn</code> and overwrite position). You can still emit <code translate="no" v-pre>gta:spawn:safe</code> with no args so the client sets <code translate="no" v-pre>isDead = false</code>.</li>
@@ -462,12 +378,7 @@ alt.log(`[gta-mysql-core] Respawn: player ${player.id} -&gt; ${hospital.name} at
 <li>You currently have two client handlers for <code translate="no" v-pre>gta:spawn:safe</code>. Consolidate to one: if (x,y,z) are provided, call <code translate="no" v-pre>forceSafeGroundSpawn(x,y,z)</code> then set <code translate="no" v-pre>isDead = false</code>; otherwise only set <code translate="no" v-pre>isDead = false</code>. This avoids any ambiguity in order of execution.</li>
 </ul>
 <p><strong>Recommendation:</strong> Fix <code translate="no" v-pre>HOSPITAL_SPAWNS</code> Z in code and optionally in a small config, then apply Option A or B. Prefer Option A if server coords are reliable to avoid client overriding good server spawn.</p>
-<doc-anchor-target id="52-property-entry-correct-interior">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#52-property-entry-correct-interior">#</doc-anchor-trigger>
-        <span>5.2 Property entry (correct interior)</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="52-property-entry-correct-interior">5.2 Property entry (correct interior)</h3>
 <ol>
 <li><strong>Fix data</strong>
 <ul>
@@ -491,12 +402,7 @@ alt.log(`[gta-mysql-core] Respawn: player ${player.id} -&gt; ${hospital.name} at
 </li>
 </ol>
 <hr>
-<doc-anchor-target id="phase-6--example-code-structure-respawn">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#phase-6--example-code-structure-respawn">#</doc-anchor-trigger>
-        <span>Phase 6 — Example Code Structure (Respawn)</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="phase-6--example-code-structure-respawn">Phase 6 — Example Code Structure (Respawn)</h2>
 <p><strong>Server — only emit “clear death” after spawn, no coords (Option A):</strong></p>
 <div id="phase-6--example-code-structure-respawn-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// In playerDeath handler, after player.spawn(...) and health/armour/money/weapons:
@@ -515,12 +421,7 @@ alt.emitClient(player, 'gta:spawn:safe');</code></pre>
 </doc-codeblock></div>
 <p>If you keep client-side ground correction, add a “known spawn” list so hospital positions use fixed Z instead of <code translate="no" v-pre>getGroundZFor3dCoord</code> (Option B).</p>
 <hr>
-<doc-anchor-target id="phase-7--example-code-structure-property-entry">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#phase-7--example-code-structure-property-entry">#</doc-anchor-trigger>
-        <span>Phase 7 — Example Code Structure (Property Entry)</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="phase-7--example-code-structure-property-entry">Phase 7 — Example Code Structure (Property Entry)</h2>
 <p><strong>Server — validate and log before sending:</strong></p>
 <div id="phase-7--example-code-structure-property-entry-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">alt.onClient('property:enter', async (player, propertyId: number) =&gt; {
@@ -571,12 +472,7 @@ function doTeleport(result: { interior: { x: number; y: number; z: number; headi
 }</code></pre>
 </doc-codeblock></div>
 <hr>
-<doc-anchor-target id="checklist">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#checklist">#</doc-anchor-trigger>
-        <span>Checklist</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="checklist">Checklist</h2>
 <ul class="contains-task-list">
 <li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>[CONFIRMED BUG]</strong> Consolidate dual <code translate="no" v-pre>gta:spawn:safe</code> handlers (lines 720 + 953) into one (Phase 5.1 Option C, Phase 6).</li>
 <li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>[CONFIRMED BUG]</strong> Apply Option A: stop emitting coords in <code translate="no" v-pre>gta:spawn:safe</code> — trust server Z from <code translate="no" v-pre>HOSPITAL_SPAWNS</code>, skip client ground probe for respawn (Phase 5.1).</li>

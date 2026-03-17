@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Global Document</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/document/document-global/">
+    <meta name="twitter:title" content="Global Document">
+    <meta name="twitter:description" content="See Documents Section for further information on documents.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,19 +164,9 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="global-document" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#global-document">#</doc-anchor-trigger>
-        <span>Global Document</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="global-document">Global Document</h1>
 <p>See <a href="../">Documents Section</a> for further information on documents.</p>
-<doc-anchor-target id="useglobal">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useglobal">#</doc-anchor-trigger>
-        <span>useGlobal</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="useglobal">useGlobal</h2>
 <p>When creating a global document, it will always come with an identifier.</p>
 <p>You should also specify a data type for your global document.</p>
 <div id="useglobal-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -185,12 +181,7 @@ async function someFunction() {
     const document = await Rebar.document.global.useGlobal&lt;MyDataType&gt;('my-cool-global-document');
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="get">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#get">#</doc-anchor-trigger>
-        <span>get</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="get">get</h3>
 <p>Get the entire document of data.</p>
 <div id="get-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function doSomething() {
@@ -199,12 +190,7 @@ async function someFunction() {
     console.log(data);
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="getfield">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#getfield">#</doc-anchor-trigger>
-        <span>getField</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="getfield">getField</h3>
 <p>Get a specific field from the document. These may return <code translate="no" v-pre>undefined</code>.</p>
 <div id="getfield-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function doSomething() {
@@ -214,12 +200,7 @@ async function someFunction() {
     console.log(totalMoneyCreated);
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="set">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#set">#</doc-anchor-trigger>
-        <span>set</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="set">set</h3>
 <p>Set a specific field for the document.</p>
 <div id="set-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function doSomething() {
@@ -227,12 +208,7 @@ async function someFunction() {
     document.set('totalMoneyCreated', 200);
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="setbulk">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#setbulk">#</doc-anchor-trigger>
-        <span>setBulk</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="setbulk">setBulk</h3>
 <p>Set multiple fields for the document.</p>
 <div id="setbulk-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function doSomething() {
@@ -240,12 +216,7 @@ async function someFunction() {
     document.setBulk({ totalMoneyCreated: 200, totalMoneyDestroyed: 200 });
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="unset">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#unset">#</doc-anchor-trigger>
-        <span>unset</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="unset">unset</h3>
 <p>Delete a specific field from the document.</p>
 <div id="unset-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function doSomething() {
@@ -253,12 +224,7 @@ async function someFunction() {
     document.unset('totalMoneyCreated');
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="increment">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#increment">#</doc-anchor-trigger>
-        <span>increment</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="increment">increment</h3>
 <p>Increment a specific field by a specific amount. It uses 1 as default amount.</p>
 <div id="increment-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function doSomething() {

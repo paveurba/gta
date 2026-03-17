@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>useDatabase</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/usedatabase/">
+    <meta name="twitter:title" content="useDatabase">
+    <meta name="twitter:description" content="When using the database in Rebar it can be accessed from any plugin.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,12 +164,7 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="usedatabase" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usedatabase">#</doc-anchor-trigger>
-        <span>useDatabase</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="usedatabase">useDatabase</h1>
 <p>When using the database in Rebar it can be accessed from any plugin.</p>
 <p>However, the database may only be accessed on <strong>server-side</strong>.</p>
 <div class="flex mb-6">
@@ -183,12 +184,7 @@
         </div>
     </div>
 </div>
-<doc-anchor-target id="usedatabase-1">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usedatabase-1">#</doc-anchor-trigger>
-        <span>useDatabase</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="usedatabase-1">useDatabase</h2>
 <p>Import the database into your plugin file, and begin using it.</p>
 <div id="usedatabase-1-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -197,12 +193,7 @@ const Rebar = useRebar();
 
 const { get, create, getAll, getMany, update, deleteDocument, createCollection } = Rebar.database.useDatabase();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="createcollection">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#createcollection">#</doc-anchor-trigger>
-        <span>createCollection</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="createcollection">createCollection</h3>
 <p>A collection is where documents are stored.</p>
 <div id="createcollection-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const db = Rebar.database.useDatabase();
@@ -212,24 +203,14 @@ async function createCollections() {
     await db.createCollection('PhoneData');
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="create">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#create">#</doc-anchor-trigger>
-        <span>create</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="create">create</h3>
 <p>Creating data uses the <code translate="no" v-pre>create</code> function and returns an <code translate="no" v-pre>_id</code> to obtain the data.</p>
 <div id="create-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function test() {
     const _id = await create({ name: 'Stuyk', age: 30 }, 'Person');
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="get">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#get">#</doc-anchor-trigger>
-        <span>get</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="get">get</h3>
 <p>If you want to get a document by an <code translate="no" v-pre>_id</code>, you can use this:</p>
 <div id="get-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function test() {
@@ -243,12 +224,7 @@ async function createCollections() {
     console.warn(`Found ${user.name}`);
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="getmany">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#getmany">#</doc-anchor-trigger>
-        <span>getMany</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="getmany">getMany</h3>
 <p>After creating data, if you don&#x27;t have an <code translate="no" v-pre>_id</code> and you want to find it. You can use <code translate="no" v-pre>getMany</code>.</p>
 <div id="getmany-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function test() {
@@ -262,12 +238,7 @@ async function createCollections() {
     console.warn(`Found ${user.name}`);
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="getall">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#getall">#</doc-anchor-trigger>
-        <span>getAll</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="getall">getAll</h3>
 <p>It is not recommended to fetch a whole collection unless it&#x27;s a smaller collection.</p>
 <p>In any case, you can use this to fetch a whole collection of data.</p>
 <div id="getall-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -275,12 +246,7 @@ async function createCollections() {
     const results = await getAll&lt;{ name: string }&gt;('Person');
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="update">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#update">#</doc-anchor-trigger>
-        <span>update</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="update">update</h3>
 <p>If you want to update a document, or simply append new data to the document.</p>
 <div id="update-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function test() {

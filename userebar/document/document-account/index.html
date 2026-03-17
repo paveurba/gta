@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Account Document</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/document/document-account/">
+    <meta name="twitter:title" content="Account Document">
+    <meta name="twitter:description" content="See Documents Section for further information on documents.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,19 +164,9 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="account-document" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#account-document">#</doc-anchor-trigger>
-        <span>Account Document</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="account-document">Account Document</h1>
 <p>See <a href="../">Documents Section</a> for further information on documents.</p>
-<doc-anchor-target id="extending-account">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#extending-account">#</doc-anchor-trigger>
-        <span>Extending Account</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="extending-account">Extending Account</h2>
 <p>Extending the default Account Interface is super simple. Just add a <code translate="no" v-pre>declare module</code> to any plugin.</p>
 <div id="extending-account-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">declare module '@Shared/types/account.js' {
@@ -179,19 +175,9 @@
     }
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="useaccountbinder">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useaccountbinder">#</doc-anchor-trigger>
-        <span>useAccountBinder</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="useaccountbinder">useAccountBinder</h2>
 <p>Always bind a player to account data when they authenticate to your server.</p>
-<doc-anchor-target id="bind">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#bind">#</doc-anchor-trigger>
-        <span>bind</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="bind">bind</h3>
 <div id="bind-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// Use database functions to fetch or create an account
 const someAccountData = {
@@ -204,24 +190,14 @@ const someAccountData = {
 const document = Rebar.document.account.useAccountBinder(player).bind(someAccountData);</code></pre>
 </doc-codeblock></div>
 <hr>
-<doc-anchor-target id="useaccount">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useaccount">#</doc-anchor-trigger>
-        <span>useAccount</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="useaccount">useAccount</h2>
 <p>Data can be retrieved for the bound account like this.</p>
 <div id="useaccount-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const account = Rebar.document.account.useAccount(player);
 const data = account.get();
 console.log(data.email);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="checkpassword">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#checkpassword">#</doc-anchor-trigger>
-        <span>checkPassword</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="checkpassword">checkPassword</h3>
 <p>When you setup an account you often want to also setup a password, or check a password.</p>
 <p>We&#x27;ve made it pretty easy in Rebar to simply check a password to login.</p>
 <div id="checkpassword-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -235,12 +211,7 @@ console.log(data.email);</code></pre>
     }
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="get">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#get">#</doc-anchor-trigger>
-        <span>get</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="get">get</h3>
 <p>Get the entire document bound to the player.</p>
 <div id="get-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function someFunction(player: alt.Player) {
@@ -248,12 +219,7 @@ console.log(data.email);</code></pre>
     const data = document.get();
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="getfield">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#getfield">#</doc-anchor-trigger>
-        <span>getField</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="getfield">getField</h3>
 <p>Get a specific field for the given document.</p>
 <div id="getfield-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function someFunction(player: alt.Player) {
@@ -261,12 +227,7 @@ console.log(data.email);</code></pre>
     const username = document.getField('username');
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="isvalid">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#isvalid">#</doc-anchor-trigger>
-        <span>isValid</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="isvalid">isValid</h3>
 <p>If you need to check if a player has an account document bound to them, you can use the following method.</p>
 <div id="isvalid-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function someFunction(player: alt.Player) {
@@ -278,12 +239,7 @@ console.log(data.email);</code></pre>
     }
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="getcharacters">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#getcharacters">#</doc-anchor-trigger>
-        <span>getCharacters</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="getcharacters">getCharacters</h3>
 <p>When you need to obtain a character file for an account, you can use this function to get all existing characters.</p>
 <p>This will return all character documents that belong to the account.</p>
 <div id="getcharacters-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -297,12 +253,7 @@ console.log(data.email);</code></pre>
     }
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="setbanned">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#setbanned">#</doc-anchor-trigger>
-        <span>setBanned</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="setbanned">setBanned</h3>
 <p>Banning an account is pretty straight forward but it does not prevent new accounts with new ips.</p>
 <p>It&#x27;s simply an account level ban that happens during server runtime.</p>
 <div id="setbanned-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -315,12 +266,7 @@ function someFunction(player: alt.Player) {
     document.setBanned('oops your banned');
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="set">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#set">#</doc-anchor-trigger>
-        <span>set</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="set">set</h3>
 <p>Set a single field to be stored in the database.</p>
 <div id="set-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">function someFunction(player: alt.Player) {
@@ -328,46 +274,21 @@ function someFunction(player: alt.Player) {
     document.set('banned', true);
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="setbulk">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#setbulk">#</doc-anchor-trigger>
-        <span>setBulk</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="setbulk">setBulk</h3>
 <div id="setbulk-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">function someFunction(player: alt.Player) {
     const document = Rebar.document.account.useAccount(player);
     document.setBulk({ banned: true, reason: 'big nerd' });
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="permissions">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#permissions">#</doc-anchor-trigger>
-        <span><a href="../../systems/permissions/playerpermissions/#useaccount">permissions</a></span>
-    </h3>
-</doc-anchor-target>
+<h3 id="permissions"><a href="../../systems/permissions/playerpermissions/#useaccount">permissions</a></h3>
 <p>Click on the link above to see how to use account permissions.</p>
-<doc-anchor-target id="groups">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#groups">#</doc-anchor-trigger>
-        <span><a href="../../systems/permissions/playergroups/#useaccount">groups</a></span>
-    </h3>
-</doc-anchor-target>
+<h3 id="groups"><a href="../../systems/permissions/playergroups/#useaccount">groups</a></h3>
 <p>Click on the link above to see how to use account groups.</p>
-<doc-anchor-target id="useaccountevents">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useaccountevents">#</doc-anchor-trigger>
-        <span>useAccountEvents</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="useaccountevents">useAccountEvents</h2>
 <p>Listen for individual key changes for a given document.</p>
 <p>Any field from the <code translate="no" v-pre>account</code> document is valid.</p>
-<doc-anchor-target id="on">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#on">#</doc-anchor-trigger>
-        <span>on</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="on">on</h3>
 <div id="on-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const AccountEvents = Rebar.document.account.useAccountEvents();
 

@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>usePermissions</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/systems/permissions/usepermissions/">
+    <meta name="twitter:title" content="usePermissions">
+    <meta name="twitter:description" content="This function allows you to easily check if a player has a permission. It is a wrapper around the useAccount and useCharacter functions, and it will">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,19 +164,9 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="usepermissions" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usepermissions">#</doc-anchor-trigger>
-        <span>usePermissions</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="usepermissions">usePermissions</h1>
 <p>This function allows you to easily check if a player has a permission. It is a wrapper around the <code translate="no" v-pre>useAccount</code> and <code translate="no" v-pre>useCharacter</code> functions, and it will automatically check the permissions for the player&#x27;s character or account.</p>
-<doc-anchor-target id="checking-permissions">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#checking-permissions">#</doc-anchor-trigger>
-        <span>Checking permissions</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="checking-permissions">Checking permissions</h2>
 <div id="checking-permissions-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
 
@@ -181,12 +177,7 @@ function hasPermission(player: alt.Player, permission: string): boolean {
 }</code></pre>
 </doc-codeblock></div>
 <p>This will start from account permissions, then will check account groups&#x27; permissions, then character permissions, and finally character groups&#x27; permissions. If the permission is found at any level, it will return <code translate="no" v-pre>true</code> immediately. If the permission is not found at any level, it will return <code translate="no" v-pre>false</code>.</p>
-<doc-anchor-target id="getting-a-flat-permission-list">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#getting-a-flat-permission-list">#</doc-anchor-trigger>
-        <span>Getting a flat permission list</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="getting-a-flat-permission-list">Getting a flat permission list</h2>
 <div id="getting-a-flat-permission-list-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
 
@@ -204,12 +195,7 @@ Includes:</p>
 <li>Character permissions</li>
 <li>Character group permissions, including inherited groups</li>
 </ul>
-<doc-anchor-target id="proxy-functions">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#proxy-functions">#</doc-anchor-trigger>
-        <span>Proxy functions</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="proxy-functions">Proxy functions</h2>
 <p>The <code translate="no" v-pre>usePermissions</code> function also has proxy functions for <code translate="no" v-pre>useAccount</code> and <code translate="no" v-pre>useCharacter</code> permissions/groups functions.
 This allows you to easily modify permissions and groups for the player&#x27;s account or character.</p>
 <div id="proxy-functions-code-1" class="codeblock-wrapper"><doc-codeblock>

@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Chapter 10. Authentication Plugin</title>
@@ -29,14 +29,22 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/tutorials/rebar/chapter-10-authentication/">
+    <meta name="twitter:title" content="Chapter 10. Authentication Plugin">
+    <meta name="twitter:description" content="Authentication is our next big ticket item for doing anything with the Rebar Framework. While there are a handful of Authentication plugins out there, I">
+    <meta name="twitter:image" content="https://rebarv.com/static/book/cam-freeze.png">
+    <meta name="twitter:image:alt" content="Chapter 10. Authentication Plugin">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -51,10 +59,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -162,41 +170,21 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="chapter-10-authentication-plugin" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#chapter-10-authentication-plugin">#</doc-anchor-trigger>
-        <span>Chapter 10. Authentication Plugin</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="chapter-10-authentication-plugin">Chapter 10. Authentication Plugin</h1>
 <p>Authentication is our next big ticket item for doing anything with the Rebar Framework. While there are a handful of Authentication plugins out there, I believe it&#x27;s incredibly important to learn and understand how Authentication works.</p>
 <p>We&#x27;re going to be building a <strong>single account</strong>, and <strong>single character</strong> login system.</p>
 <p>It will simply take a username, and a password to register and account.</p>
-<doc-anchor-target id="before-beginning">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#before-beginning">#</doc-anchor-trigger>
-        <span>Before Beginning</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="before-beginning">Before Beginning</h2>
 <p>If you followed the previous tutorial on death match, please add a file called <code translate="no" v-pre>.disable</code> to your death match game mode folder.</p>
 <p>This will disable that plugin from loading.</p>
-<doc-anchor-target id="create-a-new-plugin">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#create-a-new-plugin">#</doc-anchor-trigger>
-        <span>Create a New Plugin</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="create-a-new-plugin">Create a New Plugin</h2>
 <p>You&#x27;re going to create a new plugin folder called <code translate="no" v-pre>authentication</code>. You are going to create 2 folders inside of it.</p>
 <ul>
 <li>server</li>
 <li>webview</li>
 </ul>
 <p>Go ahead and create the <code translate="no" v-pre>index.ts</code> file inside of <code translate="no" v-pre>plugins/authentication/server/</code>. We will come back to work on the webview folder later in this tutorial when we&#x27;re ready.</p>
-<doc-anchor-target id="setting-up-the-camera">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#setting-up-the-camera">#</doc-anchor-trigger>
-        <span>Setting up the Camera</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="setting-up-the-camera">Setting up the Camera</h2>
 <p>We&#x27;re going to immediately throw the player into the sky when they join the server. As well as change their dimension, and freeze them.</p>
 <p>We&#x27;ll be using a combination of alt:V functions, and properties. As well as Rebar functions.</p>
 <p>Here&#x27;s exactly what we&#x27;re going to do so you can understand:</p>
@@ -208,12 +196,7 @@
 <li>Wait 1 second for everything to process</li>
 <li>Freeze the player&#x27;s gameplay camera in place</li>
 </ol>
-<doc-anchor-target id="handle-player-connect">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#handle-player-connect">#</doc-anchor-trigger>
-        <span>Handle Player Connect</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="handle-player-connect">Handle Player Connect</h3>
 <div id="handle-player-connect-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
 import * as alt from 'alt-server';
@@ -227,56 +210,31 @@ alt.on('playerConnect', async (player) =&gt; {
     // all code below should go here for this section
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="move-the-player-up">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#move-the-player-up">#</doc-anchor-trigger>
-        <span>Move the Player Up</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="move-the-player-up">Move the Player Up</h3>
 <div id="move-the-player-up-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
 
 player.pos = new alt.Vector3(0, 0, 100);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="freeze-the-player">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#freeze-the-player">#</doc-anchor-trigger>
-        <span>Freeze the Player</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="freeze-the-player">Freeze the Player</h3>
 <div id="freeze-the-player-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
 
 player.frozen = true;</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="make-player-invisible">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#make-player-invisible">#</doc-anchor-trigger>
-        <span>Make Player Invisible</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="make-player-invisible">Make Player Invisible</h3>
 <div id="make-player-invisible-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
 
 player.visible = false;</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="change-dimension">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#change-dimension">#</doc-anchor-trigger>
-        <span>Change Dimension</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="change-dimension">Change Dimension</h3>
 <div id="change-dimension-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
 
 player.dimension = player.id + 1;</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="freeze-gameplay-camera">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#freeze-gameplay-camera">#</doc-anchor-trigger>
-        <span>Freeze Gameplay Camera</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="freeze-gameplay-camera">Freeze Gameplay Camera</h3>
 <div id="freeze-gameplay-camera-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// async means we can wait for code to finish
 // await means this is waiting for code to complete
@@ -285,23 +243,13 @@ await alt.Utils.wait(1000); // Wait 1 second before freezing camera
 const rPlayer = Rebar.usePlayer(player);
 rPlayer.world.freezeCamera(true);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="result">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#result">#</doc-anchor-trigger>
-        <span>Result</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="result">Result</h3>
 <p><figure class="content-center">
     <img src="../../../static/book/cam-freeze.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1280" height="720" />
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="server-config-settings">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#server-config-settings">#</doc-anchor-trigger>
-        <span>Server Config Settings</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="server-config-settings">Server Config Settings</h2>
 <p>Additionally, we&#x27;re going to add a server configuration setting that will automatically hide the radar in the bottom left when any WebView page is open. This can be done anywhere outside of the player connection function. Make sure it&#x27;s outside of it.</p>
 <div id="server-config-settings-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
@@ -315,12 +263,7 @@ ServerConfig.set('hideMinimapInPage', true);
 
 // Rest of the code</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="building-a-page">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#building-a-page">#</doc-anchor-trigger>
-        <span>Building a Page</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="building-a-page">Building a Page</h2>
 <p>Our next step is going to be creating a <code translate="no" v-pre>Vue Template</code> which is ideal for creating user interfaces. Our first step is going to be opening the <code translate="no" v-pre>plugins/authentication/webview</code> folder and creating a unique page name. Like... <code translate="no" v-pre>Authentication.vue</code>.</p>
 <div id="building-a-page-code-1" class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">vue</div>
@@ -335,79 +278,44 @@ const Events = useEvents();
     &lt;div&gt;Hello World!&lt;/div&gt;
 &lt;/template&gt;</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="loading-the-page">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#loading-the-page">#</doc-anchor-trigger>
-        <span>Loading the Page</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="loading-the-page">Loading the Page</h3>
 <p>Head back over <code translate="no" v-pre>server/index.ts</code> and we&#x27;ll use the WebView functionality in <code translate="no" v-pre>rPlayer</code> to show the page to the user. You may need to run the server once before the pages show up.</p>
 <div id="loading-the-page-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
 
 rPlayer.webview.show('Authentication', 'page');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="blur-the-screen">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#blur-the-screen">#</doc-anchor-trigger>
-        <span>Blur the Screen</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="blur-the-screen">Blur the Screen</h3>
 <p>We&#x27;re also going to blur the screen so it&#x27;s a little more pleasing to look at.</p>
 <div id="blur-the-screen-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
 
 rPlayer.world.setScreenBlur(200);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="disable-the-player-controls">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#disable-the-player-controls">#</doc-anchor-trigger>
-        <span>Disable the player controls</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="disable-the-player-controls">Disable the player controls</h3>
 <p>Since we don&#x27;t want the player to accidentally opening the pausemenu if their Username or password contains the letter &#x27;P&#x27; we&#x27;re going to disable the controls. Just remember to enable them again, when releasing the player into the world.</p>
 <div id="disable-the-player-controls-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
 
 rPlayer.world.disableControls();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="initial-result">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#initial-result">#</doc-anchor-trigger>
-        <span>Initial Result</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="initial-result">Initial Result</h3>
 <p>You should see a <code translate="no" v-pre>hello world</code> in the top-left of your screen.</p>
 <p><figure class="content-center">
     <img src="../../../static/book/blurred-screen.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="691" height="463" />
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="building-a-form">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#building-a-form">#</doc-anchor-trigger>
-        <span>Building a Form</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="building-a-form">Building a Form</h2>
 <p>We&#x27;re going to need to modify the <code translate="no" v-pre>Authentication.vue</code> and make it act as a form. We&#x27;ll be utilizing a little bit of Tailwind CSS to make the form take form.</p>
-<doc-anchor-target id="before-building">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#before-building">#</doc-anchor-trigger>
-        <span>Before Building</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="before-building">Before Building</h3>
 <p>Instead of building in-game and seeing previews every time you reconnect. We actually have a utility command in Rebar that will let you do all of this work out of the browser. Open up a terminal where Rebar is located, and run this command.</p>
 <div id="before-building-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-bash"><code v-pre class="language-bash">pnpm webview:dev</code></pre>
 </doc-codeblock></div>
 <p>This will open up a server on <code translate="no" v-pre>http://localhost:5173/</code> which you can open in your browser.</p>
 <p>Alternatively, if you have one screen. In VSCode press <code translate="no" v-pre>CTRL + SHIFT P</code> and type <code translate="no" v-pre>Simple Browser: Show</code> and paste the URL when prompted. This will show the same page in your VSCode window. You can then drag the tab to the side to split the view.</p>
-<doc-anchor-target id="creating-the-wrapper">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#creating-the-wrapper">#</doc-anchor-trigger>
-        <span>Creating the Wrapper</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="creating-the-wrapper">Creating the Wrapper</h3>
 <p>We need the page to take up the whole screen, but also we want to make sure it&#x27;s centered.</p>
 <p>The easiest way to do this is to apply <code translate="no" v-pre>fixed</code> css with <code translate="no" v-pre>flex</code> and then use centering css for the rest.</p>
 <div id="creating-the-wrapper-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -422,12 +330,7 @@ rPlayer.world.disableControls();</code></pre>
 </doc-codeblock></div>
 <p>This will result in a simple black box with slight transparency, and rounded corners.</p>
 <p>It will always take up <code translate="no" v-pre>1/3</code> of the screen regardless of how large your resolution is.</p>
-<doc-anchor-target id="fill-in-the-wrapper">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#fill-in-the-wrapper">#</doc-anchor-trigger>
-        <span>Fill in the Wrapper</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="fill-in-the-wrapper">Fill in the Wrapper</h3>
 <p>We&#x27;re going to add a header, two inputs, and a single button for registering and logging in.</p>
 <div id="fill-in-the-wrapper-code-1" class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">vue</div>
@@ -444,19 +347,9 @@ rPlayer.world.disableControls();</code></pre>
     &lt;/div&gt;
 &lt;/template&gt;</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="building-page-logic">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#building-page-logic">#</doc-anchor-trigger>
-        <span>Building Page Logic</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="building-page-logic">Building Page Logic</h2>
 <p>Our next step is going to be making all of these inputs and buttons function in a useable way. What we&#x27;ll be doing is utilizing <code translate="no" v-pre>vue</code> to handle all of the heavy lifting to make all the functionality work.</p>
-<doc-anchor-target id="binding-inputs">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#binding-inputs">#</doc-anchor-trigger>
-        <span>Binding Inputs</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="binding-inputs">Binding Inputs</h3>
 <p>In <code translate="no" v-pre>vue</code> you can use a <code translate="no" v-pre>ref</code> to bind the data to the given input box. We&#x27;re going to do just that.</p>
 <p>In the <code translate="no" v-pre>script</code> section at the top we&#x27;ll add the following:</p>
 <div id="binding-inputs-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -506,12 +399,7 @@ const password = ref&lt;string&gt;('');
     &lt;/div&gt;
 &lt;/template&gt;</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="binding-buttons">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#binding-buttons">#</doc-anchor-trigger>
-        <span>Binding Buttons</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="binding-buttons">Binding Buttons</h3>
 <p>Our first step is going to be creating a simple <code translate="no" v-pre>loginOrRegister</code> function in the script section, but we need to make it <code translate="no" v-pre>async</code>.</p>
 <p>We&#x27;ll append the <code translate="no" v-pre>async</code> keyword and write the function.</p>
 <div id="binding-buttons-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -569,19 +457,9 @@ function loginOrRegister() {
     &lt;/div&gt;
 &lt;/template&gt;</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="verifying-inputs">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#verifying-inputs">#</doc-anchor-trigger>
-        <span>Verifying Inputs</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="verifying-inputs">Verifying Inputs</h2>
 <p>Next we&#x27;re going to simply verify the inputs for username and password. We want to make sure that each input has at least 3 letters or characters given to it before the login button does anything, and we&#x27;ll invalidate everything until it&#x27;s all correct.</p>
-<doc-anchor-target id="add-a-boolean-ref">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#add-a-boolean-ref">#</doc-anchor-trigger>
-        <span>Add a Boolean Ref</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="add-a-boolean-ref">Add a Boolean Ref</h3>
 <p>We&#x27;ll start by adding 2 new refs under <code translate="no" v-pre>username</code> and <code translate="no" v-pre>password</code>.</p>
 <div id="add-a-boolean-ref-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const username = ref&lt;string&gt;('');
@@ -589,12 +467,7 @@ const password = ref&lt;string&gt;('');
 const usernameValid = ref(false);
 const passwordValid = ref(false);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="build-validation">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#build-validation">#</doc-anchor-trigger>
-        <span>Build Validation</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="build-validation">Build Validation</h3>
 <p>We can build validation by using the <code translate="no" v-pre>watch</code> function from <code translate="no" v-pre>vue</code>. What this will do is that every time <code translate="no" v-pre>username</code> and <code translate="no" v-pre>password</code> is updated it&#x27;ll call another function. This can be used to check if the length matches correctly.</p>
 <div id="build-validation-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">watch(username, (value) =&gt; {
@@ -619,12 +492,7 @@ watch(password, (value) =&gt; {
     passwordValid.value = true;
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="hide-the-button">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#hide-the-button">#</doc-anchor-trigger>
-        <span>Hide the Button</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="hide-the-button">Hide the Button</h3>
 <p>We&#x27;re going to show the button only when <code translate="no" v-pre>usernameValid &amp;&amp; passwordValid</code> are set to <code translate="no" v-pre>true</code>. We can use a <code translate="no" v-pre>v-if</code> statement to do this.</p>
 <div id="hide-the-button-code-1" class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">vue</div>
@@ -637,12 +505,7 @@ watch(password, (value) =&gt; {
 &lt;/button&gt;</code></pre>
 </doc-codeblock></div>
 <p>You can now verify that this all works by typing into both boxes until the login button shows up.</p>
-<doc-anchor-target id="sanitize-inputs">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#sanitize-inputs">#</doc-anchor-trigger>
-        <span>Sanitize Inputs</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="sanitize-inputs">Sanitize Inputs</h3>
 <p>Now we&#x27;re going to sanitize the username input further, and only allow <code translate="no" v-pre>A-Z</code> and <code translate="no" v-pre>0-9</code> in the username. We can do this by using something called Regex. Regex is a confusing little monster that validates inputs. The option below will do exactly what we need.</p>
 <div id="sanitize-inputs-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">watch(username, (value) =&gt; {
@@ -662,12 +525,7 @@ watch(password, (value) =&gt; {
     usernameValid.value = true;
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="feedback">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#feedback">#</doc-anchor-trigger>
-        <span>Feedback</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="feedback">Feedback</h3>
 <p>One thing we should definitely add is a feedback message for when any of the inputs are invalid.</p>
 <p>We can do this by creating an element under each input that will complain about what is wrong.</p>
 <p>We&#x27;ll only show the feedback when the <code translate="no" v-pre>username</code> or <code translate="no" v-pre>password</code> is invalid.</p>
@@ -682,12 +540,7 @@ watch(password, (value) =&gt; {
     Password must be at least 3 characters long.
 &lt;/span&gt;</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="code-check">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#code-check">#</doc-anchor-trigger>
-        <span>Code Check</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="code-check">Code Check</h3>
 <p>We&#x27;re going to just use this section to verify that your code is similar to what is below.</p>
 <div id="code-check-code-1" class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">vue</div>
@@ -762,19 +615,9 @@ watch(password, (value) =&gt; {
     &lt;/div&gt;
 &lt;/template&gt;</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="emitting-to-server">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#emitting-to-server">#</doc-anchor-trigger>
-        <span>Emitting to Server</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="emitting-to-server">Emitting to Server</h2>
 <p>We&#x27;re going to use an <code translate="no" v-pre>rpc</code> event to emit the request to the server, and get a result back. This means that when the user clicks the <code translate="no" v-pre>login / register</code> button it will send an event to the server with their <code translate="no" v-pre>username</code> and <code translate="no" v-pre>password</code> and then we can verify if an account exists, or if we need to create a new account.</p>
-<doc-anchor-target id="emit-to-server">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#emit-to-server">#</doc-anchor-trigger>
-        <span>Emit to Server</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="emit-to-server">Emit to Server</h3>
 <p>Modify the <code translate="no" v-pre>loginOrRegister</code> function in the Vue file to use the <code translate="no" v-pre>Events</code> variable to emit to the server.</p>
 <div id="emit-to-server-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function loginOrRegister() {
@@ -782,12 +625,7 @@ watch(password, (value) =&gt; {
     console.log(result);
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="handle-the-event">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#handle-the-event">#</doc-anchor-trigger>
-        <span>Handle the Event</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="handle-the-event">Handle the Event</h3>
 <p>On the server-side now we&#x27;re going to listen for the <code translate="no" v-pre>authenticate:login</code> event in our <code translate="no" v-pre>server/index.ts</code> file. We can do this by using <code translate="no" v-pre>alt.onRpc</code> as it will have a corresponding RPC event coming up from the client.</p>
 <p>We&#x27;re going to also make this RPC event <code translate="no" v-pre>async</code>, so we can get results from our database.</p>
 <div id="handle-the-event-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -799,12 +637,7 @@ alt.onRpc('authenticate:login', async (player: alt.Player, username: string, pas
 });</code></pre>
 </doc-codeblock></div>
 <p>Verify that you receive the input data on server-side by spamming some data into the input fields in-game.</p>
-<doc-anchor-target id="build-the-registration">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#build-the-registration">#</doc-anchor-trigger>
-        <span>Build the Registration</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="build-the-registration">Build the Registration</h3>
 <p>Now that we&#x27;ve successfully gotten the event, we can move on to using the database.</p>
 <p>We&#x27;re going to grab our <code translate="no" v-pre>db</code> function and use <code translate="no" v-pre>getMany</code> to find as many documents as possible that match the <code translate="no" v-pre>username</code>.</p>
 <div id="build-the-registration-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -860,12 +693,7 @@ if (results.length &lt;= 0) {
   password: 'c1wXtKqGCzUxXgOjmfrQt0tOQN5AjYSLer4/jwMeICM=$dWF2Wc7wL1VgnSTo1RcMAmcH7Oa5nidQ9SctqXb+51BZLa6wcKBgTwmztir61yDPVWPmH+OCC72Jsv9nip2UNPJF/kPrbNOohhl3VVjYg5ovGZ3Evw4Qyr8IJABvrjiSZ65hict60EBci0tY+VWmijg3jbKXsCshxWpq7V7n3L4zmXni1kp+YSwGN5IJtIBn3LuOrbEKrkDN+cIoKvlyISU0CvZGze0wxsTjlEqQKUye151qIHTW/+fkafQZPEwsuTcbgdtv5A35z37VjtT46PVgAHJAJ8Rp2joSxn2+2LkzVd8l4YtpI3f3tRNcq/ziWnd6zTONHsadu4nF4QQMIYZfWsHQkynfP1fFgJJCP5dlPAggR5VDkQTNmug34FB5X1+9i86Tpf1P/87OXlzrVITRfFYs8SCsmFKOnYailvgtyZ899sAuXl85ZIUdd0xoI397ewZRKZmcRIv647TywhxhnyCOudOSIBm7tUHmeHx+xMTKQEuT98JX04oYb69KekMmu83ZwE6O4OKtxc71tU/ojblXuMSZRSigTAPKEolDxaaf5zW5DFnHeNeGV+Esn2WPwvEAur6zeWnIZeeUZYRfHIZKQMJRkaY6TQH1qlkqGJoCDgQePSG4b6bU1cvaI9qf7J57uSHMF4rgVO71hhxWFPXRNrU7vVSk6WS1y8A='
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="build-the-login">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#build-the-login">#</doc-anchor-trigger>
-        <span>Build the Login</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="build-the-login">Build the Login</h3>
 <p>Our next step is going to be handling the other pathway in which we&#x27;ve found a result for the username.</p>
 <p>We&#x27;re going to need to check their password against the password that exists in the database.</p>
 <p>This part is pretty simple, as we&#x27;ll be doing this below the <code translate="no" v-pre>results.length &lt;= 0</code> section.</p>
@@ -890,20 +718,10 @@ if (!Rebar.utility.password.check(password, document.password)) {
 return true;</code></pre>
 </doc-codeblock></div>
 <p>That&#x27;s it for both Login and Registration!</p>
-<doc-anchor-target id="handle-login">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#handle-login">#</doc-anchor-trigger>
-        <span>Handle Login</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="handle-login">Handle Login</h2>
 <p>Now that we have a <code translate="no" v-pre>document</code> for when the user either registers, or logs in we can use that document to bind it to the player in-game.</p>
 <p>Binding essentially makes it really easy for us to write new data to an account.</p>
-<doc-anchor-target id="handling-the-document">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#handling-the-document">#</doc-anchor-trigger>
-        <span>Handling the Document</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="handling-the-document">Handling the Document</h3>
 <p>We&#x27;re going to create a shared async function that will handle the document and bind it to the player.</p>
 <div id="handling-the-document-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
@@ -935,12 +753,7 @@ alt.onRpc('authenticate:login', async (player: alt.Player, username: string, pas
     return true;
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="building-a-character">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#building-a-character">#</doc-anchor-trigger>
-        <span>Building a Character</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="building-a-character">Building a Character</h2>
 <p>Now that we&#x27;ve bound the account, we can use <code translate="no" v-pre>account.getCharacters()</code> to find any characters the player might have on their account.</p>
 <div id="building-a-character-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function handleLogin(player: alt.Player, document: AccountExtended) {
@@ -950,12 +763,7 @@ alt.onRpc('authenticate:login', async (player: alt.Player, username: string, pas
 }</code></pre>
 </doc-codeblock></div>
 <p>If you head in-game and register an account or login, you&#x27;ll see an empty array logged to the console.</p>
-<doc-anchor-target id="adding-and-loading-a-character">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#adding-and-loading-a-character">#</doc-anchor-trigger>
-        <span>Adding, and Loading a Character</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="adding-and-loading-a-character">Adding, and Loading a Character</h3>
 <p>Now we&#x27;re going to add a character to this account, because they don&#x27;t have any. It&#x27;s almost exactly similar to the account process but we need to provide some character data. For the sake of this tutorial we&#x27;ll be using the <code translate="no" v-pre>username</code> as the character name.</p>
 <div id="adding-and-loading-a-character-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
@@ -986,12 +794,7 @@ if (characters.length &lt;= 0) {
 // Otherwise, if they have a character. Grab the first result and bind it
 Rebar.document.character.useCharacterBinder(player).bind(characters[0]);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="final-step">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#final-step">#</doc-anchor-trigger>
-        <span>Final Step</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="final-step">Final Step</h2>
 <p>Lastly we need to close the page when they&#x27;ve logged in successfully. We can do this hiding the page we&#x27;ve loaded and essentially resetting everything we&#x27;ve done to the game from server-side.</p>
 <p>Let&#x27;s take a moment to remember that we:</p>
 <ul>
@@ -1002,12 +805,7 @@ Rebar.document.character.useCharacterBinder(player).bind(characters[0]);</code><
 <li>Blurred the screen</li>
 <li>Disabled the controls</li>
 </ul>
-<doc-anchor-target id="finish-loading">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#finish-loading">#</doc-anchor-trigger>
-        <span>Finish Loading</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="finish-loading">Finish Loading</h3>
 <p>Now we&#x27;re going to make a function to reverse all of that, hide the page, and spawn the player somewhere.</p>
 <div id="finish-loading-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">function finish(player: alt.Player) {
@@ -1036,12 +834,7 @@ Rebar.document.character.useCharacterBinder(player).bind(characters[0]);</code><
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">Rebar.document.character.useCharacterBinder(player).bind(document);
 finish(player);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="were-done">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#were-done">#</doc-anchor-trigger>
-        <span>We&#x27;re done!</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="were-done">We&#x27;re done!</h3>
 <p>Now you can test the entire process all the way through.</p>
 
                 

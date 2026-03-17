@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Plugin Structure</title>
@@ -29,14 +29,22 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/info/plugins/structure/">
+    <meta name="twitter:title" content="Plugin Structure">
+    <meta name="twitter:description" content="If you wish to create plugins then you need to understand the basic structure of a plugin.">
+    <meta name="twitter:image" content="https://rebarv.com/static/vscode-rmlui.png">
+    <meta name="twitter:image:alt" content="Plugin Structure">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -51,10 +59,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -162,12 +170,7 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="plugin-structure" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#plugin-structure">#</doc-anchor-trigger>
-        <span>Plugin Structure</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="plugin-structure">Plugin Structure</h1>
 <p>If you wish to create plugins then you need to understand the basic structure of a plugin.</p>
 <ol>
 <li>Create a folder inside <code translate="no" v-pre>src/plugins</code> and name it something unique</li>
@@ -193,12 +196,7 @@
     </div>
 </figure>
 </p>
-<doc-anchor-target id="client">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#client">#</doc-anchor-trigger>
-        <span>client</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="client">client</h2>
 <p>This is where the client-side code belongs. You <strong>cannot use NPM packages</strong> in these files.</p>
 <p>Ensure that you create an <code translate="no" v-pre>index.ts</code> file as an entry point for your client code.</p>
 <div id="client-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -211,12 +209,7 @@ const { t } = useTranslate('en');
 
 alt.log(t('example.hello-from-client'));</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="server">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#server">#</doc-anchor-trigger>
-        <span>server</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="server">server</h2>
 <p>This is where server-side code belongs.</p>
 <p>Ensure that you create an <code translate="no" v-pre>index.ts</code> file as an entry point for your server code.</p>
 <div id="server-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -229,12 +222,7 @@ const { t } = useTranslate('en');
 
 alt.log(t('example.hello-from-server'));</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="shared">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#shared">#</doc-anchor-trigger>
-        <span>shared</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="shared">shared</h2>
 <p>This is where shared code (constants, events) belongs.<br/>
 Code below is just example. In <code translate="no" v-pre>shared</code> folder you can store anything you want, that is used by both, clientside and serverside code.</p>
 <div id="shared-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -248,12 +236,7 @@ export const MyPluginEventNames = {
     },
 };</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="images">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#images">#</doc-anchor-trigger>
-        <span>images</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="images">images</h2>
 <p>Images are any images with the following extensions: <code translate="no" v-pre>jpg, jpeg, png, bmp, svg, webp</code>.</p>
 <p>Additionally, the images are loaded as an <code translate="no" v-pre>asset-pack</code> and copied to the <code translate="no" v-pre>webview/public/images</code> folder as well.</p>
 <p>Image paths are absolute so if you put an image in the <code translate="no" v-pre>images</code> folder then your <code translate="no" v-pre>html</code> path will be <code translate="no" v-pre>./images/myplugin-myimage.png</code>.</p>
@@ -282,12 +265,7 @@ export const MyPluginEventNames = {
         </div>
     </div>
 </div>
-<doc-anchor-target id="rmlui">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#rmlui">#</doc-anchor-trigger>
-        <span>rmlui</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="rmlui">rmlui</h2>
 <p><a href="https://docs.altv.mp/articles/rmlui/introduction.html">RmlUi</a> is a way to write HTML pages with css2 support. They&#x27;re highly performant, but can be hard to work with.</p>
 <p>In Rebar we just create normal <code translate="no" v-pre>html</code> files but abide by CSS2 support. Confused? Check out these <a href="https://mikke89.github.io/RmlUiDoc/pages/rcss.html">docs</a>.</p>
 <p>Rmlui pages and fonts can be loaded with the following paths:</p>
@@ -318,21 +296,11 @@ export const MyPluginEventNames = {
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="sounds">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#sounds">#</doc-anchor-trigger>
-        <span>sounds</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="sounds">sounds</h2>
 <p>Sounds are custom <code translate="no" v-pre>.ogg</code> files that can be played as an asset using the <code translate="no" v-pre>Rebar.player.useAudio</code> function.</p>
 <p>Additionally, the images are loaded as an <code translate="no" v-pre>asset-pack</code> and copied to the <code translate="no" v-pre>webview/public/sounds</code> folder as well.</p>
 <p>Here&#x27;s a simple example of playing a sound called <code translate="no" v-pre>myplugin-test.ogg</code> which is in the <code translate="no" v-pre>sounds folder</code>.</p>
-<doc-anchor-target id="server-sound">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#server-sound">#</doc-anchor-trigger>
-        <span>Server Sound</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="server-sound">Server Sound</h3>
 <div id="server-sound-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import * as alt from 'alt-server';
 import { useRebar } from '@Server/index.js';
@@ -346,12 +314,7 @@ alt.on('playerConnect', async (player) =&gt; {
     Rebar.player.useAudio(player).playSound('./sounds/myplugin-test.ogg');
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="webview-sound">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#webview-sound">#</doc-anchor-trigger>
-        <span>Webview Sound</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="webview-sound">Webview Sound</h3>
 <div id="webview-sound-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-tsx"><code v-pre class="language-tsx">&lt;script lang=&quot;ts&quot; setup&gt;
 import { useAudio } from '../../../../webview/composables/useAudio';
@@ -370,12 +333,7 @@ function playSound() {
 &lt;/template&gt;
 </code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="translate">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#translate">#</doc-anchor-trigger>
-        <span>translate</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="translate">translate</h2>
 <p>Translations can be used on <code translate="no" v-pre>client-side</code>, <code translate="no" v-pre>server-side</code>, or <code translate="no" v-pre>webview</code> as long as you import the translation file.</p>
 <div id="translate-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// translate/index.ts
@@ -392,12 +350,7 @@ setBulk({
     },
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="webview">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#webview">#</doc-anchor-trigger>
-        <span>webview</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="webview">webview</h2>
 <p>Webview pages should always have unique names that differentiate from other plugins. Ensure you give your <code translate="no" v-pre>vue</code> file a unique name.</p>
 <div id="webview-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// MyPluginExample.vue
@@ -416,12 +369,7 @@ console.log(`Hello from webview`);
     &lt;/div&gt;
 &lt;/template&gt;</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="extending-built-in-interfaces">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#extending-built-in-interfaces">#</doc-anchor-trigger>
-        <span>Extending built-in interfaces</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="extending-built-in-interfaces">Extending built-in interfaces</h2>
 <p>Imagine, you want to add a new attribute to already existing document, like Vehicle.</p>
 <p>To not rewrite Rebar&#x27;s interface, you can use this approach:</p>
 <div id="extending-built-in-interfaces-pluginsmy-awesome-pluginserverindexts" class="codeblock-wrapper"><doc-codeblock>
@@ -454,12 +402,7 @@ const boundVehicle = Rebar.document.vehicle.useVehicleBinder(vehicle).bind(vehic
 vehicleWrapper.getField('mileage'); // You will see type hint there, that you're able to use 'mileage' and 'plateNumber'.
 vehicleWrapper.set('mileage', 1000); // Also here</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="dependencies">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#dependencies">#</doc-anchor-trigger>
-        <span>Dependencies</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="dependencies">Dependencies</h2>
 <p>If you noticed a plugin can use npm packages for the webview or server.</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
@@ -487,12 +430,7 @@ vehicleWrapper.set('mileage', 1000); // Also here</code></pre>
     }
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="fonts">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#fonts">#</doc-anchor-trigger>
-        <span>fonts</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="fonts">fonts</h2>
 <p>Fonts are any files with the following extensions: <code translate="no" v-pre>otf, ttf</code>.</p>
 <p>Additionally, the fonts are loaded as an <code translate="no" v-pre>asset-pack</code> and copied to the <code translate="no" v-pre>webview/public/fonts</code> folder as well.</p>
 <p>Image paths are absolute so if you put an image in the <code translate="no" v-pre>fonts</code> folder then your <code translate="no" v-pre>html</code> path will be <code translate="no" v-pre>./fonts/myfont.ttf</code>.</p>

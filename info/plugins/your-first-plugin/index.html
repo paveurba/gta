@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Your First Plugin</title>
@@ -29,14 +29,22 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/info/plugins/your-first-plugin/">
+    <meta name="twitter:title" content="Your First Plugin">
+    <meta name="twitter:description" content="This tutorial is meant to show you how to get an incredibly basic plugin running.">
+    <meta name="twitter:image" content="https://rebarv.com/static/first-plugin/vscode.png">
+    <meta name="twitter:image:alt" content="Your First Plugin">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -51,10 +59,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -162,48 +170,23 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="your-first-plugin" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#your-first-plugin">#</doc-anchor-trigger>
-        <span>Your First Plugin</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="your-first-plugin">Your First Plugin</h1>
 <p>This tutorial is meant to show you how to get an incredibly basic plugin running.</p>
 <p>It will not show you how to use the API, or anything else. It&#x27;s strictly to show you how to setup a plugin.</p>
-<doc-anchor-target id="preface">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#preface">#</doc-anchor-trigger>
-        <span>Preface</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="preface">Preface</h2>
 <p>If you are not familiar with programming, please make sure to check out <a href="../../../tutorials/rebar/chapter-07-programming/">Basic Programming</a> before starting.</p>
 <p>Even having just a small understanding of programming will help immensely.</p>
-<doc-anchor-target id="client-setup">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#client-setup">#</doc-anchor-trigger>
-        <span>Client Setup</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="client-setup">Client Setup</h2>
 <p>Before starting, make sure you have <a href="https://altv.mp">alt:V Installed</a> and modify the <code translate="no" v-pre>altv.toml</code> to turn <code translate="no" v-pre>debug</code> to true.</p>
 <p>You can read more about that <a href="https://docs.altv.mp/articles/configs/client.html">here</a>.</p>
-<doc-anchor-target id="folder-setup">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#folder-setup">#</doc-anchor-trigger>
-        <span>Folder Setup</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="folder-setup">Folder Setup</h2>
 <p>Open the entire Rebar Folder in VSCode. You should see a file tree on the left with all of your files.</p>
 <p><figure class="content-center">
     <img src="../../../static/first-plugin/vscode.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1333" height="984" />
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="accessing-plugin-folder">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#accessing-plugin-folder">#</doc-anchor-trigger>
-        <span>Accessing Plugin Folder</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="accessing-plugin-folder">Accessing Plugin Folder</h3>
 <p>Navigate based on the following folders:</p>
 <div id="accessing-plugin-folder-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">src/plugins</code></pre>
@@ -213,54 +196,29 @@
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="create-a-new-folder">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#create-a-new-folder">#</doc-anchor-trigger>
-        <span>Create a New folder</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="create-a-new-folder">Create a New folder</h3>
 <p>Create a new folder by right-clicking the <code translate="no" v-pre>plugins</code> folder and making one.</p>
 <p>Name the folder whatever you want, but it needs to be in English.</p>
 <p>For the sake of this tutorial, I named mine <code translate="no" v-pre>a-cool-plugin</code>.</p>
-<doc-anchor-target id="create-2-new-folders">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#create-2-new-folders">#</doc-anchor-trigger>
-        <span>Create 2 New Folders</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="create-2-new-folders">Create 2 New Folders</h3>
 <p>Create 2 new folders inside of <code translate="no" v-pre>a-cool-plugin</code> and name them <code translate="no" v-pre>server</code> and <code translate="no" v-pre>client</code>.</p>
 <p><figure class="content-center">
     <img src="../../../static/first-plugin/vscode_cool_plugin.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="412" height="198" />
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="create-2-new-files">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#create-2-new-files">#</doc-anchor-trigger>
-        <span>Create 2 New Files</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="create-2-new-files">Create 2 New Files</h3>
 <p>You are going to now create 2 files named <code translate="no" v-pre>index.ts</code> inside both <code translate="no" v-pre>server</code> and <code translate="no" v-pre>client</code>.</p>
 <p><figure class="content-center">
     <img src="../../../static/first-plugin/vscode_ts_files.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="412" height="260" />
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="setup-typescript-files">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#setup-typescript-files">#</doc-anchor-trigger>
-        <span>Setup TypeScript Files</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="setup-typescript-files">Setup TypeScript Files</h2>
 <p>Now that you have your files created, we need to add some content to both of them.</p>
 <p>Make sure to <strong>save your files</strong> after editing them!</p>
 <p><code translate="no" v-pre>CTRL + S</code> will save your file.</p>
-<doc-anchor-target id="serverindexts">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#serverindexts">#</doc-anchor-trigger>
-        <span>server/index.ts</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="serverindexts">server/index.ts</h3>
 <p>Inside of this file add the following contents.</p>
 <div id="serverindexts-srcpluginsyour-pluginserverindexts" class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">src/plugins/your-plugin/server/index.ts</div>
@@ -271,12 +229,7 @@ const Rebar = useRebar();
 
 alt.log('Hello from Server!');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="clientindexts">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#clientindexts">#</doc-anchor-trigger>
-        <span>client/index.ts</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="clientindexts">client/index.ts</h3>
 <p>Inside of this file add the following contents.</p>
 <div id="clientindexts-srcpluginsyour-pluginserverindexts" class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">src/plugins/your-plugin/server/index.ts</div>
@@ -284,12 +237,7 @@ alt.log('Hello from Server!');</code></pre>
 
 alt.log('Hello from Client!');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="testing-the-plugin">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#testing-the-plugin">#</doc-anchor-trigger>
-        <span>Testing the Plugin</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="testing-the-plugin">Testing the Plugin</h2>
 <p>In VSCode at the top, click on <code translate="no" v-pre>Terminal</code> and then click <code translate="no" v-pre>New Terminal</code>.</p>
 <p>Simply run <code translate="no" v-pre>pnpm dev</code> to start your server.</p>
 <p>You will then see that your plugin has loaded, and you&#x27;ll have some logs in your server console.</p>

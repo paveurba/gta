@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>useHono</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/usehono/">
+    <meta name="twitter:title" content="useHono">
+    <meta name="twitter:description" content="The useHono function is designed to extend the game-server web API server by utilizing the Hono framework. It provides mechanisms to register new routes">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,19 +164,9 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="usehono" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usehono">#</doc-anchor-trigger>
-        <span>useHono</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="usehono">useHono</h1>
 <p>The <code translate="no" v-pre>useHono</code> function is designed to extend the game-server web API server by utilizing the Hono framework. It provides mechanisms to register new routes and use middlewares for handling incoming requests.</p>
-<doc-anchor-target id="addrouter">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#addrouter">#</doc-anchor-trigger>
-        <span>addRouter</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="addrouter">addRouter</h2>
 <p>Registers a new router with the main Hono application.</p>
 <div id="addrouter-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -184,19 +180,9 @@ const app = new Hono&lt;{ Bindings: HttpBindings }&gt;();
 
 hono.addRouter('/api/v1', app);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="midlewares">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#midlewares">#</doc-anchor-trigger>
-        <span>midlewares</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="midlewares">midlewares</h2>
 <p>A collection of middleware functions for request handling.</p>
-<doc-anchor-target id="localonly">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#localonly">#</doc-anchor-trigger>
-        <span>localOnly</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="localonly">localOnly</h3>
 <p>Middleware to restrict access to requests coming from the local machine (IP address <code translate="no" v-pre>127.0.0.1</code>).</p>
 <div id="localonly-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -215,12 +201,7 @@ hono.addRouter('/api/v1', app);</code></pre>
 <blockquote>
 <p>You can also build your own middlewares, such as check auth token or whatever else.</p>
 </blockquote>
-<doc-anchor-target id="example-usage">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#example-usage">#</doc-anchor-trigger>
-        <span>Example usage</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="example-usage">Example usage</h2>
 <p>Here is an example of creating a <code translate="no" v-pre>/ban</code> endpoint, that will allow you to ban an account via api.</p>
 <div id="example-usage-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { HttpBindings } from &quot;@hono/node-server&quot;;

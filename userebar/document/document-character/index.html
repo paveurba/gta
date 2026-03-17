@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Character Document</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/document/document-character/">
+    <meta name="twitter:title" content="Character Document">
+    <meta name="twitter:description" content="See Documents Section for further information on documents.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,19 +164,9 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="character-document" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#character-document">#</doc-anchor-trigger>
-        <span>Character Document</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="character-document">Character Document</h1>
 <p>See <a href="../">Documents Section</a> for further information on documents.</p>
-<doc-anchor-target id="extending-character">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#extending-character">#</doc-anchor-trigger>
-        <span>Extending Character</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="extending-character">Extending Character</h2>
 <p>Extending the default Character Interface is super simple. Just add a <code translate="no" v-pre>declare module</code> to any plugin.</p>
 <div id="extending-character-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">declare module '@Shared/types/character.js' {
@@ -179,18 +175,8 @@
     }
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="usecharacterbinder">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usecharacterbinder">#</doc-anchor-trigger>
-        <span>useCharacterBinder</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="bind">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#bind">#</doc-anchor-trigger>
-        <span>bind</span>
-    </h3>
-</doc-anchor-target>
+<h2 id="usecharacterbinder">useCharacterBinder</h2>
+<h3 id="bind">bind</h3>
 <div id="bind-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// Use database functions to fetch or create an account
 const someCharacterData = {
@@ -205,18 +191,8 @@ const someCharacterData = {
 const document = Rebar.document.character.useCharacterBinder(player).bind(someCharacterData);</code></pre>
 </doc-codeblock></div>
 <hr>
-<doc-anchor-target id="usecharacter">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usecharacter">#</doc-anchor-trigger>
-        <span>useCharacter</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="isvalid">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#isvalid">#</doc-anchor-trigger>
-        <span>isValid</span>
-    </h3>
-</doc-anchor-target>
+<h2 id="usecharacter">useCharacter</h2>
+<h3 id="isvalid">isValid</h3>
 <p>If you need to check if a player has a document bound to them, you can use the following method.</p>
 <div id="isvalid-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">function someFunction(player: alt.Player) {
@@ -226,12 +202,7 @@ const document = Rebar.document.character.useCharacterBinder(player).bind(someCh
     }
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="get">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#get">#</doc-anchor-trigger>
-        <span>get</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="get">get</h3>
 <p>Get the entire document bound to the player.</p>
 <div id="get-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">function someFunction(player: alt.Player) {
@@ -239,12 +210,7 @@ const document = Rebar.document.character.useCharacterBinder(player).bind(someCh
     const document = character.get();
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="getfield">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#getfield">#</doc-anchor-trigger>
-        <span>getField</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="getfield">getField</h3>
 <p>Get a specific field for the given document.</p>
 <div id="getfield-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">function someFunction(player: alt.Player) {
@@ -252,12 +218,7 @@ const document = Rebar.document.character.useCharacterBinder(player).bind(someCh
     const health = character.getField('health');
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="getvehicles">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#getvehicles">#</doc-anchor-trigger>
-        <span>getVehicles</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="getvehicles">getVehicles</h3>
 <p>Get all vehicle documents that are owned by this character.</p>
 <div id="getvehicles-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">async function someFunction(player: alt.Player) {
@@ -270,12 +231,7 @@ const document = Rebar.document.character.useCharacterBinder(player).bind(someCh
     }
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="set">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#set">#</doc-anchor-trigger>
-        <span>set</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="set">set</h3>
 <p>Set a single field to be stored in the database.</p>
 <div id="set-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">function someFunction(player: alt.Player) {
@@ -283,46 +239,21 @@ const document = Rebar.document.character.useCharacterBinder(player).bind(someCh
     document.set('banned', true);
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="setbulk">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#setbulk">#</doc-anchor-trigger>
-        <span>setBulk</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="setbulk">setBulk</h3>
 <div id="setbulk-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">function someFunction(player: alt.Player) {
     const document = Rebar.document.character.useCharacter(player);
     document.setBulk({ name: 'New_Name!', health: 200 });
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="permissions">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#permissions">#</doc-anchor-trigger>
-        <span><a href="../../systems/permissions/playerpermissions/#usecharacter">permissions</a></span>
-    </h3>
-</doc-anchor-target>
+<h3 id="permissions"><a href="../../systems/permissions/playerpermissions/#usecharacter">permissions</a></h3>
 <p>Click on the link above to see how to use character permissions.</p>
-<doc-anchor-target id="groups">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#groups">#</doc-anchor-trigger>
-        <span><a href="../../systems/permissions/playergroups/#usecharacter">groups</a></span>
-    </h3>
-</doc-anchor-target>
+<h3 id="groups"><a href="../../systems/permissions/playergroups/#usecharacter">groups</a></h3>
 <p>Click on the link above to see how to use character groups.</p>
-<doc-anchor-target id="usecharacterevents">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#usecharacterevents">#</doc-anchor-trigger>
-        <span>useCharacterEvents</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="usecharacterevents">useCharacterEvents</h2>
 <p>Listen for individual key changes for a given document.</p>
 <p>Any field from the <code translate="no" v-pre>character</code> document is valid.</p>
-<doc-anchor-target id="on">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#on">#</doc-anchor-trigger>
-        <span>on</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="on">on</h3>
 <div id="on-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const CharacterEvents = Rebar.document.character.useCharacterEvents();
 

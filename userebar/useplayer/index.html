@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>usePlayer</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/useplayer/">
+    <meta name="twitter:title" content="usePlayer">
+    <meta name="twitter:description" content="While there is access to individual waypoints.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,12 +164,7 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="useplayer" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#useplayer">#</doc-anchor-trigger>
-        <span>usePlayer</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="useplayer">usePlayer</h1>
 <p>While there is access to individual waypoints.</p>
 <p>It is recommended that if you&#x27;re accessing many waypoints to use the <code translate="no" v-pre>usePlayer</code> function to get direct access to all functions without having to pass the player each time.</p>
 <div id="useplayer-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -188,12 +189,7 @@ async function doSomething(player: alt.Player) {
     rebarPlayer.notify.showNotification(`You checked your account balance!`);
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="animation">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#animation">#</doc-anchor-trigger>
-        <span>Animation</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="animation">Animation</h2>
 <p>Play an animation on a player in various ways.</p>
 <p><a href="https://alexguirre.github.io/animations-list/">Animation List</a></p>
 <div id="animation-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -220,12 +216,7 @@ await rebarPlayer.animation.playInfinite('amb@world_human_stand_fishing@idle_a',
 // Clear animation
 rebarPlayer.animation.clear();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="appearance">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#appearance">#</doc-anchor-trigger>
-        <span>Appearance</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="appearance">Appearance</h2>
 <p>Used to set various freeroam character appearance data and store in the database.</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
@@ -285,12 +276,7 @@ rebarPlayer.appearance.setTattoos([{ collection: 'mpairraces_overlays', overlay:
 // Called automatically, but resynchronizes freeroam player appearance
 rebarPlayer.appearance.sync();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="attachment">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#attachment">#</doc-anchor-trigger>
-        <span>Attachment</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="attachment">Attachment</h2>
 <p>Used to attach an object to a player. Rotation is always set to fixed for attachments.</p>
 <div id="attachment-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const rPlayer = Rebar.usePlayer(player);
@@ -307,12 +293,7 @@ rPlayer.attachment.add({
     rot: { x: -6.938893903907228e-18, y: -0.32, z: 0.18 },
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="audio">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#audio">#</doc-anchor-trigger>
-        <span>Audio</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="audio">Audio</h2>
 <p>Play audio from frontend or using custom <code translate="no" v-pre>.ogg</code> sound files.</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
@@ -346,12 +327,7 @@ rebarPlayer.audio.playSound('sounds/positive.ogg');
 rebarPlayer.audio.playFrontendSound('TIMER_STOP', 'HUD_MINI_GAME_SOUNDSET');</code></pre>
 </doc-codeblock></div>
 <p><a href="https://altv.stuyk.com/docs/articles/tables/frontend-sounds.html">Frontend Sound List</a></p>
-<doc-anchor-target id="clothing">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#clothing">#</doc-anchor-trigger>
-        <span>Clothing</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="clothing">Clothing</h2>
 <p>All of these functions can be used to adjust character clothing, skins, and uniforms.</p>
 <p>Keep in mind that the render order is as follows.</p>
 <ol>
@@ -421,12 +397,7 @@ rebarPlayer.clothing.setPropComponent('glasses', alt.hash('some_dlc'), 5, 0);
 // Forces character clothing to update, and rerenders everything
 rebarPlayer.clothing.sync();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="native">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#native">#</doc-anchor-trigger>
-        <span>Native</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="native">Native</h2>
 <p>Invoke client natives from server side.</p>
 <p>Rebar is adding this because sometimes you don&#x27;t want to create a whole file to invoke one native on client-side.</p>
 <div id="native-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -451,12 +422,7 @@ function setManyWeathers(player: alt.Player) {
     ]);
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="notify">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#notify">#</doc-anchor-trigger>
-        <span>Notify</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="notify">Notify</h2>
 <p>Notify allows you to send different text and messages to the player screen.</p>
 <div id="notify-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -485,12 +451,7 @@ rebarPlayer.notify.showNotification('Hello there');
 rebarPlayer.notify.sendMessage({ type: 'info', content: 'Hello there!' });
 rebarPlayer.notify.sendMessage({ type: 'player', content: 'Hello there!', author: 'Some Other Player' });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="screenshot">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#screenshot">#</doc-anchor-trigger>
-        <span>Screenshot</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="screenshot">Screenshot</h2>
 <p>Used to get a screenshot of a player&#x27;s screen.</p>
 <p>Mostly used for utility such as getting vehicle screenshots, and such.</p>
 <div id="screenshot-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -506,12 +467,7 @@ await rPlayer.screenshot.takeVehicleScreenshot(player, player.pos, 'infernus', a
 // outputs under 'screenshots/weapon_pistol50.jpg'
 await rPlayer.screenshot.takeWeaponScreenshot(player, 'weapon_pistol50');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="raycast">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#raycast">#</doc-anchor-trigger>
-        <span>Raycast</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="raycast">Raycast</h2>
 <p>Used to get what the player is looking at, or find out other information</p>
 <div id="raycast-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const rPlayer = Rebar.usePlayer(player);
@@ -528,12 +484,7 @@ console.log(someWorldObject.model, someWorldObject.pos, someWorldObject.scriptId
 // Position where the player is looking, intersects with everything
 const somePos = await rPlayer.raycast.getFocusedPosition(false); // Passing `true` draws a debug line in-game</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="player-state">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#player-state">#</doc-anchor-trigger>
-        <span>Player State</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="player-state">Player State</h2>
 <p>Used to synchronize or apply weapons to a player.</p>
 <div id="player-state-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -551,12 +502,7 @@ rebarPlayer.state.save();
 // This is likely never gonna be used outside core functionality
 rebarPlayer.state.apply({ pos: alt.Vector3.zero });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="status">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#status">#</doc-anchor-trigger>
-        <span>Status</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="status">Status</h2>
 <p>Check if a player has an account bound, or character bound.</p>
 <div id="status-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -567,12 +513,7 @@ const rebarPlayer = Rebar.usePlayer(player);
 rebarPlayer.status.hasCharacter(); // Returns true / false
 rebarPlayer.status.hasAccount(); // Returns true / false</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="waypoint">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#waypoint">#</doc-anchor-trigger>
-        <span>Waypoint</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="waypoint">Waypoint</h2>
 <p>Get a waypoint a player may or may not have currently marked on their map.</p>
 <p>It can sometimes return undefined.</p>
 <div id="waypoint-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -591,12 +532,7 @@ async function doSomething(somePlayer: alt.Player) {
     // has waypoint
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="weapon">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#weapon">#</doc-anchor-trigger>
-        <span>Weapon</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="weapon">Weapon</h2>
 <p>Used to synchronize or apply weapons to a player.</p>
 <div id="weapon-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import { useRebar } from '@Server/index.js';
@@ -633,12 +569,7 @@ const weapons = [
 
 rebarPlayer.weapon.apply(weapons);</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="webview">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#webview">#</doc-anchor-trigger>
-        <span>Webview</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="webview">Webview</h2>
 <p>This specific controller allows controlling the client-side webview instance for a given player.</p>
 <p>You can focus the webview, hide pages, or show pages with ease.</p>
 <div id="webview-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -683,12 +614,7 @@ async function someWebviewThing(player: alt.Player, attempts = 0) {
     rebarPlayer.webview.emit('someevent', 'hello world!');
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="world">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#world">#</doc-anchor-trigger>
-        <span>World</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="world">World</h2>
 <p>These functions change what the player will see, or doesn&#x27;t see.</p>
 <p>Often used for <code translate="no" v-pre>drunk effects</code>, <code translate="no" v-pre>changing weather</code>, <code translate="no" v-pre>changing time</code>, or <code translate="no" v-pre>fading a screen to black</code>.</p>
 <div id="world-code-1" class="codeblock-wrapper"><doc-codeblock>

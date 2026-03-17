@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Player groups</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/systems/permissions/playergroups/">
+    <meta name="twitter:title" content="Player groups">
+    <meta name="twitter:description" content="Player groups are a way to organize players into groups, and then assign permissions to those groups. This way, you can easily manage permissions for">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,21 +164,11 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="managing-player-groups" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#managing-player-groups">#</doc-anchor-trigger>
-        <span>Managing player groups</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="managing-player-groups">Managing player groups</h1>
 <p>Player groups are a way to organize players into groups, and then assign permissions to those groups. This way, you can easily manage permissions for multiple players at once.</p>
-<doc-anchor-target id="attaching-player-to-a-group-async">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#attaching-player-to-a-group-async">#</doc-anchor-trigger>
-        <span>Attaching player to a group <span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-primary-text bg-badge-primary border border-badge-primary-border h-6 px-2 text-xs rounded-md">
-            <span>Async</span>
-        </span></span>
-    </h2>
-</doc-anchor-target>
+<h2 id="attaching-player-to-a-group-async">Attaching player to a group <span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-primary-text bg-badge-primary border border-badge-primary-border h-6 px-2 text-xs rounded-md">
+    <span>Async</span>
+</span></h2>
 <p>To attach a player to a group, you can use the <code translate="no" v-pre>useAccount</code>, <code translate="no" v-pre>useCharacter</code> and <code translate="no" v-pre>useVirtual</code> functions. All of them have a <code translate="no" v-pre>groups</code> property that you can use to attach a player to a group.</p>
 <doc-tabs>
 <doc-tab v-cloak id="usecharacter">
@@ -299,14 +295,9 @@ async function makeAdmin(_id: string) {
 </div>
 </doc-tab>
 </doc-tabs>
-<doc-anchor-target id="removing-player-from-a-group-async">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#removing-player-from-a-group-async">#</doc-anchor-trigger>
-        <span>Removing player from a group <span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-primary-text bg-badge-primary border border-badge-primary-border h-6 px-2 text-xs rounded-md">
-            <span>Async</span>
-        </span></span>
-    </h2>
-</doc-anchor-target>
+<h2 id="removing-player-from-a-group-async">Removing player from a group <span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-primary-text bg-badge-primary border border-badge-primary-border h-6 px-2 text-xs rounded-md">
+    <span>Async</span>
+</span></h2>
 <p>To remove a player from a group, you can use the <code translate="no" v-pre>useAccount</code>, <code translate="no" v-pre>useCharacter</code> and <code translate="no" v-pre>useVirtual</code> functions. All of them have a <code translate="no" v-pre>groups</code> property that you can use to remove a player from a group.</p>
 <doc-tabs>
 <doc-tab v-cloak id="usecharacter">
@@ -432,14 +423,9 @@ async function removeAdmin(_id: string) {
 </div>
 </doc-tab>
 </doc-tabs>
-<doc-anchor-target id="clearing-all-groups-async">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#clearing-all-groups-async">#</doc-anchor-trigger>
-        <span>Clearing all groups <span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-primary-text bg-badge-primary border border-badge-primary-border h-6 px-2 text-xs rounded-md">
-            <span>Async</span>
-        </span></span>
-    </h2>
-</doc-anchor-target>
+<h2 id="clearing-all-groups-async">Clearing all groups <span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-primary-text bg-badge-primary border border-badge-primary-border h-6 px-2 text-xs rounded-md">
+    <span>Async</span>
+</span></h2>
 <p>To clear all groups from a player, you can use the <code translate="no" v-pre>useAccount</code>, <code translate="no" v-pre>useCharacter</code> and <code translate="no" v-pre>useVirtual</code> functions. All of them have a <code translate="no" v-pre>groups</code> property that you can use to clear all groups from a player.</p>
 <doc-tabs>
 <doc-tab v-cloak id="usecharacter">
@@ -564,12 +550,7 @@ async function clearGroups(_id: string) {
 </div>
 </doc-tab>
 </doc-tabs>
-<doc-anchor-target id="getting-a-list-of-groups">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#getting-a-list-of-groups">#</doc-anchor-trigger>
-        <span>Getting a list of groups</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="getting-a-list-of-groups">Getting a list of groups</h2>
 <p>To get a list of groups that a player is in, you can use the <code translate="no" v-pre>useAccount</code>, <code translate="no" v-pre>useCharacter</code> and <code translate="no" v-pre>useVirtual</code> functions. All of them have a <code translate="no" v-pre>groups</code> property that you can use to get a list of groups.</p>
 <doc-tabs>
 <doc-tab v-cloak id="usecharacter">
@@ -616,12 +597,7 @@ async function getGroups(_id: string) {
 </doc-codeblock></div>
 </doc-tab>
 </doc-tabs>
-<doc-anchor-target id="check-group-membership">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#check-group-membership">#</doc-anchor-trigger>
-        <span>Check group membership</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="check-group-membership">Check group membership</h2>
 <p>To check if a player is a member of a group, you can use the <code translate="no" v-pre>useAccount</code>, <code translate="no" v-pre>useCharacter</code> and <code translate="no" v-pre>useVirtual</code> functions. All of them have a <code translate="no" v-pre>groups</code> property that you can use to check if a player is a member of a group.</p>
 <doc-tabs>
 <doc-tab v-cloak id="usecharacter">

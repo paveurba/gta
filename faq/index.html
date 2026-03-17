@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>FAQ</title>
@@ -25,13 +25,19 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/faq/">
+    <meta name="twitter:title" content="FAQ">
+    <meta name="twitter:description" content="Frequently asked questions about Rebar.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -46,10 +52,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -157,91 +163,36 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="faq" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#faq">#</doc-anchor-trigger>
-        <span>FAQ</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="faq">FAQ</h1>
 <p>Frequently asked questions about Rebar.</p>
-<doc-anchor-target id="where-do-i-put-my-mods">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#where-do-i-put-my-mods">#</doc-anchor-trigger>
-        <span>Where do I put my mods?</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="where-do-i-put-my-mods">Where do I put my mods?</h2>
 <p>You put them inside of the <code translate="no" v-pre>resources</code> folder, and load it like a normal <a href="https://docs.altv.mp/articles/resources.html">alt:V Resource</a>.</p>
-<doc-anchor-target id="none-of-my-changes-are-saving-when-i-modify-files">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#none-of-my-changes-are-saving-when-i-modify-files">#</doc-anchor-trigger>
-        <span>None of my changes are saving when I modify files?</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="none-of-my-changes-are-saving-when-i-modify-files">None of my changes are saving when I modify files?</h2>
 <p>Be sure that you are only modifying files inside of the <code translate="no" v-pre>src</code> directory.</p>
-<doc-anchor-target id="are-fivem-scripts-compatible">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#are-fivem-scripts-compatible">#</doc-anchor-trigger>
-        <span>Are FiveM scripts compatible?</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="are-fivem-scripts-compatible">Are FiveM scripts compatible?</h2>
 <p>No, we use TypeScript in this framework and furthermore it is written for <a href="https://altv.mp">https://altv.mp</a> client.</p>
-<doc-anchor-target id="can-i-use-my-own-frontend-framework">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#can-i-use-my-own-frontend-framework">#</doc-anchor-trigger>
-        <span>Can I use my own frontend framework?</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="can-i-use-my-own-frontend-framework">Can I use my own frontend framework?</h2>
 <p>No, you will have to do a lot of changes to get any other framework to work correctly.</p>
 <p>It is not recommended, and to keep all plugins compatible we use Vue 3 and the same CSS framework across all plugins.</p>
-<doc-anchor-target id="can-i-use-my-own-css">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#can-i-use-my-own-css">#</doc-anchor-trigger>
-        <span>Can I use my own CSS?</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="can-i-use-my-own-css">Can I use my own CSS?</h2>
 <p>Sure, but it is recommended to use <code translate="no" v-pre>Tailwind</code> to keep everything compatible across all plugins.</p>
-<doc-anchor-target id="can-i-use-my-own-database">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#can-i-use-my-own-database">#</doc-anchor-trigger>
-        <span>Can I use my own database?</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="can-i-use-my-own-database">Can I use my own database?</h2>
 <p>No, it is highly recommended to stick to MongoDB and to lower the complexity for everyone using your plugins.</p>
 <p>To run your own database you will need to write it as a plugin and use it exclusively.</p>
 <p>Doing so may limit your ability to load plugins from other users.</p>
-<doc-anchor-target id="can-i-use-npm-packages-client-side">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#can-i-use-npm-packages-client-side">#</doc-anchor-trigger>
-        <span>Can I use npm packages client-side</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="can-i-use-npm-packages-client-side">Can I use npm packages client-side</h2>
 <p>Nope! You won&#x27;t ever be able to. However, you can use them in the webview, and on server-side.</p>
-<doc-anchor-target id="do-i-need-to-buy-a-server">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#do-i-need-to-buy-a-server">#</doc-anchor-trigger>
-        <span>Do I need to buy a server?</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="do-i-need-to-buy-a-server">Do I need to buy a server?</h2>
 <p>Only buy a server when you&#x27;re ready for your server to go live.</p>
 <p>Otherwise, stick to local testing and allowing others to join locally.</p>
-<doc-anchor-target id="how-can-i-speed-up-development-time">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#how-can-i-speed-up-development-time">#</doc-anchor-trigger>
-        <span>How can I speed up development time?</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="how-can-i-speed-up-development-time">How can I speed up development time?</h2>
 <p>There are a number of ways to do this, but here are some recommended approaches.</p>
 <ol>
 <li>Disable any third-party plugins</li>
 <li>Disable any MLOs that need to be loaded</li>
 </ol>
 <p>Doing both of these will increase load time, and allow you to focus on writing your plugin.</p>
-<doc-anchor-target id="can-i-sell-plugins">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#can-i-sell-plugins">#</doc-anchor-trigger>
-        <span>Can I sell plugins?</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="can-i-sell-plugins">Can I sell plugins?</h2>
 <p>Absolutely, however Rebar does not provide any resources to secure your code. You are fully responsible for updating your plugin as well as maintaining compatability with future updates.</p>
 <p><em>Keep in mind there is no way to properly secure code.</em></p>
 

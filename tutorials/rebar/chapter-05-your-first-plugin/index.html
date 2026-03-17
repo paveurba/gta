@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Chapter 5. Your First Plugin</title>
@@ -29,14 +29,22 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/tutorials/rebar/chapter-05-your-first-plugin/">
+    <meta name="twitter:title" content="Chapter 5. Your First Plugin">
+    <meta name="twitter:description" content="Now that we've gotten this far, we can write our first plugin for Rebar. Pay close attention to what you're doing and try to follow the images and text as">
+    <meta name="twitter:image" content="https://rebarv.com/static/book/plugin-structure.png">
+    <meta name="twitter:image:alt" content="Chapter 5. Your First Plugin">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -51,10 +59,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -162,19 +170,9 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="chapter-5-your-first-plugin" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#chapter-5-your-first-plugin">#</doc-anchor-trigger>
-        <span>Chapter 5. Your First Plugin</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="chapter-5-your-first-plugin">Chapter 5. Your First Plugin</h1>
 <p>Now that we&#x27;ve gotten this far, we can write our first plugin for Rebar. Pay close attention to what you&#x27;re doing and try to follow the images and text as closely as possible.</p>
-<doc-anchor-target id="create-your-plugin-folder">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#create-your-plugin-folder">#</doc-anchor-trigger>
-        <span>Create your Plugin Folder</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="create-your-plugin-folder">Create your Plugin Folder</h2>
 <p>Run the following command(s) in your <code translate="no" v-pre>Terminal</code>:</p>
 <div id="create-your-plugin-folder-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">mkdir src/plugins/my-first-plugin</code></pre>
@@ -186,12 +184,7 @@
 <pre translate="no" class="language-none"><code v-pre class="language-none">mkdir src/plugins/my-first-plugin/client</code></pre>
 </doc-codeblock></div>
 <p><em>Alternatively, feel free to use the file tree to create your plugin under the <code translate="no" v-pre>src/plugins</code> folder.</em></p>
-<doc-anchor-target id="create-your-index-files">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#create-your-index-files">#</doc-anchor-trigger>
-        <span>Create your Index Files</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="create-your-index-files">Create your Index Files</h2>
 <p>Index files are the main entry points for both <code translate="no" v-pre>server</code> and <code translate="no" v-pre>client</code>. We are going to create an <code translate="no" v-pre>index.ts</code> file in both directories.</p>
 <p>Run the following command(s) in your <code translate="no" v-pre>Terminal</code>, and press <code translate="no" v-pre>Enter</code> again after entering it:</p>
 <div id="create-your-index-files-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -207,12 +200,7 @@
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="setup-serverindexts">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#setup-serverindexts">#</doc-anchor-trigger>
-        <span>Setup server/index.ts</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="setup-serverindexts">Setup server/index.ts</h2>
 <p>Inside of our <code translate="no" v-pre>server/index.ts</code> file we&#x27;re going to need to add some source code. Copy and paste the following code to get the initial setup ready.</p>
 <div id="setup-serverindexts-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import * as alt from 'alt-server';
@@ -220,24 +208,14 @@ import { useRebar } from '@Server/index.js';
 
 alt.log('Hello from server!');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="setup-clientindexts">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#setup-clientindexts">#</doc-anchor-trigger>
-        <span>Setup client/index.ts</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="setup-clientindexts">Setup client/index.ts</h2>
 <p>Inside of our <code translate="no" v-pre>client/index.ts</code> file we&#x27;re going to add some client source code. Copy and paste the following.</p>
 <div id="setup-clientindexts-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">import * as alt from 'alt-client';
 
 alt.log('Hello from client!');</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="run-the-server">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#run-the-server">#</doc-anchor-trigger>
-        <span>Run the Server!</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="run-the-server">Run the Server!</h2>
 <p>Run your server, and you can do that by running the following in a <code translate="no" v-pre>Terminal</code>.</p>
 <div id="run-the-server-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">pnpm dev</code></pre>

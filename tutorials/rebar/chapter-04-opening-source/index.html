@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Chapter 4. Opening the Source Code</title>
@@ -29,13 +29,21 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/tutorials/rebar/chapter-04-opening-source/">
+    <meta name="twitter:title" content="Chapter 4. Opening the Source Code">
+    <meta name="twitter:description" content="Now that we've covered starting and stopping the server, it's time to get into the source code. This part may be incredibly overwhelming for people who">
+    <meta name="twitter:image" content="https://rebarv.com/static/book/vscode-init.png">
+    <meta name="twitter:image:alt" content="Chapter 4. Opening the Source Code">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -50,10 +58,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -161,21 +169,11 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="chapter-4-opening-the-source-code" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#chapter-4-opening-the-source-code">#</doc-anchor-trigger>
-        <span>Chapter 4. Opening the Source Code</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="chapter-4-opening-the-source-code">Chapter 4. Opening the Source Code</h1>
 <p>Now that we&#x27;ve covered starting and stopping the server, it&#x27;s time to get into the source code. This part may be incredibly overwhelming for people who have never programmed anything before. You are going to see a lot of files, and a lot of confusing controls.</p>
 <p>I&#x27;ll try and cover what you&#x27;re seeing in this section as much as possible so that you can move forward with ease.</p>
 <p>Let&#x27;s begin.</p>
-<doc-anchor-target id="how-to-open-the-codebase">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#how-to-open-the-codebase">#</doc-anchor-trigger>
-        <span>How to open the codebase</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="how-to-open-the-codebase">How to open the codebase</h2>
 <p>Where you installed the core of rebar, you can right-click the folder and <code translate="no" v-pre>Open with Code</code>. This will open the whole folder in VSCode and give you a giant file tree, with a big window in the center.</p>
 <p>Here&#x27;s an example of what that looks like.</p>
 <p><figure class="content-center">
@@ -183,20 +181,10 @@
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="what-are-you-looking-at">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#what-are-you-looking-at">#</doc-anchor-trigger>
-        <span>What are you looking at?</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="what-are-you-looking-at">What are you looking at?</h2>
 <p>Under <code translate="no" v-pre>Explorer</code> is your File Tree for the whole folder. This is what makes Rebar come together.</p>
 <p>In the center of the screen is likely a <code translate="no" v-pre>Welcome Screen</code> and usually a <code translate="no" v-pre>Text Editor</code> to modify source code.</p>
-<doc-anchor-target id="open-a-terminal-in-vscode">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#open-a-terminal-in-vscode">#</doc-anchor-trigger>
-        <span>Open a Terminal in VSCode</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="open-a-terminal-in-vscode">Open a Terminal in VSCode</h2>
 <p>The menu at the <code translate="no" v-pre>top left</code> is going to let you access various options.</p>
 <p>If you open the <code translate="no" v-pre>...</code> menu, or click on <code translate="no" v-pre>Terminal</code> you can open a <code translate="no" v-pre>Terminal</code> inside of VSCode.</p>
 <p>Get used to doing this, it&#x27;s really useful to have a Terminal Open in VSCode.</p>
@@ -205,12 +193,7 @@
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="setup-vscode-for-rebar">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#setup-vscode-for-rebar">#</doc-anchor-trigger>
-        <span>Setup VSCode for Rebar</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="setup-vscode-for-rebar">Setup VSCode for Rebar</h2>
 <p>One of the first things you are going to do is open the <code translate="no" v-pre>Extensions</code> tab on the left side. It&#x27;s the 4 squares.</p>
 <p>Install the following extensions, insert their ids into the search bar:</p>
 <ul>
@@ -221,12 +204,7 @@
 <li>bradlc.vscode-tailwindcss</li>
 </ul>
 <p>You will not likely notice anything after installing these extensions, this is just to set us up for later.</p>
-<doc-anchor-target id="recap">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#recap">#</doc-anchor-trigger>
-        <span>Recap</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="recap">Recap</h2>
 <p>We have now opened the code base, and we can begin looking into working with Rebar. Especially if we want to make our first plugin.</p>
 <p>You learned how to open a <code translate="no" v-pre>Terminal</code> in VSCode, and install extensions.</p>
 <p>Additionally, you can try running the server from inside VSCode to see if it starts.</p>

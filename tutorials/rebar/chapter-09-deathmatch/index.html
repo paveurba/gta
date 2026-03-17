@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Chapter 9. Free for All Death Match Gamemode</title>
@@ -29,14 +29,22 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/tutorials/rebar/chapter-09-deathmatch/">
+    <meta name="twitter:title" content="Chapter 9. Free for All Death Match Gamemode">
+    <meta name="twitter:description" content="In this chapter we're going to build a very basic version of a free for all death match. It's going to require very little code, and in this section I'll">
+    <meta name="twitter:image" content="https://rebarv.com/static/book/weapon-pickup.png">
+    <meta name="twitter:image:alt" content="Chapter 9. Free for All Death Match Gamemode">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -51,10 +59,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -162,26 +170,11 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="chapter-9-free-for-all-death-match-gamemode" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#chapter-9-free-for-all-death-match-gamemode">#</doc-anchor-trigger>
-        <span>Chapter 9. Free for All Death Match Gamemode</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="chapter-9-free-for-all-death-match-gamemode">Chapter 9. Free for All Death Match Gamemode</h1>
 <p>In this chapter we&#x27;re going to build a very basic version of a free for all death match. It&#x27;s going to require very little code, and in this section I&#x27;ll provide a handful of positions and code to help you build this faster.</p>
 <p>Death Match is perhaps one of the easiest game modes to write, and gives a firm understanding of spawning and death mechanics.</p>
-<doc-anchor-target id="respawn-system">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#respawn-system">#</doc-anchor-trigger>
-        <span>Respawn System</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="spawn-positions">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#spawn-positions">#</doc-anchor-trigger>
-        <span>Spawn Positions</span>
-    </h3>
-</doc-anchor-target>
+<h2 id="respawn-system">Respawn System</h2>
+<h3 id="spawn-positions">Spawn Positions</h3>
 <p>All of these positions are located in a subway station.</p>
 <div id="spawn-positions-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
@@ -197,12 +190,7 @@ const spawns = [
     { x: -810.09, y: -144.58, z: 28.17 },
 ];</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="spawn-randomly">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#spawn-randomly">#</doc-anchor-trigger>
-        <span>Spawn Randomly</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="spawn-randomly">Spawn Randomly</h3>
 <p>Using some of the code we did in the <code translate="no" v-pre>excercises</code> we can randomly spawn a player to a random position</p>
 <p>Let&#x27;s create a function to do that for us.</p>
 <div id="spawn-randomly-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -218,12 +206,7 @@ alt.on('playerConnect', (player) =&gt; {
     spawnPlayer(player);
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="handling-death">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#handling-death">#</doc-anchor-trigger>
-        <span>Handling Death</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="handling-death">Handling Death</h3>
 <p>When we get killed, or when a player dies. They&#x27;ll need to be respawned. We can use the alt event for <code translate="no" v-pre>playerDeath</code> to handle that, and use the <code translate="no" v-pre>spawnPlayer</code></p>
 <div id="handling-death-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
@@ -232,12 +215,7 @@ alt.on('playerDeath', (player) =&gt; {
     spawnPlayer(player);
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="giving-weapons">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#giving-weapons">#</doc-anchor-trigger>
-        <span>Giving Weapons</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="giving-weapons">Giving Weapons</h3>
 <p>Now our next step in this process is making sure that all of the players are armed for this free-for-all death match. Let&#x27;s go ahead and give each player a random weapon when we call the <code translate="no" v-pre>spawnPlayer</code> function.</p>
 <div id="giving-weapons-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
@@ -252,20 +230,10 @@ function spawnPlayer(player: alt.Player) {
     player.giveWeapon(weapons[weaponIndex], 999, true);
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="testing-time">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#testing-time">#</doc-anchor-trigger>
-        <span>Testing Time</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="testing-time">Testing Time</h3>
 <p>Now you can go in-game and test to make sure it works. If you want other players to join consider checking out this <a href="https://www.youtube.com/watch?v=c35GzxDrG5c">Tutorial on playit.gg Tunneling</a> which will allow you to port forward for alt:V without port forwarding your router, and windows firewall.</p>
 <p>If you wish to port forward your router, and firewall you need to open port <code translate="no" v-pre>7788</code>.</p>
-<doc-anchor-target id="pickups">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#pickups">#</doc-anchor-trigger>
-        <span>Pickups</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="pickups">Pickups</h2>
 <p>In the previous chapter we learned the basics of writing a super simple game mode. However, this next chapter is going to start covering some enhancements that we can add to our free-for-all death match game mode. Which in this case will be weapon pickups.</p>
 <p>First thing we&#x27;re going to check is if we have <code translate="no" v-pre>Rebar</code> available and imported into the free-for-all game mode.</p>
 <div id="pickups-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -274,20 +242,10 @@ function spawnPlayer(player: alt.Player) {
 const Rebar = useRebar();</code></pre>
 </doc-codeblock></div>
 <p>Make sure this is located at the top of your <code translate="no" v-pre>server/index.ts</code> file.</p>
-<doc-anchor-target id="what-is-a-pickup">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#what-is-a-pickup">#</doc-anchor-trigger>
-        <span>What is a Pickup?</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="what-is-a-pickup">What is a Pickup?</h3>
 <p>Pickups will allow you to listen for when a player walks over a given point, and then we can give them a weapon. They&#x27;re often seen as a hovering weapon that will invoke a function when walked over. Let&#x27;s build one.</p>
 <p>They&#x27;re found under the <code translate="no" v-pre>Rebar.controllers.</code> pathway when writing code.</p>
-<doc-anchor-target id="pickup-positions">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#pickup-positions">#</doc-anchor-trigger>
-        <span>Pickup Positions</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="pickup-positions">Pickup Positions</h3>
 <p>Here are two pickup positions we can use to create a pickup with.</p>
 <div id="pickup-positions-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">new alt.Vector3({
@@ -302,12 +260,7 @@ new alt.Vector3({
     z: 28.175315856933594,
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="create-the-pickup">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#create-the-pickup">#</doc-anchor-trigger>
-        <span>Create the Pickup</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="create-the-pickup">Create the Pickup</h3>
 <p>Below we&#x27;re going to great a pickup based on a specific weapon type. Intellisense will hint you at the available pickups for you to utilize in your pickup creation.</p>
 <div id="create-the-pickup-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
@@ -321,12 +274,7 @@ Rebar.controllers.usePickupGlobal({
     }),
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="listen-for-the-pickup">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#listen-for-the-pickup">#</doc-anchor-trigger>
-        <span>Listen for the Pickup</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="listen-for-the-pickup">Listen for the Pickup</h3>
 <p>Next we&#x27;re going to tack on a <code translate="no" v-pre>.on</code> function to the usePickupGlobal. When we create a <code translate="no" v-pre>pickup</code> it will return a handful of functions we can use and <code translate="no" v-pre>on</code> just so happens to be one.</p>
 <div id="listen-for-the-pickup-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
@@ -344,24 +292,14 @@ Rebar.controllers
         player.giveWeapon('WEAPON_RAILGUN', 99, true);
     });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="verify-the-pickup-works">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#verify-the-pickup-works">#</doc-anchor-trigger>
-        <span>Verify the Pickup Works</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="verify-the-pickup-works">Verify the Pickup Works</h3>
 <p>Next step is verifying that the pickup works. Go ahead and head in-game and walk over to the pickup location. The two positions are at the top of the subway platform.</p>
 <p><figure class="content-center">
     <img src="../../../static/book/weapon-pickup.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="793" height="423" />
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="notifying-the-player">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#notifying-the-player">#</doc-anchor-trigger>
-        <span>Notifying the Player</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="notifying-the-player">Notifying the Player</h3>
 <p>Now that we have the player picking up a weapon, we can also let them know they&#x27;ve picked up the weapon.</p>
 <p>We can do this by slightly modifying the pickup controller.</p>
 <div id="notifying-the-player-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -390,20 +328,10 @@ Rebar.controllers
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="markers">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#markers">#</doc-anchor-trigger>
-        <span>Markers</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="markers">Markers</h2>
 <p>Now that we&#x27;ve messed with some pickups, let&#x27;s really show the player that the pickup&#x27;s are there, and we can do that by using markers.</p>
 <p>Markers are effectively colorful holograms to show a player something in the world.</p>
-<doc-anchor-target id="marker-positions">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#marker-positions">#</doc-anchor-trigger>
-        <span>Marker Positions</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="marker-positions">Marker Positions</h3>
 <p>We&#x27;ll be using the same positions from the last section, but we&#x27;ll be subtracting 1 from the z position.</p>
 <div id="marker-positions-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// These were already subtracted
@@ -420,12 +348,7 @@ new alt.Vector3({
     z: 27.175315856933594,
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="building-a-marker">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#building-a-marker">#</doc-anchor-trigger>
-        <span>Building a Marker</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="building-a-marker">Building a Marker</h3>
 <p>Markers have various types, and you&#x27;ll see that when you fill in <code translate="no" v-pre>type</code> with the <code translate="no" v-pre>string</code> type, intellisense will give you more hints.</p>
 <div id="building-a-marker-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
@@ -447,20 +370,10 @@ Rebar.controllers.useMarkerGlobal({
 </figure>
 </p>
 <p>Look at that, now we have a nice marker to really draw the player to the location.</p>
-<doc-anchor-target id="interactions">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#interactions">#</doc-anchor-trigger>
-        <span>Interactions</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="interactions">Interactions</h2>
 <p>Interactions require the player to press the <code translate="no" v-pre>E</code> key in-game for something to happen. They&#x27;re effectively a super simple way to trigger a certain function when the key is pressed.</p>
 <p>In this section we&#x27;re going to build an interaction to use the elevator in the game. It will simply teleport the player from the top to the bottom of the subway station.</p>
-<doc-anchor-target id="interaction-positions">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#interaction-positions">#</doc-anchor-trigger>
-        <span>Interaction Positions</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="interaction-positions">Interaction Positions</h3>
 <div id="interaction-positions-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// Elevator Top
 new alt.Vector3({
@@ -476,12 +389,7 @@ new alt.Vector3({
     z: 18.95029067993164,
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="teleport-to-top">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#teleport-to-top">#</doc-anchor-trigger>
-        <span>Teleport to Top</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="teleport-to-top">Teleport to Top</h3>
 <p>First thing we&#x27;re going to do is use the <code translate="no" v-pre>Rebar.controllers</code> to create an interaction.</p>
 <div id="teleport-to-top-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
@@ -519,12 +427,7 @@ Rebar.controllers.useMarkerGlobal({
     scale: new alt.Vector3(1, 1, 1),
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="teleport-to-bottom">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#teleport-to-bottom">#</doc-anchor-trigger>
-        <span>Teleport to Bottom</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="teleport-to-bottom">Teleport to Bottom</h3>
 <p>Now we&#x27;re going to create the bottom elevator code, and it&#x27;s going to utilize pretty much the opposite positions that we used above. Feel free to try writing it on your own before using the code below.</p>
 <p>We&#x27;ll build the interaction first.</p>
 <div id="teleport-to-bottom-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -550,20 +453,10 @@ Rebar.controllers.useMarkerGlobal({
     scale: new alt.Vector3(1, 1, 1),
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="text-labels">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#text-labels">#</doc-anchor-trigger>
-        <span>Text Labels</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="text-labels">Text Labels</h2>
 <p>Now that we&#x27;ve created an elevator, our next step is going to be adding some text labels to elevator positions to really let the player know that they can press a key to go up and down the elevator.</p>
 <p>We&#x27;re going to use the <code translate="no" v-pre>Rebar.controllers</code> pathway to build some new Text Labels.</p>
-<doc-anchor-target id="elevator-up-label">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#elevator-up-label">#</doc-anchor-trigger>
-        <span>Elevator Up Label</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="elevator-up-label">Elevator Up Label</h3>
 <p>Labels require passing a position, and some text.</p>
 <div id="elevator-up-label-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
@@ -577,12 +470,7 @@ Rebar.controllers.useTextLabelGlobal({
     text: `E - Use Elevator`,
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="elevator-down-label">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#elevator-down-label">#</doc-anchor-trigger>
-        <span>Elevator Down Label</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="elevator-down-label">Elevator Down Label</h3>
 <p>We&#x27;ll do the same as above, but we&#x27;re just going to change the position.</p>
 <div id="elevator-down-label-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
@@ -601,20 +489,10 @@ Rebar.controllers.useTextLabelGlobal({
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
-<doc-anchor-target id="timers">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#timers">#</doc-anchor-trigger>
-        <span>Timers</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="timers">Timers</h2>
 <p>There are a lot of cases where you want something to happen after a certain period of time. Let&#x27;s say that we only want the Railgun to be available every 15 seconds after it&#x27;s picked up.</p>
 <p>What we&#x27;re going to do is make it so that when the Railgun is taken, it will destroy itself, and then it will create a timer to respawn the Railgun after 15 seconds.</p>
-<doc-anchor-target id="pickup-as-a-function">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#pickup-as-a-function">#</doc-anchor-trigger>
-        <span>Pickup as a Function</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="pickup-as-a-function">Pickup as a Function</h3>
 <p>We&#x27;re going to adjust the existing Railgun code, and change it as follows.</p>
 <div id="pickup-as-a-function-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
@@ -667,12 +545,7 @@ function createRailgun() {
     });
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="respawn-the-railgun">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#respawn-the-railgun">#</doc-anchor-trigger>
-        <span>Respawn the Railgun</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="respawn-the-railgun">Respawn the Railgun</h3>
 <p>We will now modify the pickup.on <code translate="no" v-pre>callback</code> to call the <code translate="no" v-pre>createRailgun</code> after 15 seconds.</p>
 <div id="respawn-the-railgun-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">// server/index.ts
@@ -701,12 +574,7 @@ pickup.on((player, weapon, destroy) =&gt; {
     alt.setTimeout(createRailgun, 15000); // 15 Seconds as milliseconds
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="spawn-the-railgun">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#spawn-the-railgun">#</doc-anchor-trigger>
-        <span>Spawn the Railgun</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="spawn-the-railgun">Spawn the Railgun</h3>
 <p>Finally, we just need to call <code translate="no" v-pre>createRailgun</code> somewhere in the file to create the initial railgun.</p>
 <p>You can likely put this at the end of your file.</p>
 <div id="spawn-the-railgun-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -714,12 +582,7 @@ pickup.on((player, weapon, destroy) =&gt; {
 
 createRailgun();</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="recap-on-death-match">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#recap-on-death-match">#</doc-anchor-trigger>
-        <span>Recap on Death Match</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="recap-on-death-match">Recap on Death Match</h2>
 <p>In this section you learned about working with player connections, respawning, weapon pickups, markers, interactions, text labels, and timers. All of these functionalities are core to building almost anything with Rebar.</p>
 <p>However, this is for a non-persistent game mode. Meaning that nothing is saved.</p>
 <p>This chapter was simply a primer to building larger more complex features.</p>

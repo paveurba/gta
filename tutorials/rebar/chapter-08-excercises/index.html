@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Chapter 8. Exercises</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/tutorials/rebar/chapter-08-excercises/">
+    <meta name="twitter:title" content="Chapter 8. Exercises">
+    <meta name="twitter:description" content="In the last section we learned all about programming, and got a basic understanding of reading code, and how the VSCode intellisense works. Now in this">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,33 +164,13 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="chapter-8-exercises" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#chapter-8-exercises">#</doc-anchor-trigger>
-        <span>Chapter 8. Exercises</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="chapter-8-exercises">Chapter 8. Exercises</h1>
 <p>In the last section we learned all about programming, and got a basic understanding of reading code, and how the VSCode intellisense works. Now in this section we&#x27;re going to explain a problem, and you&#x27;re going to try and build a solution. They&#x27;ll be fairly straight forward exercises but it&#x27;ll help with understanding the code a bit more.</p>
-<doc-anchor-target id="spawn-a-vehicle">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#spawn-a-vehicle">#</doc-anchor-trigger>
-        <span>Spawn a Vehicle</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="problem">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#problem">#</doc-anchor-trigger>
-        <span>Problem</span>
-    </h3>
-</doc-anchor-target>
+<h2 id="spawn-a-vehicle">Spawn a Vehicle</h2>
+<h3 id="problem">Problem</h3>
 <p>Given the code in the last section, there was a section on creating a vehicle. Spawn a vehicle and then use the <code translate="no" v-pre>setIntoVehicle</code> function on the player and pass the vehicle and seat <code translate="no" v-pre>1</code> which is the driver seat. You can spawn the vehicle when the player connects to the server.</p>
 <p>Here&#x27;s a few vehicle models: <code translate="no" v-pre>t20</code>, <code translate="no" v-pre>akuma</code>, <code translate="no" v-pre>infernus</code>, <code translate="no" v-pre>washington</code>.</p>
-<doc-anchor-target id="solution">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#solution">#</doc-anchor-trigger>
-        <span>Solution</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="solution">Solution</h3>
 <div id="solution-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const spawnA = new alt.Vector3({
     x: -866.1100463867188,
@@ -200,18 +186,8 @@ alt.on('playerConnect', (player) =&gt; {
     player.setIntoVehicle(vehicle, 1);
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="flip-between-spawns">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#flip-between-spawns">#</doc-anchor-trigger>
-        <span>Flip Between Spawns</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="problem-1">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#problem-1">#</doc-anchor-trigger>
-        <span>Problem</span>
-    </h3>
-</doc-anchor-target>
+<h2 id="flip-between-spawns">Flip Between Spawns</h2>
+<h3 id="problem-1">Problem</h3>
 <p>Given the two positions below and some code, use them to teleport each player who joins the server to a different spawn.</p>
 <p><em>You can use a <code translate="no" v-pre>boolean</code> to switch between both positions.</em></p>
 <div id="problem-1-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -234,12 +210,7 @@ alt.on('playerConnect', (player) =&gt; {
     player.spawn(spawnA);
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="solution-1">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#solution-1">#</doc-anchor-trigger>
-        <span>Solution</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="solution-1">Solution</h3>
 <p>You can verify this solution by typing <code translate="no" v-pre>reconnect</code> in the <code translate="no" v-pre>F8</code> in-game console menu.</p>
 <div id="solution-1-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const spawnA = new alt.Vector3({
@@ -268,18 +239,8 @@ alt.on('playerConnect', (player) =&gt; {
     }
 });</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="randomized-weapons">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#randomized-weapons">#</doc-anchor-trigger>
-        <span>Randomized Weapons</span>
-    </h2>
-</doc-anchor-target>
-<doc-anchor-target id="problem-2">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#problem-2">#</doc-anchor-trigger>
-        <span>Problem</span>
-    </h3>
-</doc-anchor-target>
+<h2 id="randomized-weapons">Randomized Weapons</h2>
+<h3 id="problem-2">Problem</h3>
 <p>You want to randomly give each player a weapon when they connect to the server.</p>
 <p>Given the following list of weapons, use it to randomly give a player a weapon.</p>
 <div id="problem-2-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -290,12 +251,7 @@ alt.on('playerConnect', (player) =&gt; {
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const index = Math.floor(Math.random() * weapons.length);</code></pre>
 </doc-codeblock></div>
 <p>Use the index to distribute a weapon to the player.</p>
-<doc-anchor-target id="solution-2">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#solution-2">#</doc-anchor-trigger>
-        <span>Solution</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="solution-2">Solution</h3>
 <div id="solution-2-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-typescript"><code v-pre class="language-typescript">const spawnA = new alt.Vector3({
     x: -866.1100463867188,

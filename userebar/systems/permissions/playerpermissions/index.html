@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.2.0.826993119229">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.2.0">
+    <meta name="generator" content="Retype 4.3.0">
 
     <!-- Primary Meta Tags -->
     <title>Player permissions</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rebarv.com/userebar/systems/permissions/playerpermissions/">
+    <meta name="twitter:title" content="Player permissions">
+    <meta name="twitter:description" content="To manage player permissions, Rebar exposes the same interface for both account and character permissions.">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../../resources/css/retype.css?v=4.2.0.826993119229" rel="stylesheet">
+    <link href="../../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.2.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.2.0.826993119229" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.2.0.826993119229" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,10 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://rebarv.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../../static/logo_dark.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../../../static/logo_light.svg">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../../../../static/logo_dark.svg" alt="">
+                            <img class="max-h-10 hidden dark:inline-block" src="../../../../static/logo_light.svg" alt="">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Rebar for alt:V</span>
                     </a>
@@ -158,21 +164,11 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="managing-player-permissions" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#managing-player-permissions">#</doc-anchor-trigger>
-        <span>Managing player permissions</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="managing-player-permissions">Managing player permissions</h1>
 <p>To manage player permissions, Rebar exposes the same interface for both account and character permissions.</p>
-<doc-anchor-target id="grant-permission-async">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#grant-permission-async">#</doc-anchor-trigger>
-        <span>Grant permission <span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-primary-text bg-badge-primary border border-badge-primary-border h-6 px-2 text-xs rounded-md">
-            <span>Async</span>
-        </span></span>
-    </h3>
-</doc-anchor-target>
+<h3 id="grant-permission-async">Grant permission <span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-primary-text bg-badge-primary border border-badge-primary-border h-6 px-2 text-xs rounded-md">
+    <span>Async</span>
+</span></h3>
 <p>To grant a permission to a player, you can use one of the <code translate="no" v-pre>grant</code> methods.</p>
 <doc-tabs>
 <doc-tab v-cloak id="usecharacter">
@@ -316,14 +312,9 @@ async function allowBan(_id: string) {
 </div>
 </doc-tab>
 </doc-tabs>
-<doc-anchor-target id="revoke-permission-async">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#revoke-permission-async">#</doc-anchor-trigger>
-        <span>Revoke permission <span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-primary-text bg-badge-primary border border-badge-primary-border h-6 px-2 text-xs rounded-md">
-            <span>Async</span>
-        </span></span>
-    </h3>
-</doc-anchor-target>
+<h3 id="revoke-permission-async">Revoke permission <span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-primary-text bg-badge-primary border border-badge-primary-border h-6 px-2 text-xs rounded-md">
+    <span>Async</span>
+</span></h3>
 <p>To revoke a permission from a player, you can use one of the <code translate="no" v-pre>revoke</code> methods.</p>
 <doc-tabs>
 <doc-tab v-cloak id="usecharacter">
@@ -467,14 +458,9 @@ async function disallowBan(_id: string) {
 </div>
 </doc-tab>
 </doc-tabs>
-<doc-anchor-target id="clear-permissions-async">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#clear-permissions-async">#</doc-anchor-trigger>
-        <span>Clear permissions <span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-primary-text bg-badge-primary border border-badge-primary-border h-6 px-2 text-xs rounded-md">
-            <span>Async</span>
-        </span></span>
-    </h3>
-</doc-anchor-target>
+<h3 id="clear-permissions-async">Clear permissions <span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-primary-text bg-badge-primary border border-badge-primary-border h-6 px-2 text-xs rounded-md">
+    <span>Async</span>
+</span></h3>
 <p>To clear all permissions from a player, you can use one of the <code translate="no" v-pre>clear</code> methods.</p>
 <doc-tabs>
 <doc-tab v-cloak id="usecharacter">
@@ -603,12 +589,7 @@ async function clearPermissions(_id: string) {
 </div>
 </doc-tab>
 </doc-tabs>
-<doc-anchor-target id="list-permissions">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#list-permissions">#</doc-anchor-trigger>
-        <span>List permissions</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="list-permissions">List permissions</h3>
 <p>To list all permissions granted to a player, you can use one of the <code translate="no" v-pre>list</code> methods.</p>
 <doc-tabs>
 <doc-tab v-cloak id="usecharacter">
@@ -657,12 +638,7 @@ async function listPermissions(_id: string) {
 </doc-codeblock></div>
 </doc-tab>
 </doc-tabs>
-<doc-anchor-target id="check-specific-permission">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#check-specific-permission">#</doc-anchor-trigger>
-        <span>Check specific permission</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="check-specific-permission">Check specific permission</h3>
 <p>To check if a player has a specific permission, you can use one of the <code translate="no" v-pre>has</code> methods.</p>
 <doc-tabs>
 <doc-tab v-cloak id="usecharacter">
@@ -712,12 +688,7 @@ async function hasBanPermission(_id: string) {
 </doc-codeblock></div>
 </doc-tab>
 </doc-tabs>
-<doc-anchor-target id="check-all-permissions">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#check-all-permissions">#</doc-anchor-trigger>
-        <span>Check all permissions</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="check-all-permissions">Check all permissions</h3>
 <p>To check if player has all of the specified permissions, you can use one of the <code translate="no" v-pre>hasAll</code> methods.</p>
 <doc-tabs>
 <doc-tab v-cloak id="usecharacter">
@@ -766,12 +737,7 @@ async function hasAllPermissions(_id: string) {
 </doc-codeblock></div>
 </doc-tab>
 </doc-tabs>
-<doc-anchor-target id="check-any-permission">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#check-any-permission">#</doc-anchor-trigger>
-        <span>Check any permission</span>
-    </h3>
-</doc-anchor-target>
+<h3 id="check-any-permission">Check any permission</h3>
 <p>To check if player has at least one of the specified permissions, you can use one of the <code translate="no" v-pre>hasAny</code> methods.</p>
 <doc-tabs>
 <doc-tab v-cloak id="usecharacter">
