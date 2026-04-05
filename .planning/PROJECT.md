@@ -10,7 +10,9 @@ A **GTA Online–style alt:V multiplayer server** built on the **Rebar** framewo
 
 ## Next milestone goals (candidates)
 
-_Not scheduled._ Typical follow-ups from `.planning/codebase/CONCERNS.md` and archived **v2** ideas: **automated tests** (TEST-01), **CI compile/lint** (TEST-02), **optional MAIL-01**, and **splitting or modularizing** `server/index.ts` when change velocity demands it. Define scope with **`$gsd-new-milestone`**.
+**In progress (v1.1 gap closure):** Phases **7–9** on [.planning/ROADMAP.md](.planning/ROADMAP.md) — GSD `VERIFICATION.md` retrofit, retro **SUMMARY** files for phases 4–6, server trust hardening + WEBV doc alignment (from [v1.0 audit](.planning/v1.0-MILESTONE-AUDIT.md)).
+
+**Later:** From `.planning/codebase/CONCERNS.md` and archived **v2** ideas: **TEST-01**, **TEST-02**, **MAIL-01**, modularizing `server/index.ts`. Promote via **`$gsd-new-milestone`** when v1.1 gaps are done.
 
 ## Core Value
 
