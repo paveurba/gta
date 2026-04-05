@@ -69,9 +69,9 @@ Capabilities the server is expected to provide (baseline for verification and fu
 
 ### Operations
 
-- [ ] **OPS-01**: `docker compose` can start MySQL, MongoDB, and alt:V server with documented ports
-- [ ] **OPS-02**: MySQL schema is applied on fresh DB and migrations run on server start
-- [ ] **OPS-03**: Documented refresh path rebuilds TS/webview and restarts containers after code changes
+- [x] **OPS-01**: `docker compose` can start MySQL, MongoDB, and alt:V server with documented ports
+- [x] **OPS-02**: MySQL schema is applied on fresh DB and migrations run on server start
+- [x] **OPS-03**: Documented refresh path rebuilds TS/webview and restarts containers after code changes
 
 ## v2 Requirements
 
@@ -98,9 +98,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| OPS-01 | Phase 1 | Pending |
-| OPS-02 | Phase 1 | Pending |
-| OPS-03 | Phase 1 | Pending |
+| OPS-01 | Phase 1 | Complete |
+| OPS-02 | Phase 1 | Complete |
+| OPS-03 | Phase 1 | Complete |
 | AUTH-01 | Phase 2 | Pending |
 | AUTH-02 | Phase 2 | Pending |
 | AUTH-03 | Phase 2 | Pending |

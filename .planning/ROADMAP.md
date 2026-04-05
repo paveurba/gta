@@ -6,7 +6,7 @@ The codebase already implements the documented GTA-style multiplayer server. Pha
 
 ## Phases
 
-- [ ] **Phase 1: Platform & persistence** — Docker stack, migrations, documented refresh path
+- [x] **Phase 1: Platform & persistence** — Docker stack, migrations, documented refresh path (completed 2026-04-05)
 - [ ] **Phase 2: Identity & economy** — Auth and money persistence
 - [ ] **Phase 3: Phone & messaging** — Contacts, SMS, phone UI (**UI hint**: yes)
 - [ ] **Phase 4: Properties & vehicles** — Housing, garages, ownership, spawning
@@ -33,9 +33,9 @@ The codebase already implements the documented GTA-style multiplayer server. Pha
 
 Plans:
 
-- [ ] 01-01: Verify Compose services, env vars, and port mapping against `README.md`
-- [ ] 01-02: Validate migration path on empty DB and idempotency expectations
-- [ ] 01-03: Exercise `pnpm refresh` / compile path and document any gaps
+- [x] 01-01: Verify Compose services, env vars, and port mapping against `README.md`
+- [x] 01-02: Validate migration path on empty DB and idempotency expectations
+- [x] 01-03: Exercise `pnpm refresh` / compile path and document any gaps
 
 ### Phase 2: Identity & economy
 
@@ -157,7 +157,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Platform & persistence | 0/3 | Not started | - |
+| 1. Platform & persistence | 3/3 | Complete    | 2026-04-05 |
 | 2. Identity & economy | 0/3 | Not started | - |
 | 3. Phone & messaging | 0/2 | Not started | - |
 | 4. Properties & vehicles | 0/4 | Not started | - |

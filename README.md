@@ -154,11 +154,12 @@ This runs a full rebuild (TypeScript + webview) inside Docker and restarts all g
 
 ## Database Schema
 
-Tables managed by the server:
+Tables managed by the server (created by `runMigrations()` in `src/plugins/gta-mysql-core/server/database/migrations.ts` on server start; `database/init/001_schema.sql` is mounted into MySQL for first-time container init):
 
 - `players` - Core player data (email, password, money, bank)
 - `player_weapons` - Weapon persistence (hash, ammo)
 - `player_clothes` - Clothing persistence (component, drawable, texture)
+- `character_appearance` - Face, hair, overlays, tattoos (one row per player)
 - `player_vehicles` - Vehicle ownership (model, colors, garage location)
 - `properties` - Property ownership, locations, and garage slots
 - `phone_contacts` - Player phone contacts
@@ -166,7 +167,7 @@ Tables managed by the server:
 - `casino_transactions` - Casino game history
 - `transaction_logs` - Audit trail for all transactions
 
-See `database/init/001_schema.sql` for full schema.
+See `database/init/001_schema.sql` for full DDL reference.
 
 ## Project Structure
 
@@ -251,20 +252,35 @@ src/plugins/gta-mysql-core/
 
 | Service | Port | Description |
 |---------|------|-------------|
-| `altv-server` | 7788 | Game server |
-| `mysql` | 3306 | MySQL database |
-| `mongodb` | 27017 | MongoDB (Rebar core) |
+| `altv-server` | `${GAME_PORT:-7788}` TCP/UDP | Game server (`7788` inside container; host port from `GAME_PORT`) |
+| `mysql` | `${MYSQL_EXPOSE_PORT:-3306}` → `3306` in container | MySQL (host port overridable via `MYSQL_EXPOSE_PORT` in `.env`) |
+| `mongodb` | `27017` | MongoDB (Rebar core) |
 
 ## Environment Variables
 
+Values below match `docker-compose.yml` and `.env.example`. Copy `.env.example` to `.env` and adjust.
+
 ```env
+GAME_PORT=7788
+
 DB_HOST=mysql
 DB_PORT=3306
 DB_NAME=gta_rebar
 DB_USER=gta
 DB_PASSWORD=gta_password
+DB_ROOT_PASSWORD=root_password
+MYSQL_EXPOSE_PORT=3306
+
 MONGODB=mongodb://mongodb:27017
-GAME_PORT=7788
+
+BCRYPT_ROUNDS=10
+
+MAIL_HOST=
+MAIL_PORT=587
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_FROM_ADDRESS=
+MAIL_FROM_NAME=GTA Server
 ```
 
 ## License
