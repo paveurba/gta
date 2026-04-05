@@ -4,6 +4,14 @@
 
 A **GTA Online–style alt:V multiplayer server** built on the **Rebar** framework: players authenticate, earn and spend money, own properties and vehicles, use a phone, visit shops and the casino, and play in a cleaned world (no ambient traffic/peds) with map blips and static parked cars. Persistence uses **MySQL** for custom gameplay data and **MongoDB** for Rebar core; **Docker Compose** is the documented way to run the stack.
 
+## Current state (shipped)
+
+- **v1.0** completed **2026-04-06** (GSD phases 1–6, 18 plans, 34 v1 requirements). Archives: [`.planning/milestones/v1.0-ROADMAP.md`](.planning/milestones/v1.0-ROADMAP.md), [`.planning/milestones/v1.0-REQUIREMENTS.md`](.planning/milestones/v1.0-REQUIREMENTS.md). Summary: [`.planning/MILESTONES.md`](.planning/MILESTONES.md). Git tag: **`v1.0`**.
+
+## Next milestone goals (candidates)
+
+_Not scheduled._ Typical follow-ups from `.planning/codebase/CONCERNS.md` and archived **v2** ideas: **automated tests** (TEST-01), **CI compile/lint** (TEST-02), **optional MAIL-01**, and **splitting or modularizing** `server/index.ts` when change velocity demands it. Define scope with **`$gsd-new-milestone`**.
+
 ## Core Value
 
 Players can **join the server, persist a character economy (cash/bank), and use the documented gameplay loops** (auth, money, housing, vehicles, weapons, clothing, phone, casino, world markers) **reliably against MySQL-backed state**.
@@ -15,7 +23,7 @@ Players can **join the server, persist a character economy (cash/bank), and use 
 - ✓ **alt:V + Rebar server** runs with compiled `resources/core` — existing
 - ✓ **MySQL persistence** for players, money, weapons, clothes, vehicles, properties, phone, casino, transaction log — existing (`database/init/001_schema.sql`, migrations)
 - ✓ **MongoDB** for Rebar core — existing (Compose service + `MONGODB` env)
-- ✓ **Authentication** — register/login via chat (`AuthService`) — existing
+- ✓ **Authentication** — register/login via **Auth UI** (**T**) and `AuthService` — existing
 - ✓ **Money** — cash and bank with commands — existing
 - ✓ **Phone** — contacts and SMS between players — existing
 - ✓ **Properties** — buy/sell/enter/exit, garages — existing
@@ -23,7 +31,7 @@ Players can **join the server, persist a character economy (cash/bank), and use 
 - ✓ **Weapon & clothing shops** — purchase and persistence — existing
 - ✓ **Casino** — slots and roulette — existing
 - ✓ **World UX** — blips, static parked vehicles, hospital respawn fee — existing
-- ✓ **Vue webview** for in-game UI — existing
+- ✓ **Vue webview** bundle builds to `resources/webview`; core gameplay HUDs are **native** client — existing
 - ✓ **Docker workflow** — `docker compose` + `pnpm refresh` documented — existing
 
 ### Active
@@ -76,4 +84,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-_Last updated: 2026-04-05 after initialization_
+_Last updated: 2026-04-06 after v1.0 milestone completion_

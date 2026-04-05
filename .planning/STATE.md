@@ -1,43 +1,43 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-status: milestone_complete
-stopped_at: v1.0 roadmap phases 1–6 executed; optional `$gsd-complete-milestone` to archive
-last_updated: "2026-04-06T01:00:00.000Z"
+milestone: v1.1
+milestone_name: TBD
+status: ready_to_plan
+stopped_at: v1.0 shipped and archived; run `$gsd-new-milestone` to define next version
+last_updated: "2026-04-06T12:00:00.000Z"
 last_activity: 2026-04-06
 progress:
-  total_phases: 6
-  completed_phases: 6
-  total_plans: 18
-  completed_plans: 18
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-05)
+See: .planning/PROJECT.md
 
 **Core value:** Players can join the server, persist a character economy, and use the documented gameplay loops reliably against MySQL-backed state.
 
-**Current focus:** v1.0 milestone — all planned phases complete
+**Current focus:** Next milestone (undefined) — start with **`$gsd-new-milestone`**
 
 ## Current Position
 
-Phase: 6 of 6 (World & webview) — **complete**
-Plan: 18 of 18 total plans executed
-Status: Milestone complete
-Last activity: 2026-04-06 — Phase 6 executed (06-01 … 06-03)
+Phase: — (awaiting next roadmap)
+Plan: —
+Status: Post–v1.0 archive
+Last activity: 2026-04-06 — Milestone v1.0 completed and tagged
 
-Progress: [██████████] 100%
+Progress: [░░░░░░░░░░] 0% _(next milestone)_
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 18
+- Total plans completed (v1.0): 18
 - Average duration: —
 - Total execution time: —
 
@@ -49,8 +49,7 @@ Progress: [██████████] 100%
 
 **Recent Trend:**
 
-- Last 5 plans: —
-- Trend: —
+- v1.0 closed 2026-04-06
 
 _Updated after each plan completion_
 
@@ -59,9 +58,6 @@ _Updated after each plan completion_
 ### Decisions
 
 Decisions are logged in PROJECT.md Key Decisions table.
-Recent decisions affecting current work:
-
-- Initialization: Brownfield map captured under `.planning/codebase/` (2026-04-05)
 
 ### Pending Todos
 
@@ -74,5 +70,5 @@ See `.planning/codebase/CONCERNS.md` (no automated test suite; large `server/ind
 ## Session Continuity
 
 Last session: 2026-04-06
-Stopped at: v1.0 GSD phases complete
+Stopped at: v1.0 archive complete
 Resume file: None
