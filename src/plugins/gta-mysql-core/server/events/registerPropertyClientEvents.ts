@@ -3,14 +3,10 @@ import {
     type PropertyService,
     buildPropertyInteriorEnterPayload,
 } from '../services/index.js';
-
-export type PropertyMoneySession = {
-    oderId: number;
-    money: number;
-};
+import type { PlayerSession } from '../types/playerSession.js';
 
 export type PropertyHandlersContext = {
-    getSession: (player: alt.Player) => PropertyMoneySession | undefined;
+    getSession: (player: alt.Player) => PlayerSession | undefined;
     propertyService: PropertyService;
     playersInProperty: Map<number, number>;
     syncMoneyToClient: (player: alt.Player) => void;

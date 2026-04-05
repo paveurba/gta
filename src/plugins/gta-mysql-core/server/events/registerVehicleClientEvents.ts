@@ -4,15 +4,10 @@ import {
     type VehicleService,
     VEHICLE_CATALOG,
 } from '../services/index.js';
-
-/** Session fields vehicle RPCs read or update */
-export type VehicleMoneySession = {
-    oderId: number;
-    money: number;
-};
+import type { PlayerSession } from '../types/playerSession.js';
 
 export type VehicleHandlersContext = {
-    getSession: (player: alt.Player) => VehicleMoneySession | undefined;
+    getSession: (player: alt.Player) => PlayerSession | undefined;
     vehicleService: VehicleService;
     propertyService: PropertyService;
     syncMoneyToClient: (player: alt.Player) => void;
