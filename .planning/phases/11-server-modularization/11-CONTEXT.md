@@ -25,6 +25,10 @@
 - `src/plugins/gta-mysql-core/server/index.ts` — orchestration (~**220** LOC after **11-04**): `getMySQLPool` assignment from bundle, maps, `createPlayerRuntime` destructuring, `register*()` wiring, `init`.
 - `server/bootstrap/createGameplayMysqlBundle.ts`, `server/runtime/createPlayerRuntime.ts`, `server/world/spawnStaticParkedVehicles.ts`, `server/events/register*.ts`, `server/commands/handleChatCommand.ts`, `server/types/playerSession.ts`.
 
+## Verification
+
+- Cross-plan refactor audit: [VERIFICATION-REFACTOR.md](VERIFICATION-REFACTOR.md) (automated + structure; in-game UAT optional).
+
 ---
 
 *Phase: 11-server-modularization*
