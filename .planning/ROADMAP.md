@@ -47,8 +47,8 @@ Plans:
 
 Plans:
 
-- [ ] 09-01: `vehicle:buy` / `buyVehicle` catalog enforcement + tests or manual checklist in VERIFICATION
-- [ ] 09-02: `vehicle:spawnFromGarage` ownership guard + WEBV-01 / README doc alignment
+- [x] 09-01: `vehicle:buy` / `buyVehicle` catalog enforcement + tests or manual checklist in VERIFICATION
+- [x] 09-02: `vehicle:spawnFromGarage` ownership guard + WEBV-01 / README doc alignment
 
 ### Deferred (optional, not scheduled)
 

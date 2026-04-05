@@ -2,7 +2,7 @@
 
 **Active milestone:** **v1.1 — gap closure** (from [v1.0 audit](v1.0-MILESTONE-AUDIT.md))
 
-**Shipped baseline:** **[v1.0 requirements archive](milestones/v1.0-REQUIREMENTS.md)** — 34 capabilities complete (phases 1–6); unchanged.
+**Shipped baseline:** **[v1.0 requirements archive](milestones/v1.0-REQUIREMENTS.md)** — 34 capabilities complete (phases 1–6). **WEBV-01** bullet clarified in v1.1 gap closure (native vs Vue — **INT-01**); no feature scope change.
 
 ## v1.1 — Audit gap closure
 
@@ -18,9 +18,9 @@
 
 - [x] **AUD-VERIFY-01**
 - [x] **AUD-SUMM-01**
-- [ ] **AUD-TRUST-01**
-- [ ] **AUD-TRUST-02**
-- [ ] **AUD-DOC-01**
+- [x] **AUD-TRUST-01**
+- [x] **AUD-TRUST-02**
+- [x] **AUD-DOC-01**
 
 ## Traceability (v1.1)
 
@@ -28,9 +28,9 @@
 |-------------|-------|--------|
 | AUD-VERIFY-01 | Phase 7 | Complete |
 | AUD-SUMM-01 | Phase 8 | Complete |
-| AUD-TRUST-01 | Phase 9 | Pending |
-| AUD-TRUST-02 | Phase 9 | Pending |
-| AUD-DOC-01 | Phase 9 | Pending |
+| AUD-TRUST-01 | Phase 9 | Complete |
+| AUD-TRUST-02 | Phase 9 | Complete |
+| AUD-DOC-01 | Phase 9 | Complete |
 
 **Coverage:** 5 gap-closure requirements → phases 7–9.
 

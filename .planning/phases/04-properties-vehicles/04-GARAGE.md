@@ -40,7 +40,7 @@ Server handlers pass `garageSlots` as `(property as any).garage_slots || 2` when
 | `vehicle:store` | Session; `getPropertyById`; `property.owner_player_id === session.oderId` | `storeVehicle(..., garageSlots)`; on success emits `vehicle:garageVehicles` for that property. |
 | `vehicle:storeNearby` | Same property ownership | `storeNearbyVehicle(player, ...)`; same refresh. |
 | `vehicle:getGarageVehicles` | Session | `getGarageVehicles(oderId, propertyId)` → `vehicle:garageVehicles` (no ownership check in handler — client should only open garage for owned property). |
-| `vehicle:spawnFromGarage` | Session; property exists | Spawns at `garage_x/y/z` or falls back to `pos_x/y/z`; `garage_heading` or 0; `spawnVehicle(player, vehicleId, ...)`; refreshes garage list. |
+| `vehicle:spawnFromGarage` | Session; property exists; **`property.owner_player_id === session.oderId`**; `getVehicleById(vehicleId)` with **`player_id === session.oderId`**, **`garage_property_id === propertyId`**, **`is_spawned === false`** | Spawns at `garage_x/y/z` or falls back to `pos_x/y/z`; `garage_heading` or 0; `spawnVehicle(player, vehicleId, ...)`; refreshes garage list. |
 
 Property row fields: `garage_slots`, `garage_x`, `garage_y`, `garage_z`, `garage_heading` (see `properties` table / `Property` interface).
 

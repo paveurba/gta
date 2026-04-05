@@ -9,9 +9,9 @@ Maps **VEH-03** to `VehicleService` constants and server/client flow.
 
 ## Purchase RPC
 
-- Client: `vehicle:buy(model, modelHash, price)`.
+- Client: `vehicle:buy(model, modelHash, price)` — `price` is ignored server-side (kept for RPC compatibility).
 - Server: `buyVehicle(session.oderId, model, modelHash, price, session.money)`.
-- **Trust model:** Server uses **client-supplied** `price` and `modelHash` for deduction and insert; it does not re-validate against `VEHICLE_CATALOG` in `buyVehicle` (operators should treat catalog enforcement as a future hardening item).
+- **Trust model:** `VehicleService.resolveCatalogVehicle` requires `model` (trimmed, lowercased) **and** `modelHash` to match the **same** `VEHICLE_CATALOG` row. Purchase **always** charges **`catalogItem.price`** and persists **`catalogItem.model`** / **`catalogItem.hash`**. Mismatch → failure before any money or row mutation.
 
 ## `VEHICLE_DEALERSHIPS` (exact coordinates from source)
 

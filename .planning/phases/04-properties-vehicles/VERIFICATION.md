@@ -39,4 +39,19 @@ gap_closure: Phase 7 (AUD-VERIFY-01)
 
 ## Notes
 
-Retrospective verification for [v1.0 audit](../../v1.0-MILESTONE-AUDIT.md). Phase executed without per-plan `SUMMARY.md` (addressed in Phase 8 gap closure). `vehicle:buy` catalog trust noted in audit **INT-02** (Phase 9).
+Retrospective verification for [v1.0 audit](../../v1.0-MILESTONE-AUDIT.md). Phase executed without per-plan `SUMMARY.md` (addressed in Phase 8 gap closure).
+
+### Phase 9 — manual checks (trust hardening)
+
+**AUD-TRUST-01 (`vehicle:buy` / catalog)** — after code change:
+
+1. At a dealership, buy a catalog vehicle with normal UI → succeeds; money deducts **catalog** price; row uses catalog model/hash.
+2. If you can trigger `vehicle:buy` with a wrong hash for a valid model name (e.g. dev RPC) → expect **failure** and **no** `player_vehicles` insert / money change.
+3. Wrong model string for a valid hash → **failure**.
+
+**AUD-TRUST-02 (`vehicle:spawnFromGarage`)** — after code change:
+
+1. Open garage at **owned** property, spawn a stored vehicle → succeeds.
+2. Spawning with a `propertyId` you do not own → denied (even if vehicle id is yours).
+3. Vehicle stored in **another** property’s garage → denied at this `propertyId`.
+4. Already-spawned vehicle id → denied.

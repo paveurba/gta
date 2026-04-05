@@ -928,6 +928,27 @@ alt.onClient('vehicle:spawnFromGarage', async (player, vehicleId: number, proper
         notifyPlayer(player, 'Property not found');
         return;
     }
+    if (property.owner_player_id !== session.oderId) {
+        notifyPlayer(player, 'You don\'t own this property');
+        return;
+    }
+    const dbVehicle = await vehicleService.getVehicleById(vehicleId);
+    if (!dbVehicle) {
+        notifyPlayer(player, 'Vehicle not found');
+        return;
+    }
+    if (dbVehicle.player_id !== session.oderId) {
+        notifyPlayer(player, 'You don\'t own this vehicle');
+        return;
+    }
+    if (dbVehicle.garage_property_id !== propertyId) {
+        notifyPlayer(player, 'This vehicle is not stored in this garage');
+        return;
+    }
+    if (dbVehicle.is_spawned) {
+        notifyPlayer(player, 'Vehicle is already spawned');
+        return;
+    }
     const garageX = (property as any).garage_x || property.pos_x;
     const garageY = (property as any).garage_y || property.pos_y;
     const garageZ = (property as any).garage_z || property.pos_z;

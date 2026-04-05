@@ -24,6 +24,10 @@ Full compile uses **`scripts/compile.js`** (invoked by **`pnpm refresh`**, **`pn
 
 **`src/main/shared/webview/index.ts`** and **`src/main/client/webview/index.ts`** bridge Rebar’s webview events (`SystemEvents.player.webview` in shared types): page show/hide, RPC, localStorage, etc.
 
+## Requirements traceability
+
+**WEBV-01** (archived [v1.0 requirements](../../milestones/v1.0-REQUIREMENTS.md)) is satisfied by the pipeline above and this section: Vue is the Rebar webview **shell**; gameplay UIs listed under **Native vs Vue** are **not** implemented as Vue pages in this repo. Audit **INT-01** / **AUD-DOC-01** — README + milestone wording aligned in v1.1 gap closure.
+
 ## Native vs Vue (scope)
 
 Primary gameplay UIs in **`gta-mysql-core/client/index.ts`** are **native** (drawn with GTA natives): **auth**, **phone**, **property**, **shops**, **dealership**, **chat**, death overlay, HUD.

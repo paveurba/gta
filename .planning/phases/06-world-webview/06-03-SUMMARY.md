@@ -44,7 +44,7 @@ completed: 2026-04-06
 ## Accomplishments
 
 - Documented `scripts/compile.js` steps, `pnpm webview:dev`, and smoke checklist.
-- Clarified **WEBV-01** as “bundle builds and integrates”; **INT-01** README/requirement wording polish is **AUD-DOC-01** / Phase 9.
+- **AUD-DOC-01** / Phase 9: **WEBV-01** line in archived `v1.0-REQUIREMENTS.md` plus **Requirements traceability** in `06-WEBVIEW.md` (INT-01).
 
 ## Deviations from Plan
 

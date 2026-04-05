@@ -128,13 +128,26 @@ export class VehicleService {
         return (rows as any[])[0].count;
     }
 
+    /** Server-authoritative catalog match; client `price` is ignored (RPC keeps arg for compatibility). */
+    private resolveCatalogVehicle(model: string, modelHash: number): VehicleCatalogItem | null {
+        const normalized = model.trim().toLowerCase();
+        const item = VEHICLE_CATALOG.find((v) => v.model === normalized && v.hash === modelHash);
+        return item ?? null;
+    }
+
     async buyVehicle(
         playerId: number,
         model: string,
         modelHash: number,
-        price: number,
+        _clientPrice: number,
         playerMoney: number
     ): Promise<{ success: boolean; message: string; newBalance?: number; vehicleId?: number }> {
+        const catalogItem = this.resolveCatalogVehicle(model, modelHash);
+        if (!catalogItem) {
+            return { success: false, message: 'Invalid vehicle or catalog mismatch' };
+        }
+
+        const price = catalogItem.price;
         if (playerMoney < price) {
             return { success: false, message: `Not enough money. Need $${price.toLocaleString()}` };
         }
@@ -144,7 +157,7 @@ export class VehicleService {
         const [result] = await this.pool.execute(
             `INSERT INTO player_vehicles (player_id, model, model_hash, color_primary, color_secondary) 
              VALUES (?, ?, ?, 0, 0)`,
-            [playerId, model, modelHash]
+            [playerId, catalogItem.model, catalogItem.hash]
         );
 
         const vehicleId = (result as any).insertId;
@@ -157,11 +170,16 @@ export class VehicleService {
         await this.pool.execute(
             `INSERT INTO transaction_logs (player_id, transaction_type, amount, description) 
              VALUES (?, 'vehicle_purchase', ?, ?)`,
-            [playerId, -price, `Purchased ${model}`]
+            [playerId, -price, `Purchased ${catalogItem.model}`]
         );
 
-        alt.log(`[VehicleService] Player ${playerId} bought ${model} for $${price}`);
-        return { success: true, message: `Purchased ${model} for $${price.toLocaleString()}`, newBalance, vehicleId };
+        alt.log(`[VehicleService] Player ${playerId} bought ${catalogItem.model} for $${price}`);
+        return {
+            success: true,
+            message: `Purchased ${catalogItem.model} for $${price.toLocaleString()}`,
+            newBalance,
+            vehicleId,
+        };
     }
 
     async sellVehicle(

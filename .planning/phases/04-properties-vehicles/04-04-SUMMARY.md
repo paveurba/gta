@@ -6,7 +6,7 @@ tags: altv, dealership, catalog
 
 requires: []
 provides:
-  - 04-DEALERSHIP.md for VEHICLE_CATALOG, VEHICLE_DEALERSHIPS, vehicle:buy trust model
+  - 04-DEALERSHIP.md for VEHICLE_CATALOG, VEHICLE_DEALERSHIPS, vehicle:buy + server catalog trust model
   - README /dealership and coordinates vs code
 affects: []
 
@@ -21,7 +21,7 @@ key-files:
     - README.md
 
 key-decisions:
-  - "Explicitly document client-supplied price/hash on vehicle:buy (catalog re-validation deferred)"
+  - "Dealership doc tracks server catalog authority for vehicle:buy (AUD-TRUST-01 / Phase 9)"
 
 patterns-established: []
 
@@ -34,7 +34,7 @@ completed: 2026-04-06
 
 # Phase 4: Plan 04-04 Summary
 
-**Dealership locations, 45-entry catalog exposure, and purchase RPC are documented with an honest server trust note.**
+**Dealership locations, 45-entry catalog exposure, and purchase RPC are documented; server-side catalog enforcement is implemented in Phase 9 (AUD-TRUST-01).**
 
 ## Performance
 
@@ -48,7 +48,7 @@ completed: 2026-04-06
 
 ## Deviations from Plan
 
-None. Catalog price enforcement is **AUD-TRUST-01** / Phase 9.
+None. **AUD-TRUST-01** catalog enforcement landed in Phase 9; `04-DEALERSHIP.md` and `VERIFICATION.md` updated accordingly.
 
 ## Task commits
 
