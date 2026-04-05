@@ -26,7 +26,7 @@
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | PROP-INT-01 | 10 | Complete |
-| REFACTOR-01 | 11 | Pending |
+| REFACTOR-01 | 11 | In progress _(planned: `11-01`, `11-02`)_ |
 
 ## v2 backlog (reference)
 

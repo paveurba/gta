@@ -24,11 +24,20 @@ Plans:
 
 - [x] 10-01: Interior enter/exit without server `player.pos` snap; `buildPropertyInteriorEnterPayload`
 
-### Phase 11 (planned): Server modularization (incremental)
+### Phase 11: Server modularization (incremental)
 
-**Goal:** Extract one domain (e.g. vehicles or properties) from `server/index.ts` into focused modules **when** touching that code — no big-bang rewrite.
+**Goal:** Extract **vehicle** and **property** client RPC wiring from `server/index.ts` into `server/events/register*ClientEvents.ts` registrars with small typed **context** objects (KISS / SRP). No behavior change.
 
-**Requirements:** REFACTOR-01 _(backlog; plan when starting)_
+**Requirements:** REFACTOR-01
+
+**Plans:** 2
+
+Plans:
+
+- [ ] 11-01: **`registerVehicleClientEvents`** — all `vehicle:*` `alt.onClient` handlers
+- [ ] 11-02: **`registerPropertyClientEvents`** — all `property:*` `alt.onClient` handlers (after 11-01 pattern)
+
+**Artifacts:** [`.planning/phases/11-server-modularization/11-CONTEXT.md`](phases/11-server-modularization/11-CONTEXT.md), `11-01-PLAN.md`, `11-02-PLAN.md`
 
 ---
 

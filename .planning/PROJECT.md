@@ -15,7 +15,7 @@ A **GTA Online–style alt:V multiplayer server** built on the **Rebar** framewo
 **Roadmap:** [`.planning/ROADMAP.md`](.planning/ROADMAP.md)
 
 - **Done (phase 10):** Property interior enter/exit — **client-authoritative** teleport; shared `PropertyService` payload helpers (fixes server position snap / wrong exterior spawn).
-- **Planned (phase 11):** Incremental **`server/index.ts`** extraction (REFACTOR-01) when touching a domain — KISS, no big-bang.
+- **Planned (phase 11):** Incremental **`server/index.ts`** extraction (REFACTOR-01) — see [`.planning/phases/11-server-modularization/`](.planning/phases/11-server-modularization/) plans **11-01** (vehicle RPC registrar) and **11-02** (property RPC registrar).
 - **Still backlog:** **TEST-01/02**, **MAIL-01**, **`vehicle:spawn`** ownership hardening, Nyquist files — promote via requirements when ready.
 
 ## Core Value
