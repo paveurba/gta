@@ -15,10 +15,10 @@ A full-featured GTA Online-style multiplayer server built on alt:V with the Reba
 - **Casino**: Slots and roulette via chat and/or in-world client flow; bets update MySQL cash and `casino_transactions`
 
 ### World
-- **GTA Online Style**: No AI pedestrians or traffic (clean multiplayer environment)
-- **Static Parked Vehicles**: 45+ vehicles parked in realistic locations around the city
-- **Map Blips**: All shops, properties, hospitals, and casino marked on the map
-- **Death/Respawn System**: Players respawn at nearest hospital with $500 fee after 5 seconds
+- **GTA Online Style**: No ambient pedestrians or traffic — client zeros density **every frame** and disables population budgets / dispatch on **`connectionComplete`** (see `disableAmbientPopulation` / `disablePopulationOnce` in `client/index.ts`)
+- **Static Parked Vehicles**: **46** server-spawned parked vehicles from `PARKED_VEHICLE_SPAWNS` in `server/index.ts` (unlocked, engine off)
+- **Map Blips**: Weapon, clothing, casino, property, hospital, and dealership markers from `gta:locations:update`, `property:list`, and client constants — details in `.planning/phases/06-world-webview/06-BLIPS-AND-STATIC.md`
+- **Death/Respawn System**: Server **`playerDeath`** → nearest **`HOSPITAL_SPAWNS`** after **5000 ms**; **$500** hospital fee when the player has enough cash (`HOSPITAL_FEE` in `server/index.ts`). Client shows a matching **5 s** WASTED overlay and fee hint
 
 ## Tech Stack
 
@@ -27,6 +27,11 @@ A full-featured GTA Online-style multiplayer server built on alt:V with the Reba
 - **MySQL 8** - Player data, money, weapons, properties, phone
 - **MongoDB** - Rebar core character documents
 - **Docker / Docker Compose** - Containerized deployment
+- **Vue 3 + Vite** - Rebar **webview** UI shell; production bundle is written to **`resources/webview`** (`webview/vite.config.ts`). Full compile (**TypeScript + webview**) runs inside **`scripts/compile.js`**, which Docker/`pnpm refresh` uses — see **Webview** below
+
+## Webview (Vue)
+
+Gameplay HUDs documented above (auth, phone, shops, properties, etc.) are implemented in the **native** `gta-mysql-core` client, not in Vue. The **`webview/`** app is still built on every full **`compile.js`** run (`pnpm refresh`, Docker image build, `pnpm start`) and outputs to **`resources/webview`**. **`webview/pages/plugins.ts`** → **`PLUGIN_IMPORTS`** is auto-generated and may be **empty** until you register plugin pages. For build steps and smoke checks, see `.planning/phases/06-world-webview/06-WEBVIEW.md`.
 
 ## Quick Start
 
@@ -278,19 +283,23 @@ Eight stores; names and coords match `CLOTHING_SHOP_LOCATIONS`:
 - **Diamond Casino** — `924.0, 46.0, 81.1`
 
 ### Hospitals (Pink cross icon)
-- Pillbox Hill Medical Center
-- Mount Zonah Medical Center
-- Sandy Shores Medical Center
-- Paleto Bay Medical Center
+
+Map blips use **client** coords (`HOSPITALS` in `client/index.ts`). **Death respawn** uses **server** **`HOSPITAL_SPAWNS`** (street-level); for Pillbox they differ so the icon is near the hospital while spawn uses configured ground coords.
+
+| Hospital (blip) | Blip x,y,z |
+|-----------------|------------|
+| Pillbox Hill Medical Center | 340.25, -580.59, 28.82 |
+| Mount Zonah Medical Center | -449.67, -340.55, 34.51 |
+| Sandy Shores Medical Center | 1839.44, 3672.71, 34.28 |
+| Paleto Bay Medical Center | -247.46, 6331.23, 32.43 |
 
 ### Vehicle Dealerships (Yellow car icon)
 - **Premium Deluxe Motorsport** — `-56.49, -1097.25, 26.42` (`/dealership` teleports here)
 - **Simeon's Dealership** — `-31.66, -1106.95, 26.42`
 
 ### Properties (House icons)
-- Green = For sale
-- Blue = Owned by you
-- Gray = Owned by another player
+- **Green** = For sale (`owner_player_id` null)
+- **Blue** = Owned (any owner; blip label shows “(Owned)” — the client does **not** use a separate grey blip for other players’ properties)
 
 **Property Locations with Garage Slots:**
 | Property | Price | Garage Slots |

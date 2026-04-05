@@ -58,14 +58,14 @@ Capabilities the server is expected to provide (baseline for verification and fu
 
 ### World & UX
 
-- [ ] **WORLD-01**: Map blips mark shops, properties, hospitals, casino, dealerships
-- [ ] **WORLD-02**: Static parked vehicles spawn at configured world locations
-- [ ] **WORLD-03**: On death, user respawns at nearest hospital with documented fee and delay
-- [ ] **WORLD-04**: Ambient pedestrians and traffic remain disabled (multiplayer-clean world)
+- [x] **WORLD-01**: Map blips mark shops, properties, hospitals, casino, dealerships
+- [x] **WORLD-02**: Static parked vehicles spawn at configured world locations
+- [x] **WORLD-03**: On death, user respawns at nearest hospital with documented fee and delay
+- [x] **WORLD-04**: Ambient pedestrians and traffic remain disabled (multiplayer-clean world)
 
 ### Webview
 
-- [ ] **WEBV-01**: In-game webview (Vue) loads for phone and related UI flows
+- [x] **WEBV-01**: In-game webview (Vue) loads for phone and related UI flows
 
 ### Operations
 
@@ -126,11 +126,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CLTH-02 | Phase 5 | Complete |
 | CASI-01 | Phase 5 | Complete |
 | CASI-02 | Phase 5 | Complete |
-| WORLD-01 | Phase 6 | Pending |
-| WORLD-02 | Phase 6 | Pending |
-| WORLD-03 | Phase 6 | Pending |
-| WORLD-04 | Phase 6 | Pending |
-| WEBV-01 | Phase 6 | Pending |
+| WORLD-01 | Phase 6 | Complete |
+| WORLD-02 | Phase 6 | Complete |
+| WORLD-03 | Phase 6 | Complete |
+| WORLD-04 | Phase 6 | Complete |
+| WEBV-01 | Phase 6 | Complete |
 
 **Coverage:**
 
