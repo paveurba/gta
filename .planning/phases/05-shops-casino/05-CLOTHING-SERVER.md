@@ -1,6 +1,6 @@
 # Phase 05 — Clothing (server reference)
 
-Maps **CLTH-01**, **CLTH-02** to `ClothingShopService` and `clothingshop:*` in `src/plugins/gta-mysql-core/server/index.ts`.
+Maps **CLTH-01**, **CLTH-02** to `ClothingShopService` and `clothingshop:*` in `src/plugins/gta-mysql-core/server/events/registerClothingShopClientEvents.ts` (wired from `server/index.ts`).
 
 ## Catalog (`CLOTHING_CATALOG`)
 
@@ -48,7 +48,7 @@ Trusted tuple `(component, drawable, texture)` from client: if not in catalog, p
 
 ## When outfit is applied
 
-**`applyCharacterLook`** (`index.ts`): `appearanceService.loadOrCreateDefaultAppearance` + Rebar appearance apply, then **`loadPlayerClothing`**. Used from **`completeLogin`** and **hospital respawn** after death.
+**`applyCharacterLook`** (`server/index.ts`): `appearanceService.loadOrCreateDefaultAppearance` + Rebar appearance apply, then **`loadPlayerClothing`**. Used from **`completeLogin`** and **hospital respawn** (`registerPlayerLifecycleEvents`) after death.
 
 **`/sex`**: after model change, calls `loadPlayerClothing` again.
 

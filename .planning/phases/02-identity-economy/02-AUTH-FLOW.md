@@ -1,7 +1,7 @@
 # Auth flow (server reference)
 
 **Phase:** 02 — Identity & economy  
-**Source of truth:** `src/plugins/gta-mysql-core/server/index.ts`, `AuthService.ts`
+**Source of truth:** `src/plugins/gta-mysql-core/server/events/registerAuthClientEvents.ts` (wired from `server/index.ts`), `AuthService.ts`
 
 ## Entry points
 

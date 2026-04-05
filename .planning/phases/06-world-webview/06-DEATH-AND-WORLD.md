@@ -2,9 +2,9 @@
 
 Maps **WORLD-03** and **WORLD-04**.
 
-## Death / hospital respawn (`server/index.ts`)
+## Death / hospital respawn (`server/events/registerPlayerLifecycleEvents.ts`)
 
-Handler: **`alt.on('playerDeath', ...)`**.
+Handler: **`alt.on('playerDeath', ...)`** (registered from **`registerPlayerLifecycleEvents`**; wired in **`server/index.ts`**).
 
 1. Resolves **`getNearestHospital(deathPos)`** over **`HOSPITAL_SPAWNS`** (4 entries: Pillbox, Mount Zonah, Sandy Shores, Paleto).
 2. **`alt.setTimeout(..., 5000)`** — **5 seconds** before respawn.

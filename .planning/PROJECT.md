@@ -15,7 +15,7 @@ A **GTA Online–style alt:V multiplayer server** built on the **Rebar** framewo
 **Roadmap:** [`.planning/ROADMAP.md`](.planning/ROADMAP.md)
 
 - **Done (phase 10):** Property interior enter/exit — **client-authoritative** teleport; shared `PropertyService` payload helpers (fixes server position snap / wrong exterior spawn).
-- **Done (phase 11):** **`server/events/registerVehicleClientEvents.ts`** and **`registerPropertyClientEvents.ts`** — **REFACTOR-01** slice (all `vehicle:*` / `property:*` `alt.onClient` wiring out of `index.ts`).
+- **Done (phase 11):** Server modularization — **REFACTOR-01** (**11-01**, **11-02**): `vehicle:*` / `property:*` registrars; **REFACTOR-02** (**11-03**): lifecycle (`registerPlayerLifecycleEvents`), `auth:*`, chat + **`handleChatCommand`**, phone, weapon/clothing/casino registrars, shared **`PlayerSession`** (~**420** LOC **`index.ts`** orchestration only).
 - **Still backlog:** **TEST-01/02**, **MAIL-01**, **`vehicle:spawn`** ownership hardening, Nyquist files — promote via requirements when ready.
 
 ## Core Value
@@ -43,8 +43,8 @@ Players can **join the server, persist a character economy (cash/bank), and use 
 
 ### Active
 
-- [ ] **Further modularization** — auth, shops, casino, `handleCommand` still in `index.ts` (promote when you add **REFACTOR-02** or next milestone)
-- [ ] Keep **documentation and planning** aligned as the repo evolves
+- [ ] Optional **further split** — static parked spawns / `bindCharacter` helpers could move out of `index.ts` if it grows again (no requirement until promoted).
+- [ ] Keep **documentation and planning** aligned as the repo evolves (**GSD**: plan before or immediately after substantial refactors).
 - [ ] Address **technical debt** in CONCERNS when prioritized
 
 ### Out of Scope
@@ -54,7 +54,7 @@ Players can **join the server, persist a character economy (cash/bank), and use 
 
 ## Context
 
-- Brownfield codebase: primary plugin `src/plugins/gta-mysql-core/` with long `server/index.ts` orchestration and dedicated **services**.
+- Brownfield codebase: primary plugin `src/plugins/gta-mysql-core/` with **`server/index.ts`** orchestration (**~420** LOC), **`register*ClientEvents`**, **`handleChatCommand`**, and dedicated **services**.
 - See `.planning/codebase/ARCHITECTURE.md` and `STACK.md` for structure and dependencies.
 - Public feature reference: root `README.md`.
 
@@ -69,7 +69,7 @@ Players can **join the server, persist a character economy (cash/bank), and use 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
 | MySQL for custom gameplay, Mongo for Rebar | Separation of concerns | ✓ Good |
-| Monolithic `server/index.ts` | Fast delivery | ⚠️ Revisit if unmaintainable |
+| Monolithic `server/index.ts` | Fast delivery | ⚠️ Mitigated by phase **11** registrars; optional further splits if needed |
 | Server-authoritative vehicle catalog on buy | Close INT-02 / exploitation risk | ✓ Good — v1.1 |
 
 ## Evolution
@@ -80,4 +80,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-_Last updated: 2026-04-05 — **v1.2**: phase 10 (PROP-INT-01) + phase 11 (**REFACTOR-01** vehicle/property registrars)._
+_Last updated: 2026-04-06 — **v1.2**: phase 10 (**PROP-INT-01**) + phase 11 (**REFACTOR-01** + **REFACTOR-02**, plans **11-01**–**11-03**)._

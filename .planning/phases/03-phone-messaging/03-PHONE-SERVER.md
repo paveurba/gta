@@ -1,6 +1,6 @@
 # Phone & messaging — server reference
 
-**Source:** `src/plugins/gta-mysql-core/server/services/PhoneService.ts`, `src/plugins/gta-mysql-core/server/index.ts`
+**Source:** `src/plugins/gta-mysql-core/server/services/PhoneService.ts`, `src/plugins/gta-mysql-core/server/events/registerPhoneClientEvents.ts` (wired from `server/index.ts`)
 
 ## MySQL tables
 
@@ -20,7 +20,7 @@ All handlers require `playerSessions.get(player.id)` (logged-in); they use `sess
 | `phone:deleteContact` | `contactId` → `deleteContact` → notify (no auto `phone:data` emit) |
 | `phone:sendMessage` | `(receiverId, message)` → `sendMessage(session.oderId, receiverId, message)` → notify sender |
 
-## Chat commands (`handleCommand`)
+## Chat commands (`handleChatCommand`)
 
 | Command | Usage string | Behavior |
 |---------|----------------|----------|

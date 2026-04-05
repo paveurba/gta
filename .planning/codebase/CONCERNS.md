@@ -1,6 +1,6 @@
 # Concerns
 
-**Analysis Date:** 2026-04-05
+**Analysis Date:** 2026-04-06
 
 ## Test coverage
 
@@ -9,7 +9,7 @@
 
 ## Operational
 
-- **Large orchestration file:** `src/plugins/gta-mysql-core/server/index.ts` is very long (1000+ lines), which increases merge conflict risk and makes navigation harder.
+- **Orchestration file:** `src/plugins/gta-mysql-core/server/index.ts` is **~420** lines after phase **11** (registrars + **`handleChatCommand`**). Remaining bulk is static parked vehicle data and session/login helpers — still a merge hotspot if many hands touch it.
 - **Docker / arch:** README notes possible `linux/amd64` emulation on ARM Macs — performance and debugging overhead.
 
 ## Security
@@ -28,4 +28,4 @@
 
 ---
 
-_Concerns analysis: 2026-04-05_
+_Concerns analysis: 2026-04-06_

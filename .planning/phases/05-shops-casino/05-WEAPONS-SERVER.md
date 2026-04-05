@@ -1,6 +1,6 @@
 # Phase 05 — Weapons (server reference)
 
-Maps **WPN-01**, **WPN-02** to `WeaponShopService`, `PlayerWeaponService`, and `weaponshop:*` in `src/plugins/gta-mysql-core/server/index.ts`.
+Maps **WPN-01**, **WPN-02** to `WeaponShopService`, `PlayerWeaponService`, and `weaponshop:*` handlers in `src/plugins/gta-mysql-core/server/events/registerWeaponShopClientEvents.ts` (wired from `server/index.ts`).
 
 ## Catalog
 

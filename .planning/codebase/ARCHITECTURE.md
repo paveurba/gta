@@ -1,6 +1,6 @@
 # Architecture
 
-**Analysis Date:** 2026-04-05
+**Analysis Date:** 2026-04-06
 
 ## Pattern Overview
 
@@ -9,7 +9,7 @@
 **Key characteristics:**
 
 - Single primary gameplay plugin: `gta-mysql-core` (server + client entrypoints).
-- **Procedural registration** — Chat commands, keybinds, interactions, and blips wired in `server/index.ts` and `client/index.ts`.
+- **Procedural registration** — Server: `server/index.ts` calls **`register*()`** functions (lifecycle, auth, chat, shops, phone, casino, property, vehicle); **`commands/handleChatCommand.ts`** owns `/` routing. Client: `client/index.ts` for keybinds, blips, interactions.
 - **Stateless game logic per request** with **persistent state in MySQL** (pool-per-process).
 
 ## Layers
@@ -17,7 +17,7 @@
 **Server plugin (`gta-mysql-core/server`):**
 
 - **Purpose:** alt:V lifecycle, player sessions, command routing, business operations.
-- **Contains:** `index.ts` (orchestration), `services/*.ts` (domain logic), `events/register*ClientEvents.ts` (thin `alt.onClient` registrars for property/vehicle RPCs), `repositories/*.ts` (data access helpers), `database/migrations.ts`.
+- **Contains:** `index.ts` (pool, services, session helpers, static parked spawns, **`register*()`** wiring), `services/*.ts` (domain logic), `events/register*ClientEvents.ts` + `registerPlayerLifecycleEvents.ts` (thin `alt.on` / `alt.onClient` registrars), `commands/handleChatCommand.ts` (chat `/` commands), `types/playerSession.ts`, `repositories/*.ts`, `database/migrations.ts`.
 - **Depends on:** `mysql2`, Rebar (`useRebar()`), `alt-server`.
 - **Used by:** alt:V server runtime when resource starts.
 
@@ -41,13 +41,13 @@
 **Player login / session:**
 
 1. Player connects via alt:V client to server (`GAME_PORT`, default 7788).
-2. Rebar handles character/account; plugin tracks `PlayerSession` in `server/index.ts` (in-memory session keyed by player, backed by MySQL for durable data).
+2. Rebar handles character/account; plugin tracks **`PlayerSession`** in memory (`types/playerSession.ts`, map in `server/index.ts`), backed by MySQL for durable data.
 3. Chat commands (`/login`, `/register`, etc.) invoke `AuthService` and related services.
 4. Services read/write via `mysql2` pool (repositories where used).
 
 **Economy / inventory flows:**
 
-- Money, weapons, vehicles, properties — each has a dedicated service (`PlayerWeaponService`, `VehicleService`, `PropertyService`, etc.) called from command handlers and interaction callbacks in `server/index.ts`.
+- Money, weapons, vehicles, properties — each has a dedicated service (`PlayerWeaponService`, `VehicleService`, `PropertyService`, etc.) called from **`handleChatCommand`**, registrars, and session helpers wired from `server/index.ts`.
 
 **State management:**
 
@@ -76,7 +76,7 @@
 
 **Server resource:**
 
-- `src/plugins/gta-mysql-core/server/index.ts` — registers alt:V events, commands, tick handlers, and initializes MySQL after `getMySQLPool()`.
+- `src/plugins/gta-mysql-core/server/index.ts` — initializes MySQL after `getMySQLPool()`, then registers gameplay via **`registerPlayerLifecycleEvents`**, **`registerAuthClientEvents`**, **`registerChatClientEvents`**, shop/phone/casino/property/vehicle registrars (no inline `alt.onClient` in `index.ts`).
 
 **Client resource:**
 
@@ -99,9 +99,9 @@
 
 **World presentation:**
 
-- Blips, static vehicles, shop locations — configured as data + registration blocks in `server/index.ts` (see imports of `WEAPON_SHOP_LOCATIONS`, `CASINO_LOCATIONS`, etc.).
+- Blips, static vehicles — `PARKED_VEHICLE_SPAWNS` + `spawnStaticParkedVehicles` in `server/index.ts`. Shop/casino POI lists are imported in **`registerPlayerLifecycleEvents`** for `gta:locations:update` on connect.
 
 ---
 
-_Architecture analysis: 2026-04-05_
+_Architecture analysis: 2026-04-06_
 _Update when major patterns change_

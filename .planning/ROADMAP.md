@@ -26,25 +26,26 @@ Plans:
 
 ### Phase 11: Server modularization (incremental)
 
-**Goal:** Extract **vehicle** and **property** client RPC wiring from `server/index.ts` into `server/events/register*ClientEvents.ts` registrars with small typed **context** objects (KISS / SRP). No behavior change.
+**Goal:** Move **`alt.onClient`** and core **`alt.on`** gameplay wiring out of `server/index.ts` into **`register*()`** modules and **`handleChatCommand`** (KISS / SRP). No behavior change.
 
-**Requirements:** REFACTOR-01
+**Requirements:** **REFACTOR-01** (11-01, 11-02), **REFACTOR-02** (11-03)
 
-**Plans:** 2
+**Plans:** 3
 
 Plans:
 
 - [x] 11-01: **`registerVehicleClientEvents`** — all `vehicle:*` `alt.onClient` handlers
 - [x] 11-02: **`registerPropertyClientEvents`** — all `property:*` `alt.onClient` handlers (after 11-01 pattern)
+- [x] 11-03: **Lifecycle + auth + chat + shops + phone + casino** — `registerPlayerLifecycleEvents`, `registerAuthClientEvents`, `registerChatClientEvents`, `handleChatCommand`, shop/phone/casino registrars; shared **`PlayerSession`**
 
-**Artifacts:** [`.planning/phases/11-server-modularization/11-CONTEXT.md`](phases/11-server-modularization/11-CONTEXT.md), `11-01-PLAN.md`, `11-02-PLAN.md`
+**Artifacts:** [`.planning/phases/11-server-modularization/11-CONTEXT.md`](phases/11-server-modularization/11-CONTEXT.md), `11-01-PLAN.md`, `11-02-PLAN.md`, `11-03-PLAN.md`
 
 ---
 
 ### Backlog (from v1.1)
 
 - **GSD-NYQUIST-01** — optional `*-VALIDATION.md`
-- **CONCERNS.md** — TEST-01/02, full `server/index.ts` split
+- **CONCERNS.md** — TEST-01/02; **`index.ts`** still holds parked spawns + session/login helpers (optional future slice)
 
 ---
 

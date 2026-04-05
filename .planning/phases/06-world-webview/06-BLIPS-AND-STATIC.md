@@ -18,7 +18,7 @@ Maps **WORLD-01** and **WORLD-02** to `gta-mysql-core` client/server code.
 
 ### Server → client
 
-On **`playerConnect`** (`server/index.ts`):
+On **`playerConnect`** (`registerPlayerLifecycleEvents`, wired from `server/index.ts`):
 
 1. **`gta:locations:update`** with `WEAPON_SHOP_LOCATIONS`, `CLOTHING_SHOP_LOCATIONS`, `CASINO_LOCATIONS`.
 2. **`property:list`** with `getAllProperties()` for blips + markers.
@@ -30,7 +30,7 @@ After buy/sell property, **`broadcastPropertyUpdate`** re-emits `property:list` 
 | Purpose | Source | Pillbox Hill example |
 |---------|--------|----------------------|
 | **Map blip** | `HOSPITALS` in `client/index.ts` | `340.25, -580.59, 28.82` |
-| **Death respawn** | `HOSPITAL_SPAWNS` in `server/index.ts` | `307.32, -595.38, 43.29` (street-level spawn) |
+| **Death respawn** | `HOSPITAL_SPAWNS` in `registerPlayerLifecycleEvents.ts` | `307.32, -595.38, 43.29` (street-level spawn) |
 
 Other three hospitals use the **same** x,y,z between client blip list and server spawn table. Pillbox differs so the icon sits near the medical plaza while the player spawns at configured street coords.
 

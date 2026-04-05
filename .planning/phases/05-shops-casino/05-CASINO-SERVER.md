@@ -1,6 +1,6 @@
 # Phase 05 — Casino (server reference)
 
-Maps **CASI-01**, **CASI-02** to `CasinoService` and casino RPCs / chat in `index.ts`.
+Maps **CASI-01**, **CASI-02** to `CasinoService`, `registerCasinoClientEvents.ts` (RPCs), and **`handleChatCommand`** (`/slots`, `/roulette`).
 
 ## Location (`CASINO_LOCATIONS`)
 
@@ -51,7 +51,7 @@ Chat **`/roulette <bet> <type> <value>`**: defaults `betType = 'color'`, `betVal
 
 | Client → server | Notes |
 |-----------------|--------|
-| `casino:playSlots` | Same logic as `/slots`; emits `casino:slotsResult` on success path in `index.ts`. |
+| `casino:playSlots` | Same logic as `/slots`; emits `casino:slotsResult` on success path in `registerCasinoClientEvents.ts`. |
 | `casino:playRoulette` | Same as `/roulette`; `casino:rouletteResult`. |
 | `casino:getHistory` | Session → `getPlayerHistory` → `casino:history`. |
 

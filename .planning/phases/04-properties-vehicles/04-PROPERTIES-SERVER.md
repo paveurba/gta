@@ -1,6 +1,6 @@
 # Phase 04 — Properties (server reference)
 
-Maps **PROP-01**–**PROP-04** to `PropertyService` and `property:*` handlers in `src/plugins/gta-mysql-core/server/index.ts`.
+Maps **PROP-01**–**PROP-04** to `PropertyService` and `property:*` handlers in `src/plugins/gta-mysql-core/server/events/registerPropertyClientEvents.ts` (wired from `server/index.ts`).
 
 ## `PropertyService` (`PropertyService.ts`)
 
