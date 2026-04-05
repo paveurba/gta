@@ -10,7 +10,7 @@ The codebase already implements the documented GTA-style multiplayer server. Pha
 - [x] **Phase 2: Identity & economy** — Auth and money persistence (completed 2026-04-05)
 - [x] **Phase 3: Phone & messaging** — Contacts, SMS, native phone UI (**M** key) (**UI hint**: yes) (completed 2026-04-05)
 - [x] **Phase 4: Properties & vehicles** — Housing, garages, ownership, spawning (completed 2026-04-05)
-- [ ] **Phase 5: Shops & casino** — Weapons, clothing, gambling flows
+- [x] **Phase 5: Shops & casino** — Weapons, clothing, gambling flows (completed 2026-04-05)
 - [ ] **Phase 6: World & webview** — Blips, static vehicles, death/respawn, Vue UI
 
 ## Phase Details
@@ -122,9 +122,9 @@ Plans:
 
 Plans:
 
-- [ ] 05-01: Weapon shop catalog, locations, persistence
-- [ ] 05-02: Clothing shop catalog, locations, persistence
-- [ ] 05-03: Casino bet validation, outcomes, and DB side effects
+- [x] 05-01: Weapon shop catalog, locations, persistence
+- [x] 05-02: Clothing shop catalog, locations, persistence
+- [x] 05-03: Casino bet validation, outcomes, and DB side effects
 
 ### Phase 6: World & webview
 
@@ -161,7 +161,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 2. Identity & economy | 3/3 | Complete    | 2026-04-05 |
 | 3. Phone & messaging | 2/2 | Complete    | 2026-04-05 |
 | 4. Properties & vehicles | 4/4 | Complete    | 2026-04-05 |
-| 5. Shops & casino | 0/3 | Planned     | - |
+| 5. Shops & casino | 3/3 | Complete    | 2026-04-05 |
 | 6. World & webview | 0/3 | Not started | - |
 
 ---

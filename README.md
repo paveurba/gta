@@ -10,9 +10,9 @@ A full-featured GTA Online-style multiplayer server built on alt:V with the Reba
 - **Phone System**: Contacts and SMS-style messages (native in-game phone menu on **M**; not the Vue webview)
 - **Property System**: Buy, sell, enter, and exit properties with garages
 - **Vehicle System**: Buy, sell, store vehicles in property garages
-- **Weapon Shop**: Purchase weapons and ammo from Ammu-Nation (weapons persist)
-- **Clothing Shop**: Buy and save outfits
-- **Casino**: Slot machines and roulette with betting
+- **Weapon Shop**: Ammu-Nation — native client menu (**E** at red blips); weapons and ammo persist in MySQL (not the Vue webview)
+- **Clothing Shop**: Native client menu (**E** at blue blips); outfits persist in `player_clothes`
+- **Casino**: Slots and roulette via chat and/or in-world client flow; bets update MySQL cash and `casino_transactions`
 
 ### World
 - **GTA Online Style**: No AI pedestrians or traffic (clean multiplayer environment)
@@ -121,10 +121,30 @@ Cash and bank are stored in the **`players`** table in MySQL. The session is upd
 **Buying catalog vehicles:** Use **E** at a dealership to open the native client menu (`client/index.ts`), then purchase via `vehicle:buy`. There is no `/buyvehicle` chat command for the catalog.
 
 ### Weapons
+
+Catalog purchases use the **native** weapon shop UI in `src/plugins/gta-mysql-core/client/index.ts`: stand near an **Ammu-Nation** red blip and press **E** to open the menu (`weaponshop:getCatalog` / `weaponshop:buy`). Ammo refills use **`weaponshop:buyAmmo`** from the same shop flow when implemented in the client.
+
 | Command | Description |
 |---------|-------------|
-| `/weapons` | List available weapons |
-| `/buyweapon <name>` | Purchase a weapon |
+| `/weapons` | Short hint + sample weapon names (full list in-game via shop catalog) |
+| `/buyweapon <name>` | Buy by catalog **name** (e.g. `/buyweapon Pistol`) — same server path as `weaponshop:buy` |
+
+**Ammu-Nation coordinates** (`WEAPON_SHOP_LOCATIONS` in code):
+
+| x | y | z |
+|---|-----|-----|
+| 19.80 | -1106.90 | 29.80 |
+| -661.90 | -933.50 | 21.83 |
+| 811.20 | -2159.40 | 29.62 |
+| 1692.80 | 3761.40 | 34.71 |
+| -330.70 | 6085.20 | 31.45 |
+| 2569.30 | 292.40 | 108.73 |
+
+See also `.planning/phases/05-shops-casino/05-WEAPONS-SERVER.md`.
+
+### Clothing
+
+There is **no** chat command to buy clothing; use **E** at a clothing store (**blue** blip) for the native menu (`clothingshop:getCatalog`, preview, `clothingshop:buy`). Purchased components are stored in **`player_clothes`** and re-applied on login and respawn (after appearance). Details: `.planning/phases/05-shops-casino/05-CLOTHING-SERVER.md`.
 
 ### Properties
 | Command | Description |
@@ -136,10 +156,16 @@ Cash and bank are stored in the **`players`** table in MySQL. The session is upd
 **Garages:** Each property has a **`garage_slots`** limit in MySQL (see table below). Storing a vehicle checks the count of rows in `player_vehicles` with that `garage_property_id`; when full, the server returns a message containing **`Garage is full`**. Use the property menu’s garage flow (client) or the `vehicle:store` / `vehicle:storeNearby` RPCs documented under phase 04 planning.
 
 ### Casino
+
+Bets must be between **$100** and **$100,000** and cannot exceed cash on hand (`CasinoService.validateBet`). Outcomes update **`players.money`**, **`casino_transactions`**, and **`transaction_logs`**.
+
 | Command | Description |
 |---------|-------------|
-| `/slots <bet>` | Play slot machine |
-| `/roulette <bet> <type> <value>` | Play roulette |
+| `/slots <bet>` | Play slots; **default bet 100** if `<bet>` omitted or invalid |
+| `/roulette <bet> <type> <value>` | **Defaults:** `type=color`, `value=red` if omitted. Types: **`number`** (value 0–36), **`color`** (`red` / `black` / `green`), **`odd`**, **`even`** (value ignored) |
+| `/casino` | Teleport to **Diamond Casino** `924.0, 46.0, 81.1` (same as `CASINO_LOCATIONS[0]`) |
+
+Examples: `/roulette 500 color black`, `/roulette 200 number 7`, `/roulette 100 even 0`. RPCs `casino:playSlots` / `casino:playRoulette` mirror these rules. More detail: `.planning/phases/05-shops-casino/05-CASINO-SERVER.md`.
 
 ### Phone
 
@@ -221,25 +247,35 @@ src/plugins/gta-mysql-core/
 ## Map Locations
 
 ### Weapon Shops (Red gun icon)
-- Ammu-Nation Pillbox Hill
-- Ammu-Nation Little Seoul
-- Ammu-Nation Cypress Flats
-- Ammu-Nation Sandy Shores
-- Ammu-Nation Paleto Bay
-- Ammu-Nation Tataviam Mountains
+
+Six **Ammu-Nation** markers; coordinates match `WEAPON_SHOP_LOCATIONS`:
+
+| x | y | z |
+|---|-----|-----|
+| 19.80 | -1106.90 | 29.80 |
+| -661.90 | -933.50 | 21.83 |
+| 811.20 | -2159.40 | 29.62 |
+| 1692.80 | 3761.40 | 34.71 |
+| -330.70 | 6085.20 | 31.45 |
+| 2569.30 | 292.40 | 108.73 |
 
 ### Clothing Shops (Blue shirt icon)
-- Suburban (Innocence Blvd)
-- Suburban (Chumash)
-- Suburban (Hawick)
-- Ponsonbys (Rockford Hills)
-- Ponsonbys (Burton)
-- Binco (Del Perro)
-- Discount Store (Pillbox Hill)
-- Discount Store (Harmony)
+
+Eight stores; names and coords match `CLOTHING_SHOP_LOCATIONS`:
+
+| x | y | z | Label |
+|---|-----|-----|--------|
+| 72.30 | -1398.90 | 29.37 | Suburban |
+| -163.10 | -302.70 | 39.73 | Ponsonbys |
+| -1192.60 | -768.30 | 17.32 | Binco |
+| 425.70 | -806.20 | 29.49 | Discount Store |
+| -708.20 | -152.30 | 37.42 | Ponsonbys |
+| -1193.90 | -766.90 | 17.32 | Suburban |
+| 127.00 | -223.20 | 54.56 | Suburban |
+| 617.30 | 2759.60 | 42.09 | Discount Store |
 
 ### Casino (Gold chip icon)
-- Diamond Casino
+- **Diamond Casino** — `924.0, 46.0, 81.1`
 
 ### Hospitals (Pink cross icon)
 - Pillbox Hill Medical Center

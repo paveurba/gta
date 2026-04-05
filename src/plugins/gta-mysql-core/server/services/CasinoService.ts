@@ -156,12 +156,15 @@ export class CasinoService {
         let multiplier = 0;
 
         switch (betType) {
-            case 'number':
-                if (spinResult.number === betValue) {
+            case 'number': {
+                const target =
+                    typeof betValue === 'number' ? betValue : parseInt(String(betValue), 10);
+                if (!Number.isNaN(target) && spinResult.number === target) {
                     won = true;
                     multiplier = 35; // 35:1 for exact number
                 }
                 break;
+            }
             case 'color':
                 if (spinResult.color === betValue) {
                     won = true;

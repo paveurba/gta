@@ -43,18 +43,18 @@ Capabilities the server is expected to provide (baseline for verification and fu
 
 ### Weapons
 
-- [ ] **WPN-01**: User can view weapon catalog and buy weapons at Ammu-Nation locations
-- [ ] **WPN-02**: Owned weapons and ammo persist in MySQL
+- [x] **WPN-01**: User can view weapon catalog and buy weapons at Ammu-Nation locations
+- [x] **WPN-02**: Owned weapons and ammo persist in MySQL
 
 ### Clothing
 
-- [ ] **CLTH-01**: User can purchase clothing at configured shops
-- [ ] **CLTH-02**: Outfit components persist in MySQL
+- [x] **CLTH-01**: User can purchase clothing at configured shops
+- [x] **CLTH-02**: Outfit components persist in MySQL
 
 ### Casino
 
-- [ ] **CASI-01**: User can play slots with a bet command
-- [ ] **CASI-02**: User can play roulette with bet/type/value command
+- [x] **CASI-01**: User can play slots with a bet command
+- [x] **CASI-02**: User can play roulette with bet/type/value command
 
 ### World & UX
 
@@ -120,12 +120,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | VEH-03 | Phase 4 | Complete |
 | VEH-04 | Phase 4 | Complete |
 | VEH-05 | Phase 4 | Complete |
-| WPN-01 | Phase 5 | Pending |
-| WPN-02 | Phase 5 | Pending |
-| CLTH-01 | Phase 5 | Pending |
-| CLTH-02 | Phase 5 | Pending |
-| CASI-01 | Phase 5 | Pending |
-| CASI-02 | Phase 5 | Pending |
+| WPN-01 | Phase 5 | Complete |
+| WPN-02 | Phase 5 | Complete |
+| CLTH-01 | Phase 5 | Complete |
+| CLTH-02 | Phase 5 | Complete |
+| CASI-01 | Phase 5 | Complete |
+| CASI-02 | Phase 5 | Complete |
 | WORLD-01 | Phase 6 | Pending |
 | WORLD-02 | Phase 6 | Pending |
 | WORLD-03 | Phase 6 | Pending |
