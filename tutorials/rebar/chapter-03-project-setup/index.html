@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.4.0.828736056344">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.3.0">
+    <meta name="generator" content="Retype 4.4.0">
 
     <!-- Primary Meta Tags -->
     <title>Chapter 3. Project Setup</title>
@@ -39,11 +39,11 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.4.0.828736056344" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.4.0.828736056344" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.4.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.4.0.828736056344" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -175,11 +175,10 @@
 <p>Cloning a repository means you&#x27;re going to download some source code from a GitHub website, in the case here we&#x27;ll be cloning the Rebar repository into some location on our computer. For the sake of this book, I&#x27;m cloning the repository into a separate disk <code translate="no" v-pre>D:</code> drive under the location <code translate="no" v-pre>D:/projects/rebar-altv</code>.</p>
 <p>Right-click the base folder where you wish to clone the repository, and click <code translate="no" v-pre>Open in Terminal</code>. This will open the terminal in the current directory that you have open.</p>
 <p>**Ensure you do not clone it to any folders with spaces, or special characters. **</p>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/book/open-terminal.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1119" height="441" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <p>Now run the follow command in the <code translate="no" v-pre>Terminal</code> to clone the repository.</p>
 <div id="cloning-the-repository-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">git clone https://github.com/Stuyk/rebar-altv/</code></pre>
@@ -204,11 +203,10 @@
 <li>Compile the Code Once</li>
 </ol>
 <p>Here&#x27;s an example of a successful installation.</p>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/book/successful-install.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1113" height="550" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <h2 id="running-the-server">Running the Server</h2>
 <p>With that all said and done, we will be using the <code translate="no" v-pre>Terminal</code> to <strong>Start and Stop</strong> the server. We want to verify that everything is loading correctly throughout the entire framework.</p>
 <p>We&#x27;ll be using <code translate="no" v-pre>dev</code> mode to ensure the server starts. Use your <code translate="no" v-pre>Terminal</code> to run the following command.</p>
@@ -217,11 +215,10 @@
 </doc-codeblock></div>
 <p>Your console should output a similar output to what you see below, if all resources are <code translate="no" v-pre>Loaded</code> then you are successful!</p>
 <p>Additionally, when you start modifying source code <strong>your development server will automatically reload and reconnect your game</strong>.</p>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/book/successful-run.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1113" height="892" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <h2 id="configuring-altv-client">Configuring alt:V Client</h2>
 <p>When you are working on a server, you are more often than not going to want to run your alt:V client with <code translate="no" v-pre>debug</code> set to <code translate="no" v-pre>true</code>.</p>
 <p>Open your alt:V Client folder where it&#x27;s installed. Usually it&#x27;s under the following path:</p>
@@ -229,11 +226,10 @@
 <pre translate="no" class="language-none"><code v-pre class="language-none">C:\Users\your-username-here\AppData\Local\altv</code></pre>
 </doc-codeblock></div>
 <p>Open <code translate="no" v-pre>altv.toml</code> in VSCode, you can do this by <code translate="no" v-pre>right-clicking</code> the file and clicking <code translate="no" v-pre>Open with Code</code>.</p>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/book/vscode-altv-client-debug.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="831" height="433" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <p>Make sure to <strong>SAVE THE FILE</strong> and then restart your alt:V client.</p>
 <h2 id="connecting-to-the-server">Connecting to the Server</h2>
 <p>Once you have the server running in the above steps, you can <code translate="no" v-pre>Direct Connect</code> to your server with the following IP by opening the alt:V Client and using the in-game interface to connect to your server.</p>

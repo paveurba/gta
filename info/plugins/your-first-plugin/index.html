@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.4.0.828736056344">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.3.0">
+    <meta name="generator" content="Retype 4.4.0">
 
     <!-- Primary Meta Tags -->
     <title>Your First Plugin</title>
@@ -39,12 +39,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.4.0.828736056344" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.4.0.828736056344" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.4.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.4.0.828736056344" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.4.0.828736056344" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -181,39 +181,35 @@
 <p>You can read more about that <a href="https://docs.altv.mp/articles/configs/client.html">here</a>.</p>
 <h2 id="folder-setup">Folder Setup</h2>
 <p>Open the entire Rebar Folder in VSCode. You should see a file tree on the left with all of your files.</p>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/first-plugin/vscode.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1333" height="984" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <h3 id="accessing-plugin-folder">Accessing Plugin Folder</h3>
 <p>Navigate based on the following folders:</p>
 <div id="accessing-plugin-folder-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">src/plugins</code></pre>
 </doc-codeblock></div>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/first-plugin/vscode_plugin_folder.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="448" height="119" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <h3 id="create-a-new-folder">Create a New folder</h3>
 <p>Create a new folder by right-clicking the <code translate="no" v-pre>plugins</code> folder and making one.</p>
 <p>Name the folder whatever you want, but it needs to be in English.</p>
 <p>For the sake of this tutorial, I named mine <code translate="no" v-pre>a-cool-plugin</code>.</p>
 <h3 id="create-2-new-folders">Create 2 New Folders</h3>
 <p>Create 2 new folders inside of <code translate="no" v-pre>a-cool-plugin</code> and name them <code translate="no" v-pre>server</code> and <code translate="no" v-pre>client</code>.</p>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/first-plugin/vscode_cool_plugin.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="412" height="198" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <h3 id="create-2-new-files">Create 2 New Files</h3>
 <p>You are going to now create 2 files named <code translate="no" v-pre>index.ts</code> inside both <code translate="no" v-pre>server</code> and <code translate="no" v-pre>client</code>.</p>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/first-plugin/vscode_ts_files.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="412" height="260" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <h2 id="setup-typescript-files">Setup TypeScript Files</h2>
 <p>Now that you have your files created, we need to add some content to both of them.</p>
 <p>Make sure to <strong>save your files</strong> after editing them!</p>
@@ -241,11 +237,10 @@ alt.log('Hello from Client!');</code></pre>
 <p>In VSCode at the top, click on <code translate="no" v-pre>Terminal</code> and then click <code translate="no" v-pre>New Terminal</code>.</p>
 <p>Simply run <code translate="no" v-pre>pnpm dev</code> to start your server.</p>
 <p>You will then see that your plugin has loaded, and you&#x27;ll have some logs in your server console.</p>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/first-plugin/vscode_dev.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="782" height="319" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <p>Additionally, you can see the result in your <strong>client console in-game</strong> which can be opened with <code translate="no" v-pre>F8</code>.</p>
 
                 

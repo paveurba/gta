@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.4.0.828736056344">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.3.0">
+    <meta name="generator" content="Retype 4.4.0">
 
     <!-- Primary Meta Tags -->
     <title>Chapter 10. Authentication Plugin</title>
@@ -39,12 +39,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.4.0.828736056344" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.4.0.828736056344" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.4.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.4.0.828736056344" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.4.0.828736056344" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -244,11 +244,10 @@ const rPlayer = Rebar.usePlayer(player);
 rPlayer.world.freezeCamera(true);</code></pre>
 </doc-codeblock></div>
 <h3 id="result">Result</h3>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/book/cam-freeze.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1280" height="720" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <h2 id="server-config-settings">Server Config Settings</h2>
 <p>Additionally, we&#x27;re going to add a server configuration setting that will automatically hide the radar in the bottom left when any WebView page is open. This can be done anywhere outside of the player connection function. Make sure it&#x27;s outside of it.</p>
 <div id="server-config-settings-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -301,11 +300,10 @@ rPlayer.world.disableControls();</code></pre>
 </doc-codeblock></div>
 <h3 id="initial-result">Initial Result</h3>
 <p>You should see a <code translate="no" v-pre>hello world</code> in the top-left of your screen.</p>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/book/blurred-screen.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="691" height="463" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <h2 id="building-a-form">Building a Form</h2>
 <p>We&#x27;re going to need to modify the <code translate="no" v-pre>Authentication.vue</code> and make it act as a form. We&#x27;ll be utilizing a little bit of Tailwind CSS to make the form take form.</p>
 <h3 id="before-building">Before Building</h3>

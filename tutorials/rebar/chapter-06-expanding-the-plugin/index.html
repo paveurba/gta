@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.4.0.828736056344">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.3.0">
+    <meta name="generator" content="Retype 4.4.0">
 
     <!-- Primary Meta Tags -->
     <title>Chapter 6. Expanding the Plugin</title>
@@ -39,12 +39,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.4.0.828736056344" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.4.0.828736056344" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.4.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.4.0.828736056344" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.4.0.828736056344" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -195,11 +195,10 @@ alt.on('playerConnect', (player) =&gt; {
 </doc-codeblock></div>
 <h3 id="verify-results">Verify Results</h3>
 <p>Head in-game and verify that you spawn at the given location, and you have a model loaded for your player. At this stage you should be able to move around in-game and walk around in an empty world.</p>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/book/first-spawn.jpg" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1280" height="720" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <h2 id="give-the-player-a-weapon">Give the Player a Weapon</h2>
 <p>Let&#x27;s modify that source <code translate="no" v-pre>alt.on</code> event so that when they spawn it also gives them a gun. Here&#x27;s a few weapon models you can use.</p>
 <ul>
@@ -230,11 +229,10 @@ alt.on('playerConnect', (player) =&gt; {
 </doc-codeblock></div>
 <h3 id="verify-results-1">Verify Results</h3>
 <p>Head in-game and verify that you can select weapons with <code translate="no" v-pre>Tab</code> and you can shoot those weapons as well.</p>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/book/first-give-weapon.jpg" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1280" height="720" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <h2 id="wait-a-minute">Wait a Minute!</h2>
 <p>We&#x27;re already writing some basic code to do some basic things in-game. Yet you may have no idea what kind of code you&#x27;re writing and what that code does.</p>
 <p>While, it may seem like we&#x27;re reading plain English, our next section is going to explain more about how programming works.</p>

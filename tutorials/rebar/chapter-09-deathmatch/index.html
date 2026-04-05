@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.4.0.828736056344">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.3.0">
+    <meta name="generator" content="Retype 4.4.0">
 
     <!-- Primary Meta Tags -->
     <title>Chapter 9. Free for All Death Match Gamemode</title>
@@ -39,12 +39,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.4.0.828736056344" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.4.0.828736056344" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.4.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.4.0.828736056344" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.4.0.828736056344" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -294,11 +294,10 @@ Rebar.controllers
 </doc-codeblock></div>
 <h3 id="verify-the-pickup-works">Verify the Pickup Works</h3>
 <p>Next step is verifying that the pickup works. Go ahead and head in-game and walk over to the pickup location. The two positions are at the top of the subway platform.</p>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/book/weapon-pickup.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="793" height="423" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <h3 id="notifying-the-player">Notifying the Player</h3>
 <p>Now that we have the player picking up a weapon, we can also let them know they&#x27;ve picked up the weapon.</p>
 <p>We can do this by slightly modifying the pickup controller.</p>
@@ -323,11 +322,10 @@ Rebar.controllers
         rPlayer.notify.showNotification(`You picked up the Railgun!`);
     });</code></pre>
 </doc-codeblock></div>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/book/weapon-pickup-notification.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="556" height="297" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <h2 id="markers">Markers</h2>
 <p>Now that we&#x27;ve messed with some pickups, let&#x27;s really show the player that the pickup&#x27;s are there, and we can do that by using markers.</p>
 <p>Markers are effectively colorful holograms to show a player something in the world.</p>
@@ -364,11 +362,10 @@ Rebar.controllers.useMarkerGlobal({
     scale: new alt.Vector3(2, 2, 1),
 });</code></pre>
 </doc-codeblock></div>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/book/marker-preview.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="668" height="408" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <p>Look at that, now we have a nice marker to really draw the player to the location.</p>
 <h2 id="interactions">Interactions</h2>
 <p>Interactions require the player to press the <code translate="no" v-pre>E</code> key in-game for something to happen. They&#x27;re effectively a super simple way to trigger a certain function when the key is pressed.</p>
@@ -484,11 +481,10 @@ Rebar.controllers.useTextLabelGlobal({
     text: `E - Use Elevator`,
 });</code></pre>
 </doc-codeblock></div>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/book/text-labels.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="657" height="351" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <h2 id="timers">Timers</h2>
 <p>There are a lot of cases where you want something to happen after a certain period of time. Let&#x27;s say that we only want the Railgun to be available every 15 seconds after it&#x27;s picked up.</p>
 <p>What we&#x27;re going to do is make it so that when the Railgun is taken, it will destroy itself, and then it will create a timer to respawn the Railgun after 15 seconds.</p>

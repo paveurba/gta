@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.3.0.827086457300">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.4.0.828736056344">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.3.0">
+    <meta name="generator" content="Retype 4.4.0">
 
     <!-- Primary Meta Tags -->
     <title>Chapter 5. Your First Plugin</title>
@@ -39,12 +39,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../../resources/css/retype.css?v=4.3.0.827086457300" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.4.0.828736056344" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.3.0.827086457300" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.3.0.827086457300" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.4.0.828736056344" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.4.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.4.0.828736056344" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.4.0.828736056344" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -195,11 +195,10 @@
 </doc-codeblock></div>
 <p><em>Alternatively, feel free to use the file tree to create your <code translate="no" v-pre>index.ts</code> files under the <code translate="no" v-pre>src/plugins/my-first-plugin</code> folders.</em></p>
 <p>Here&#x27;s a preview of what you should have as a folder structure.</p>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/book/plugin-structure.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="264" height="185" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 <h2 id="setup-serverindexts">Setup server/index.ts</h2>
 <p>Inside of our <code translate="no" v-pre>server/index.ts</code> file we&#x27;re going to need to add some source code. Copy and paste the following code to get the initial setup ready.</p>
 <div id="setup-serverindexts-code-1" class="codeblock-wrapper"><doc-codeblock>
@@ -223,11 +222,10 @@ alt.log('Hello from client!');</code></pre>
 <p>While this may not seem like much for our first plugin, it will print some data to your client console <code translate="no" v-pre>F8</code> in-game.</p>
 <p>We can also find the printed data in our server console as well.</p>
 <p>If you are successful, you will see <code translate="no" v-pre>Hello from server!</code> printed in the console.</p>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../../../static/book/first-plugin-run.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="743" height="467" />
     <figcaption class="caption"></figcaption>
 </figure>
-</p>
 
                 
                 <!-- Required only on API pages -->
