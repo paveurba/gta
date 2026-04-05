@@ -9,15 +9,15 @@ Capabilities the server is expected to provide (baseline for verification and fu
 
 ### Authentication
 
-- [ ] **AUTH-01**: User can register an account with email and password via chat
-- [ ] **AUTH-02**: User can log in with email and password via chat
-- [ ] **AUTH-03**: Passwords are stored using bcrypt (hashed, not plaintext)
-- [ ] **AUTH-04**: Session ties player to persisted account for MySQL-backed features
+- [x] **AUTH-01**: User can register an account with username, email, and password via the **Auth UI** (press **T**)
+- [x] **AUTH-02**: User can log in with **username or email** and password via the **Auth UI** (press **T**)
+- [x] **AUTH-03**: Passwords are stored using bcrypt (hashed, not plaintext)
+- [x] **AUTH-04**: Session ties player to persisted account for MySQL-backed features
 
 ### Economy
 
-- [ ] **ECON-01**: User can view cash and bank balance via chat
-- [ ] **ECON-02**: Money changes persist across reconnects (MySQL)
+- [x] **ECON-01**: User can view cash and bank balance via chat
+- [x] **ECON-02**: Money changes persist across reconnects (MySQL)
 
 ### Phone
 
@@ -101,12 +101,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | OPS-01 | Phase 1 | Complete |
 | OPS-02 | Phase 1 | Complete |
 | OPS-03 | Phase 1 | Complete |
-| AUTH-01 | Phase 2 | Pending |
-| AUTH-02 | Phase 2 | Pending |
-| AUTH-03 | Phase 2 | Pending |
-| AUTH-04 | Phase 2 | Pending |
-| ECON-01 | Phase 2 | Pending |
-| ECON-02 | Phase 2 | Pending |
+| AUTH-01 | Phase 2 | Complete |
+| AUTH-02 | Phase 2 | Complete |
+| AUTH-03 | Phase 2 | Complete |
+| AUTH-04 | Phase 2 | Complete |
+| ECON-01 | Phase 2 | Complete |
+| ECON-02 | Phase 2 | Complete |
 | PHON-01 | Phase 3 | Pending |
 | PHON-02 | Phase 3 | Pending |
 | PHON-03 | Phase 3 | Pending |

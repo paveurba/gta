@@ -7,7 +7,7 @@ The codebase already implements the documented GTA-style multiplayer server. Pha
 ## Phases
 
 - [x] **Phase 1: Platform & persistence** — Docker stack, migrations, documented refresh path (completed 2026-04-05)
-- [ ] **Phase 2: Identity & economy** — Auth and money persistence
+- [x] **Phase 2: Identity & economy** — Auth and money persistence (completed 2026-04-05)
 - [ ] **Phase 3: Phone & messaging** — Contacts, SMS, phone UI (**UI hint**: yes)
 - [ ] **Phase 4: Properties & vehicles** — Housing, garages, ownership, spawning
 - [ ] **Phase 5: Shops & casino** — Weapons, clothing, gambling flows
@@ -55,9 +55,9 @@ Plans:
 
 Plans:
 
-- [ ] 02-01: Trace `AuthService` + session binding from chat through MySQL
-- [ ] 02-02: Verify bcrypt configuration and failure modes (wrong password, duplicate email)
-- [ ] 02-03: Verify money read/write and persistence across reconnect
+- [x] 02-01: Trace `AuthService` + session binding from chat through MySQL
+- [x] 02-02: Verify bcrypt configuration and failure modes (wrong password, duplicate email)
+- [x] 02-03: Verify money read/write and persistence across reconnect
 
 ### Phase 3: Phone & messaging
 
@@ -158,7 +158,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Platform & persistence | 3/3 | Complete    | 2026-04-05 |
-| 2. Identity & economy | 0/3 | Planned    |  |
+| 2. Identity & economy | 3/3 | Complete    | 2026-04-05 |
 | 3. Phone & messaging | 0/2 | Not started | - |
 | 4. Properties & vehicles | 0/4 | Not started | - |
 | 5. Shops & casino | 0/3 | Not started | - |

@@ -89,12 +89,22 @@ This runs a full rebuild (TypeScript + webview) inside Docker and restarts all g
 ## Chat Commands
 
 ### Authentication
-| Command | Description |
-|---------|-------------|
-| `/register <email> <password>` | Create new account |
-| `/login <email> <password>` | Login to existing account |
+
+Registration and login use the **Auth UI** (press **T** to open). The UI talks to the server over `auth:register` / `auth:login` (not chat arguments).
+
+| Action | Description |
+|--------|-------------|
+| **Register** | In the Auth UI: provide **username** (3–32 chars, letters/numbers/`_`/`-`), **email**, and **password** (min 6 chars). |
+| **Login** | In the Auth UI: **username or email** plus **password**. |
+| `/register`, `/login` | Not supported as chat commands — the server replies: `Use the Auth menu (press T) to login or register.` |
+| `/logout` | Log out (saves weapons, clears session). |
+
+**Passwords:** Stored in MySQL as **bcrypt** hashes (`players.password_hash`). Cost rounds come from **`BCRYPT_ROUNDS`** in `.env` (default **10**). See `src/plugins/gta-mysql-core/server/services/AuthService.ts`.
 
 ### Money
+
+Cash and bank are stored in the **`players`** table in MySQL. The session is updated on commands and written with `UPDATE players SET money = ?, bank = ? WHERE email = ?` on disconnect, respawn fees, `/givemoney`, and other spend flows.
+
 | Command | Description |
 |---------|-------------|
 | `/money` | Check cash and bank balance |
