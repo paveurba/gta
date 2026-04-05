@@ -18,8 +18,8 @@ Phases **7–9** close items from [`.planning/v1.0-MILESTONE-AUDIT.md`](v1.0-MIL
 
 Plans:
 
-- [ ] 07-01: VERIFICATION.md for phases **01–03** (platform, identity/economy, phone)
-- [ ] 07-02: VERIFICATION.md for phases **04–06** (properties/vehicles, shops/casino, world/webview)
+- [x] 07-01: VERIFICATION.md for phases **01–03** (platform, identity/economy, phone)
+- [x] 07-02: VERIFICATION.md for phases **04–06** (properties/vehicles, shops/casino, world/webview)
 
 ### Phase 8: Retroactive plan summaries (phases 4–6)
 
