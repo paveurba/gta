@@ -8,7 +8,7 @@ A **GTA Online–style alt:V multiplayer server** built on the **Rebar** framewo
 
 - **v1.0** completed **2026-04-06** (GSD phases 1–6, 18 plans, 34 v1 requirements). Archives: [`.planning/milestones/v1.0-ROADMAP.md`](.planning/milestones/v1.0-ROADMAP.md), [`.planning/milestones/v1.0-REQUIREMENTS.md`](.planning/milestones/v1.0-REQUIREMENTS.md). Git tag: **`v1.0`**.
 - **v1.1 gap closure** completed **2026-04-06** (phases 7–9 — GSD verification retrofit, retro plan summaries, server catalog/garage trust + WEBV wording). Archives: [`.planning/milestones/v1.1-ROADMAP.md`](.planning/milestones/v1.1-ROADMAP.md), [`.planning/milestones/v1.1-REQUIREMENTS.md`](.planning/milestones/v1.1-REQUIREMENTS.md). Summary: [`.planning/MILESTONES.md`](.planning/MILESTONES.md). Git tag: **`v1.1`**.
-- **v1.2** in progress — quality / clean-code refactors; **phase 10** fixes property interior client teleport (see ROADMAP).
+- **v1.2** in progress — quality / refactors + **CI compile gate** (**TEST-02**, phase **12**); see ROADMAP.
 
 ## Next milestone goals (v1.2 — active)
 
@@ -16,7 +16,8 @@ A **GTA Online–style alt:V multiplayer server** built on the **Rebar** framewo
 
 - **Done (phase 10):** Property interior enter/exit — **client-authoritative** teleport; shared `PropertyService` payload helpers (fixes server position snap / wrong exterior spawn).
 - **Done (phase 11):** Server modularization — **REFACTOR-01**–**03** (**11-01**–**11-04**): registrars + **`handleChatCommand`** + **`createGameplayMysqlBundle`** + **`createPlayerRuntime`** + **`world/spawnStaticParkedVehicles`**; **`index.ts`** ~**222** LOC (wiring only).
-- **Still backlog:** **TEST-01/02**, **MAIL-01**, **`vehicle:spawn`** ownership hardening, Nyquist files — promote via requirements when ready.
+- **Done (phase 12):** **TEST-02** — **`.github/workflows/ci.yml`** runs **`pnpm run compile:ts`** on push/PR to **`main`**.
+- **Still backlog:** **TEST-01**, **MAIL-01**, **`vehicle:spawn`** ownership hardening, Nyquist files — promote via requirements when ready.
 
 ## Core Value
 
@@ -40,6 +41,7 @@ Players can **join the server, persist a character economy (cash/bank), and use 
 - ✓ **GSD verification artifacts** — `VERIFICATION.md` per phase dir 01–06 — v1.1
 - ✓ **GSD retro summaries** — `NN-MM-SUMMARY.md` for phases 4–6 plans — v1.1
 - ✓ **Property interior teleport** — server does not set `player.pos` for IPL interiors; client + `buildPropertyInteriorEnterPayload` — v1.2
+- ✓ **CI compile gate** — GitHub Actions **`ci.yml`** (**TEST-02**, phase **12**)
 
 ### Active
 

@@ -17,6 +17,7 @@
 | **REFACTOR-01** | Extract **`vehicle:*`** and **`property:*`** client RPC wiring from `server/index.ts` into **`register*ClientEvents`** with typed context (**11-01**, **11-02**). No speculative abstractions. |
 | **REFACTOR-02** | Extract remaining server wiring: **`playerConnect` / `Disconnect` / `Death`**, **`auth:*`**, chat + **`handleChatCommand`**, phone, weapon/clothing/casino shop RPCs; shared **`PlayerSession`** (**11-03**). No behavior change. |
 | **REFACTOR-03** | Extract **`index.ts`** remainder: MySQL pool + service construction (**`createGameplayMysqlBundle`**), player/session helpers (**`createPlayerRuntime`**), static parked vehicles (**`spawnStaticParkedVehicles`**). No behavior change (**11-04**). |
+| **TEST-02** | **GitHub Actions** **`ci.yml`**: **`pnpm run compile:ts`** on **push** and **pull_request** to **`main`**. Install uses **`--ignore-scripts`** because root **`postinstall`** runs **`altv-pkg`** / **`build:docker`** (not CI-safe). **Lint** in CI deferred (no shared eslint script; Prettier optional follow-up). |
 
 ### Checklist (v1.2)
 
@@ -24,6 +25,7 @@
 - [x] **REFACTOR-01**
 - [x] **REFACTOR-02**
 - [x] **REFACTOR-03**
+- [x] **TEST-02**
 
 ## Traceability (v1.2)
 
@@ -33,13 +35,13 @@
 | REFACTOR-01 | 11 | Complete _(11-01, 11-02 — vehicle + property registrars)_ |
 | REFACTOR-02 | 11 | Complete _(11-03 — lifecycle, auth, chat commands, shops, phone, casino)_ |
 | REFACTOR-03 | 11 | Complete _(11-04 — bootstrap, player runtime, parked world spawns)_ |
+| TEST-02 | 12 | Complete _(12-01 — CI compile workflow)_ |
 
 ## v2 backlog (reference)
 
 | ID | Theme | Summary |
 |----|--------|---------|
 | TEST-01 | Hardening | Automated tests for critical services or repositories |
-| TEST-02 | Hardening | CI runs compile and lint on push |
 | MAIL-01 | Email | Optional SMTP-based verification or notifications in production |
 
 ## Out of scope (reference)
@@ -52,4 +54,4 @@
 
 ---
 
-_Updated: 2026-04-06 — **v1.2** active; phase **11** complete (**11-01**–**11-04**)._
+_Updated: 2026-04-06 — **v1.2** active; phases **11**–**12** complete (**11-01**–**11-04**, **12-01**)._

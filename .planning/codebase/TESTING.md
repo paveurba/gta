@@ -1,11 +1,11 @@
 # Testing
 
-**Analysis Date:** 2026-04-05
+**Analysis Date:** 2026-04-06
 
 ## Automated tests
 
-- **Unit / integration:** No `*.test.ts`, `*.spec.ts`, or Jest/Vitest config observed in the repository root or `webview/` at analysis time.
-- **CI:** No dedicated GitHub Actions / CI workflow files were required for this mapping pass; rely on local `pnpm compile:ts` and Docker build for compile verification.
+- **Unit / integration:** No `*.test.ts`, `*.spec.ts`, or Jest/Vitest config observed in the repository root or `webview/` at analysis time (**TEST-01** backlog).
+- **CI:** **`.github/workflows/ci.yml`** runs **`pnpm run compile:ts`** on **push** and **pull_request** to **`main`** (**TEST-02**). Install uses **`--ignore-scripts`** (root **`postinstall`** is not CI-safe).
 
 ## Manual verification
 
@@ -20,4 +20,4 @@
 
 ---
 
-_Testing analysis: 2026-04-05_
+_Testing analysis: 2026-04-06_

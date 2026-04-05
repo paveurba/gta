@@ -4,8 +4,8 @@
 
 ## Test coverage
 
-- **Gap:** No automated test suite detected; regressions rely on manual playtesting and compile-time checks.
-- **Risk:** Database and service changes can break gameplay flows without immediate signal.
+- **Partial mitigation (v1.2):** **GitHub Actions** runs **`pnpm run compile:ts`** on push/PR to **`main`** (**TEST-02**). No unit/integration test suite yet (**TEST-01** backlog).
+- **Risk:** Gameplay and DB logic can still regress without automated tests; compile-only CI catches TS/transpile breaks.
 
 ## Operational
 
