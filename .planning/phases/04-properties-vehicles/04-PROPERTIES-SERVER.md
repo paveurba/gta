@@ -25,8 +25,8 @@ All require login where noted; session uses `session.oderId` (MySQL player id).
 |--------|--------|---------------------|---------------------|
 | `property:buy` | Session | `buyProperty(oderId, propertyId, money)` | `property:buyResult`; on success updates session money, `syncMoneyToClient`, `broadcastPropertyUpdate` |
 | `property:sell` | Session | `sellProperty` | `property:sellResult`; same money sync |
-| `property:enter` | Session | Load property; owner check; valid `interior_*` (non-zero triple); `player.pos` → interior; `playersInProperty.set(player.id, propertyId)` | `property:enterResult` + `interior` payload (`heading`, `ipl`) |
-| `property:exit` | — | `playersInProperty.get`; load property; `player.pos` → `pos_x/y/z + 1`; map delete | `property:exitResult` + `exterior` |
+| `property:enter` | Session | Load property; owner check; `buildPropertyInteriorEnterPayload` (valid `interior_*`); **`playersInProperty.set`** only — **no** `player.pos` on server (client teleports after IPL/collision; server-side interior pos caused wrong world sync / exterior snap) | `property:enterResult` + `interior` payload (`heading`, `ipl`) |
+| `property:exit` | — | `playersInProperty.get`; load property; map delete; **no** server `player.pos` (client `property:exitResult` teleports to door) | `property:exitResult` + `exterior` |
 
 Also: `property:getList` / `property:requestList` → `getAllProperties` → `property:list` (full list for blips/UI).
 
@@ -38,8 +38,8 @@ Also: `property:getList` / `property:requestList` → `getAllProperties` → `pr
 | `myproperties` | Yes | `getPlayerProperties(session.oderId)` — **owned** only. |
 | `buyproperty <id>` | Yes | `buyProperty` + money sync + broadcast. |
 | `sellproperty <id>` | Yes | `sellProperty` + money sync + broadcast. |
-| `enter` | Yes | `getPropertyAtPosition(..., 10)`; owner check; teleport to interior; `playersInProperty`; `property:enterResult` (chat path mirrors RPC). |
-| `exit` | — | Uses `playersInProperty`; teleport out; `property:exitResult`. |
+| `enter` | Yes | Same validation as RPC via `buildPropertyInteriorEnterPayload`; `playersInProperty`; `property:enterResult` (client teleport). |
+| `exit` | — | Uses `playersInProperty`; `property:exitResult` (client teleport). |
 
 ## `playersInProperty`
 

@@ -6,6 +6,7 @@ import { runMigrations } from './database/migrations.js';
 import {
     PlayerWeaponService,
     PropertyService,
+    buildPropertyInteriorEnterPayload,
     WeaponShopService,
     ClothingShopService,
     PhoneService,
@@ -650,17 +651,10 @@ alt.onClient('property:enter', async (player, propertyId: number) => {
         return; 
     }
 
-    const ix = property.interior_x;
-    const iy = property.interior_y;
-    const iz = property.interior_z;
-    const hasValidInterior =
-        typeof ix === 'number' &&
-        typeof iy === 'number' &&
-        typeof iz === 'number' &&
-        !(ix === 0 && iy === 0 && iz === 0);
-    if (!hasValidInterior) {
+    const interior = buildPropertyInteriorEnterPayload(property);
+    if (!interior) {
         alt.logWarning(
-            `[gta-mysql-core] property:enter propertyId=${propertyId} has invalid interior coords (${ix}, ${iy}, ${iz}) - fix in DB`
+            `[gta-mysql-core] property:enter propertyId=${propertyId} has invalid interior coords — fix in DB`
         );
         alt.emitClient(player, 'property:enterResult', {
             success: false,
@@ -670,20 +664,13 @@ alt.onClient('property:enter', async (player, propertyId: number) => {
     }
 
     alt.log(
-        `[gta-mysql-core] property:enter player=${player.id} propertyId=${propertyId} name=${property.name} interior=${ix}, ${iy}, ${iz}`
+        `[gta-mysql-core] property:enter player=${player.id} propertyId=${propertyId} name=${property.name} interior=${interior.x}, ${interior.y}, ${interior.z}`
     );
-    player.pos = new alt.Vector3(ix, iy, iz);
     playersInProperty.set(player.id, propertyId);
-    alt.emitClient(player, 'property:enterResult', { 
-        success: true, 
+    alt.emitClient(player, 'property:enterResult', {
+        success: true,
         message: `Entered ${property.name}`,
-        interior: {
-            x: property.interior_x,
-            y: property.interior_y,
-            z: property.interior_z,
-            heading: property.interior_heading || 0,
-            ipl: property.ipl || undefined
-        }
+        interior,
     });
 });
 
@@ -703,15 +690,14 @@ alt.onClient('property:exit', async (player, propertyId: number) => {
     }
     
     playersInProperty.delete(player.id);
-    player.pos = new alt.Vector3(property.pos_x, property.pos_y, property.pos_z + 1.0);
-    alt.emitClient(player, 'property:exitResult', { 
-        success: true, 
+    alt.emitClient(player, 'property:exitResult', {
+        success: true,
         message: `Exited ${property.name}`,
         exterior: {
             x: property.pos_x,
             y: property.pos_y,
-            z: property.pos_z
-        }
+            z: property.pos_z,
+        },
     });
 });
 
@@ -1138,18 +1124,16 @@ async function handleCommand(player: alt.Player, command: string, args: string[]
             const nearbyProp = await propertyService.getPropertyAtPosition(player.pos.x, player.pos.y, player.pos.z, 10);
             if (!nearbyProp) { notifyPlayer(player, 'No property nearby'); return; }
             if (nearbyProp.owner_player_id !== session.oderId) { notifyPlayer(player, 'You do not own this property'); return; }
+            const interiorChat = buildPropertyInteriorEnterPayload(nearbyProp);
+            if (!interiorChat) {
+                notifyPlayer(player, 'Property interior is not configured. Contact an administrator.');
+                break;
+            }
             playersInProperty.set(player.id, nearbyProp.id);
-            player.pos = new alt.Vector3(nearbyProp.interior_x, nearbyProp.interior_y, nearbyProp.interior_z);
             alt.emitClient(player, 'property:enterResult', {
                 success: true,
                 message: `Entered ${nearbyProp.name}`,
-                interior: {
-                    x: nearbyProp.interior_x,
-                    y: nearbyProp.interior_y,
-                    z: nearbyProp.interior_z,
-                    heading: nearbyProp.interior_heading || 0,
-                    ipl: nearbyProp.ipl || undefined,
-                },
+                interior: interiorChat,
             });
             break;
         }
@@ -1158,7 +1142,6 @@ async function handleCommand(player: alt.Player, command: string, args: string[]
             if (!propId) { notifyPlayer(player, 'You are not inside a property'); return; }
             const prop = await propertyService.getPropertyById(propId);
             if (prop) {
-                player.pos = new alt.Vector3(prop.pos_x, prop.pos_y, prop.pos_z + 1.0);
                 alt.emitClient(player, 'property:exitResult', {
                     success: true,
                     message: `Exited ${prop.name}`,

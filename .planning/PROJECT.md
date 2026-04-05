@@ -8,10 +8,15 @@ A **GTA Online–style alt:V multiplayer server** built on the **Rebar** framewo
 
 - **v1.0** completed **2026-04-06** (GSD phases 1–6, 18 plans, 34 v1 requirements). Archives: [`.planning/milestones/v1.0-ROADMAP.md`](.planning/milestones/v1.0-ROADMAP.md), [`.planning/milestones/v1.0-REQUIREMENTS.md`](.planning/milestones/v1.0-REQUIREMENTS.md). Git tag: **`v1.0`**.
 - **v1.1 gap closure** completed **2026-04-06** (phases 7–9 — GSD verification retrofit, retro plan summaries, server catalog/garage trust + WEBV wording). Archives: [`.planning/milestones/v1.1-ROADMAP.md`](.planning/milestones/v1.1-ROADMAP.md), [`.planning/milestones/v1.1-REQUIREMENTS.md`](.planning/milestones/v1.1-REQUIREMENTS.md). Summary: [`.planning/MILESTONES.md`](.planning/MILESTONES.md). Git tag: **`v1.1`**.
+- **v1.2** in progress — quality / clean-code refactors; **phase 10** fixes property interior client teleport (see ROADMAP).
 
-## Next milestone goals (candidates)
+## Next milestone goals (v1.2 — active)
 
-**No active roadmap** until **`$gsd-new-milestone`**. Likely themes from [`.planning/codebase/CONCERNS.md`](codebase/CONCERNS.md) and v2 backlog: **TEST-01**, **TEST-02**, **MAIL-01**, owning **`vehicle:spawn`** ownership if desired, modularizing `server/index.ts`, optional Nyquist **`VALIDATION.md`** files.
+**Roadmap:** [`.planning/ROADMAP.md`](.planning/ROADMAP.md)
+
+- **Done (phase 10):** Property interior enter/exit — **client-authoritative** teleport; shared `PropertyService` payload helpers (fixes server position snap / wrong exterior spawn).
+- **Planned (phase 11):** Incremental **`server/index.ts`** extraction (REFACTOR-01) when touching a domain — KISS, no big-bang.
+- **Still backlog:** **TEST-01/02**, **MAIL-01**, **`vehicle:spawn`** ownership hardening, Nyquist files — promote via requirements when ready.
 
 ## Core Value
 
@@ -34,10 +39,11 @@ Players can **join the server, persist a character economy (cash/bank), and use 
 - ✓ **Docker workflow** — v1.0
 - ✓ **GSD verification artifacts** — `VERIFICATION.md` per phase dir 01–06 — v1.1
 - ✓ **GSD retro summaries** — `NN-MM-SUMMARY.md` for phases 4–6 plans — v1.1
+- ✓ **Property interior teleport** — server does not set `player.pos` for IPL interiors; client + `buildPropertyInteriorEnterPayload` — v1.2
 
 ### Active
 
-- [ ] **Next milestone scope** — define via `$gsd-new-milestone`
+- [ ] **REFACTOR-01** — thin modules cut from `server/index.ts` over time (v1.2 phase 11)
 - [ ] Keep **documentation and planning** aligned as the repo evolves
 - [ ] Address **technical debt** in CONCERNS when prioritized
 
@@ -74,4 +80,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-_Last updated: 2026-04-06 after **v1.1** milestone completion (`$gsd-complete-milestone`)._
+_Last updated: 2026-04-05 — **v1.2** opened; **PROP-INT-01** (property interior fix) shipped in phase 10._

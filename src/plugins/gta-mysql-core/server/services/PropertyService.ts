@@ -186,3 +186,43 @@ export class PropertyService {
         );
     }
 }
+
+/** Payload sent to client for native interior teleport (IPL + collision). */
+export type PropertyInteriorEnterPayload = {
+    x: number;
+    y: number;
+    z: number;
+    heading: number;
+    ipl?: string;
+};
+
+/**
+ * IPL apartment interiors must be teleported on the client after collision/IPL are ready.
+ * Setting `player.pos` on the server for these coordinates syncs badly and can snap the player
+ * to exterior navmesh (e.g. wrong world location).
+ */
+export function hasConfiguredPropertyInterior(property: Property): boolean {
+    const ix = Number(property.interior_x);
+    const iy = Number(property.interior_y);
+    const iz = Number(property.interior_z);
+    if (![ix, iy, iz].every((n) => Number.isFinite(n))) {
+        return false;
+    }
+    if (ix === 0 && iy === 0 && iz === 0) {
+        return false;
+    }
+    return true;
+}
+
+export function buildPropertyInteriorEnterPayload(property: Property): PropertyInteriorEnterPayload | null {
+    if (!hasConfiguredPropertyInterior(property)) {
+        return null;
+    }
+    return {
+        x: Number(property.interior_x),
+        y: Number(property.interior_y),
+        z: Number(property.interior_z),
+        heading: Number(property.interior_heading) || 0,
+        ipl: property.ipl || undefined,
+    };
+}

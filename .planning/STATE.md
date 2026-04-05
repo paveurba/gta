@@ -1,17 +1,17 @@
 ---
 gsd_state_version: 1.0
-milestone: pending
-milestone_name: null
-status: milestone_complete
-stopped_at: "v1.1 shipped and archived; next: $gsd-new-milestone"
-last_updated: "2026-04-06T23:00:00.000Z"
-last_activity: 2026-04-06
+milestone: v1.2
+milestone_name: quality-refactor
+status: in_progress
+stopped_at: "Phase 10-01 done; next: $gsd-plan-phase 11 or pick REFACTOR-01 slice"
+last_updated: "2026-04-05T12:00:00.000Z"
+last_activity: 2026-04-05
 progress:
-  total_phases: 0
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  total_phases: 2
+  completed_phases: 1
+  total_plans: 2
+  completed_plans: 1
+  percent: 50
 ---
 
 # Project State
@@ -22,39 +22,19 @@ See: `.planning/PROJECT.md`
 
 **Core value:** Players can join the server, persist a character economy, and use the documented gameplay loops reliably against MySQL-backed state.
 
-**Current focus:** **Plan next milestone** — v1.0 and **v1.1 gap closure** are shipped and archived.
+**Current focus:** **v1.2** — property interior correctness + incremental clean-code refactors.
 
 ## Current Position
 
-**Last shipped:** **v1.1** (2026-04-06) — see `.planning/MILESTONES.md` and git tag **`v1.1`**.
+**Shipped:** v1.0, v1.1 — see `.planning/MILESTONES.md`.
 
-**Active phase / plan:** None.
+Phase: **10** — quality refactor (**10-01** complete)  
+Next: Phase **11** — incremental `server/index.ts` extraction (**REFACTOR-01**) when scoped.
 
-Progress: _Reset for next milestone scoping._
-
-## Performance Metrics
-
-**Velocity (historical):**
-
-- **v1.0:** 18 plans (phases 1–6)
-- **v1.1:** 7 gap-closure plan rows (phases 7–9)
-
-## Accumulated Context
-
-### Decisions
-
-See PROJECT.md Key Decisions.
-
-### Pending Todos
-
-Promote items from `.planning/codebase/CONCERNS.md` or new product goals via **`$gsd-new-milestone`**.
-
-### Blockers/Concerns
-
-See `.planning/codebase/CONCERNS.md`.
+Progress: [█████░░░░░] 50% _(v1.2: 1/2 planned phases with scoped plans)_
 
 ## Session Continuity
 
-Last session: 2026-04-06  
-Stopped at: **`$gsd-complete-milestone`** — v1.1 archived, roadmap collapsed, requirements reset  
+Last session: 2026-04-05  
+Stopped at: PROP-INT-01 — client-authoritative property interior teleport  
 Resume file: None
