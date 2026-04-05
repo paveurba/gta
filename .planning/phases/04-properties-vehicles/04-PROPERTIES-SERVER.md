@@ -52,3 +52,5 @@ Also: `property:getList` / `property:requestList` → `getAllProperties` → `pr
 ## Client wiring
 
 Native property UI lives in `src/plugins/gta-mysql-core/client/index.ts`: **E** opens `openPropertyMenu()` when near a property; actions emit `property:buy`, `property:enter`, `property:exit`, `property:sell`.
+
+**Server:** `property:*` `alt.onClient` handlers are registered in `src/plugins/gta-mysql-core/server/events/registerPropertyClientEvents.ts` (called from `server/index.ts`).

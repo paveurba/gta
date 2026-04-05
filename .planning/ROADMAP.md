@@ -34,8 +34,8 @@ Plans:
 
 Plans:
 
-- [ ] 11-01: **`registerVehicleClientEvents`** — all `vehicle:*` `alt.onClient` handlers
-- [ ] 11-02: **`registerPropertyClientEvents`** — all `property:*` `alt.onClient` handlers (after 11-01 pattern)
+- [x] 11-01: **`registerVehicleClientEvents`** — all `vehicle:*` `alt.onClient` handlers
+- [x] 11-02: **`registerPropertyClientEvents`** — all `property:*` `alt.onClient` handlers (after 11-01 pattern)
 
 **Artifacts:** [`.planning/phases/11-server-modularization/11-CONTEXT.md`](phases/11-server-modularization/11-CONTEXT.md), `11-01-PLAN.md`, `11-02-PLAN.md`
 

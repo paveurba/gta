@@ -15,7 +15,7 @@ A **GTA Online–style alt:V multiplayer server** built on the **Rebar** framewo
 **Roadmap:** [`.planning/ROADMAP.md`](.planning/ROADMAP.md)
 
 - **Done (phase 10):** Property interior enter/exit — **client-authoritative** teleport; shared `PropertyService` payload helpers (fixes server position snap / wrong exterior spawn).
-- **Planned (phase 11):** Incremental **`server/index.ts`** extraction (REFACTOR-01) — see [`.planning/phases/11-server-modularization/`](.planning/phases/11-server-modularization/) plans **11-01** (vehicle RPC registrar) and **11-02** (property RPC registrar).
+- **Done (phase 11):** **`server/events/registerVehicleClientEvents.ts`** and **`registerPropertyClientEvents.ts`** — **REFACTOR-01** slice (all `vehicle:*` / `property:*` `alt.onClient` wiring out of `index.ts`).
 - **Still backlog:** **TEST-01/02**, **MAIL-01**, **`vehicle:spawn`** ownership hardening, Nyquist files — promote via requirements when ready.
 
 ## Core Value
@@ -43,7 +43,7 @@ Players can **join the server, persist a character economy (cash/bank), and use 
 
 ### Active
 
-- [ ] **REFACTOR-01** — thin modules cut from `server/index.ts` over time (v1.2 phase 11)
+- [ ] **Further modularization** — auth, shops, casino, `handleCommand` still in `index.ts` (promote when you add **REFACTOR-02** or next milestone)
 - [ ] Keep **documentation and planning** aligned as the repo evolves
 - [ ] Address **technical debt** in CONCERNS when prioritized
 
@@ -80,4 +80,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-_Last updated: 2026-04-05 — **v1.2** opened; **PROP-INT-01** (property interior fix) shipped in phase 10._
+_Last updated: 2026-04-05 — **v1.2**: phase 10 (PROP-INT-01) + phase 11 (**REFACTOR-01** vehicle/property registrars)._

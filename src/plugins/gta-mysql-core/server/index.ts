@@ -3,6 +3,8 @@ import { useRebar } from '@Server/index.js';
 import mysql from 'mysql2/promise';
 import type { Appearance } from '@Shared/types/appearance.js';
 import { runMigrations } from './database/migrations.js';
+import { registerPropertyClientEvents } from './events/registerPropertyClientEvents.js';
+import { registerVehicleClientEvents } from './events/registerVehicleClientEvents.js';
 import {
     PlayerWeaponService,
     PropertyService,
@@ -20,7 +22,6 @@ import {
     CLOTHING_CATALOG,
     CLOTHING_SHOP_LOCATIONS,
     CASINO_LOCATIONS,
-    VEHICLE_CATALOG,
     VEHICLE_DEALERSHIPS,
 } from './services/index.js';
 
@@ -594,111 +595,12 @@ alt.onClient('phone:sendMessage', async (player, receiverId: number, message: st
     notifyPlayer(player, result.message);
 });
 
-// Property events
-alt.onClient('property:getList', async (player) => {
-    const properties = await propertyService.getAllProperties();
-    alt.emitClient(player, 'property:list', properties);
-});
-
-alt.onClient('property:requestList', async (player) => {
-    const properties = await propertyService.getAllProperties();
-    alt.emitClient(player, 'property:list', properties);
-});
-
-alt.onClient('property:buy', async (player, propertyId: number) => {
-    const session = playerSessions.get(player.id);
-    if (!session) { 
-        alt.emitClient(player, 'property:buyResult', { success: false, message: 'You must login first' });
-        return; 
-    }
-    const result = await propertyService.buyProperty(session.oderId, propertyId, session.money);
-    alt.emitClient(player, 'property:buyResult', result);
-    if (result.success && result.newBalance !== undefined) {
-        session.money = result.newBalance;
-        syncMoneyToClient(player);
-        broadcastPropertyUpdate();
-    }
-});
-
-alt.onClient('property:sell', async (player, propertyId: number) => {
-    const session = playerSessions.get(player.id);
-    if (!session) { 
-        alt.emitClient(player, 'property:sellResult', { success: false, message: 'You must login first' });
-        return; 
-    }
-    const result = await propertyService.sellProperty(session.oderId, propertyId, session.money);
-    alt.emitClient(player, 'property:sellResult', result);
-    if (result.success && result.newBalance !== undefined) {
-        session.money = result.newBalance;
-        syncMoneyToClient(player);
-        broadcastPropertyUpdate();
-    }
-});
-
-alt.onClient('property:enter', async (player, propertyId: number) => {
-    const session = playerSessions.get(player.id);
-    if (!session) { 
-        alt.emitClient(player, 'property:enterResult', { success: false, message: 'You must login first' });
-        return; 
-    }
-    const property = await propertyService.getPropertyById(propertyId);
-    if (!property) { 
-        alt.emitClient(player, 'property:enterResult', { success: false, message: 'Property not found' });
-        return; 
-    }
-    if (property.owner_player_id !== session.oderId) { 
-        alt.emitClient(player, 'property:enterResult', { success: false, message: 'You do not own this property' });
-        return; 
-    }
-
-    const interior = buildPropertyInteriorEnterPayload(property);
-    if (!interior) {
-        alt.logWarning(
-            `[gta-mysql-core] property:enter propertyId=${propertyId} has invalid interior coords — fix in DB`
-        );
-        alt.emitClient(player, 'property:enterResult', {
-            success: false,
-            message: 'Property interior is not configured. Contact an administrator.',
-        });
-        return;
-    }
-
-    alt.log(
-        `[gta-mysql-core] property:enter player=${player.id} propertyId=${propertyId} name=${property.name} interior=${interior.x}, ${interior.y}, ${interior.z}`
-    );
-    playersInProperty.set(player.id, propertyId);
-    alt.emitClient(player, 'property:enterResult', {
-        success: true,
-        message: `Entered ${property.name}`,
-        interior,
-    });
-});
-
-alt.onClient('property:exit', async (player, propertyId: number) => {
-    const session = playerSessions.get(player.id);
-    const currentPropertyId = playersInProperty.get(player.id);
-    
-    if (!currentPropertyId) { 
-        alt.emitClient(player, 'property:exitResult', { success: false, message: 'You are not inside a property' });
-        return; 
-    }
-    
-    const property = await propertyService.getPropertyById(currentPropertyId);
-    if (!property) {
-        alt.emitClient(player, 'property:exitResult', { success: false, message: 'Property not found' });
-        return;
-    }
-    
-    playersInProperty.delete(player.id);
-    alt.emitClient(player, 'property:exitResult', {
-        success: true,
-        message: `Exited ${property.name}`,
-        exterior: {
-            x: property.pos_x,
-            y: property.pos_y,
-            z: property.pos_z,
-        },
-    });
+registerPropertyClientEvents({
+    getSession: (player) => playerSessions.get(player.id),
+    propertyService,
+    playersInProperty,
+    syncMoneyToClient,
+    broadcastPropertyUpdate,
 });
 
 // Weapon shop events
@@ -780,172 +682,12 @@ alt.onClient('casino:getHistory', async (player) => {
     alt.emitClient(player, 'casino:history', history);
 });
 
-// ============================================================================
-// VEHICLE EVENTS
-// ============================================================================
-
-alt.onClient('vehicle:getCatalog', (player) => {
-    alt.emitClient(player, 'vehicle:catalog', VEHICLE_CATALOG);
-});
-
-alt.onClient('vehicle:getMyVehicles', async (player) => {
-    const session = playerSessions.get(player.id);
-    if (!session) return;
-    const vehicles = await vehicleService.getPlayerVehicles(session.oderId);
-    alt.emitClient(player, 'vehicle:myVehicles', vehicles);
-});
-
-alt.onClient('vehicle:buy', async (player, model: string, modelHash: number, price: number) => {
-    const session = playerSessions.get(player.id);
-    if (!session) { 
-        alt.emitClient(player, 'vehicle:buyResult', { success: false, message: 'You must login first' });
-        return; 
-    }
-    const result = await vehicleService.buyVehicle(session.oderId, model, modelHash, price, session.money);
-    if (result.success && result.newBalance !== undefined) {
-        session.money = result.newBalance;
-        syncMoneyToClient(player);
-        
-        // Auto-spawn the purchased vehicle near the player
-        if (result.vehicleId) {
-            const pos = player.pos;
-            const rot = player.rot;
-            // Spawn vehicle 3 meters in front of player
-            const spawnX = pos.x + Math.sin(-rot.z) * 3;
-            const spawnY = pos.y + Math.cos(-rot.z) * 3;
-            const spawnZ = pos.z;
-            const headingDeg = rot.z * (180 / Math.PI);
-            await vehicleService.spawnVehicle(player, result.vehicleId, spawnX, spawnY, spawnZ, headingDeg);
-            alt.log(`[gta-mysql-core] Auto-spawned vehicle ${result.vehicleId} for player ${session.oderId}`);
-        }
-    }
-    alt.emitClient(player, 'vehicle:buyResult', result);
-});
-
-alt.onClient('vehicle:sell', async (player, vehicleId: number) => {
-    const session = playerSessions.get(player.id);
-    if (!session) { 
-        alt.emitClient(player, 'vehicle:sellResult', { success: false, message: 'You must login first' });
-        return; 
-    }
-    const result = await vehicleService.sellVehicle(session.oderId, vehicleId, session.money);
-    if (result.success && result.newBalance !== undefined) {
-        session.money = result.newBalance;
-        syncMoneyToClient(player);
-    }
-    alt.emitClient(player, 'vehicle:sellResult', result);
-});
-
-alt.onClient('vehicle:spawn', async (player, vehicleId: number) => {
-    const session = playerSessions.get(player.id);
-    if (!session) { 
-        notifyPlayer(player, 'You must login first');
-        return; 
-    }
-    const pos = player.pos;
-    const heading = player.rot.z * (180 / Math.PI);
-    const result = await vehicleService.spawnVehicle(player, vehicleId, pos.x + 3, pos.y, pos.z, heading);
-    notifyPlayer(player, result.message);
-});
-
-alt.onClient('vehicle:store', async (player, vehicleId: number, propertyId: number) => {
-    const session = playerSessions.get(player.id);
-    if (!session) { 
-        notifyPlayer(player, 'You must login first');
-        return; 
-    }
-    const property = await propertyService.getPropertyById(propertyId);
-    if (!property) {
-        notifyPlayer(player, 'Property not found');
-        return;
-    }
-    if (property.owner_player_id !== session.oderId) {
-        notifyPlayer(player, 'You don\'t own this property');
-        return;
-    }
-    const garageSlots = (property as any).garage_slots || 2;
-    const result = await vehicleService.storeVehicle(session.oderId, vehicleId, propertyId, garageSlots);
-    notifyPlayer(player, result.message);
-    if (result.success) {
-        const vehicles = await vehicleService.getGarageVehicles(session.oderId, propertyId);
-        alt.emitClient(player, 'vehicle:garageVehicles', vehicles);
-    }
-});
-
-alt.onClient('vehicle:storeNearby', async (player, propertyId: number) => {
-    const session = playerSessions.get(player.id);
-    if (!session) { 
-        notifyPlayer(player, 'You must login first');
-        return; 
-    }
-    const property = await propertyService.getPropertyById(propertyId);
-    if (!property) {
-        notifyPlayer(player, 'Property not found');
-        return;
-    }
-    if (property.owner_player_id !== session.oderId) {
-        notifyPlayer(player, 'You don\'t own this property');
-        return;
-    }
-    const garageSlots = (property as any).garage_slots || 2;
-    const result = await vehicleService.storeNearbyVehicle(player, session.oderId, propertyId, garageSlots);
-    notifyPlayer(player, result.message);
-    if (result.success) {
-        const vehicles = await vehicleService.getGarageVehicles(session.oderId, propertyId);
-        alt.emitClient(player, 'vehicle:garageVehicles', vehicles);
-    }
-});
-
-alt.onClient('vehicle:getGarageVehicles', async (player, propertyId: number) => {
-    const session = playerSessions.get(player.id);
-    if (!session) return;
-    const vehicles = await vehicleService.getGarageVehicles(session.oderId, propertyId);
-    alt.emitClient(player, 'vehicle:garageVehicles', vehicles);
-});
-
-alt.onClient('vehicle:spawnFromGarage', async (player, vehicleId: number, propertyId: number) => {
-    const session = playerSessions.get(player.id);
-    if (!session) { 
-        notifyPlayer(player, 'You must login first');
-        return; 
-    }
-    const property = await propertyService.getPropertyById(propertyId);
-    if (!property) {
-        notifyPlayer(player, 'Property not found');
-        return;
-    }
-    if (property.owner_player_id !== session.oderId) {
-        notifyPlayer(player, 'You don\'t own this property');
-        return;
-    }
-    const dbVehicle = await vehicleService.getVehicleById(vehicleId);
-    if (!dbVehicle) {
-        notifyPlayer(player, 'Vehicle not found');
-        return;
-    }
-    if (dbVehicle.player_id !== session.oderId) {
-        notifyPlayer(player, 'You don\'t own this vehicle');
-        return;
-    }
-    if (dbVehicle.garage_property_id !== propertyId) {
-        notifyPlayer(player, 'This vehicle is not stored in this garage');
-        return;
-    }
-    if (dbVehicle.is_spawned) {
-        notifyPlayer(player, 'Vehicle is already spawned');
-        return;
-    }
-    const garageX = (property as any).garage_x || property.pos_x;
-    const garageY = (property as any).garage_y || property.pos_y;
-    const garageZ = (property as any).garage_z || property.pos_z;
-    const garageHeading = (property as any).garage_heading || 0;
-    
-    const result = await vehicleService.spawnVehicle(player, vehicleId, garageX, garageY, garageZ, garageHeading);
-    notifyPlayer(player, result.message);
-    if (result.success) {
-        const vehicles = await vehicleService.getGarageVehicles(session.oderId, propertyId);
-        alt.emitClient(player, 'vehicle:garageVehicles', vehicles);
-    }
+registerVehicleClientEvents({
+    getSession: (player) => playerSessions.get(player.id),
+    vehicleService,
+    propertyService,
+    syncMoneyToClient,
+    notifyPlayer,
 });
 
 // ============================================================================

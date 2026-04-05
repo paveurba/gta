@@ -17,7 +17,7 @@
 **Server plugin (`gta-mysql-core/server`):**
 
 - **Purpose:** alt:V lifecycle, player sessions, command routing, business operations.
-- **Contains:** `index.ts` (orchestration), `services/*.ts` (domain logic), `repositories/*.ts` (data access helpers), `database/migrations.ts`.
+- **Contains:** `index.ts` (orchestration), `services/*.ts` (domain logic), `events/register*ClientEvents.ts` (thin `alt.onClient` registrars for property/vehicle RPCs), `repositories/*.ts` (data access helpers), `database/migrations.ts`.
 - **Depends on:** `mysql2`, Rebar (`useRebar()`), `alt-server`.
 - **Used by:** alt:V server runtime when resource starts.
 

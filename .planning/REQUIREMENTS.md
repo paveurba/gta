@@ -19,14 +19,14 @@
 ### Checklist (v1.2)
 
 - [x] **PROP-INT-01**
-- [ ] **REFACTOR-01**
+- [x] **REFACTOR-01**
 
 ## Traceability (v1.2)
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | PROP-INT-01 | 10 | Complete |
-| REFACTOR-01 | 11 | In progress _(planned: `11-01`, `11-02`)_ |
+| REFACTOR-01 | 11 | Complete _(vehicle + property registrars)_ |
 
 ## v2 backlog (reference)
 

@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: quality-refactor
-status: ready_to_execute
-stopped_at: "Phase 11 planned; next $gsd-execute-phase 11 or run 11-01 then 11-02"
-last_updated: "2026-04-05T14:00:00.000Z"
+status: milestone_complete
+stopped_at: "Phase 11 executed (11-01, 11-02); v1.2 scope done — ship or $gsd-complete-milestone / new milestone"
+last_updated: "2026-04-05T16:00:00.000Z"
 last_activity: 2026-04-05
 progress:
   total_phases: 2
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 3
-  completed_plans: 1
-  percent: 33
+  completed_plans: 3
+  percent: 100
 ---
 
 # Project State
@@ -22,20 +22,17 @@ See: `.planning/PROJECT.md`
 
 **Core value:** Players can join the server, persist a character economy, and use the documented gameplay loops reliably against MySQL-backed state.
 
-**Current focus:** **v1.2** — Phase **11** server modularization (**REFACTOR-01**).
+**Current focus:** **v1.2** objectives met (PROP-INT-01 + REFACTOR-01 slice). Plan **v1.3** or archive when ready.
 
 ## Current Position
 
-**Shipped slices:** v1.0, v1.1; v1.2 phase **10** (PROP-INT-01) done.
+Phase: **11** — **complete** (`11-01`, `11-02`)  
+Last shipped slice: property interior fix (phase 10) + RPC registrars (phase 11)
 
-Phase: **11** — server modularization  
-Plan: **0 of 2** executed (`11-01`, `11-02` ready)  
-Status: Ready to execute
-
-Progress: [███░░░░░░░] 33% _(v1.2: 1 phase done, 2 plans queued in phase 11)_
+Progress: [██████████] 100% _(v1.2: phases 10–11)_
 
 ## Session Continuity
 
 Last session: 2026-04-05  
-Stopped at: `$gsd-plan-phase 11` — CONTEXT + `11-01`/`11-02` plans  
+Stopped at: Phase 11 executed — `events/registerVehicleClientEvents.ts`, `registerPropertyClientEvents.ts`  
 Resume file: None

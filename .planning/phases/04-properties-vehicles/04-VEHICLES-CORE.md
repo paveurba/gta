@@ -1,6 +1,6 @@
 # Phase 04 — Vehicles core (persistence, spawn, debug)
 
-Maps **VEH-01**, **VEH-02**, **VEH-04**, **VEH-05** to `VehicleService` and chat/RPC in `index.ts`.
+Maps **VEH-01**, **VEH-02**, **VEH-04**, **VEH-05** to `VehicleService` and chat/RPC; `vehicle:*` client handlers live in `server/events/registerVehicleClientEvents.ts` (wired from `index.ts`).
 
 ## `player_vehicles` / `PlayerVehicle`
 
