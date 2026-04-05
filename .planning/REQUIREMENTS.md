@@ -1,40 +1,19 @@
 # Requirements: GTA (alt:V Rebar server)
 
-**Active milestone:** **v1.1 — gap closure** (from [v1.0 audit](v1.0-MILESTONE-AUDIT.md))
+**Active milestone:** _None — start with **`$gsd-new-milestone`**._
 
-**Shipped baseline:** **[v1.0 requirements archive](milestones/v1.0-REQUIREMENTS.md)** — 34 capabilities complete (phases 1–6). **WEBV-01** bullet clarified in v1.1 gap closure (native vs Vue — **INT-01**); no feature scope change.
+## Shipped baselines
 
-## v1.1 — Audit gap closure
+| Milestone | Scope | Archive |
+|-----------|--------|---------|
+| **v1.0** | 34 gameplay / ops requirements (phases 1–6) | [v1.0-REQUIREMENTS.md](milestones/v1.0-REQUIREMENTS.md) |
+| **v1.1** | 5 audit gap-closure IDs (AUD-VERIFY-01 … AUD-DOC-01) | [v1.1-REQUIREMENTS.md](milestones/v1.1-REQUIREMENTS.md) |
 
-| ID | Description |
-|----|-------------|
-| **AUD-VERIFY-01** | Every phase folder `01-…` through `06-…` contains **`VERIFICATION.md`** with REQ mapping and retrospective status for GSD audit. |
-| **AUD-SUMM-01** | Executed plans in phases **4–6** have **`NN-MM-SUMMARY.md`** with `requirements-completed` frontmatter. |
-| **AUD-TRUST-01** | Server enforces **vehicle catalog** price (and model hash where applicable) on purchase — closes audit **INT-02**. |
-| **AUD-TRUST-02** | **`vehicle:spawnFromGarage`** verifies **property owner** matches session before spawn — closes audit **INT-03**. |
-| **AUD-DOC-01** | **WEBV-01** wording and README clearly state: **native client** for phone/core HUD; **Vue webview** is Rebar shell / future plugins — closes audit **INT-01**. |
+## Next milestone
 
-### Checklist
+_Requirements for v1.2+ go here after `$gsd-new-milestone`._
 
-- [x] **AUD-VERIFY-01**
-- [x] **AUD-SUMM-01**
-- [x] **AUD-TRUST-01**
-- [x] **AUD-TRUST-02**
-- [x] **AUD-DOC-01**
-
-## Traceability (v1.1)
-
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| AUD-VERIFY-01 | Phase 7 | Complete |
-| AUD-SUMM-01 | Phase 8 | Complete |
-| AUD-TRUST-01 | Phase 9 | Complete |
-| AUD-TRUST-02 | Phase 9 | Complete |
-| AUD-DOC-01 | Phase 9 | Complete |
-
-**Coverage:** 5 gap-closure requirements → phases 7–9.
-
-## v2 backlog (unchanged)
+## v2 backlog (reference)
 
 | ID | Theme | Summary |
 |----|--------|---------|
@@ -42,7 +21,7 @@
 | TEST-02 | Hardening | CI runs compile and lint on push |
 | MAIL-01 | Email | Optional SMTP-based verification or notifications in production |
 
-## Out of scope (unchanged)
+## Out of scope (reference)
 
 | Feature | Reason |
 |---------|--------|
@@ -52,4 +31,4 @@
 
 ---
 
-_Updated: 2026-04-06 — `$gsd-plan-milestone-gaps`_
+_Created: 2026-04-06 — fresh file after **`$gsd-complete-milestone`** (v1.1)._
