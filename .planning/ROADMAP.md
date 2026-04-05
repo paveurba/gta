@@ -9,7 +9,7 @@ The codebase already implements the documented GTA-style multiplayer server. Pha
 - [x] **Phase 1: Platform & persistence** — Docker stack, migrations, documented refresh path (completed 2026-04-05)
 - [x] **Phase 2: Identity & economy** — Auth and money persistence (completed 2026-04-05)
 - [x] **Phase 3: Phone & messaging** — Contacts, SMS, native phone UI (**M** key) (**UI hint**: yes) (completed 2026-04-05)
-- [ ] **Phase 4: Properties & vehicles** — Housing, garages, ownership, spawning
+- [x] **Phase 4: Properties & vehicles** — Housing, garages, ownership, spawning (completed 2026-04-05)
 - [ ] **Phase 5: Shops & casino** — Weapons, clothing, gambling flows
 - [ ] **Phase 6: World & webview** — Blips, static vehicles, death/respawn, Vue UI
 
@@ -99,10 +99,10 @@ Plans:
 
 Plans:
 
-- [ ] 04-01: Property purchase, ownership, enter/exit, sell
-- [ ] 04-02: Garage storage rules and edge cases
-- [ ] 04-03: Vehicle catalog, purchase, persistence, spawn
-- [ ] 04-04: Dealership teleports and temporary spawn command behavior
+- [x] 04-01: Property purchase, ownership, enter/exit, sell
+- [x] 04-02: Garage storage rules and edge cases
+- [x] 04-03: Vehicle catalog, purchase, persistence, spawn
+- [x] 04-04: Dealership teleports and temporary spawn command behavior
 
 ### Phase 5: Shops & casino
 

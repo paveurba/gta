@@ -27,19 +27,19 @@ Capabilities the server is expected to provide (baseline for verification and fu
 
 ### Properties
 
-- [ ] **PROP-01**: User can list properties for sale and their own owned properties
-- [ ] **PROP-02**: User can buy an available property when near it (interaction)
-- [ ] **PROP-03**: User can enter and exit owned properties
-- [ ] **PROP-04**: User can sell an owned property
-- [ ] **PROP-05**: User can store vehicles in property garages up to slot limits
+- [x] **PROP-01**: User can list properties for sale and their own owned properties
+- [x] **PROP-02**: User can buy an available property when near it (interaction)
+- [x] **PROP-03**: User can enter and exit owned properties
+- [x] **PROP-04**: User can sell an owned property
+- [x] **PROP-05**: User can store vehicles in property garages up to slot limits
 
 ### Vehicles
 
-- [ ] **VEH-01**: User can list owned vehicles
-- [ ] **VEH-02**: User can spawn an owned vehicle by id
-- [ ] **VEH-03**: User can buy vehicles from dealerships (interaction / teleport helpers)
-- [ ] **VEH-04**: Vehicle ownership and attributes persist in MySQL
-- [ ] **VEH-05**: User can spawn a temporary debug vehicle via chat (where implemented)
+- [x] **VEH-01**: User can list owned vehicles
+- [x] **VEH-02**: User can spawn an owned vehicle by id
+- [x] **VEH-03**: User can buy vehicles from dealerships (interaction / teleport helpers)
+- [x] **VEH-04**: Vehicle ownership and attributes persist in MySQL
+- [x] **VEH-05**: User can spawn a temporary debug vehicle via chat (where implemented)
 
 ### Weapons
 
@@ -110,16 +110,16 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PHON-01 | Phase 3 | Complete |
 | PHON-02 | Phase 3 | Complete |
 | PHON-03 | Phase 3 | Complete |
-| PROP-01 | Phase 4 | Pending |
-| PROP-02 | Phase 4 | Pending |
-| PROP-03 | Phase 4 | Pending |
-| PROP-04 | Phase 4 | Pending |
-| PROP-05 | Phase 4 | Pending |
-| VEH-01 | Phase 4 | Pending |
-| VEH-02 | Phase 4 | Pending |
-| VEH-03 | Phase 4 | Pending |
-| VEH-04 | Phase 4 | Pending |
-| VEH-05 | Phase 4 | Pending |
+| PROP-01 | Phase 4 | Complete |
+| PROP-02 | Phase 4 | Complete |
+| PROP-03 | Phase 4 | Complete |
+| PROP-04 | Phase 4 | Complete |
+| PROP-05 | Phase 4 | Complete |
+| VEH-01 | Phase 4 | Complete |
+| VEH-02 | Phase 4 | Complete |
+| VEH-03 | Phase 4 | Complete |
+| VEH-04 | Phase 4 | Complete |
+| VEH-05 | Phase 4 | Complete |
 | WPN-01 | Phase 5 | Pending |
 | WPN-02 | Phase 5 | Pending |
 | CLTH-01 | Phase 5 | Pending |

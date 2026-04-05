@@ -1,0 +1,31 @@
+# Phase 04 — Dealerships and catalog
+
+Maps **VEH-03** to `VehicleService` constants and server/client flow.
+
+## Catalog
+
+- Source: `VEHICLE_CATALOG` in `VehicleService.ts` — **45** entries across categories (Compacts, Sedans, Sports, Super, Muscle, SUVs, Motorcycles, Off-Road).
+- `vehicle:getCatalog` → server emits `vehicle:catalog` with the full array (no auth gate in handler).
+
+## Purchase RPC
+
+- Client: `vehicle:buy(model, modelHash, price)`.
+- Server: `buyVehicle(session.oderId, model, modelHash, price, session.money)`.
+- **Trust model:** Server uses **client-supplied** `price` and `modelHash` for deduction and insert; it does not re-validate against `VEHICLE_CATALOG` in `buyVehicle` (operators should treat catalog enforcement as a future hardening item).
+
+## `VEHICLE_DEALERSHIPS` (exact coordinates from source)
+
+| name | x | y | z |
+|------|---|---|---|
+| Premium Deluxe Motorsport | -56.49 | -1097.25 | 26.42 |
+| Simeon's Dealership | -31.66 | -1106.95 | 26.42 |
+
+## Chat `/dealership`
+
+`handleCommand` `dealership` case (logged-in): teleports to **Premium Deluxe Motorsport** coords above — matches `VEHICLE_DEALERSHIPS[0]`.
+
+## Client
+
+`client/index.ts`: dealership proximity + **E** opens dealership UI (`dealershipMenuOpen` / catalog from `vehicle:catalog`); purchase selection emits `vehicle:buy`. Not the Vue webview.
+
+There is **no** chat command to buy a catalog vehicle by name; ownership purchases go through the **in-world dealership menu** (or future RPC from other UI).

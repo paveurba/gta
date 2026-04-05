@@ -828,7 +828,8 @@ alt.onClient('vehicle:buy', async (player, model: string, modelHash: number, pri
             const spawnX = pos.x + Math.sin(-rot.z) * 3;
             const spawnY = pos.y + Math.cos(-rot.z) * 3;
             const spawnZ = pos.z;
-            await vehicleService.spawnVehicle(result.vehicleId, spawnX, spawnY, spawnZ, rot.z);
+            const headingDeg = rot.z * (180 / Math.PI);
+            await vehicleService.spawnVehicle(player, result.vehicleId, spawnX, spawnY, spawnZ, headingDeg);
             alt.log(`[gta-mysql-core] Auto-spawned vehicle ${result.vehicleId} for player ${session.oderId}`);
         }
     }

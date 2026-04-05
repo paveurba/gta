@@ -113,10 +113,12 @@ Cash and bank are stored in the **`players`** table in MySQL. The session is upd
 ### Vehicles
 | Command | Description |
 |---------|-------------|
-| `/car <model>` | Spawn a temporary vehicle |
-| `/myvehicles` | List your owned vehicles |
-| `/spawnvehicle <id>` | Spawn an owned vehicle |
-| `/dealership` | Teleport to vehicle dealership |
+| `/car <model>` | Spawn a **temporary** vehicle next to you (not saved to MySQL; default model `sultan`) |
+| `/myvehicles` | List your owned vehicles (MySQL `player_vehicles`) |
+| `/spawnvehicle <id>` | Spawn an owned vehicle by database id |
+| `/dealership` | Teleport to **Premium Deluxe Motorsport** (same coords as `VEHICLE_DEALERSHIPS[0]` in code) |
+
+**Buying catalog vehicles:** Use **E** at a dealership to open the native client menu (`client/index.ts`), then purchase via `vehicle:buy`. There is no `/buyvehicle` chat command for the catalog.
 
 ### Weapons
 | Command | Description |
@@ -127,9 +129,11 @@ Cash and bank are stored in the **`players`** table in MySQL. The session is upd
 ### Properties
 | Command | Description |
 |---------|-------------|
-| `/properties` | List available properties |
-| `/myproperties` | List owned properties |
-| Press `E` near property | Open property menu (buy/enter/sell/garage) |
+| `/properties` | List **for-sale** properties only (`owner_player_id IS NULL`) |
+| `/myproperties` | List **your** owned properties (requires login) |
+| Press `E` near property | Open **native** property menu in `gta-mysql-core` client (buy / enter / sell / garage) |
+
+**Garages:** Each property has a **`garage_slots`** limit in MySQL (see table below). Storing a vehicle checks the count of rows in `player_vehicles` with that `garage_property_id`; when full, the server returns a message containing **`Garage is full`**. Use the property menu’s garage flow (client) or the `vehicle:store` / `vehicle:storeNearby` RPCs documented under phase 04 planning.
 
 ### Casino
 | Command | Description |
@@ -244,8 +248,8 @@ src/plugins/gta-mysql-core/
 - Paleto Bay Medical Center
 
 ### Vehicle Dealerships (Yellow car icon)
-- Premium Deluxe Motorsport (near airport)
-- Simeon's Dealership
+- **Premium Deluxe Motorsport** — `-56.49, -1097.25, 26.42` (`/dealership` teleports here)
+- **Simeon's Dealership** — `-31.66, -1106.95, 26.42`
 
 ### Properties (House icons)
 - Green = For sale
