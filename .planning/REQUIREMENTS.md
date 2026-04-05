@@ -98,15 +98,47 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (pending roadmap) | — | Pending |
+| OPS-01 | Phase 1 | Pending |
+| OPS-02 | Phase 1 | Pending |
+| OPS-03 | Phase 1 | Pending |
+| AUTH-01 | Phase 2 | Pending |
+| AUTH-02 | Phase 2 | Pending |
+| AUTH-03 | Phase 2 | Pending |
+| AUTH-04 | Phase 2 | Pending |
+| ECON-01 | Phase 2 | Pending |
+| ECON-02 | Phase 2 | Pending |
+| PHON-01 | Phase 3 | Pending |
+| PHON-02 | Phase 3 | Pending |
+| PHON-03 | Phase 3 | Pending |
+| PROP-01 | Phase 4 | Pending |
+| PROP-02 | Phase 4 | Pending |
+| PROP-03 | Phase 4 | Pending |
+| PROP-04 | Phase 4 | Pending |
+| PROP-05 | Phase 4 | Pending |
+| VEH-01 | Phase 4 | Pending |
+| VEH-02 | Phase 4 | Pending |
+| VEH-03 | Phase 4 | Pending |
+| VEH-04 | Phase 4 | Pending |
+| VEH-05 | Phase 4 | Pending |
+| WPN-01 | Phase 5 | Pending |
+| WPN-02 | Phase 5 | Pending |
+| CLTH-01 | Phase 5 | Pending |
+| CLTH-02 | Phase 5 | Pending |
+| CASI-01 | Phase 5 | Pending |
+| CASI-02 | Phase 5 | Pending |
+| WORLD-01 | Phase 6 | Pending |
+| WORLD-02 | Phase 6 | Pending |
+| WORLD-03 | Phase 6 | Pending |
+| WORLD-04 | Phase 6 | Pending |
+| WEBV-01 | Phase 6 | Pending |
 
 **Coverage:**
 
 - v1 requirements: 34 total
-- Mapped to phases: 0
-- Unmapped: 34 ⚠️
+- Mapped to phases: 34
+- Unmapped: 0 ✓
 
 ---
 
 _Requirements defined: 2026-04-05_
-_Last updated: 2026-04-05 after initial definition_
+_Last updated: 2026-04-05 after roadmap creation_
