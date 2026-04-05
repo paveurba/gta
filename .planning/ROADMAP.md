@@ -162,7 +162,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 3. Phone & messaging | 2/2 | Complete    | 2026-04-05 |
 | 4. Properties & vehicles | 4/4 | Complete    | 2026-04-05 |
 | 5. Shops & casino | 3/3 | Complete    | 2026-04-05 |
-| 6. World & webview | 0/3 | Not started | - |
+| 6. World & webview | 0/3 | Planned     | - |
 
 ---
 
