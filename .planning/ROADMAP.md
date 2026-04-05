@@ -8,7 +8,7 @@ The codebase already implements the documented GTA-style multiplayer server. Pha
 
 - [x] **Phase 1: Platform & persistence** — Docker stack, migrations, documented refresh path (completed 2026-04-05)
 - [x] **Phase 2: Identity & economy** — Auth and money persistence (completed 2026-04-05)
-- [ ] **Phase 3: Phone & messaging** — Contacts, SMS, phone UI (**UI hint**: yes)
+- [x] **Phase 3: Phone & messaging** — Contacts, SMS, native phone UI (**M** key) (**UI hint**: yes) (completed 2026-04-05)
 - [ ] **Phase 4: Properties & vehicles** — Housing, garages, ownership, spawning
 - [ ] **Phase 5: Shops & casino** — Weapons, clothing, gambling flows
 - [ ] **Phase 6: World & webview** — Blips, static vehicles, death/respawn, Vue UI
@@ -61,7 +61,7 @@ Plans:
 
 ### Phase 3: Phone & messaging
 
-**Goal**: Phone contacts and player-to-player messaging work with the webview phone UI.
+**Goal**: Phone contacts and player-to-player messaging work with the **native client phone menu** (drawn in `client/index.ts`, **M** key), backed by `PhoneService` and MySQL.
 
 **Depends on**: Phase 2
 
@@ -70,15 +70,15 @@ Plans:
 **Success Criteria** (what must be TRUE):
 
 1. Player can add/list contacts via chat
-2. Player can send messages to another online player by id
-3. Documented hotkey opens phone webview without errors
+2. Player can send messages to another online player by **MySQL `players.id`**
+3. Documented hotkey (**M**) opens the native phone UI without errors
 
 **Plans**: 2 plans
 
 Plans:
 
-- [ ] 03-01: Server-side phone flows (`PhoneService`) + chat commands
-- [ ] 03-02: Client/webview phone shell and event wiring
+- [x] 03-01: Server-side phone flows (`PhoneService`) + chat commands
+- [x] 03-02: Client native phone UI and `phone:*` event wiring
 
 ### Phase 4: Properties & vehicles
 
@@ -159,7 +159,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 |-------|----------------|--------|-----------|
 | 1. Platform & persistence | 3/3 | Complete    | 2026-04-05 |
 | 2. Identity & economy | 3/3 | Complete    | 2026-04-05 |
-| 3. Phone & messaging | 0/2 | Planned    |  |
+| 3. Phone & messaging | 2/2 | Complete    | 2026-04-05 |
 | 4. Properties & vehicles | 0/4 | Not started | - |
 | 5. Shops & casino | 0/3 | Not started | - |
 | 6. World & webview | 0/3 | Not started | - |

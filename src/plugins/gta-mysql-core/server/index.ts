@@ -307,7 +307,7 @@ async function broadcastPropertyUpdate(): Promise<void> {
 alt.on('playerConnect', async (player) => {
     alt.log(`[gta-mysql-core] Player connected: ${player.id}`);
     spawnPlayerSafe(player);
-    notifyPlayer(player, 'Welcome! Press T to open Login / Register. Press P for phone when logged in.');
+    notifyPlayer(player, 'Welcome! Press T to open Login / Register. Press M for phone when logged in.');
 
     // Send shop locations to client
     alt.emitClient(player, 'gta:locations:update', {

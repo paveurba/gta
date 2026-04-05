@@ -7,7 +7,7 @@ A full-featured GTA Online-style multiplayer server built on alt:V with the Reba
 ### Core Systems
 - **Authentication**: Register/login with email and password
 - **Money System**: Cash and bank balance with MySQL persistence
-- **Phone System**: Contacts, messaging between players
+- **Phone System**: Contacts and SMS-style messages (native in-game phone menu on **M**; not the Vue webview)
 - **Property System**: Buy, sell, enter, and exit properties with garages
 - **Vehicle System**: Buy, sell, store vehicles in property garages
 - **Weapon Shop**: Purchase weapons and ammo from Ammu-Nation (weapons persist)
@@ -138,11 +138,14 @@ Cash and bank are stored in the **`players`** table in MySQL. The session is upd
 | `/roulette <bet> <type> <value>` | Play roulette |
 
 ### Phone
+
+The phone UI is drawn in the **alt:V client resource** (`src/plugins/gta-mysql-core/client/index.ts`) with **GTA natives** — it is **not** part of the Vue `webview/` app.
+
 | Command | Description |
 |---------|-------------|
-| `/contact <name> <number>` | Add a contact |
+| `/contact <name> <number>` | Add a contact (`contact_number` stored as you type it — often another player’s **`players.id`** as digits) |
 | `/contacts` | List contacts |
-| `/sms <playerId> <message>` | Send message |
+| `/sms <playerId> <message>` | Send a message; **`<playerId>` is the MySQL `players.id`** (same as account id after login), **not** the alt:V connection id |
 
 ### Utility
 | Command | Description |

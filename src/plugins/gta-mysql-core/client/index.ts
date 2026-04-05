@@ -2027,7 +2027,7 @@ alt.everyTick(() => {
 
     // Help hint
     if (isLoggedIn && !chatOpen && !phoneOpen && !propertyInteractionOpen) {
-        drawTextLeft('T: Chat | P: Phone | E: Interact | /help', 0.02, 0.02, 0.3, 150, 150, 150);
+        drawTextLeft('T: Chat | M: Phone | E: Interact | /help', 0.02, 0.02, 0.3, 150, 150, 150);
     }
 });
 

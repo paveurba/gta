@@ -21,9 +21,9 @@ Capabilities the server is expected to provide (baseline for verification and fu
 
 ### Phone
 
-- [ ] **PHON-01**: User can add and list phone contacts via chat
-- [ ] **PHON-02**: User can send SMS-style messages to another player by id
-- [ ] **PHON-03**: User can open phone UI via documented hotkey
+- [x] **PHON-01**: User can add and list phone contacts via chat
+- [x] **PHON-02**: User can send SMS-style messages to another player by id
+- [x] **PHON-03**: User can open phone UI via documented hotkey
 
 ### Properties
 
@@ -107,9 +107,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | AUTH-04 | Phase 2 | Complete |
 | ECON-01 | Phase 2 | Complete |
 | ECON-02 | Phase 2 | Complete |
-| PHON-01 | Phase 3 | Pending |
-| PHON-02 | Phase 3 | Pending |
-| PHON-03 | Phase 3 | Pending |
+| PHON-01 | Phase 3 | Complete |
+| PHON-02 | Phase 3 | Complete |
+| PHON-03 | Phase 3 | Complete |
 | PROP-01 | Phase 4 | Pending |
 | PROP-02 | Phase 4 | Pending |
 | PROP-03 | Phase 4 | Pending |
