@@ -2,6 +2,7 @@ import * as alt from 'alt-server';
 import mysql from 'mysql2/promise';
 import type { PlayerSession } from '../types/playerSession.js';
 import type { AuthService, PlayerWeaponService, VehicleService } from '../services/index.js';
+import { SYNCED_DISPLAY_NAME, displayTagFromEmail } from '../constants/syncedMetaKeys.js';
 
 export type AuthHandlersContext = {
     authService: AuthService;
@@ -68,6 +69,7 @@ export function registerAuthClientEvents(ctx: AuthHandlersContext): void {
         if (result.session!.passwordChangeRequired) {
             playerSessions.set(player.id, session);
             player.setMeta('playerId', session.oderId);
+            player.setSyncedMeta(SYNCED_DISPLAY_NAME as never, displayTagFromEmail(session.email));
             alt.emitClient(player, 'auth:loginResult', { success: true, message: 'You must set a new password.', passwordChangeRequired: true });
             notifyPlayer(player, 'You must change your password to continue.');
             return;
@@ -112,6 +114,7 @@ export function registerAuthClientEvents(ctx: AuthHandlersContext): void {
             playerSessions.delete(player.id);
             playersInProperty.delete(player.id);
             player.deleteMeta('playerId');
+            player.deleteSyncedMeta(SYNCED_DISPLAY_NAME);
             alt.emitClient(player, 'gta:logout');
             player.removeAllWeapons();
             notifyPlayer(player, 'You have been logged out. Press T to login again.');

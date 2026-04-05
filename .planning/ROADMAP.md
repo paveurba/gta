@@ -55,13 +55,54 @@ Plans:
 
 **Artifacts:** [`.planning/phases/12-ci-hardening/12-CONTEXT.md`](phases/12-ci-hardening/12-CONTEXT.md), `12-01-PLAN.md`, `12-01-SUMMARY.md`
 
+### Phase 13: Player nametags
+
+**Goal:** **UI-NAMETAG-01** — visible display names above other players for multiplayer recognition.
+
+**Requirements:** **UI-NAMETAG-01**
+
+**Plans:** 1
+
+Plans:
+
+- [x] **13-01:** Synced meta **`gta:displayName`** on login / clear on logout; client **`drawPlayerNametags`** for **`streamedIn`** players
+
+**Artifacts:** [`.planning/phases/13-player-nametags/13-CONTEXT.md`](phases/13-player-nametags/13-CONTEXT.md), `13-01-PLAN.md`, `13-01-SUMMARY.md`
+
+### Phase 14: Client modularization
+
+**Goal:** **REFACTOR-CLIENT-01** — same behavior as monolithic client **`index.ts`**, split into **`client/`** modules with shared **`clientState`**.
+
+**Requirements:** **REFACTOR-CLIENT-01**
+
+**Plans:** 1
+
+Plans:
+
+- [x] **14-01:** **`types`**, **`constants`**, **`state`**, **`draw`**, **`authClient`**, **`chatPhoneClient`**, **`blipsClient`**, **`propertyClient`**, **`commerceClient`**, **`worldClient`**, **`deathCasinoClient`**, **`inputClient`**, **`hudClient`**; thin **`index.ts`**
+
+**Artifacts:** [`.planning/phases/14-client-modularization/14-CONTEXT.md`](phases/14-client-modularization/14-CONTEXT.md), `14-01-PLAN.md`, `14-01-SUMMARY.md`
+
+### Phase 15: Test scaffold (**TEST-01**)
+
+**Goal:** Introduce a **Node unit-test runner** and **first pure-function tests** for server-side code that does not require alt:V or MySQL in-process — first step toward backlog **TEST-01**.
+
+**Requirements:** **TEST-01** _(backlog → active slice; full coverage out of scope)_
+
+**Plans:** 1
+
+Plans:
+
+- [x] **15-01:** **Vitest** (or equivalent) **`pnpm test`**; initial tests e.g. **`displayTagFromEmail`** in **`server/constants/syncedMetaKeys.ts`**; document how to add more pure tests
+
+**Artifacts:** [`.planning/phases/15-test-hardening/15-CONTEXT.md`](phases/15-test-hardening/15-CONTEXT.md), `15-01-PLAN.md`, `15-01-SUMMARY.md`
+
 ---
 
 ### Backlog (from v1.1)
 
 - **GSD-NYQUIST-01** — optional `*-VALIDATION.md`
 - **TEST-01** — service/repo automated tests (no plan until **`$gsd-plan-phase`**)
-- Optional **`index.ts`** trim — only if new fat blocks appear (parking data already in **`world/spawnStaticParkedVehicles`**)
 
 ---
 

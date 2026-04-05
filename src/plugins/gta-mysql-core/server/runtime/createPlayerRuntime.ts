@@ -10,6 +10,7 @@ import type {
     PropertyService,
     VehicleService,
 } from '../services/index.js';
+import { SYNCED_DISPLAY_NAME, displayTagFromEmail } from '../constants/syncedMetaKeys.js';
 
 type RebarRoot = ReturnType<typeof useRebar>;
 type RebarDatabase = ReturnType<RebarRoot['database']['useDatabase']>;
@@ -64,6 +65,7 @@ export function createPlayerRuntime(ctx: PlayerRuntimeContext) {
         await applyCharacterLook(player, session.oderId);
         await weapon().loadWeaponsToPlayer(player, session.oderId);
         syncMoneyToClient(player);
+        player.setSyncedMeta(SYNCED_DISPLAY_NAME as never, displayTagFromEmail(session.email));
     }
 
     async function savePlayerMoney(email: string, money: number, bank: number): Promise<void> {
@@ -81,6 +83,7 @@ export function createPlayerRuntime(ctx: PlayerRuntimeContext) {
         } catch (err) {
             alt.logWarning(`[gta-mysql-core] clearExistingSession: ${(err as Error).message}`);
         }
+        player.deleteSyncedMeta(SYNCED_DISPLAY_NAME);
         playerSessions.delete(player.id);
         playersInProperty.delete(player.id);
         player.deleteMeta('playerId');

@@ -8,6 +8,7 @@
         "start": "node ./scripts/compile.js && altv-server",
         "start:linux": "node ./scripts/compile.js && ./altv-server",
         "compile:ts": "npx sucrase ./src -d ./resources/core --exclude-dirs ./src/scratchpad --transforms typescript -q && node ./scripts/buildPluginImports.js && node ./scripts/pathResolver.js && shx cp ./src/resource.toml ./resources/core/resource.toml",
+        "test": "vitest run",
         "refresh": "pnpm compile:ts && docker compose up --build -d",
         "dev:hot": "pnpm build:docker && concurrently --raw \"nodemon -C --config ./nodemon-hot.json -x pnpm build:docker\" \"altv-server\"",
         "build:docker": "node ./scripts/compile.js -- docker",
@@ -35,7 +36,8 @@
         "retypeapp": "^3.5.0",
         "shx": "^0.3.4",
         "sucrase": "^3.35.0",
-        "tailwindcss": "^3.4.10"
+        "tailwindcss": "^3.4.10",
+        "vitest": "^3.2.4"
     },
     "dependencies": {
         "@hono/node-server": "^1.12.2",
@@ -47,8 +49,8 @@
         "hono": "^4.5.11",
         "mongodb": "^6.8.0",
         "mysql2": "^3.15.3",
-        "nodemailer": "^6.9.16",
         "node-cron": "^3.0.3",
+        "nodemailer": "^6.9.16",
         "sjcl": "^1.0.8",
         "typescript": "^5.5.4",
         "vite": "^5.4.3",

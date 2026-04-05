@@ -1,5 +1,5 @@
-# TEST-02: compile gate for PRs/pushes. Root postinstall runs altv-pkg + build:docker — not suitable
-# for a lightweight Ubuntu runner; we use --ignore-scripts and only run compile:ts.
+# TEST-02 / TEST-01: compile + unit tests. Root postinstall runs altv-pkg + build:docker — not suitable
+# for a lightweight Ubuntu runner; we use --ignore-scripts, then compile:ts and vitest.
 name: CI
 
 on:
@@ -32,3 +32,6 @@ jobs:
 
             - name: Compile TypeScript (Sucrase)
               run: pnpm run compile:ts
+
+            - name: Unit tests (Vitest)
+              run: pnpm test

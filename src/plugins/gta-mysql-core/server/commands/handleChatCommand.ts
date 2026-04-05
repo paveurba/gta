@@ -14,6 +14,7 @@ import {
     sendTestEmail,
     WEAPON_CATALOG,
 } from '../services/index.js';
+import { SYNCED_DISPLAY_NAME } from '../constants/syncedMetaKeys.js';
 
 export type ChatCommandDeps = {
     notifyPlayer: (player: alt.Player, message: string) => void;
@@ -78,6 +79,7 @@ export async function handleChatCommand(
                 await vehicleService.despawnAllPlayerVehicles(session.oderId);
                 playerSessions.delete(player.id);
                 player.deleteMeta('playerId');
+                player.deleteSyncedMeta(SYNCED_DISPLAY_NAME);
                 alt.emitClient(player, 'gta:logout');
                 player.removeAllWeapons();
                 notifyPlayer(player, 'You have been logged out. Press T to open the Auth menu to login again.');

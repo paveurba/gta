@@ -17,7 +17,10 @@
 | **REFACTOR-01** | Extract **`vehicle:*`** and **`property:*`** client RPC wiring from `server/index.ts` into **`register*ClientEvents`** with typed context (**11-01**, **11-02**). No speculative abstractions. |
 | **REFACTOR-02** | Extract remaining server wiring: **`playerConnect` / `Disconnect` / `Death`**, **`auth:*`**, chat + **`handleChatCommand`**, phone, weapon/clothing/casino shop RPCs; shared **`PlayerSession`** (**11-03**). No behavior change. |
 | **REFACTOR-03** | Extract **`index.ts`** remainder: MySQL pool + service construction (**`createGameplayMysqlBundle`**), player/session helpers (**`createPlayerRuntime`**), static parked vehicles (**`spawnStaticParkedVehicles`**). No behavior change (**11-04**). |
-| **TEST-02** | **GitHub Actions** **`ci.yml`**: **`pnpm run compile:ts`** on **push** and **pull_request** to **`main`**. Install uses **`--ignore-scripts`** because root **`postinstall`** runs **`altv-pkg`** / **`build:docker`** (not CI-safe). **Lint** in CI deferred (no shared eslint script; Prettier optional follow-up). |
+| **TEST-02** | **GitHub Actions** **`ci.yml`**: **`pnpm run compile:ts`** and **`pnpm test`** (Vitest) on **push** and **pull_request** to **`main`**. Install uses **`--ignore-scripts`** because root **`postinstall`** runs **`altv-pkg`** / **`build:docker`** (not CI-safe). **Lint** in CI deferred (no shared eslint script; Prettier optional follow-up). |
+| **TEST-01** | **Unit tests:** **Vitest**, **`pnpm test`**, tests under **`tests/`** (kept out of **`src/`** so Sucrase output unchanged). First coverage: **`displayTagFromEmail`** (**`syncedMetaKeys`**). More pure helpers / services later. |
+| **UI-NAMETAG-01** | **Player nametags:** server sets synced meta **`gta:displayName`** (email **`@`** prefix, same idea as chat); clears on session clear, auth logout, **`/logout`**. Client draws label above **`streamedIn`** others within **~22 m** via **`getScreenCoordFromWorldCoord`**. |
+| **REFACTOR-CLIENT-01** | Split **`gta-mysql-core/client/index.ts`** into **`client/*.ts`** modules (**`clientState`**, domain **`*Client.ts`**, **`draw.ts`**, **`hudClient.ts`**, **`inputClient.ts`**). Thin **`index.ts`** imports only. No gameplay change (**14-01**). |
 
 ### Checklist (v1.2)
 
@@ -26,6 +29,9 @@
 - [x] **REFACTOR-02**
 - [x] **REFACTOR-03**
 - [x] **TEST-02**
+- [x] **UI-NAMETAG-01**
+- [x] **REFACTOR-CLIENT-01**
+- [x] **TEST-01**
 
 ## Traceability (v1.2)
 
@@ -35,13 +41,15 @@
 | REFACTOR-01 | 11 | Complete _(11-01, 11-02 — vehicle + property registrars)_ |
 | REFACTOR-02 | 11 | Complete _(11-03 — lifecycle, auth, chat commands, shops, phone, casino)_ |
 | REFACTOR-03 | 11 | Complete _(11-04 — bootstrap, player runtime, parked world spawns)_ |
-| TEST-02 | 12 | Complete _(12-01 — CI compile workflow)_ |
+| TEST-02 | 12 | Complete _(12-01 — CI compile; **15-01** adds **`pnpm test`** to same workflow)_ |
+| UI-NAMETAG-01 | 13 | Complete _(13-01 — synced meta + client draw)_ |
+| REFACTOR-CLIENT-01 | 14 | Complete _(14-01 — client modules + thin index)_ |
+| TEST-01 | 15 | Complete _(15-01 — Vitest + **`displayTagFromEmail`** + CI test step)_ |
 
 ## v2 backlog (reference)
 
 | ID | Theme | Summary |
 |----|--------|---------|
-| TEST-01 | Hardening | Automated tests for critical services or repositories |
 | MAIL-01 | Email | Optional SMTP-based verification or notifications in production |
 
 ## Out of scope (reference)
@@ -54,4 +62,4 @@
 
 ---
 
-_Updated: 2026-04-06 — **v1.2** active; phases **11**–**12** complete (**11-01**–**11-04**, **12-01**)._
+_Updated: 2026-04-05 — **v1.2** active; phases **10**–**15** complete (**15-01** Vitest + **TEST-01** scaffold)._
