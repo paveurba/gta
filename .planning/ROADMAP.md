@@ -60,7 +60,8 @@ Plans:
 ### Backlog (from v1.1)
 
 - **GSD-NYQUIST-01** — optional `*-VALIDATION.md`
-- **CONCERNS.md** — TEST-01/02; **`index.ts`** still holds parked spawns + session/login helpers (optional future slice)
+- **TEST-01** — service/repo automated tests (no plan until **`$gsd-plan-phase`**)
+- Optional **`index.ts`** trim — only if new fat blocks appear (parking data already in **`world/spawnStaticParkedVehicles`**)
 
 ---
 
