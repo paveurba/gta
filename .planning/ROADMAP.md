@@ -41,6 +41,20 @@ Plans:
 
 **Artifacts:** [`.planning/phases/11-server-modularization/11-CONTEXT.md`](phases/11-server-modularization/11-CONTEXT.md), `11-01-PLAN.md` … `11-04-PLAN.md`
 
+### Phase 12: CI hardening _(planned)_
+
+**Goal:** **TEST-02** — push/PR CI runs **`pnpm run compile:ts`** so compile breaks are visible before merge.
+
+**Requirements:** TEST-02 _(promoted from v2 backlog reference on execute)_
+
+**Plans:** 1
+
+Plans:
+
+- [ ] **12-01:** **`.github/workflows/ci.yml`** — Node + pnpm + **`compile:ts`**
+
+**Artifacts:** [`.planning/phases/12-ci-hardening/12-CONTEXT.md`](phases/12-ci-hardening/12-CONTEXT.md), `12-01-PLAN.md`
+
 ---
 
 ### Backlog (from v1.1)
