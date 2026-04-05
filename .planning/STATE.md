@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: ready_to_plan
-stopped_at: Phase 1 complete; start Phase 2 with `$gsd-plan-phase 2` or `$gsd-discuss-phase 2`
+stopped_at: Phase 2 planned; run `$gsd-execute-phase 2`
 last_updated: "2026-04-05T20:05:05.703Z"
 last_activity: 2026-04-05
 progress:
@@ -28,8 +28,8 @@ See: .planning/PROJECT.md (updated 2026-04-05)
 
 Phase: 2 of 6 (Identity & economy)
 Plan: 0 of 3 in current phase
-Status: Ready to plan
-Last activity: 2026-04-05 — Phase 1 executed (3/3 plans)
+Status: Ready to execute
+Last activity: 2026-04-05 — Phase 2 planned (02-01–02-03)
 
 Progress: [█░░░░░░░░░] 17%
 
@@ -74,5 +74,5 @@ See `.planning/codebase/CONCERNS.md` (no automated test suite; large `server/ind
 ## Session Continuity
 
 Last session: 2026-04-05
-Stopped at: Phase 1 complete; next `$gsd-plan-phase 2`
+Stopped at: Phase 2 plans ready; next `$gsd-execute-phase 2`
 Resume file: None
