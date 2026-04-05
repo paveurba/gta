@@ -47,15 +47,15 @@ Plans:
 
 **Success Criteria** (what must be TRUE):
 
-1. New user can register and log in via chat commands
+1. New user can register and log in via the **Auth UI** (press T)
 2. Passwords are stored hashed (bcrypt), not plaintext
-3. Logged-in player can inspect cash and bank; values survive reconnect
+3. Logged-in player can inspect cash and bank; values survive reconnect (MySQL `players` table)
 
 **Plans**: 3 plans
 
 Plans:
 
-- [x] 02-01: Trace `AuthService` + session binding from chat through MySQL
+- [x] 02-01: Trace `AuthService` + session binding (UI events → `completeLogin` → MySQL-backed session)
 - [x] 02-02: Verify bcrypt configuration and failure modes (wrong password, duplicate email)
 - [x] 02-03: Verify money read/write and persistence across reconnect
 
