@@ -9,7 +9,7 @@
 
 ## Operational
 
-- **Orchestration file:** `src/plugins/gta-mysql-core/server/index.ts` is **~420** lines after phase **11** (registrars + **`handleChatCommand`**). Remaining bulk is static parked vehicle data and session/login helpers — still a merge hotspot if many hands touch it.
+- **Orchestration file:** `src/plugins/gta-mysql-core/server/index.ts` is **~220** lines after phase **11** (**11-04**). Merge risk is lower; large data arrays live in **`world/spawnStaticParkedVehicles.ts`**.
 - **Docker / arch:** README notes possible `linux/amd64` emulation on ARM Macs — performance and debugging overhead.
 
 ## Security

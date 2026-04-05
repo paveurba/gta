@@ -16,12 +16,14 @@
 | **PROP-INT-01** | Property **enter**: no server-side `player.pos` to IPL interior coords; client teleports from `property:enterResult`. **Exit**: client-only exterior teleport. Chat `enter` validates interior like RPC. |
 | **REFACTOR-01** | Extract **`vehicle:*`** and **`property:*`** client RPC wiring from `server/index.ts` into **`register*ClientEvents`** with typed context (**11-01**, **11-02**). No speculative abstractions. |
 | **REFACTOR-02** | Extract remaining server wiring: **`playerConnect` / `Disconnect` / `Death`**, **`auth:*`**, chat + **`handleChatCommand`**, phone, weapon/clothing/casino shop RPCs; shared **`PlayerSession`** (**11-03**). No behavior change. |
+| **REFACTOR-03** | Extract **`index.ts`** remainder: MySQL pool + service construction (**`createGameplayMysqlBundle`**), player/session helpers (**`createPlayerRuntime`**), static parked vehicles (**`spawnStaticParkedVehicles`**). No behavior change (**11-04**). |
 
 ### Checklist (v1.2)
 
 - [x] **PROP-INT-01**
 - [x] **REFACTOR-01**
 - [x] **REFACTOR-02**
+- [x] **REFACTOR-03**
 
 ## Traceability (v1.2)
 
@@ -30,6 +32,7 @@
 | PROP-INT-01 | 10 | Complete |
 | REFACTOR-01 | 11 | Complete _(11-01, 11-02 — vehicle + property registrars)_ |
 | REFACTOR-02 | 11 | Complete _(11-03 — lifecycle, auth, chat commands, shops, phone, casino)_ |
+| REFACTOR-03 | 11 | Complete _(11-04 — bootstrap, player runtime, parked world spawns)_ |
 
 ## v2 backlog (reference)
 
@@ -49,4 +52,4 @@
 
 ---
 
-_Updated: 2026-04-06 — **v1.2** active; phase **11** complete (**11-01**–**11-03**)._
+_Updated: 2026-04-06 — **v1.2** active; phase **11** complete (**11-01**–**11-04**)._

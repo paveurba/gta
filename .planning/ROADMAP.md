@@ -28,17 +28,18 @@ Plans:
 
 **Goal:** Move **`alt.onClient`** and core **`alt.on`** gameplay wiring out of `server/index.ts` into **`register*()`** modules and **`handleChatCommand`** (KISS / SRP). No behavior change.
 
-**Requirements:** **REFACTOR-01** (11-01, 11-02), **REFACTOR-02** (11-03)
+**Requirements:** **REFACTOR-01** (11-01, 11-02), **REFACTOR-02** (11-03), **REFACTOR-03** (11-04)
 
-**Plans:** 3
+**Plans:** 4
 
 Plans:
 
 - [x] 11-01: **`registerVehicleClientEvents`** — all `vehicle:*` `alt.onClient` handlers
 - [x] 11-02: **`registerPropertyClientEvents`** — all `property:*` `alt.onClient` handlers (after 11-01 pattern)
 - [x] 11-03: **Lifecycle + auth + chat + shops + phone + casino** — `registerPlayerLifecycleEvents`, `registerAuthClientEvents`, `registerChatClientEvents`, `handleChatCommand`, shop/phone/casino registrars; shared **`PlayerSession`**
+- [x] 11-04: **Bootstrap + runtime + world** — `createGameplayMysqlBundle`, `createPlayerRuntime`, `spawnStaticParkedVehicles`; **`index.ts`** wiring only
 
-**Artifacts:** [`.planning/phases/11-server-modularization/11-CONTEXT.md`](phases/11-server-modularization/11-CONTEXT.md), `11-01-PLAN.md`, `11-02-PLAN.md`, `11-03-PLAN.md`
+**Artifacts:** [`.planning/phases/11-server-modularization/11-CONTEXT.md`](phases/11-server-modularization/11-CONTEXT.md), `11-01-PLAN.md` … `11-04-PLAN.md`
 
 ---
 

@@ -36,7 +36,7 @@ Other three hospitals use the **same** x,y,z between client blip list and server
 
 ## Static parked vehicles (**WORLD-02**)
 
-- Array **`PARKED_VEHICLE_SPAWNS`** in `server/index.ts` — **46** entries `{ x, y, z, heading, model }`.
+- Array **`PARKED_VEHICLE_SPAWNS`** in **`server/world/spawnStaticParkedVehicles.ts`** — **46** entries `{ x, y, z, heading, model }`; **`spawnStaticParkedVehicles()`** called from **`server/index.ts`** at startup.
 - **`spawnStaticParkedVehicles()`** (called at plugin load after `init`): destroys previous `spawnedParkedVehicles`, spawns each with `new alt.Vehicle(model, pos, rot)` where rotation z = `heading * (π/180)`, **`engineOn = false`**, **`lockState = 1`** (unlocked). Failures log a warning per model.
 
 ## Property menu vs blip

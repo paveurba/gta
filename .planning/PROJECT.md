@@ -15,7 +15,7 @@ A **GTA Online–style alt:V multiplayer server** built on the **Rebar** framewo
 **Roadmap:** [`.planning/ROADMAP.md`](.planning/ROADMAP.md)
 
 - **Done (phase 10):** Property interior enter/exit — **client-authoritative** teleport; shared `PropertyService` payload helpers (fixes server position snap / wrong exterior spawn).
-- **Done (phase 11):** Server modularization — **REFACTOR-01** (**11-01**, **11-02**): `vehicle:*` / `property:*` registrars; **REFACTOR-02** (**11-03**): lifecycle (`registerPlayerLifecycleEvents`), `auth:*`, chat + **`handleChatCommand`**, phone, weapon/clothing/casino registrars, shared **`PlayerSession`** (~**420** LOC **`index.ts`** orchestration only).
+- **Done (phase 11):** Server modularization — **REFACTOR-01**–**03** (**11-01**–**11-04**): registrars + **`handleChatCommand`** + **`createGameplayMysqlBundle`** + **`createPlayerRuntime`** + **`world/spawnStaticParkedVehicles`**; **`index.ts`** ~**222** LOC (wiring only).
 - **Still backlog:** **TEST-01/02**, **MAIL-01**, **`vehicle:spawn`** ownership hardening, Nyquist files — promote via requirements when ready.
 
 ## Core Value
@@ -80,4 +80,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-_Last updated: 2026-04-06 — **v1.2**: phase 10 (**PROP-INT-01**) + phase 11 (**REFACTOR-01** + **REFACTOR-02**, plans **11-01**–**11-03**)._
+_Last updated: 2026-04-06 — **v1.2**: phase 10 (**PROP-INT-01**) + phase 11 (**REFACTOR-01**–**03**, plans **11-01**–**11-04**)._

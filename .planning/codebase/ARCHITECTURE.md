@@ -17,7 +17,7 @@
 **Server plugin (`gta-mysql-core/server`):**
 
 - **Purpose:** alt:V lifecycle, player sessions, command routing, business operations.
-- **Contains:** `index.ts` (pool, services, session helpers, static parked spawns, **`register*()`** wiring), `services/*.ts` (domain logic), `events/register*ClientEvents.ts` + `registerPlayerLifecycleEvents.ts` (thin `alt.on` / `alt.onClient` registrars), `commands/handleChatCommand.ts` (chat `/` commands), `types/playerSession.ts`, `repositories/*.ts`, `database/migrations.ts`.
+- **Contains:** `index.ts` ( **`getMySQLPool`** + service assignment, maps, **`createPlayerRuntime`** destructuring, **`register*()`** wiring only), `bootstrap/createGameplayMysqlBundle.ts`, `runtime/createPlayerRuntime.ts`, `world/spawnStaticParkedVehicles.ts`, `services/*.ts`, `events/register*ClientEvents.ts` + `registerPlayerLifecycleEvents.ts`, `commands/handleChatCommand.ts`, `types/playerSession.ts`, `repositories/*.ts`, `database/migrations.ts`.
 - **Depends on:** `mysql2`, Rebar (`useRebar()`), `alt-server`.
 - **Used by:** alt:V server runtime when resource starts.
 
@@ -99,7 +99,7 @@
 
 **World presentation:**
 
-- Blips, static vehicles — `PARKED_VEHICLE_SPAWNS` + `spawnStaticParkedVehicles` in `server/index.ts`. Shop/casino POI lists are imported in **`registerPlayerLifecycleEvents`** for `gta:locations:update` on connect.
+- Blips, static vehicles — **`world/spawnStaticParkedVehicles.ts`** (data + spawn). Shop/casino POI lists are imported in **`registerPlayerLifecycleEvents`** for `gta:locations:update` on connect.
 
 ---
 
