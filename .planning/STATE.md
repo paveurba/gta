@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: gap-closure
-status: ready_to_execute
-stopped_at: Phase 8 planned (`08-01`…`08-03-PLAN.md` + `08-CONTEXT.md`); next `$gsd-execute-phase 8`
-last_updated: "2026-04-06T19:00:00.000Z"
+status: ready_to_plan
+stopped_at: Phase 8 complete; next `$gsd-plan-phase 9` or `$gsd-execute-phase 9`
+last_updated: "2026-04-06T20:00:00.000Z"
 last_activity: 2026-04-06
 progress:
   total_phases: 9
-  completed_phases: 7
+  completed_phases: 8
   total_plans: 25
-  completed_plans: 20
-  percent: 80
+  completed_plans: 23
+  percent: 92
 ---
 
 # Project State
@@ -22,23 +22,23 @@ See: .planning/PROJECT.md
 
 **Core value:** Players can join the server, persist a character economy, and use the documented gameplay loops reliably against MySQL-backed state.
 
-**Current focus:** v1.1 gap closure — **Phase 8** (retro plan summaries)
+**Current focus:** v1.1 gap closure — **Phase 9** (server trust + WEBV docs)
 
 ## Current Position
 
-Phase: **8 of 9** (retroactive SUMMARY for plans 04–06)
-Plan: 0 of 3 executed (3 plans ready: `08-01` … `08-03`)
-Status: Ready to execute
-Last activity: 2026-04-06 — `$gsd-plan-phase 8`
+Phase: **9 of 9** (trust model + documentation)
+Plan: 0 of 2 in current phase
+Status: Ready to plan
+Last activity: 2026-04-06 — `$gsd-execute-phase 8`
 
-Progress: [████████░░] 80% _(v1.0 + Phase 7; Phases 8–9 pending)_
+Progress: [█████████░] 92% _(Phases 7–8 done; Phase 9 pending)_
 
 ## Performance Metrics
 
 **Velocity:**
 
 - Total plans completed (v1.0): 18
-- Gap closure plans: 5 pending (suggested; Phase 7 done: 2)
+- Gap closure plans: 2 pending (suggested; Phases 7–8 done: 5)
 
 **By Phase:**
 
@@ -67,5 +67,5 @@ See `.planning/codebase/CONCERNS.md`.
 ## Session Continuity
 
 Last session: 2026-04-06
-Stopped at: Phase 8 planned — `08-CONTEXT.md` + three executable plans for retro SUMMARYs
+Stopped at: Phase 8 executed — ten `NN-MM-SUMMARY.md` files + AUD-SUMM-01 complete
 Resume file: None

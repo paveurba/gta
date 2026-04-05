@@ -33,9 +33,9 @@ Plans:
 
 Plans:
 
-- [ ] 08-01: Summaries for **04-01 … 04-04**
-- [ ] 08-02: Summaries for **05-01 … 05-03**
-- [ ] 08-03: Summaries for **06-01 … 06-03**
+- [x] 08-01: Summaries for **04-01 … 04-04**
+- [x] 08-02: Summaries for **05-01 … 05-03**
+- [x] 08-03: Summaries for **06-01 … 06-03**
 
 ### Phase 9: Server trust model & WEBV wording
 
