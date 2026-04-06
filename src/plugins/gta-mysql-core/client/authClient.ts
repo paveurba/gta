@@ -49,6 +49,11 @@ export function authBack(): void {
 }
 
 export function submitAuthForm(): void {
+    if (clientState.isDisconnected) {
+        clientState.authMessage =
+            'Not connected to the server yet. Wait for reconnect or pick the server again from the list.';
+        return;
+    }
     const f = clientState.authForm;
     if (clientState.authScreen === 'login') {
         alt.emitServer('auth:login', f.loginId.trim(), f.loginPassword);

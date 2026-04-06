@@ -23,20 +23,44 @@ import { disableAmbientPopulation, forceSafeGroundSpawn } from './worldClient.js
 alt.everyTick(() => {
     disableAmbientPopulation();
 
-    if (clientState.isDisconnected) {
-        drawRect(0.5, 0.5, 1.0, 1.0, 0, 0, 0, 220);
-        drawRect(0.5, 0.5, 0.4, 0.22, 25, 25, 35, 245);
-        drawTextLeft('Connection lost', 0.32, 0.38, 0.55, 255, 100, 100);
-        drawTextLeft('Reconnecting...', 0.32, 0.46, 0.4, 255, 255, 255);
-        drawTextLeft(`Attempt ${clientState.reconnectAttempts}`, 0.32, 0.52, 0.32, 180, 180, 180);
-        drawTextLeft('If this does not reconnect, use the server list to reconnect.', 0.32, 0.62, 0.28, 150, 150, 150);
-        return;
-    }
-
+    // Auth UI must draw even while "disconnected": otherwise pressing T opens auth in state but the
+    // disconnect overlay hides it completely (looks like login is broken).
     if (clientState.authOpen) {
         alt.showCursor(true);
         alt.toggleGameControls(false);
         drawAuthOverlay();
+        if (clientState.isDisconnected) {
+            drawRect(0.5, 0.06, 0.85, 0.07, 40, 20, 20, 230);
+            drawTextLeft(
+                'Not connected to server — login will work after reconnect.',
+                0.08,
+                0.035,
+                0.32,
+                255,
+                200,
+                120,
+            );
+            drawTextLeft(
+                'Use the server list if this stays red. Press Esc to close this menu.',
+                0.08,
+                0.065,
+                0.26,
+                200,
+                200,
+                200,
+            );
+        }
+        return;
+    }
+
+    if (clientState.isDisconnected) {
+        drawRect(0.5, 0.5, 1.0, 1.0, 0, 0, 0, 220);
+        drawRect(0.5, 0.5, 0.4, 0.22, 25, 25, 35, 245);
+        drawTextLeft('Server not responding / connection lost', 0.32, 0.34, 0.42, 255, 100, 100);
+        drawTextLeft('Reconnecting...', 0.32, 0.42, 0.4, 255, 255, 255);
+        drawTextLeft(`Attempt ${clientState.reconnectAttempts}`, 0.32, 0.48, 0.32, 180, 180, 180);
+        drawTextLeft('If this does not reconnect, use the server list.', 0.32, 0.54, 0.28, 150, 150, 150);
+        drawTextLeft('Press T to open Login / Register (visible when connected).', 0.32, 0.62, 0.26, 200, 200, 100);
         return;
     }
 
@@ -49,7 +73,7 @@ alt.everyTick(() => {
         drawText(`$${clientState.playerMoney.toLocaleString()}`, 0.98, 0.02, 0.5, 114, 204, 114);
         drawText(`Bank: $${clientState.playerBank.toLocaleString()}`, 0.98, 0.055, 0.35, 200, 200, 200);
     } else {
-        drawText('Login required', 0.98, 0.02, 0.35, 255, 255, 255);
+        drawText('Press T — Login / Register', 0.98, 0.02, 0.32, 255, 255, 255);
     }
 
     drawPlayerNametags();
@@ -74,15 +98,35 @@ alt.everyTick(() => {
             const sr = clientState.slotsResult;
             drawTextLeft(`[ ${sr.symbols.join(' | ')} ]`, 0.38, 0.26, 0.6, 255, 215, 0);
             const resultColor = sr.won ? [100, 255, 100] : [255, 100, 100];
-            drawTextLeft(sr.won ? `WIN: $${sr.winAmount}` : 'No win', 0.42, 0.32, 0.5, resultColor[0], resultColor[1], resultColor[2]);
+            drawTextLeft(
+                sr.won ? `WIN: $${sr.winAmount}` : 'No win',
+                0.42,
+                0.32,
+                0.5,
+                resultColor[0],
+                resultColor[1],
+                resultColor[2],
+            );
         }
         if (clientState.rouletteResult) {
             const rr = clientState.rouletteResult;
-            const colorMap: { [k: string]: number[] } = { red: [255, 50, 50], black: [50, 50, 50], green: [50, 255, 50] };
+            const colorMap: { [k: string]: number[] } = {
+                red: [255, 50, 50],
+                black: [50, 50, 50],
+                green: [50, 255, 50],
+            };
             const col = colorMap[rr.color] || [255, 255, 255];
             drawTextLeft(`${rr.number} (${rr.color})`, 0.42, 0.26, 0.6, col[0], col[1], col[2]);
             const resultColor = rr.won ? [100, 255, 100] : [255, 100, 100];
-            drawTextLeft(rr.won ? `WIN: $${rr.winAmount}` : 'No win', 0.42, 0.32, 0.5, resultColor[0], resultColor[1], resultColor[2]);
+            drawTextLeft(
+                rr.won ? `WIN: $${rr.winAmount}` : 'No win',
+                0.42,
+                0.32,
+                0.5,
+                resultColor[0],
+                resultColor[1],
+                resultColor[2],
+            );
         }
     }
 
@@ -92,7 +136,15 @@ alt.everyTick(() => {
 
         if (clientState.phoneTab === 'main') {
             drawTextLeft('[1] Contacts', 0.4, 0.35, 0.4, 255, 255, 255);
-            drawTextLeft('[2] Messages' + (clientState.phoneUnread > 0 ? ` (${clientState.phoneUnread})` : ''), 0.4, 0.4, 0.4, 255, 255, 255);
+            drawTextLeft(
+                '[2] Messages' + (clientState.phoneUnread > 0 ? ` (${clientState.phoneUnread})` : ''),
+                0.4,
+                0.4,
+                0.4,
+                255,
+                255,
+                255,
+            );
             drawTextLeft('[3] Add Contact', 0.4, 0.45, 0.4, 255, 255, 255);
             drawTextLeft('[4] Send Message', 0.4, 0.5, 0.4, 255, 255, 255);
             drawTextLeft('[ESC] Close', 0.4, 0.6, 0.35, 150, 150, 150);
@@ -114,7 +166,7 @@ alt.everyTick(() => {
                     0.3,
                     m.is_read ? 150 : 255,
                     m.is_read ? 150 : 255,
-                    m.is_read ? 150 : 255
+                    m.is_read ? 150 : 255,
                 );
             });
             if (clientState.phoneMessages.length === 0) drawTextLeft('No messages', 0.4, 0.4, 0.35, 150, 150, 150);
@@ -130,9 +182,17 @@ alt.everyTick(() => {
                 clientState.activeInput === 'phone1' ? 60 : 40,
                 clientState.activeInput === 'phone1' ? 60 : 40,
                 clientState.activeInput === 'phone1' ? 80 : 50,
-                255
+                255,
             );
-            drawTextLeft(clientState.phoneInput + (clientState.activeInput === 'phone1' ? '_' : ''), 0.41, 0.455, 0.35, 255, 255, 255);
+            drawTextLeft(
+                clientState.phoneInput + (clientState.activeInput === 'phone1' ? '_' : ''),
+                0.41,
+                0.455,
+                0.35,
+                255,
+                255,
+                255,
+            );
             drawTextLeft('Number:', 0.4, 0.5, 0.35, 200, 200, 200);
             drawRect(
                 0.5,
@@ -142,9 +202,17 @@ alt.everyTick(() => {
                 clientState.activeInput === 'phone2' ? 60 : 40,
                 clientState.activeInput === 'phone2' ? 60 : 40,
                 clientState.activeInput === 'phone2' ? 80 : 50,
-                255
+                255,
             );
-            drawTextLeft(clientState.phoneInput2 + (clientState.activeInput === 'phone2' ? '_' : ''), 0.41, 0.515, 0.35, 255, 255, 255);
+            drawTextLeft(
+                clientState.phoneInput2 + (clientState.activeInput === 'phone2' ? '_' : ''),
+                0.41,
+                0.515,
+                0.35,
+                255,
+                255,
+                255,
+            );
             drawTextLeft('[TAB] Switch | [ENTER] Save | [ESC] Back', 0.4, 0.6, 0.3, 150, 150, 150);
         } else if (clientState.phoneTab === 'sendMessage') {
             drawTextLeft('SEND MESSAGE', 0.4, 0.35, 0.4, 100, 200, 255);
@@ -157,9 +225,17 @@ alt.everyTick(() => {
                 clientState.activeInput === 'phone1' ? 60 : 40,
                 clientState.activeInput === 'phone1' ? 60 : 40,
                 clientState.activeInput === 'phone1' ? 80 : 50,
-                255
+                255,
             );
-            drawTextLeft(clientState.phoneInput + (clientState.activeInput === 'phone1' ? '_' : ''), 0.41, 0.455, 0.35, 255, 255, 255);
+            drawTextLeft(
+                clientState.phoneInput + (clientState.activeInput === 'phone1' ? '_' : ''),
+                0.41,
+                0.455,
+                0.35,
+                255,
+                255,
+                255,
+            );
             drawTextLeft('Message:', 0.4, 0.5, 0.35, 200, 200, 200);
             drawRect(
                 0.5,
@@ -169,9 +245,17 @@ alt.everyTick(() => {
                 clientState.activeInput === 'phone2' ? 60 : 40,
                 clientState.activeInput === 'phone2' ? 60 : 40,
                 clientState.activeInput === 'phone2' ? 80 : 50,
-                255
+                255,
             );
-            drawTextLeft(clientState.phoneInput2 + (clientState.activeInput === 'phone2' ? '_' : ''), 0.41, 0.515, 0.35, 255, 255, 255);
+            drawTextLeft(
+                clientState.phoneInput2 + (clientState.activeInput === 'phone2' ? '_' : ''),
+                0.41,
+                0.515,
+                0.35,
+                255,
+                255,
+                255,
+            );
             drawTextLeft('[TAB] Switch | [ENTER] Send | [ESC] Back', 0.4, 0.6, 0.3, 150, 150, 150);
         }
     }
@@ -192,7 +276,9 @@ alt.everyTick(() => {
     if (clientState.chatOpen) {
         drawRect(0.5, 0.95, 0.6, 0.04, 0, 0, 0, 180);
         const displayText =
-            clientState.chatInput.length > 0 ? clientState.chatInput + '_' : 'Type message... (Enter to send, Esc to cancel)';
+            clientState.chatInput.length > 0
+                ? clientState.chatInput + '_'
+                : 'Type message... (Enter to send, Esc to cancel)';
         native.setTextFont(4);
         native.setTextScale(0.35, 0.35);
         native.setTextColour(255, 255, 255, 255);
@@ -201,7 +287,12 @@ alt.everyTick(() => {
         native.endTextCommandDisplayText(0.22, 0.94, 0);
     }
 
-    if (clientState.isLoggedIn && !clientState.chatOpen && !clientState.phoneOpen && !clientState.propertyInteractionOpen) {
+    if (
+        clientState.isLoggedIn &&
+        !clientState.chatOpen &&
+        !clientState.phoneOpen &&
+        !clientState.propertyInteractionOpen
+    ) {
         drawTextLeft('T: Chat | M: Phone | E: Interact | /help', 0.02, 0.02, 0.3, 150, 150, 150);
     }
 });
