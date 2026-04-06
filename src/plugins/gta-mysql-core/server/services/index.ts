@@ -1,3 +1,4 @@
+export { DatabaseService } from './database.service.js';
 export { PlayerWeaponService } from './PlayerWeaponService.js';
 export {
     PropertyService,

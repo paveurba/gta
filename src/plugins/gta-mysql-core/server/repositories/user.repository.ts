@@ -11,7 +11,7 @@ export class UserRepository {
     constructor(private readonly database: DatabaseService) {}
 
     async findByEmail(email: string): Promise<UserRow | null> {
-        const rows = await this.database.query<UserRow[]>(
+        const rows = await this.database.query<UserRow>(
             'SELECT id, email, password_hash FROM users WHERE email = :email LIMIT 1',
             { email },
         );

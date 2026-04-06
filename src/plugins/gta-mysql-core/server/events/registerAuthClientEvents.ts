@@ -69,7 +69,7 @@ export function registerAuthClientEvents(ctx: AuthHandlersContext): void {
         if (result.session!.passwordChangeRequired) {
             playerSessions.set(player.id, session);
             player.setMeta('playerId', session.oderId);
-            player.setSyncedMeta(SYNCED_DISPLAY_NAME as never, displayTagFromEmail(session.email));
+            player.setSyncedMeta(SYNCED_DISPLAY_NAME, displayTagFromEmail(session.email));
             alt.emitClient(player, 'auth:loginResult', { success: true, message: 'You must set a new password.', passwordChangeRequired: true });
             notifyPlayer(player, 'You must change your password to continue.');
             return;

@@ -32,8 +32,9 @@ export function usePermissionProxy<T extends Document>(
 
         const documentPermissions = document.permissions || [];
         if (typeof document.groups === 'object' && !Array.isArray(document.groups)) {
+            const docId = (document as Document & { _id?: unknown })._id;
             alt.logWarning(
-                `${target || 'virtual'} document ${document._id} has a groups object instead of an array. Prefer to migrate.`,
+                `${target || 'virtual'} document ${String(docId)} has a groups object instead of an array. Prefer to migrate.`,
             );
             return documentPermissions;
         }

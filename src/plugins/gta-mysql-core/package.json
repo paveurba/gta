@@ -1,6 +1,7 @@
 {
   "name": "gta-mysql-core-plugin",
   "private": true,
+  "type": "module",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.5.0",

@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import { useServiceRegister } from './index.js';
-import { Item, RebarBaseItem } from '@Shared/types/items.js';
+import { Item, RebarBaseItem, type RebarItems } from '@Shared/types/items.js';
 
 export interface ItemService {
     /**

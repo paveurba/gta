@@ -55,11 +55,12 @@ export class PlayerWeaponService {
     async savePlayerWeapons(player: alt.Player, playerId: number): Promise<void> {
         const weapons = player.weapons;
         for (const weapon of weapons) {
-            // Server-side IWeapon has no ammo property; use INSERT IGNORE to record
-            // the weapon hash without overwriting ammo already stored in the DB.
+            const ammo = player.getWeaponAmmo(weapon.hash);
             await this.pool.execute(
-                'INSERT IGNORE INTO player_weapons (player_id, weapon_hash, ammo) VALUES (?, ?, 100)',
-                [playerId, weapon.hash],
+                `INSERT INTO player_weapons (player_id, weapon_hash, ammo)
+                 VALUES (?, ?, ?)
+                 ON DUPLICATE KEY UPDATE ammo = ?`,
+                [playerId, weapon.hash, ammo, ammo],
             );
         }
         alt.log(`[PlayerWeaponService] Saved ${weapons.length} weapons for player ${playerId}`);

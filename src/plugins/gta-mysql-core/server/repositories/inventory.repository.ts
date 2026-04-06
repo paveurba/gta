@@ -10,7 +10,7 @@ export class InventoryRepository {
     constructor(private readonly database: DatabaseService) {}
 
     async listByUser(userId: number): Promise<Array<{ itemName: string; quantity: number }>> {
-        const rows = await this.database.query<InventoryRow[]>(
+        const rows = await this.database.query<InventoryRow>(
             'SELECT item_name, quantity FROM inventory_items WHERE user_id = :user_id ORDER BY item_name ASC',
             { user_id: userId },
         );

@@ -20,7 +20,7 @@ export class JobRepository {
     }
 
     async getActiveJob(userId: number): Promise<string | null> {
-        const rows = await this.database.query<ActiveJobRow[]>(
+        const rows = await this.database.query<ActiveJobRow>(
             'SELECT job_name FROM player_jobs WHERE user_id = :user_id AND is_active = 1 LIMIT 1',
             { user_id: userId },
         );

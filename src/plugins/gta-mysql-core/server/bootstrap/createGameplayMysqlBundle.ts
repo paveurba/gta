@@ -35,6 +35,7 @@ export async function createGameplayMysqlBundle(): Promise<GameplayMysqlBundle> 
         database: process.env.DB_NAME || 'gta_rebar',
         waitForConnections: true,
         connectionLimit: 10,
+        namedPlaceholders: true,
     });
 
     await runMigrations(pool);

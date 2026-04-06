@@ -1,3 +1,11 @@
+/**
+ * Registry of item type keys. Augment in your project for stricter ids, e.g.
+ * `declare module '@Shared/types/items.js' { interface RebarItems { 'burger': true } }`
+ */
+export interface RebarItems {
+    [key: string]: unknown;
+}
+
 export interface RebarBaseItem {
     /**
      * A general purpose item identifier.

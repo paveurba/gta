@@ -137,11 +137,9 @@ export class AppearanceService {
     constructor(private pool: mysql.Pool) {}
 
     async loadAppearance(playerId: number): Promise<Partial<Appearance> | null> {
-        const [rows] = await this.pool.execute<CharacterAppearanceRow[]>(
-            'SELECT * FROM character_appearance WHERE player_id = ?',
-            [playerId]
-        );
-        const row = Array.isArray(rows) ? rows[0] : (rows as any)?.[0];
+        const [rows] = await this.pool.execute('SELECT * FROM character_appearance WHERE player_id = ?', [playerId]);
+        const list = rows as CharacterAppearanceRow[];
+        const row = Array.isArray(list) ? list[0] : undefined;
         if (!row) return null;
         return rowToAppearance(row);
     }

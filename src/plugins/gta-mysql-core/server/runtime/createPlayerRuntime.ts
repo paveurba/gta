@@ -65,7 +65,7 @@ export function createPlayerRuntime(ctx: PlayerRuntimeContext) {
         await applyCharacterLook(player, session.oderId);
         await weapon().loadWeaponsToPlayer(player, session.oderId);
         syncMoneyToClient(player);
-        player.setSyncedMeta(SYNCED_DISPLAY_NAME as never, displayTagFromEmail(session.email));
+        player.setSyncedMeta(SYNCED_DISPLAY_NAME, displayTagFromEmail(session.email));
     }
 
     async function savePlayerMoney(email: string, money: number, bank: number): Promise<void> {

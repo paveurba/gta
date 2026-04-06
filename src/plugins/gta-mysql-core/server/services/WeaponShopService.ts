@@ -138,11 +138,10 @@ export class WeaponShopService {
             return { success: false, message: 'Not enough money' };
         }
 
-        // Add ammo to player
-        const currentWeapon = player.weapons.find(w => w.hash === weaponHash);
-        if (currentWeapon) {
-            player.giveWeapon(weaponHash, currentWeapon.totalAmmo + ammoAmount, false);
-            await this.weaponService.saveWeapon(playerId, weaponHash, currentWeapon.totalAmmo + ammoAmount);
+        if (player.hasWeapon(weaponHash)) {
+            const currentAmmo = player.getWeaponAmmo(weaponHash);
+            player.giveWeapon(weaponHash, currentAmmo + ammoAmount, false);
+            await this.weaponService.saveWeapon(playerId, weaponHash, currentAmmo + ammoAmount);
         }
 
         // Deduct money

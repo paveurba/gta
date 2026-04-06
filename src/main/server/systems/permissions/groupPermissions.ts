@@ -112,9 +112,8 @@ export function usePermissionGroup() {
             ...accountPromises,
             ...characterPromises,
             // Remove the group from all accounts that are offline.
-            database.updateMany({ groups: groupName }, { $pull: { groups: groupName } }, CollectionNames.Accounts),
-            // Remove the group from all characters that are offline.
-            database.updateMany({ groups: groupName }, { $pull: { groups: groupName } }, CollectionNames.Characters),
+            database.updateMany({ groups: groupName }, { $pull: { groups: groupName } } as never, CollectionNames.Accounts),
+            database.updateMany({ groups: groupName }, { $pull: { groups: groupName } } as never, CollectionNames.Characters),
         ]);
         return true;
     }

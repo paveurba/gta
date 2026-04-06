@@ -116,14 +116,18 @@ export async function runMigrations(pool: mysql.Pool): Promise<void> {
     } catch (e) { /* Column already exists */ }
 
     // Backfill empty usernames from email local part (e.g. pavlik@upanet.org -> pavlik)
-    const [rows] = await pool.execute<{ id: number; email: string; username: string | null }[]>(
+    const [rows] = await pool.execute(
         "SELECT id, email, username FROM players WHERE username IS NULL OR TRIM(COALESCE(username, '')) = ''"
     );
-    const toBackfill = Array.isArray(rows) ? rows : [];
+    const toBackfill = Array.isArray(rows) ? (rows as { id: number; email: string; username: string | null }[]) : [];
     if (toBackfill.length > 0) {
         const used = new Set<string>();
-        const [existing] = await pool.execute<{ username: string }[]>('SELECT username FROM players WHERE username IS NOT NULL AND TRIM(username) != ""');
-        (Array.isArray(existing) ? existing : []).forEach((r) => { if (r.username) used.add(r.username.toLowerCase()); });
+        const [existing] = await pool.execute(
+            'SELECT username FROM players WHERE username IS NOT NULL AND TRIM(username) != ""'
+        );
+        (Array.isArray(existing) ? (existing as { username: string }[]) : []).forEach((r) => {
+            if (r.username) used.add(r.username.toLowerCase());
+        });
         for (const row of toBackfill) {
             const local = row.email.split('@')[0] || '';
             let base = local.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 32) || `player${row.id}`;

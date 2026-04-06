@@ -17,7 +17,7 @@ let isPageOpen = false;
 let openPages: PageNames[] = [];
 let openOverlays: PageNames[] = [];
 let openPeristentPages: PageNames[] = [];
-let escapeToClosePage: PageNames;
+let escapeToClosePage: PageNames | undefined;
 
 function handleServerEvent(event: string, ...args: any[]) {
     alt.emitServer(event, ...args);
