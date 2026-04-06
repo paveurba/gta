@@ -38,7 +38,7 @@ export function registerPlayerLifecycleEvents(ctx: PlayerLifecycleContext): void
     alt.on('playerConnect', async (player) => {
         alt.log(`[gta-mysql-core] Player connected: ${player.id}`);
         spawnPlayerSafe(player);
-        notifyPlayer(player, 'Welcome! Press T to open Login / Register. Press M for phone when logged in.');
+        notifyPlayer(player, 'Welcome! The login form opens automatically. Press M for phone when logged in.');
 
         alt.emitClient(player, 'gta:locations:update', {
             weaponShops: WEAPON_SHOP_LOCATIONS,

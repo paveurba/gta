@@ -1,11 +1,11 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 
-import { closeAuth } from './authClient.js';
+import { openAuth } from './authClient.js';
 import { createMapBlips } from './blipsClient.js';
 import { addNotification } from './chatPhoneClient.js';
 import { CASINO_IPLS, RECONNECT_INTERVAL_MS, SAFE_SPAWN } from './constants.js';
-import { clientState } from './state.js';
+import { clientState, resetTransientClientUiState } from './state.js';
 
 export async function forceSafeGroundSpawn(x: number, y: number, z: number): Promise<void> {
     const player = alt.Player.local;
@@ -95,19 +95,26 @@ function scheduleReconnect(): void {
     }, RECONNECT_INTERVAL_MS);
 }
 
+function openInitialLoginForm(): void {
+    if (clientState.isDisconnected || clientState.isLoggedIn || clientState.authOpen) return;
+    openAuth('login');
+}
+
 alt.onServer('gta:playerId', (id: number) => {
     clientState.currentPlayerId = id;
 });
 
 alt.onServer('gta:logout', () => {
+    resetTransientClientUiState();
+    alt.showCursor(false);
+    alt.toggleGameControls(true);
     clientState.isLoggedIn = false;
-    clientState.authRequirePasswordChange = false;
     clientState.currentPlayerId = 0;
     clientState.playerMoney = 0;
     clientState.playerBank = 0;
     clientState.properties = [];
     createMapBlips();
-    if (clientState.authOpen) closeAuth();
+    openInitialLoginForm();
     addNotification('Logged out successfully');
 });
 
@@ -128,6 +135,9 @@ alt.onServer('gta:spawn:safe', (x?: number, y?: number, z?: number) => {
 });
 
 alt.on('connectionComplete', () => {
+    resetTransientClientUiState();
+    alt.showCursor(false);
+    alt.toggleGameControls(true);
     clientState.isDisconnected = false;
     clientState.reconnectAttempts = 0;
     if (clientState.reconnectTimer != null) {
@@ -139,9 +149,13 @@ alt.on('connectionComplete', () => {
     loadCasinoInterior();
     disablePopulationOnce();
     native.requestCollisionAtCoord(924.0, 46.0, 81.1);
+    alt.setTimeout(() => {
+        openInitialLoginForm();
+    }, 100);
 });
 
 alt.on('disconnect', () => {
+    resetTransientClientUiState();
     clientState.isDisconnected = true;
     alt.log('[gta-client] Disconnected - will try to reconnect');
     tryReconnect();

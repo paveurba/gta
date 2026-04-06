@@ -49,7 +49,7 @@ alt.everyTick(() => {
         drawText(`$${clientState.playerMoney.toLocaleString()}`, 0.98, 0.02, 0.5, 114, 204, 114);
         drawText(`Bank: $${clientState.playerBank.toLocaleString()}`, 0.98, 0.055, 0.35, 200, 200, 200);
     } else {
-        drawText('Press T - Login / Register', 0.98, 0.02, 0.35, 255, 255, 255);
+        drawText('Login required', 0.98, 0.02, 0.35, 255, 255, 255);
     }
 
     drawPlayerNametags();

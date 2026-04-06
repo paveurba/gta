@@ -73,3 +73,47 @@ export const clientState: ClientState = {
 export function resetAuthForm(): void {
     clientState.authForm = emptyAuthForm();
 }
+
+/**
+ * Clear transient local UI/input state so reconnects and logout cannot leave hotkeys blocked
+ * by stale open menus or focused inputs.
+ */
+export function resetTransientClientUiState(): void {
+    clientState.nearbyProperty = null;
+    clientState.propertyInteractionOpen = false;
+    clientState.propertyMenuSelection = 0;
+
+    clientState.nearbyShop = null;
+    clientState.nearbyShopType = null;
+    clientState.shopMenuOpen = false;
+    clientState.shopMenuType = null;
+    clientState.shopCatalog = [];
+    clientState.shopMenuSelection = 0;
+
+    clientState.nearbyDealership = null;
+    clientState.dealershipMenuOpen = false;
+    clientState.vehicleCatalog = [];
+    clientState.vehicleMenuSelection = 0;
+
+    clientState.garageMenuOpen = false;
+    clientState.garageVehicles = [];
+    clientState.garageMenuSelection = 0;
+    clientState.currentGaragePropertyId = null;
+
+    clientState.phoneOpen = false;
+    clientState.phoneInput = '';
+    clientState.phoneInput2 = '';
+
+    clientState.authOpen = false;
+    clientState.authScreen = 'menu';
+    clientState.authRequirePasswordChange = false;
+    clientState.authMessage = '';
+    clientState.activeAuthFieldIndex = 0;
+    resetAuthForm();
+
+    clientState.chatOpen = false;
+    clientState.chatInput = '';
+    clientState.justOpened = false;
+    clientState.shiftPressed = false;
+    clientState.activeInput = 'chat';
+}
