@@ -15,10 +15,12 @@ import { useWebview } from './webview/index.js';
 async function start() {
     useWebview();
 
-    // Load Plugins (await so load errors are not unhandled rejections)
     alt.log(':: Loading Client Plugins');
     await import('./plugins.js');
     alt.log(':: Loaded Client Plugins');
 }
 
-start();
+void start().catch((err) => {
+    alt.log(`[core] Client startup failed: ${err}`);
+    console.error(err);
+});
