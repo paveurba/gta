@@ -7,6 +7,8 @@ import * as alt from 'alt-server';
 import mysql from 'mysql2/promise';
 import bcrypt from 'bcryptjs';
 
+import { isValidEmail, isValidUsername } from '../auth/authValidation.js';
+
 const BCRYPT_ROUNDS = parseInt(process.env.BCRYPT_ROUNDS || '10', 10);
 const TEMP_PASSWORD_EXPIRY_MINUTES = parseInt(process.env.TEMP_PASSWORD_EXPIRY_MINUTES || '60', 10);
 
@@ -59,16 +61,6 @@ export interface ChangePasswordResult {
     message: string;
 }
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-function isValidEmail(email: string): boolean {
-    return EMAIL_REGEX.test(email) && email.length <= 255;
-}
-
-function isValidUsername(username: string): boolean {
-    return /^[a-zA-Z0-9_-]{3,32}$/.test(username);
-}
-
 export class AuthService {
     constructor(private pool: mysql.Pool) {}
 
@@ -83,7 +75,7 @@ export class AuthService {
     async findById(id: number): Promise<PlayerRow | null> {
         const [rows] = await this.pool.execute(
             'SELECT id, email, username, password_hash, money, bank, password_change_required, temp_password_hash, temp_password_expires_at FROM players WHERE id = ?',
-            [id]
+            [id],
         );
         const arr = rows as PlayerRow[];
         return arr.length > 0 ? arr[0] : null;
@@ -92,7 +84,7 @@ export class AuthService {
     async findByEmail(email: string): Promise<PlayerRow | null> {
         const [rows] = await this.pool.execute(
             'SELECT id, email, username, password_hash, money, bank, password_change_required, temp_password_hash, temp_password_expires_at FROM players WHERE email = ?',
-            [email]
+            [email],
         );
         const arr = rows as PlayerRow[];
         return arr.length > 0 ? arr[0] : null;
@@ -101,7 +93,7 @@ export class AuthService {
     async findByUsername(username: string): Promise<PlayerRow | null> {
         const [rows] = await this.pool.execute(
             'SELECT id, email, username, password_hash, money, bank, password_change_required, temp_password_hash, temp_password_expires_at FROM players WHERE username = ?',
-            [username]
+            [username],
         );
         const arr = rows as PlayerRow[];
         return arr.length > 0 ? arr[0] : null;
@@ -161,7 +153,7 @@ export class AuthService {
         try {
             await this.pool.execute(
                 'INSERT INTO players (username, email, password_hash, money, bank) VALUES (?, ?, ?, 5000, 10000)',
-                [trimmedUsername, trimmedEmail, passwordHash]
+                [trimmedUsername, trimmedEmail, passwordHash],
             );
         } catch (err) {
             alt.logError(`[AuthService] Register insert failed: ${(err as Error).message}`);
@@ -192,8 +184,12 @@ export class AuthService {
         }
 
         const passwordMatches = await this.comparePassword(password, row.password_hash);
-        const tempValid = row.temp_password_hash && row.temp_password_expires_at && new Date() < new Date(row.temp_password_expires_at);
-        const tempMatches = tempValid && row.temp_password_hash ? await this.comparePassword(password, row.temp_password_hash) : false;
+        const tempValid =
+            row.temp_password_hash &&
+            row.temp_password_expires_at &&
+            new Date() < new Date(row.temp_password_expires_at);
+        const tempMatches =
+            tempValid && row.temp_password_hash ? await this.comparePassword(password, row.temp_password_hash) : false;
 
         if (!passwordMatches && !tempMatches) {
             return { success: false, message: 'Invalid username/email or password.' };
@@ -226,7 +222,7 @@ export class AuthService {
 
         await this.pool.execute(
             'UPDATE players SET temp_password_hash = ?, temp_password_expires_at = ?, password_change_required = TRUE WHERE id = ?',
-            [tempHash, expiresAt, row.id]
+            [tempHash, expiresAt, row.id],
         );
 
         alt.log(`[AuthService] Sending password reset email to ${row.email}`);
@@ -234,7 +230,7 @@ export class AuthService {
         if (!mailResult.success) {
             await this.pool.execute(
                 'UPDATE players SET temp_password_hash = NULL, temp_password_expires_at = NULL, password_change_required = FALSE WHERE id = ?',
-                [row.id]
+                [row.id],
             );
             const message =
                 mailResult.error === 'Mail not configured'
@@ -259,7 +255,7 @@ export class AuthService {
         playerId: number,
         currentPassword: string,
         newPassword: string,
-        confirmPassword: string
+        confirmPassword: string,
     ): Promise<ChangePasswordResult> {
         if (newPassword !== confirmPassword) {
             return { success: false, message: 'New password and confirmation do not match.' };
@@ -274,8 +270,14 @@ export class AuthService {
         }
 
         const mainMatches = await this.comparePassword(currentPassword, row.password_hash);
-        const tempValid = row.temp_password_hash && row.temp_password_expires_at && new Date() < new Date(row.temp_password_expires_at);
-        const tempMatches = tempValid && row.temp_password_hash ? await this.comparePassword(currentPassword, row.temp_password_hash) : false;
+        const tempValid =
+            row.temp_password_hash &&
+            row.temp_password_expires_at &&
+            new Date() < new Date(row.temp_password_expires_at);
+        const tempMatches =
+            tempValid && row.temp_password_hash
+                ? await this.comparePassword(currentPassword, row.temp_password_hash)
+                : false;
 
         if (!mainMatches && !tempMatches) {
             return { success: false, message: 'Current password is incorrect.' };
@@ -284,7 +286,7 @@ export class AuthService {
         const newHash = await this.hashPassword(newPassword);
         await this.pool.execute(
             'UPDATE players SET password_hash = ?, temp_password_hash = NULL, temp_password_expires_at = NULL, password_change_required = FALSE WHERE id = ?',
-            [newHash, playerId]
+            [newHash, playerId],
         );
 
         return { success: true, message: 'Password changed successfully.' };

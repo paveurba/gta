@@ -97,6 +97,21 @@ Plans:
 
 **Artifacts:** [`.planning/phases/15-test-hardening/15-CONTEXT.md`](phases/15-test-hardening/15-CONTEXT.md), `15-01-PLAN.md`, `15-01-SUMMARY.md`
 
+### Phase 17: GTA automated coverage (max practical in Vitest)
+
+**Goal:** Grow **Node/Vitest** coverage for **`gta-mysql-core`** (auth validation, **AuthService** paths, property interior helpers, property buy/sell); add **scoped** **`pnpm test:coverage`**. Real **alt:V** / webview flows remain **manual UAT**.
+
+**Requirements:** **TEST-01**, **TEST-COVERAGE-17**
+
+**Plans:** 2
+
+Plans:
+
+- [x] **17-01:** Extract **`authValidation`**, **`authService`** + **`propertyInterior`** unit tests
+- [x] **17-02:** **`propertyService.transactions`** tests, **`@vitest/coverage-v8`**, **`TESTING.md`**, summaries
+
+**Artifacts:** [`.planning/phases/17-gta-automated-coverage-max/17-CONTEXT.md`](phases/17-gta-automated-coverage-max/17-CONTEXT.md), `17-01-PLAN.md`, `17-02-PLAN.md`, `17-01-SUMMARY.md`, `17-02-SUMMARY.md`, `17-VERIFICATION.md`
+
 ---
 
 ### Backlog (from v1.1)
@@ -106,4 +121,4 @@ Plans:
 
 ---
 
-_Shipped v1.1: 2026-04-06. v1.2 opened: 2026-04-05._
+_Shipped v1.1: 2026-04-06. v1.2 opened: 2026-04-05. Phase **17** (TEST-COVERAGE-17) executed: 2026-04-06._

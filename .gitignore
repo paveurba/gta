@@ -51,6 +51,7 @@ pnpm-debug.log*
 lerna-debug.log*
 dist
 dist-ssr
+coverage/
 *.local
 
 # Editor directories and files

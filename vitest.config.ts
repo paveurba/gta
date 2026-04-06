@@ -10,5 +10,11 @@ export default defineConfig({
     test: {
         include: ['tests/**/*.test.ts'],
         globals: false,
+        coverage: {
+            provider: 'v8',
+            include: ['src/plugins/gta-mysql-core/**/*.ts'],
+            exclude: ['**/node_modules/**'],
+            reporter: ['text', 'html'],
+        },
     },
 });

@@ -19,6 +19,7 @@
 | **REFACTOR-03** | Extract **`index.ts`** remainder: MySQL pool + service construction (**`createGameplayMysqlBundle`**), player/session helpers (**`createPlayerRuntime`**), static parked vehicles (**`spawnStaticParkedVehicles`**). No behavior change (**11-04**). |
 | **TEST-02** | **GitHub Actions** **`ci.yml`**: **`pnpm run compile:ts`** and **`pnpm test`** (Vitest) on **push** and **pull_request** to **`main`**. Install uses **`--ignore-scripts`** because root **`postinstall`** runs **`altv-pkg`** / **`build:docker`** (not CI-safe). **Lint** in CI deferred (no shared eslint script; Prettier optional follow-up). |
 | **TEST-01** | **Unit tests:** **Vitest**, **`pnpm test`**, tests under **`tests/`** (kept out of **`src/`** so Sucrase output unchanged). First coverage: **`displayTagFromEmail`** (**`syncedMetaKeys`**). More pure helpers / services later. |
+| **TEST-COVERAGE-17** | **GTA plugin Vitest depth:** **`authValidation`** + **`AuthService`** (mocked pool), property interior helpers + **`buyProperty` / `sellProperty`**; **`pnpm test:coverage`** scoped to `src/plugins/gta-mysql-core/**/*.ts`. Full alt:V / webview not claimed. |
 | **UI-NAMETAG-01** | **Player nametags:** server sets synced meta **`gta:displayName`** (email **`@`** prefix, same idea as chat); clears on session clear, auth logout, **`/logout`**. Client draws label above **`streamedIn`** others within **~22 m** via **`getScreenCoordFromWorldCoord`**. |
 | **REFACTOR-CLIENT-01** | Split **`gta-mysql-core/client/index.ts`** into **`client/*.ts`** modules (**`clientState`**, domain **`*Client.ts`**, **`draw.ts`**, **`hudClient.ts`**, **`inputClient.ts`**). Thin **`index.ts`** imports only. No gameplay change (**14-01**). |
 
@@ -32,6 +33,7 @@
 - [x] **UI-NAMETAG-01**
 - [x] **REFACTOR-CLIENT-01**
 - [x] **TEST-01**
+- [x] **TEST-COVERAGE-17**
 
 ## Traceability (v1.2)
 
@@ -45,6 +47,7 @@
 | UI-NAMETAG-01 | 13 | Complete _(13-01 — synced meta + client draw)_ |
 | REFACTOR-CLIENT-01 | 14 | Complete _(14-01 — client modules + thin index)_ |
 | TEST-01 | 15 | Complete _(15-01 — Vitest + **`displayTagFromEmail`** + CI test step)_ |
+| TEST-COVERAGE-17 | 17 | Complete _(17-01, 17-02 — auth/property tests + scoped coverage)_ |
 
 ## v2 backlog (reference)
 
@@ -62,4 +65,4 @@
 
 ---
 
-_Updated: 2026-04-05 — **v1.2** active; phases **10**–**15** complete (**15-01** Vitest + **TEST-01** scaffold)._
+_Updated: 2026-04-06 — **v1.2** active; phases **10**–**17** include **TEST-COVERAGE-17** (Vitest + scoped **`test:coverage`**)._
