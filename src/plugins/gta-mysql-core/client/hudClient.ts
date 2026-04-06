@@ -1,8 +1,8 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 
-import { clientState } from './state';
-import { SAFE_SPAWN } from './constants';
+import { clientState } from './state.js';
+import { SAFE_SPAWN } from './constants.js';
 import {
     drawAuthOverlay,
     drawDeathScreen,
@@ -17,8 +17,8 @@ import {
     drawShopMarkers,
     drawText,
     drawTextLeft,
-} from './draw';
-import { disableAmbientPopulation, forceSafeGroundSpawn } from './worldClient';
+} from './draw.js';
+import { disableAmbientPopulation, forceSafeGroundSpawn } from './worldClient.js';
 
 alt.everyTick(() => {
     disableAmbientPopulation();

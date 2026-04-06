@@ -1,7 +1,7 @@
 import * as alt from 'alt-client';
 
-import type { AuthScreen } from './types';
-import { clientState, resetAuthForm } from './state';
+import type { AuthScreen } from './types.js';
+import { clientState, resetAuthForm } from './state.js';
 
 const AUTH_FIELDS: Record<AuthScreen, (keyof typeof clientState.authForm)[]> = {
     menu: [],

@@ -15,9 +15,9 @@ import { useWebview } from './webview/index.js';
 async function start() {
     useWebview();
 
-    // Load Plugins
+    // Load Plugins (await so load errors are not unhandled rejections)
     alt.log(':: Loading Client Plugins');
-    import('./plugins.js');
+    await import('./plugins.js');
     alt.log(':: Loaded Client Plugins');
 }
 

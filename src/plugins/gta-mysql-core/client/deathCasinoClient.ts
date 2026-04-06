@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 
-import { clientState } from './state';
+import { clientState } from './state.js';
 
 alt.on('playerDeath', () => {
     clientState.isDead = true;

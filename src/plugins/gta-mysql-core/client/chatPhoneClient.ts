@@ -1,8 +1,8 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 
-import { MAX_CHAT_HISTORY } from './constants';
-import { clientState } from './state';
+import { MAX_CHAT_HISTORY } from './constants.js';
+import { clientState } from './state.js';
 
 export function addNotification(msg: string): void {
     clientState.chatHistory.unshift(`> ${msg}`);

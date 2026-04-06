@@ -1,4 +1,4 @@
-import type { ShopLocation } from './types';
+import type { ShopLocation } from './types.js';
 
 export const SAFE_SPAWN = { x: 425.1, y: -979.5, z: 30.7 };
 

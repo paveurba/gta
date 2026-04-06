@@ -1,6 +1,6 @@
 import * as alt from 'alt-client';
 
-import { AUTH_FIELDS, authBack, closeAuth, getActiveAuthFieldKey, handleAuthTextInput, openAuth, submitAuthForm } from './authClient';
+import { AUTH_FIELDS, authBack, closeAuth, getActiveAuthFieldKey, handleAuthTextInput, openAuth, submitAuthForm } from './authClient.js';
 import {
     closeChat,
     closePhone,
@@ -9,7 +9,7 @@ import {
     openChat,
     openPhone,
     addNotification,
-} from './chatPhoneClient';
+} from './chatPhoneClient.js';
 import {
     closeDealershipMenu,
     closeGarageMenu,
@@ -20,9 +20,9 @@ import {
     openDealershipMenu,
     openGarageMenu,
     openShopMenu,
-} from './commerceClient';
-import { closePropertyMenu, handlePropertyAction, openPropertyMenu } from './propertyClient';
-import { clientState } from './state';
+} from './commerceClient.js';
+import { closePropertyMenu, handlePropertyAction, openPropertyMenu } from './propertyClient.js';
+import { clientState } from './state.js';
 
 export function handlePropertyMenuKey(key: number): void {
     if (!clientState.nearbyProperty) return;

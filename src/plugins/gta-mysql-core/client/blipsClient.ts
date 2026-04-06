@@ -1,9 +1,9 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 
-import { BLIP_SPRITES, HOSPITALS, VEHICLE_DEALERSHIPS } from './constants';
-import { clientState } from './state';
-import type { PropertyLocation, ShopLocation } from './types';
+import { BLIP_SPRITES, HOSPITALS, VEHICLE_DEALERSHIPS } from './constants.js';
+import { clientState } from './state.js';
+import type { PropertyLocation, ShopLocation } from './types.js';
 
 export function createMapBlips(): void {
     clientState.createdBlips.forEach((blip) => {

@@ -1,4 +1,4 @@
-import type { ClientState } from './types';
+import type { ClientState } from './types.js';
 
 const emptyAuthForm = (): ClientState['authForm'] => ({
     loginId: '',

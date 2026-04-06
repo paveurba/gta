@@ -1,7 +1,7 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 
-import { getActiveAuthFieldKey } from './authClient';
+import { getActiveAuthFieldKey } from './authClient.js';
 import {
     DEALERSHIP_INTERACTION_RADIUS,
     NAMETAG_HEAD_OFFSET_Z,
@@ -13,18 +13,21 @@ import {
     SHOP_PAGE_SIZE,
     VEHICLE_DEALERSHIPS,
     VEHICLE_PAGE_SIZE,
-} from './constants';
-import { findNearestDealership, findNearestShop } from './commerceClient';
-import { getDistanceToProperty, findNearestProperty } from './propertyClient';
-import { clientState } from './state';
+} from './constants.js';
+import { findNearestDealership, findNearestShop } from './commerceClient.js';
+import { closePropertyMenu, findNearestProperty, getDistanceToProperty } from './propertyClient.js';
+import { clientState } from './state.js';
 
 export function drawText(text: string, x: number, y: number, scale: number, r: number, g: number, b: number, center = false): void {
     native.setTextFont(4);
     native.setTextScale(scale, scale);
     native.setTextColour(r, g, b, 255);
     native.setTextOutline();
-    if (center) native.setTextCentre(true);
-    else {
+    if (center) {
+        native.setTextRightJustify(false);
+        native.setTextCentre(true);
+    } else {
+        native.setTextCentre(false);
         native.setTextRightJustify(true);
         native.setTextWrap(0, x);
     }
@@ -34,6 +37,8 @@ export function drawText(text: string, x: number, y: number, scale: number, r: n
 }
 
 export function drawTextLeft(text: string, x: number, y: number, scale: number, r: number, g: number, b: number): void {
+    native.setTextRightJustify(false);
+    native.setTextCentre(false);
     native.setTextFont(4);
     native.setTextScale(scale, scale);
     native.setTextColour(r, g, b, 255);
@@ -90,7 +95,17 @@ export function drawPropertyMarkers(): void {
     if (!player || !player.valid) return;
     const pos = player.pos;
 
-    clientState.nearbyProperty = findNearestProperty();
+    // While the property menu is open, keep `nearbyProperty` fixed to the property it was opened for.
+    // Otherwise each frame `findNearestProperty()` can become null when the player is on the edge of the
+    // radius → `drawPropertyMenu` draws nothing but `propertyInteractionOpen` stays true and blocks T/chat/auth.
+    if (clientState.propertyInteractionOpen) {
+        if (!clientState.nearbyProperty || getDistanceToProperty(clientState.nearbyProperty) > PROPERTY_INTERACTION_RADIUS) {
+            closePropertyMenu();
+        }
+    }
+    if (!clientState.propertyInteractionOpen) {
+        clientState.nearbyProperty = findNearestProperty();
+    }
 
     clientState.properties.forEach((prop) => {
         const dist = getDistanceToProperty(prop);

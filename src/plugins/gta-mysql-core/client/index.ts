@@ -1,13 +1,13 @@
 import * as alt from 'alt-client';
 
-import './authClient';
-import './chatPhoneClient';
-import './blipsClient';
-import './propertyClient';
-import './commerceClient';
-import './worldClient';
-import './deathCasinoClient';
-import './inputClient';
-import './hudClient';
+import './authClient.js';
+import './chatPhoneClient.js';
+import './blipsClient.js';
+import './propertyClient.js';
+import './commerceClient.js';
+import './worldClient.js';
+import './deathCasinoClient.js';
+import './inputClient.js';
+import './hudClient.js';
 
 alt.log('[gta-client] Plugin loaded');

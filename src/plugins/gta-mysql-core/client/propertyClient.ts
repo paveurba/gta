@@ -1,11 +1,11 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 
-import { createMapBlips } from './blipsClient';
-import { addNotification } from './chatPhoneClient';
-import { PROPERTY_INTERACTION_RADIUS, PROPERTY_IPLS } from './constants';
-import { clientState } from './state';
-import type { PropertyLocation } from './types';
+import { createMapBlips } from './blipsClient.js';
+import { addNotification } from './chatPhoneClient.js';
+import { PROPERTY_INTERACTION_RADIUS, PROPERTY_IPLS } from './constants.js';
+import { clientState } from './state.js';
+import type { PropertyLocation } from './types.js';
 
 export function getDistanceToProperty(prop: PropertyLocation): number {
     const player = alt.Player.local;

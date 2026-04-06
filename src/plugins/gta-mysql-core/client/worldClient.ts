@@ -1,11 +1,11 @@
 import * as alt from 'alt-client';
 import * as native from 'natives';
 
-import { closeAuth } from './authClient';
-import { createMapBlips } from './blipsClient';
-import { addNotification } from './chatPhoneClient';
-import { CASINO_IPLS, RECONNECT_INTERVAL_MS, SAFE_SPAWN } from './constants';
-import { clientState } from './state';
+import { closeAuth } from './authClient.js';
+import { createMapBlips } from './blipsClient.js';
+import { addNotification } from './chatPhoneClient.js';
+import { CASINO_IPLS, RECONNECT_INTERVAL_MS, SAFE_SPAWN } from './constants.js';
+import { clientState } from './state.js';
 
 export async function forceSafeGroundSpawn(x: number, y: number, z: number): Promise<void> {
     const player = alt.Player.local;

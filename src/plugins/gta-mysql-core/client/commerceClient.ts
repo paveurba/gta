@@ -1,9 +1,9 @@
 import * as alt from 'alt-client';
 
-import { addNotification } from './chatPhoneClient';
-import { DEALERSHIP_INTERACTION_RADIUS, SHOP_INTERACTION_RADIUS, VEHICLE_DEALERSHIPS } from './constants';
-import { clientState } from './state';
-import type { ShopLocation, VehicleCatalogItem, PlayerVehicle } from './types';
+import { addNotification } from './chatPhoneClient.js';
+import { DEALERSHIP_INTERACTION_RADIUS, SHOP_INTERACTION_RADIUS, VEHICLE_DEALERSHIPS } from './constants.js';
+import { clientState } from './state.js';
+import type { ShopLocation, VehicleCatalogItem, PlayerVehicle } from './types.js';
 
 export function openShopMenu(type: 'weapon' | 'clothing'): void {
     clientState.shopMenuOpen = true;
