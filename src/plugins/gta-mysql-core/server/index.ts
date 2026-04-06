@@ -105,105 +105,111 @@ const {
 // ============================================================================
 
 registerDiagnosticsClientEvents();
+let gameplayEventsRegistered = false;
 
-registerPlayerLifecycleEvents({
-    playerSessions,
-    playersInProperty,
-    propertyService,
-    weaponService,
-    spawnPlayerSafe,
-    notifyPlayer,
-    savePlayerMoney,
-    syncMoneyToClient,
-    applyCharacterLook,
-});
+function registerGameplayEvents(): void {
+    if (gameplayEventsRegistered) return;
+    gameplayEventsRegistered = true;
 
-registerAuthClientEvents({
-    authService,
-    playerSessions,
-    playersInProperty,
-    weaponService,
-    vehicleService,
-    notifyPlayer,
-    getMySQLPool,
-    completeLogin,
-    clearExistingSession,
-});
+    registerPlayerLifecycleEvents({
+        playerSessions,
+        playersInProperty,
+        propertyService,
+        weaponService,
+        spawnPlayerSafe,
+        notifyPlayer,
+        savePlayerMoney,
+        syncMoneyToClient,
+        applyCharacterLook,
+    });
 
-const chatCommandDeps: ChatCommandDeps = {
-    notifyPlayer,
-    getSession: (p) => playerSessions.get(p.id),
-    playerSessions,
-    playersInProperty,
-    weaponService,
-    vehicleService,
-    propertyService,
-    casinoService,
-    phoneService,
-    appearanceService,
-    clothingShopService,
-    weaponShopService,
-    savePlayerMoney,
-    syncMoneyToClient,
-    broadcastPropertyUpdate,
-    buildPropertyInteriorEnterPayload,
-    sendTestEmail,
-    clamp,
-    saveAndApplyAppearance,
-};
+    registerAuthClientEvents({
+        authService,
+        playerSessions,
+        playersInProperty,
+        weaponService,
+        vehicleService,
+        notifyPlayer,
+        getMySQLPool,
+        completeLogin,
+        clearExistingSession,
+    });
 
-async function handleCommand(player: alt.Player, command: string, args: string[]): Promise<void> {
-    await handleChatCommand(chatCommandDeps, player, command, args);
+    const chatCommandDeps: ChatCommandDeps = {
+        notifyPlayer,
+        getSession: (p) => playerSessions.get(p.id),
+        playerSessions,
+        playersInProperty,
+        weaponService,
+        vehicleService,
+        propertyService,
+        casinoService,
+        phoneService,
+        appearanceService,
+        clothingShopService,
+        weaponShopService,
+        savePlayerMoney,
+        syncMoneyToClient,
+        broadcastPropertyUpdate,
+        buildPropertyInteriorEnterPayload,
+        sendTestEmail,
+        clamp,
+        saveAndApplyAppearance,
+    };
+
+    async function handleCommand(player: alt.Player, command: string, args: string[]): Promise<void> {
+        await handleChatCommand(chatCommandDeps, player, command, args);
+    }
+
+    registerChatClientEvents({
+        playerSessions,
+        notifyPlayer,
+        handleCommand,
+    });
+
+    registerPhoneClientEvents({
+        getSession: (player) => playerSessions.get(player.id),
+        phoneService,
+        notifyPlayer,
+    });
+
+    registerPropertyClientEvents({
+        getSession: (player) => playerSessions.get(player.id),
+        propertyService,
+        playersInProperty,
+        syncMoneyToClient,
+        broadcastPropertyUpdate,
+    });
+
+    registerWeaponShopClientEvents({
+        getSession: (player) => playerSessions.get(player.id),
+        weaponShopService,
+        syncMoneyToClient,
+        notifyPlayer,
+    });
+
+    registerClothingShopClientEvents({
+        getSession: (player) => playerSessions.get(player.id),
+        clothingShopService,
+        syncMoneyToClient,
+        notifyPlayer,
+    });
+
+    registerCasinoClientEvents({
+        getSession: (player) => playerSessions.get(player.id),
+        casinoService,
+        syncMoneyToClient,
+        notifyPlayer,
+    });
+
+    registerVehicleClientEvents({
+        getSession: (player) => playerSessions.get(player.id),
+        vehicleService,
+        propertyService,
+        syncMoneyToClient,
+        notifyPlayer,
+    });
 }
-
-registerChatClientEvents({
-    playerSessions,
-    notifyPlayer,
-    handleCommand,
-});
-
-registerPhoneClientEvents({
-    getSession: (player) => playerSessions.get(player.id),
-    phoneService,
-    notifyPlayer,
-});
-
-registerPropertyClientEvents({
-    getSession: (player) => playerSessions.get(player.id),
-    propertyService,
-    playersInProperty,
-    syncMoneyToClient,
-    broadcastPropertyUpdate,
-});
-
-registerWeaponShopClientEvents({
-    getSession: (player) => playerSessions.get(player.id),
-    weaponShopService,
-    syncMoneyToClient,
-    notifyPlayer,
-});
-
-registerClothingShopClientEvents({
-    getSession: (player) => playerSessions.get(player.id),
-    clothingShopService,
-    syncMoneyToClient,
-    notifyPlayer,
-});
-
-registerCasinoClientEvents({
-    getSession: (player) => playerSessions.get(player.id),
-    casinoService,
-    syncMoneyToClient,
-    notifyPlayer,
-});
-
-registerVehicleClientEvents({
-    getSession: (player) => playerSessions.get(player.id),
-    vehicleService,
-    propertyService,
-    syncMoneyToClient,
-    notifyPlayer,
-});
 
 // ============================================================================
 // INITIALIZE
@@ -212,6 +218,7 @@ registerVehicleClientEvents({
 async function init() {
     try {
         await getMySQLPool();
+        registerGameplayEvents();
         alt.log('[gta-mysql-core] All services initialized');
     } catch (err) {
         alt.logError(`[gta-mysql-core] Init failed: ${(err as Error).message}`);
