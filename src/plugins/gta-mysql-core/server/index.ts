@@ -6,6 +6,7 @@ import { handleChatCommand, type ChatCommandDeps } from './commands/handleChatCo
 import { registerAuthClientEvents } from './events/registerAuthClientEvents.js';
 import { registerCasinoClientEvents } from './events/registerCasinoClientEvents.js';
 import { registerChatClientEvents } from './events/registerChatClientEvents.js';
+import { registerDiagnosticsClientEvents } from './events/registerDiagnosticsClientEvents.js';
 import { registerClothingShopClientEvents } from './events/registerClothingShopClientEvents.js';
 import { registerPhoneClientEvents } from './events/registerPhoneClientEvents.js';
 import { registerPlayerLifecycleEvents } from './events/registerPlayerLifecycleEvents.js';
@@ -102,6 +103,8 @@ const {
 // ============================================================================
 // EVENT REGISTRATION (lifecycle, client RPCs, chat commands)
 // ============================================================================
+
+registerDiagnosticsClientEvents();
 
 registerPlayerLifecycleEvents({
     playerSessions,

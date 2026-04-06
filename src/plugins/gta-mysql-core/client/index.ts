@@ -1,3 +1,4 @@
+import './diagnosticsForwarder.js';
 import * as alt from 'alt-client';
 
 import './authClient.js';
