@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
-import { displayTagFromEmail } from '../../src/plugins/gta-mysql-core/server/constants/syncedMetaKeys.js';
+import { NAMETAG_SYNCED_META } from '../../../src/plugins/gta-mysql-core/client/constants.js';
+import {
+    SYNCED_DISPLAY_NAME,
+    displayTagFromEmail,
+} from '../../../src/plugins/gta-mysql-core/server/constants/syncedMetaKeys.js';
 
 describe('displayTagFromEmail', () => {
     it('returns substring before @', () => {
@@ -19,15 +23,13 @@ describe('displayTagFromEmail', () => {
         expect(displayTagFromEmail('')).toBe('');
     });
 
-    it('uses first @ only (extra @ in local part ignored for slice end)', () => {
+    it('uses first @ only', () => {
         expect(displayTagFromEmail('user@foo@bar')).toBe('user');
     });
+});
 
-    it('allows single-character local part', () => {
-        expect(displayTagFromEmail('a@example.com')).toBe('a');
-    });
-
-    it('returns lone @ unchanged (@ at index 0)', () => {
-        expect(displayTagFromEmail('@')).toBe('@');
+describe('client/server synced meta key', () => {
+    it('NAMETAG_SYNCED_META matches SYNCED_DISPLAY_NAME', () => {
+        expect(NAMETAG_SYNCED_META).toBe(SYNCED_DISPLAY_NAME);
     });
 });

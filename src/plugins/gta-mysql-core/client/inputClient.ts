@@ -23,6 +23,7 @@ import {
 } from './commerceClient.js';
 import { closePropertyMenu, handlePropertyAction, openPropertyMenu } from './propertyClient.js';
 import { clientState } from './state.js';
+import { keyCodeFromAltKey } from './keyCode.js';
 
 export function handlePropertyMenuKey(key: number): void {
     if (!clientState.nearbyProperty) return;
@@ -56,17 +57,13 @@ export function handlePropertyMenuKey(key: number): void {
     }
 }
 
-function keyCode(key: alt.KeyCode): number {
-    return typeof key === 'number' ? key : Number(key);
-}
-
 alt.on('keydown', (key) => {
-    const k = keyCode(key);
+    const k = keyCodeFromAltKey(key);
     if (k === 16 || k === 160 || k === 161) clientState.shiftPressed = true;
 });
 
 alt.on('keyup', (key) => {
-    const k = keyCode(key);
+    const k = keyCodeFromAltKey(key);
     if (k === 16 || k === 160 || k === 161) {
         clientState.shiftPressed = false;
         return;

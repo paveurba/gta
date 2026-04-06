@@ -6,6 +6,7 @@ import {
     CLOTHING_SHOP_LOCATIONS,
     CASINO_LOCATIONS,
 } from '../services/index.js';
+import { getNearestHospital } from '../world/nearestHospital.js';
 
 export type PlayerLifecycleContext = {
     playerSessions: Map<number, PlayerSession>;
@@ -19,40 +20,7 @@ export type PlayerLifecycleContext = {
     applyCharacterLook: (player: alt.Player, playerId: number) => Promise<void>;
 };
 
-/** Street-level spawn points in front of each hospital (not on roof or inside building). */
-interface HospitalSpawn {
-    x: number;
-    y: number;
-    z: number;
-    heading: number;
-    name: string;
-}
-
-const HOSPITAL_SPAWNS: HospitalSpawn[] = [
-    { x: 307.32, y: -595.38, z: 43.29, heading: 70, name: 'Pillbox Hill Medical Center' },
-    { x: -449.67, y: -340.55, z: 34.51, heading: 0, name: 'Mount Zonah Medical Center' },
-    { x: 1839.44, y: 3672.71, z: 34.28, heading: 0, name: 'Sandy Shores Medical Center' },
-    { x: -247.46, y: 6331.23, z: 32.43, heading: 0, name: 'Paleto Bay Medical Center' },
-];
-
 const HOSPITAL_FEE = 500;
-
-function getNearestHospital(x: number, y: number, z: number): HospitalSpawn {
-    let nearest = HOSPITAL_SPAWNS[0];
-    let minDist = Infinity;
-
-    for (const hospital of HOSPITAL_SPAWNS) {
-        const dist = Math.sqrt(
-            Math.pow(hospital.x - x, 2) + Math.pow(hospital.y - y, 2) + Math.pow(hospital.z - z, 2)
-        );
-        if (dist < minDist) {
-            minDist = dist;
-            nearest = hospital;
-        }
-    }
-
-    return nearest;
-}
 
 export function registerPlayerLifecycleEvents(ctx: PlayerLifecycleContext): void {
     const {

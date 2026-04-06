@@ -9,6 +9,7 @@
         "start:linux": "node ./scripts/compile.js && ./altv-server",
         "compile:ts": "npx sucrase ./src -d ./resources/core --exclude-dirs ./src/scratchpad --transforms typescript -q && node ./scripts/buildPluginImports.js && node ./scripts/pathResolver.js && shx cp ./src/resource.toml ./resources/core/resource.toml",
         "test": "vitest run",
+        "test:gta": "vitest run tests/unit/gta",
         "refresh": "pnpm compile:ts && docker compose up --build -d",
         "dev:hot": "pnpm build:docker && concurrently --raw \"nodemon -C --config ./nodemon-hot.json -x pnpm build:docker\" \"altv-server\"",
         "build:docker": "node ./scripts/compile.js -- docker",
