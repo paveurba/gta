@@ -56,19 +56,83 @@ export function handlePropertyMenuKey(key: number): void {
     }
 }
 
+function keyCode(key: alt.KeyCode): number {
+    return typeof key === 'number' ? key : Number(key);
+}
+
 alt.on('keydown', (key) => {
-    const keyNum = key as number;
-    if (keyNum === 16 || keyNum === 160 || keyNum === 161) clientState.shiftPressed = true;
+    const k = keyCode(key);
+    if (k === 16 || k === 160 || k === 161) clientState.shiftPressed = true;
 });
 
 alt.on('keyup', (key) => {
-    const keyNum = key as number;
-    if (keyNum === 16 || keyNum === 160 || keyNum === 161) {
+    const k = keyCode(key);
+    if (k === 16 || k === 160 || k === 161) {
         clientState.shiftPressed = false;
         return;
     }
 
-    if (key === 69 && !clientState.chatOpen && !clientState.phoneOpen && !clientState.propertyInteractionOpen && !clientState.shopMenuOpen && !clientState.dealershipMenuOpen && !clientState.garageMenuOpen && clientState.nearbyDealership) {
+    // Auth must run before `justOpened` and before world E/M interactions, or keys are swallowed
+    // (e.g. after T opens the menu, Enter / 1–4 were ignored for 100ms and E could open dealership).
+    if (clientState.authOpen) {
+        if (k === 27) {
+            authBack();
+            return;
+        }
+        if (clientState.authScreen === 'menu') {
+            if (k === 49) {
+                openAuth('login');
+                clientState.authForm.loginId = '';
+                clientState.authForm.loginPassword = '';
+                clientState.activeAuthFieldIndex = 0;
+                return;
+            }
+            if (k === 50) {
+                openAuth('register');
+                clientState.authForm.regUsername = '';
+                clientState.authForm.regEmail = '';
+                clientState.authForm.regPassword = '';
+                clientState.authForm.regConfirm = '';
+                clientState.activeAuthFieldIndex = 0;
+                return;
+            }
+            if (k === 51) {
+                openAuth('forgot');
+                clientState.authForm.forgotEmail = '';
+                clientState.activeAuthFieldIndex = 0;
+                return;
+            }
+            if (k === 52 && clientState.currentPlayerId > 0) {
+                alt.emitServer('auth:logout');
+                return;
+            }
+        }
+        if (k === 9) {
+            const keys = AUTH_FIELDS[clientState.authScreen];
+            if (keys.length) {
+                clientState.activeAuthFieldIndex = (clientState.activeAuthFieldIndex + 1) % keys.length;
+            }
+            return;
+        }
+        if (k === 13) {
+            if (clientState.authScreen === 'menu') {
+                openAuth('login');
+                clientState.authForm.loginId = '';
+                clientState.authForm.loginPassword = '';
+                clientState.activeAuthFieldIndex = 0;
+                return;
+            }
+            submitAuthForm();
+            return;
+        }
+        const field = getActiveAuthFieldKey();
+        if (field !== null) {
+            handleAuthTextInput(k, clientState.shiftPressed);
+        }
+        return;
+    }
+
+    if (k === 69 && !clientState.chatOpen && !clientState.phoneOpen && !clientState.propertyInteractionOpen && !clientState.shopMenuOpen && !clientState.dealershipMenuOpen && !clientState.garageMenuOpen && clientState.nearbyDealership) {
         openDealershipMenu();
         return;
     }
@@ -83,7 +147,7 @@ alt.on('keyup', (key) => {
         return;
     }
 
-    if (key === 69 && !clientState.chatOpen && !clientState.phoneOpen && !clientState.propertyInteractionOpen && !clientState.shopMenuOpen && !clientState.dealershipMenuOpen && !clientState.garageMenuOpen && clientState.nearbyShop && clientState.nearbyShopType) {
+    if (k === 69 && !clientState.chatOpen && !clientState.phoneOpen && !clientState.propertyInteractionOpen && !clientState.shopMenuOpen && !clientState.dealershipMenuOpen && !clientState.garageMenuOpen && clientState.nearbyShop && clientState.nearbyShopType) {
         if (clientState.nearbyShopType === 'weapon') {
             openShopMenu('weapon');
             alt.emitServer('weaponshop:getCatalog');
@@ -101,7 +165,7 @@ alt.on('keyup', (key) => {
         return;
     }
 
-    if (key === 69 && !clientState.chatOpen && !clientState.phoneOpen && !clientState.propertyInteractionOpen && !clientState.shopMenuOpen && !clientState.dealershipMenuOpen && !clientState.garageMenuOpen && clientState.nearbyProperty) {
+    if (k === 69 && !clientState.chatOpen && !clientState.phoneOpen && !clientState.propertyInteractionOpen && !clientState.shopMenuOpen && !clientState.dealershipMenuOpen && !clientState.garageMenuOpen && clientState.nearbyProperty) {
         openPropertyMenu();
         return;
     }
@@ -111,13 +175,13 @@ alt.on('keyup', (key) => {
         return;
     }
 
-    if (key === 77 && !clientState.authOpen && !clientState.chatOpen && !clientState.propertyInteractionOpen) {
+    if (k === 77 && !clientState.authOpen && !clientState.chatOpen && !clientState.propertyInteractionOpen) {
         if (clientState.phoneOpen) closePhone();
         else if (clientState.isLoggedIn) openPhone();
         return;
     }
 
-    if (key === 84 && !clientState.authOpen && !clientState.chatOpen && !clientState.phoneOpen && !clientState.propertyInteractionOpen) {
+    if (k === 84 && !clientState.authOpen && !clientState.chatOpen && !clientState.phoneOpen && !clientState.propertyInteractionOpen) {
         if (!clientState.isLoggedIn || clientState.authRequirePasswordChange) {
             openAuth(clientState.authRequirePasswordChange ? 'changePassword' : 'menu');
         } else {
@@ -132,57 +196,6 @@ alt.on('keyup', (key) => {
     }
 
     if (clientState.justOpened) return;
-
-    if (clientState.authOpen) {
-        if (key === 27) {
-            authBack();
-            return;
-        }
-        if (clientState.authScreen === 'menu') {
-            if (key === 49) {
-                openAuth('login');
-                clientState.authForm.loginId = '';
-                clientState.authForm.loginPassword = '';
-                clientState.activeAuthFieldIndex = 0;
-                return;
-            }
-            if (key === 50) {
-                openAuth('register');
-                clientState.authForm.regUsername = '';
-                clientState.authForm.regEmail = '';
-                clientState.authForm.regPassword = '';
-                clientState.authForm.regConfirm = '';
-                clientState.activeAuthFieldIndex = 0;
-                return;
-            }
-            if (key === 51) {
-                openAuth('forgot');
-                clientState.authForm.forgotEmail = '';
-                clientState.activeAuthFieldIndex = 0;
-                return;
-            }
-            if (key === 52 && clientState.currentPlayerId > 0) {
-                alt.emitServer('auth:logout');
-                return;
-            }
-        }
-        if (key === 9) {
-            const keys = AUTH_FIELDS[clientState.authScreen];
-            if (keys.length) {
-                clientState.activeAuthFieldIndex = (clientState.activeAuthFieldIndex + 1) % keys.length;
-            }
-            return;
-        }
-        if (key === 13) {
-            submitAuthForm();
-            return;
-        }
-        const field = getActiveAuthFieldKey();
-        if (field !== null) {
-            handleAuthTextInput(key, clientState.shiftPressed);
-        }
-        return;
-    }
 
     if (clientState.phoneOpen) {
         handlePhoneKey(key);

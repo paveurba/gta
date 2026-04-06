@@ -73,7 +73,11 @@ export function useWebview(path = 'http://assets/webview/index.html') {
             return;
         }
 
-        webview.emit(Events.view.onKeypress, key);
+        try {
+            webview.emit(Events.view.onKeypress, key);
+        } catch (err) {
+            console.error('[webview] onKeypress emit failed', err);
+        }
     }
 
     /**

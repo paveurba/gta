@@ -578,7 +578,8 @@ export function drawAuthOverlay(): void {
         drawTextLeft('[2] Register', 0.36, 0.42, 0.4, 255, 255, 255);
         drawTextLeft('[3] Forgot Password', 0.36, 0.48, 0.4, 255, 255, 255);
         if (clientState.currentPlayerId > 0) drawTextLeft('[4] Logout', 0.36, 0.54, 0.4, 255, 180, 180);
-        drawTextLeft('[ESC] Close', 0.36, clientState.currentPlayerId > 0 ? 0.62 : 0.58, 0.35, 150, 150, 150);
+        drawTextLeft('[ENTER] Login (same as [1])', 0.36, clientState.currentPlayerId > 0 ? 0.6 : 0.56, 0.3, 150, 150, 150);
+        drawTextLeft('[ESC] Close', 0.36, clientState.currentPlayerId > 0 ? 0.66 : 0.62, 0.35, 150, 150, 150);
     } else if (clientState.authScreen === 'login') {
         drawTextLeft('Username or Email:', 0.36, 0.34, 0.35, 200, 200, 200);
         drawRect(0.5, 0.395, 0.26, 0.032, gk === 'loginId' ? 60 : 40, gk === 'loginId' ? 60 : 40, gk === 'loginId' ? 90 : 55, 255);
