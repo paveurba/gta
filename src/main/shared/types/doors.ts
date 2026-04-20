@@ -2,10 +2,12 @@ import * as alt from 'alt-shared';
 import {PermissionOptions} from "@Shared/types/index.js";
 
 
-export enum DoorState {
-    LOCKED = 'locked',
-    UNLOCKED = 'unlocked',
-}
+export const DoorState = {
+    LOCKED: 'locked',
+    UNLOCKED: 'unlocked',
+} as const;
+
+export type DoorState = (typeof DoorState)[keyof typeof DoorState];
 
 
 export interface Door extends PermissionOptions {

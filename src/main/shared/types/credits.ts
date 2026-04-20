@@ -1,8 +1,10 @@
-export enum CreditAlignment {
-    LEFT = 'left',
-    RIGHT = 'right',
-    CENTER = 'center',
-}
+export const CreditAlignment = {
+    LEFT: 'left',
+    RIGHT: 'right',
+    CENTER: 'center',
+} as const;
+
+export type CreditAlignment = (typeof CreditAlignment)[keyof typeof CreditAlignment];
 
 export type Credit = {
     /**
