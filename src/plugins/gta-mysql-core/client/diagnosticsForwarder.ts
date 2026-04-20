@@ -92,25 +92,7 @@ function patchConsole(): void {
     }
 }
 
-function patchAltLog(): void {
-    const a = alt as unknown as Record<string, (...args: unknown[]) => void>;
-    const pairs: [string, string][] = [
-        ['log', 'log'],
-        ['logWarning', 'warn'],
-        ['logError', 'error'],
-    ];
-    for (const [name, level] of pairs) {
-        const orig = a[name];
-        if (typeof orig !== 'function') continue;
-        a[name] = (...args: unknown[]) => {
-            orig.apply(alt, args);
-            forward(level, formatArgs(args));
-        };
-    }
-}
-
 patchConsole();
-patchAltLog();
 
 alt.on('resourceError', (error, file, line, stackTrace) => {
     const msg = error?.message ?? String(error);
