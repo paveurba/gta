@@ -1,0 +1,148 @@
+﻿# What is Rebar?
+
+> Rebar is a plugin-based framework for GTA:V based on alt:V that focuses on server-side functionality to control almost all player aspects. Rebar provides a robust starting point for any game mode as you'll be able to choose from a wide variety of community plugins to install.
+
+- [What is Rebar?](https://rebarv.com/index.md): What is Rebar?
+- [Install & Upgrade](https://rebarv.com/install.md): Hey listen! When you run Rebar for the first time, you won't be able to spawn.
+- [FAQ](https://rebarv.com/faq.md): Frequently asked questions about Rebar.
+- [Troubleshooting](https://rebarv.com/troubleshooting.md): This troubleshooting guide mostly pertains to people who have successfully installed this framework.
+- [Changelog](https://rebarv.com/changelog.md): Removed useVehicleEvents, useCharacterEvents, and useAccountEvents
+- [API - useRebar](https://rebarv.com/userebar/userebar.md): The server API can be accessed through a single import.
+- [Character Appearance & Personality — Technical Review and Improvement Plan](https://rebarv.com/character-appearance-technical-review.md): A technical review of the current player personality/character appearance implementation on the alt:V roleplay server, with an improvement plan for registration, storage, load, and editing.
+- [Debug Plan: Respawn Location & Property Entry Teleport Bugs](https://rebarv.com/debug-respawn-and-property-teleport.md): Step-by-step implementation plan to diagnose and fix two critical issues on the alt:V roleplay server.
+
+## Info
+
+- [Client Console Commands](https://rebarv.com/info/client-console-commands.md): There are a handful of tools in-game that will allow you to easily obtain information to build out plugins.
+
+### Plugins
+
+- [What is a Plugin?](https://rebarv.com/info/plugins/what-is-a-plugin.md): A plugin can be seen as code that is meant to work with the Rebar Framework.
+- [Plugin Structure](https://rebarv.com/info/plugins/structure.md): If you wish to create plugins then you need to understand the basic structure of a plugin.
+- [Your First Plugin](https://rebarv.com/info/plugins/your-first-plugin.md): This tutorial is meant to show you how to get an incredibly basic plugin running.
+
+### Webview
+
+- [What is a Webview?](https://rebarv.com/info/webview/what-is-a-webview.md): A Webview for this framework may also be known as a page.
+- [Create a Webview](https://rebarv.com/info/webview/create.md): First, make sure you've created a plugin.
+
+#### Components
+
+- [Draggable Component](https://rebarv.com/info/webview/components/draggable.md): The draggable component is a built-in component that allows you to wrap up any code to make it draggable.
+
+#### Composables
+
+- [useAudio](https://rebarv.com/info/webview/composables/use-audio.md): Gives you the ability to play custom sounds from the Webview.
+- [useEvents](https://rebarv.com/info/webview/composables/use-events.md): This is an event wrapper that allows for communication directly to the server, or the client.
+- [useLocalStorage](https://rebarv.com/info/webview/composables/use-local-storage.md): A way to store local data to the alt:V Client.
+- [useMessenger](https://rebarv.com/info/webview/composables/use-messenger.md): Gives the ability to get messages from the messenger system as well as emit messages to the messenger system.
+- [useMinimap](https://rebarv.com/info/webview/composables/use-minimap.md): Gets minimap positional data and makes it available in the Webview.
+- [usePlayerStats](https://rebarv.com/info/webview/composables/use-player-stats.md): This specific composable is for gather information from client-side, and rendering it in the WebView.
+- [useSyncedMeta](https://rebarv.com/info/webview/composables/use-synced-meta.md): When using the Stream Synced Binder, this webview component allows you to get that data as vue refs.
+
+## Tutorials
+
+### General
+
+- [Code Examples](https://rebarv.com/tutorials/general/code-examples.md): This is a giant page for code examples and a general purpose cookbook for writing just about anything.
+- [VSCode Transmitter](https://rebarv.com/tutorials/general/vscode-transmitter.md): Rebar has built in support for the Rebar Transmitter extension.
+
+### Rebar
+
+- [Chapter 1. Preface](https://rebarv.com/tutorials/rebar/chapter-01-preface.md): While it is recommended to know how to program a little bit, I started programming with zero knowledge doing stuff for Fallout 4 with Papyrus, and then moving to GTA:V with C#, and now TypeScript.
+- [Chapter 2. Dependencies](https://rebarv.com/tutorials/rebar/chapter-02-dependencies.md): With every great project comes a list of dependencies and things you will need to get started. All of the dependencies below are required and you will need to obtain the necessary software to follow this book.
+- [Chapter 3. Project Setup](https://rebarv.com/tutorials/rebar/chapter-03-project-setup.md): Now that we've obtained all the necessary programs to get started with development, we can begin with setting up our project.
+- [Chapter 4. Opening the Source Code](https://rebarv.com/tutorials/rebar/chapter-04-opening-source.md): Now that we've covered starting and stopping the server, it's time to get into the source code. This part may be incredibly overwhelming for people who have never programmed anything before.
+- [Chapter 5. Your First Plugin](https://rebarv.com/tutorials/rebar/chapter-05-your-first-plugin.md): Now that we've gotten this far, we can write our first plugin for Rebar. Pay close attention to what you're doing and try to follow the images and text as closely as possible.
+- [Chapter 6. Expanding the Plugin](https://rebarv.com/tutorials/rebar/chapter-06-expanding-the-plugin.md): The next stage of our plugin is going to be spawning the player. While Rebar does come with plenty of plugins to handle this, we're going to be going from scratch to get a better understanding of how to work with Rebar as a whole.
+- [Chapter 7. Programming](https://rebarv.com/tutorials/rebar/chapter-07-programming.md): In our previous section we created our first plugin, spawned a player, and gave them a weapon. In this section, we're going to learn how to do some basic programming, and how to know what to type based on the patterns you're seeing.
+- [Chapter 8. Exercises](https://rebarv.com/tutorials/rebar/chapter-08-excercises.md): In the last section we learned all about programming, and got a basic understanding of reading code, and how the VSCode intellisense works. Now in this section we're going to explain a problem, and you're going to try and build a solution.
+- [Chapter 9. Free for All Death Match Gamemode](https://rebarv.com/tutorials/rebar/chapter-09-deathmatch.md): In this chapter we're going to build a very basic version of a free for all death match. It's going to require very little code, and in this section I'll provide a handful of positions and code to help you build this faster.
+- [Chapter 10. Authentication Plugin](https://rebarv.com/tutorials/rebar/chapter-10-authentication.md): Authentication is our next big ticket item for doing anything with the Rebar Framework. While there are a handful of Authentication plugins out there, I believe it's incredibly important to learn and understand how Authentication works.
+
+## API - useRebar
+
+- [useApi](https://rebarv.com/userebar/useapi.md): API allows for plugins to register their own APIs and make them available globally.
+- [useCronJob](https://rebarv.com/userebar/usecronjob.md): This API allows you to create timed events that happen at different intervals based on server time. Such as every 5th minute of the hour, every hour, etc.
+- [useConfig](https://rebarv.com/userebar/useconfig.md): This document provides an overview of the configuration management for a Rebar server application.
+- [controllers](https://rebarv.com/userebar/controllers.md): Controllers effectively show and allow interactions throughout the game world for your players.
+- [useDatabase](https://rebarv.com/userebar/usedatabase.md): When using the database in Rebar it can be accessed from any plugin.
+
+### document
+
+- [document](https://rebarv.com/userebar/document/index.md): Documents are what are stored inside of MongoDB. Evey document has an _id which is a string of characters. That string of characters can be used to quickly pull down any document.
+- [Account Document](https://rebarv.com/userebar/document/document-account.md): See Documents Section for further information on documents.
+- [Character Document](https://rebarv.com/userebar/document/document-character.md): See Documents Section for further information on documents.
+- [Global Document](https://rebarv.com/userebar/document/document-global.md): See Documents Section for further information on documents.
+- [Vehicle Document](https://rebarv.com/userebar/document/document-vehicle.md): See Documents Section for further information on documents.
+- [Virtual Document](https://rebarv.com/userebar/document/document-virtual.md): See Documents Section for further information on documents.
+- [events](https://rebarv.com/userebar/events.md): These events are unique to the Rebar framework, and help provide information about when something happens.
+- [get](https://rebarv.com/userebar/get.md): Get means that it's going to get some information about a player, players, a vehicle, vehicles, or the world
+- [usePlayer](https://rebarv.com/userebar/useplayer.md): While there is access to individual waypoints.
+
+### systems
+
+#### permissions
+
+- [About permissions](https://rebarv.com/userebar/systems/permissions/about.md): There is a documentation for permission system that allows you to control what players can and cannot do.
+- [Player permissions](https://rebarv.com/userebar/systems/permissions/playerpermissions.md): To manage player permissions, Rebar exposes the same interface for both account and character permissions.
+- [Player groups](https://rebarv.com/userebar/systems/permissions/playergroups.md): Player groups are a way to organize players into groups, and then assign permissions to those groups. This way, you can easily manage permissions for multiple players at once.
+- [usePermissions](https://rebarv.com/userebar/systems/permissions/usepermissions.md): This function allows you to easily check if a player has a permission. It is a wrapper around the useAccount and useCharacter functions, and it will automatically check the permissions for the player's character or account.
+- [usePermissionGroup](https://rebarv.com/userebar/systems/permissions/usepermissiongroup.md): Permission groups are a way to organize permissions into groups, and then assign those groups to players. This way, you can easily manage permissions for multiple players at once.
+- [useEntityPermissions](https://rebarv.com/userebar/systems/permissions/useentitypermissions.md): This function allows you to easily integrate permission system into your feature.
+- [useKeybinder](https://rebarv.com/userebar/systems/usekeybinder.md): A simple way to bind keybinds to server-side functionality.
+- [useKeypress](https://rebarv.com/userebar/systems/usekeypress.md): Keypress lets you handle key up and key down from server-side. It completely ignores if a page is open.
+- [useMessenger](https://rebarv.com/userebar/systems/usemessenger.md): The messenger system allows for developers to easily send up messages from players and process them as commands or messages for other players to read.
+- [useProxyFetch](https://rebarv.com/userebar/systems/useproxyfetch.md): Allows for you to register safe endpoints on server-side which can be called client-side, or server-side.
+- [useServerConfig](https://rebarv.com/userebar/systems/useserverconfig.md): The server config controls player-wide aspects such as radar display, vehicle class display, etc.
+- [useStreamSyncedBinder](https://rebarv.com/userebar/systems/usestreamsyncedbinder.md): What this allows you to do is target a specific document field from a Character or Vehicle document and automatically synchronize the document data to client-side through streamSyncedMeta.
+- [useServices](https://rebarv.com/userebar/useservices.md): Services provide a way for plugin developers to call a shared interface handled by Rebar to handle common place functionality.
+- [utility](https://rebarv.com/userebar/utility.md): These are a collection of utility functions, some also exist client-side but most are server-side only.
+- [useVehicle](https://rebarv.com/userebar/usevehicle.md): Used to create a new vehicle document, repair vehicles, apply vehicle documents, etc.
+- [useHono](https://rebarv.com/userebar/usehono.md): The useHono function is designed to extend the game-server web API server by utilizing the Hono framework. It provides mechanisms to register new routes and use middlewares for handling incoming requests.
+
+## API - useRebarClient
+
+- [Client API Usage](https://rebarv.com/userebarclient/client-api-usage.md): The client API can be accessed through a single import.
+
+### Controllers
+
+- [Interaction](https://rebarv.com/userebarclient/controllers/interaction.md): Listen on client-side for when a player enters an interaction or leaves an interaction.
+
+### Menus
+
+- [Native Menu](https://rebarv.com/userebarclient/menus/native-menu.md): This is a faux version of the native menu. It's a custom implementation that has a much simpler API.
+
+### Screen
+
+- [Instructional Menu](https://rebarv.com/userebarclient/screen/instructional-menu.md): Instructional menus are the keys that show up in the bottom right of the screen.
+
+### System
+
+- [Notification](https://rebarv.com/userebarclient/system/notification.md): If you wish to override the default GTA:V notification system, you can use the built in notification system.
+- [useProxyFetch](https://rebarv.com/userebarclient/system/useproxyfetch.md): This is the client version of the proxy fetch.
+- [useStreamSyncedGetter](https://rebarv.com/userebarclient/system/usestreamsyncedgetter.md): When using the Stream Synced Binder, this allows you to get type safe responses on client-side.
+- [Plugin API](https://rebarv.com/userebarclient/api/api.md): API allows for plugins to register their own APIs and make them available globally.
+- [Webview](https://rebarv.com/userebarclient/webview/webview.md): When using the webview on client-side, you have a lot of options.
+
+## Team pass
+
+- [QA Plan - Runtime Connection and Gameplay Smoke](https://rebarv.com/team-pass/06-qa-plan-runtime.md): Date: 2026-03-05 Branch: rebar-rewrite
+- [Rebar Integration + QA Report](https://rebarv.com/team-pass/05-rebar-integration-and-qa-report.md): Date: 2026-03-05 Branch: rebar-rewrite
+
+## API - Shared
+
+- [Utility](https://rebarv.com/shared/utility.md): Utility provides a lot of shared functionality between client, server, and webview.
+
+## Data
+
+- [Doors](https://rebarv.com/data/doors.md): List of doors that could be used with useDoor controller.
+- [Explosion Types](https://rebarv.com/data/explosions.md): List of all explosion types.
+- [Frontend Sounds](https://rebarv.com/data/frontend-sounds.md): A list of common frontend sounds.
+- [GTA:V Controls](https://rebarv.com/data/controls.md): These are all the control groups, and controls official names.
+- [Ped Bones](https://rebarv.com/data/ped-bones.md): Bone Name
+- [Vehicle Bones](https://rebarv.com/data/vehicle-bones.md): Bone Name
+- [Vehicle Colors](https://rebarv.com/data/vehicle-colors.md): ID
+- [Vehicle Mods](https://rebarv.com/data/vehicle-mods.md): Mod Index
+- [Weapon Pickup Models](https://rebarv.com/data/pickups.md): Pickup Model
+- [Weather](https://rebarv.com/data/weather.md): Weather

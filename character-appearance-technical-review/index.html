@@ -4,24 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.4.0.828807858403">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.830027155866">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.4.0">
+    <meta name="generator" content="Retype 4.5.3">
 
     <!-- Primary Meta Tags -->
     <title>Character Appearance &amp; Personality — Technical Review and Improvement Plan</title>
     <meta name="title" content="Character Appearance & Personality — Technical Review and Improvement Plan">
-    <meta name="description" content="A technical review of the current player personality/character appearance implementation on the alt:V roleplay server, with an improvement plan for">
+    <meta name="description" content="A technical review of the current player personality/character appearance implementation on the alt:V roleplay server, with an improvement plan for registration, storage, load, and editing.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://rebarv.com/character-appearance-technical-review/">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://rebarv.com/sitemap.xml">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://rebarv.com/character-appearance-technical-review/">
     <meta property="og:title" content="Character Appearance & Personality — Technical Review and Improvement Plan">
-    <meta property="og:description" content="A technical review of the current player personality/character appearance implementation on the alt:V roleplay server, with an improvement plan for">
+    <meta property="og:description" content="A technical review of the current player personality/character appearance implementation on the alt:V roleplay server, with an improvement plan for registration, storage, load, and editing.">
     <meta property="og:site_name" content="Rebar for alt:V">
     <meta property="og:locale" content="en_US">
 
@@ -29,16 +30,19 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://rebarv.com/character-appearance-technical-review/">
     <meta name="twitter:title" content="Character Appearance & Personality — Technical Review and Improvement Plan">
-    <meta name="twitter:description" content="A technical review of the current player personality/character appearance implementation on the alt:V roleplay server, with an improvement plan for">
+    <meta name="twitter:description" content="A technical review of the current player personality/character appearance implementation on the alt:V roleplay server, with an improvement plan for registration, storage, load, and editing.">
+
+    <!-- Alternate Markdown -->
+    <link rel="alternate" type="text/markdown" href="https://rebarv.com/character-appearance-technical-review.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../resources/css/retype.css?v=4.4.0.828807858403" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=4.5.3.830027155866" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=4.4.0.828807858403" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../resources/js/retype.js?v=4.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.4.0.828807858403" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=4.4.0.828807858403" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=4.5.3.830027155866" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.5.3.830027155866" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=4.5.3.830027155866" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -160,9 +164,11 @@
 <div class="flex">
     <div id="retype-main" class="min-w-0 p-4 grow md:px-16">
         <main class="relative pb-12 lg:pt-2">
-            <div class="retype-markdown" id="retype-content">
+            <div class="relative retype-markdown" id="retype-content">
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
+                <doc-page-actions></doc-page-actions>
+
                 <!-- Page content  -->
 <h1 id="character-appearance--personality--technical-review-and-improvement-plan">Character Appearance &amp; Personality — Technical Review and Improvement Plan</h1>
 <p>A technical review of the current player personality/character appearance implementation on the alt:V roleplay server, with an improvement plan for registration, storage, load, and editing.</p>
@@ -220,7 +226,8 @@
 </ul>
 <h3 id="13-how-it-is-loaded-on-player-spawn--login">1.3 How it is loaded on player spawn / login</h3>
 <ul>
-<li><p><strong>Login flow</strong> (<code translate="no" v-pre>completeLogin</code>):</p>
+<li>
+<p><strong>Login flow</strong> (<code translate="no" v-pre>completeLogin</code>):</p>
 <ol>
 <li><code translate="no" v-pre>bindCharacterForPlayer(player, session.email)</code> — loads or creates Rebar Character and calls <code translate="no" v-pre>characterBinder.bind(document)</code> with <strong><code translate="no" v-pre>syncPlayer: false</code></strong>.</li>
 <li><code translate="no" v-pre>spawnPlayerSafe(player)</code> — sets model to <code translate="no" v-pre>mp_m_freemode_01</code>, spawn position, health.</li>
@@ -228,13 +235,15 @@
 <li><code translate="no" v-pre>clothingShopService.loadPlayerClothing(player, session.oderId)</code> — reads <strong>MySQL</strong> <code translate="no" v-pre>player_clothes</code> and applies <code translate="no" v-pre>player.setClothes(component, drawable, texture, 0)</code>.</li>
 </ol>
 </li>
-<li><p><strong>Rebar sync:</strong> Because <code translate="no" v-pre>syncPlayer</code> is <code translate="no" v-pre>false</code>, <code translate="no" v-pre>usePlayerAppearance(player).sync()</code> and <code translate="no" v-pre>useClothing(player).sync()</code> are <strong>never</strong> called on bind. So:</p>
+<li>
+<p><strong>Rebar sync:</strong> Because <code translate="no" v-pre>syncPlayer</code> is <code translate="no" v-pre>false</code>, <code translate="no" v-pre>usePlayerAppearance(player).sync()</code> and <code translate="no" v-pre>useClothing(player).sync()</code> are <strong>never</strong> called on bind. So:</p>
 <ul>
 <li><strong>Appearance</strong> from MongoDB is never applied on login.</li>
 <li><strong>Clothing</strong> from MongoDB is never applied; only MySQL clothing is.</li>
 </ul>
 </li>
-<li><p><strong>Respawn:</strong> Same player session; character document remains bound. If respawn only resets position/health and does not re-apply appearance/clothing, the ped keeps whatever was last set (so no reset unless something else overwrites it).</p>
+<li>
+<p><strong>Respawn:</strong> Same player session; character document remains bound. If respawn only resets position/health and does not re-apply appearance/clothing, the ped keeps whatever was last set (so no reset unless something else overwrites it).</p>
 </li>
 </ul>
 <p><strong>Summary:</strong> Appearance is not set at registration and is not applied on login. Only MySQL-based clothing is applied on login.</p>
@@ -342,16 +351,19 @@ Current schema has only <code translate="no" v-pre>(id, player_id, component, dr
 <h2 id="3-server-side-architecture">3. Server-Side Architecture</h2>
 <h3 id="31-best-practice-for-loading-and-applying-appearance">3.1 Best practice for loading and applying appearance</h3>
 <ol>
-<li><p><strong>Order of application (login/spawn):</strong></p>
+<li>
+<p><strong>Order of application (login/spawn):</strong></p>
 <ul>
 <li>Set <strong>model</strong> from appearance sex (or default) so clothing and overlays match.</li>
 <li>Apply <strong>appearance</strong> (head blend, structure, hair, overlays, eyes, tattoos).</li>
 <li>Apply <strong>clothing</strong> (from MySQL or from Rebar, but one source).</li>
 </ul>
 </li>
-<li><p><strong>Single function:</strong> One “apply character look” function that: loads appearance row (or Rebar document), loads clothing rows, then calls in order: <code translate="no" v-pre>usePlayerAppearance(player).apply(appearance)</code> (or equivalent native calls), then applies each clothing component. That way respawn/reconnect can call the same function.</p>
+<li>
+<p><strong>Single function:</strong> One “apply character look” function that: loads appearance row (or Rebar document), loads clothing rows, then calls in order: <code translate="no" v-pre>usePlayerAppearance(player).apply(appearance)</code> (or equivalent native calls), then applies each clothing component. That way respawn/reconnect can call the same function.</p>
 </li>
-<li><p><strong>Defaults:</strong> If no appearance row exists (e.g. new character), apply a default Appearance (e.g. male/female freemode, default face/hair) and optionally save it so the next load is consistent.</p>
+<li>
+<p><strong>Defaults:</strong> If no appearance row exists (e.g. new character), apply a default Appearance (e.g. male/female freemode, default face/hair) and optionally save it so the next load is consistent.</p>
 </li>
 </ol>
 <h3 id="32-syncing-appearance-with-the-client">3.2 Syncing appearance with the client</h3>
@@ -463,13 +475,15 @@ Current schema has only <code translate="no" v-pre>(id, player_id, component, dr
 <h3 id="61-example-server-side-flow">6.1 Example server-side flow</h3>
 <p><strong>Registration → save → spawn → load → update</strong></p>
 <ol>
-<li><p><strong>Registration (auth)</strong></p>
+<li>
+<p><strong>Registration (auth)</strong></p>
 <ul>
 <li>Create account (e.g. <code translate="no" v-pre>players</code> row with email, password_hash).</li>
 <li>If you use a <strong>character creator</strong> in the same flow: client sends appearance (and optionally initial clothing). Server creates <code translate="no" v-pre>character_appearance</code> row (and initial <code translate="no" v-pre>player_clothes</code> rows). If you use Rebar Character, create the document with <code translate="no" v-pre>appearance</code> and optionally <code translate="no" v-pre>clothing</code> populated.</li>
 </ul>
 </li>
-<li><p><strong>First login</strong></p>
+<li>
+<p><strong>First login</strong></p>
 <ul>
 <li>Load character (Rebar by email or MySQL by player_id).</li>
 <li>If MySQL: load <code translate="no" v-pre>character_appearance</code> for <code translate="no" v-pre>player_id</code>; if none, apply default appearance and INSERT default row.</li>
@@ -479,17 +493,20 @@ Current schema has only <code translate="no" v-pre>(id, player_id, component, dr
 <li>Sync money, weapons, etc.</li>
 </ul>
 </li>
-<li><p><strong>Later logins</strong></p>
+<li>
+<p><strong>Later logins</strong></p>
 <ul>
 <li>Same as first login: load appearance + clothing from DB, spawn, apply appearance then clothing.</li>
 </ul>
 </li>
-<li><p><strong>Respawn</strong></p>
+<li>
+<p><strong>Respawn</strong></p>
 <ul>
 <li>After setting position/health, optionally re-apply appearance and clothing from the same DB (or from bound Rebar document) so the ped is never left in a default or half-applied state.</li>
 </ul>
 </li>
-<li><p><strong>Barber / plastic surgery / clothing</strong></p>
+<li>
+<p><strong>Barber / plastic surgery / clothing</strong></p>
 <ul>
 <li>Server receives event with new data → validate → UPDATE DB (or Rebar <code translate="no" v-pre>document.set</code>) → apply to player from the updated data.</li>
 </ul>
@@ -567,7 +584,7 @@ onClient('barber:apply', player, hair, hairColor1, hairColor2, facialHair, ...):
                         <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../debug-respawn-and-property-teleport/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Debug Plan: Respawn Location & Property Entry Teleport Bugs</span>
+                                <span class="block mt-1">Debug Plan: Respawn Location &amp; Property Entry Teleport Bugs</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>
@@ -611,6 +628,6 @@ onClient('barber:apply', player, hair, hairColor1, hairColor2, facialHair, ...):
 
     <div id="retype-overlay-target"></div>
 
-    <script data-cfasync="false">window.__DOCS__ = { "title": "Character Appearance & Personality — Technical Review and Improvement Plan", level: 1, icon: "file", hasPrism: true, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Character Appearance & Personality — Technical Review and Improvement Plan", level: 1, icon: "file", hasPrism: true, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/character-appearance-technical-review.md" }</script>
 </body>
 </html>
